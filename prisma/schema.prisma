@@ -1,0 +1,93 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model Admin {
+  id        String   @id @default(cuid())
+  nome      String
+  email     String   @unique
+  cpf       String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+model Responsavel {
+  id        String   @id @default(cuid())
+  nome      String
+  email     String   @unique
+  cpf       String   @unique
+  telefone  String
+  cep       String
+  endereco  String
+  alunos    Aluno[]
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Aluno {
+  id          String   @id @default(cuid())
+  nome        String?
+  email       String   @unique
+  telefone    String
+  cep         String
+  endereco    String
+  ficha       String
+  password    String
+  responsavelId String
+  responsavel Responsavel @relation(fields: [responsavelId], references: [id])
+  dificuldades AlunoDificuldades[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Professor {
+  id             String   @id @default(cuid())
+  nome           String
+  email          String   @unique
+  cpf            String   @unique
+  telefone       String
+  cep            String
+  endereco       String
+  ativo          Boolean
+  disponibilidade Json
+  password       String
+  materias       ProfessorMaterias[]
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Materias {
+  id        String   @id @default(cuid())
+  materia      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  alunos    AlunoDificuldades[]
+  professores ProfessorMaterias[]
+}
+
+model AlunoDificuldades {
+  alunoId    String
+  materiaId  String
+  aluno      Aluno   @relation(fields: [alunoId], references: [id])
+  materia    Materias @relation(fields: [materiaId], references: [id])
+  
+  @@id([alunoId, materiaId])
+}
+
+model ProfessorMaterias {
+  professorId String
+  materiaId   String
+  professor   Professor @relation(fields: [professorId], references: [id])
+  materia     Materias  @relation(fields: [materiaId], references: [id])
+
+  @@id([professorId, materiaId])
+}
