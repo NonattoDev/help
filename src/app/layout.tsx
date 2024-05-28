@@ -8,6 +8,9 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Help - Login",
+  icons: {
+    icon: "/help.ico",
+  },
 };
 
 export default function RootLayout({
