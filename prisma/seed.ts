@@ -19,12 +19,31 @@ async function main() {
       { materia: "Sociologia" },
       { materia: "Artes" },
       { materia: "Educação Física" },
-      { materia: "Informática" },
     ],
     skipDuplicates: true, // Ignora duplicados se já existirem
   });
 
   console.log("Materias criadas:", materias);
+
+  const adminUsers = await prisma.admin.createMany({
+    data: [
+      {
+        nome: "Lara",
+        email: "larahelp@gmail.com",
+        password: "Lara123!",
+        cpf: "00000000000",
+      },
+      {
+        nome: "Robson Nonato",
+        email: "robsonnonatoiii@gmail.com",
+        password: "Robson123!",
+        cpf: "08362023503",
+      },
+    ],
+    skipDuplicates: true,
+  });
+
+  console.log("Admins criados:", adminUsers);
 }
 
 main()
