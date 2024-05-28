@@ -1,36 +1,38 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Melhorias e Correções para o Sistema de Banca:
 
-## Getting Started
+Funcionalidades a serem implementadas:
 
-First, run the development server:
+Match automático com sugestões de professores:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Considerar a proximidade geográfica e as habilidades do professor.
+Permitir que o usuário envie uma mensagem automática para o professor via WhatsApp após a sugestão.
+Controle de aulas:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Registrar o número de aulas realizadas por aluno em um determinado período.
+Permitir filtrar as aulas por mês ou período específico.
+Mostrar o saldo de aulas restantes para cada aluno.
+Sistema de ponto para professores:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Permitir que os professores marquem as aulas realizadas.
+Incluir a possibilidade de adicionar observações sobre as aulas.
+Facilitar a visualização das aulas dadas por professor em um determinado período.
+Correções a serem feitas:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Eliminar a necessidade de planilhas do Google:
 
-## Learn More
+Substituir o uso de planilhas por funcionalidades nativas do sistema.
+Automatizar o processo de pagamento dos professores com base nas aulas registradas no sistema.
+Otimizar o processo de comunicação com os professores:
 
-To learn more about Next.js, take a look at the following resources:
+Integrar o sistema com o WhatsApp para facilitar a comunicação.
+Automatizar o envio de mensagens sobre novos alunos e disponibilidade de aulas.
+Observações:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+A cliente já possui logo e registro da empresa, portanto, não é necessário criar um novo.
+A maioria dos professores dá aulas de várias matérias, exceto os de acompanhamento geral (fundamental 1 e 2).
+A cliente está aberta a sugestões e novas possibilidades para melhorar o sistema.
+Sugestões adicionais:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Implementar um sistema de agendamento de aulas para facilitar a organização.
+Criar um sistema de avaliação para alunos e professores.
+Adicionar um dashboard com informações relevantes sobre o desempenho da banca (número de alunos, professores, aulas realizadas, etc.).
