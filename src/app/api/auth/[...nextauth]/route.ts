@@ -16,45 +16,47 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Senha", type: "password" },
       },
       async authorize(credentials) {
-        if (!credentials || !credentials.email || !credentials.password) throw new Error("Credenciais inválidas");
+        try {
+          if (!credentials || !credentials.email || !credentials.password) throw new Error("Credenciais inválidas");
 
-        let user;
-        let userType;
+          let user;
+          let userType;
 
-        // Try to find the user in the 'aluno' table
-        user = await prisma.aluno.findUnique({
-          where: {
-            email: credentials.email,
-          },
-        });
-        userType = "aluno";
-
-        // If not found, try to find the user in the 'professor' table
-        if (!user) {
-          user = await prisma.professor.findUnique({
+          // Try to find the user in the 'aluno' table
+          user = await prisma.aluno.findUnique({
             where: {
               email: credentials.email,
             },
           });
-          userType = "professor";
-        }
+          userType = "aluno";
 
-        // If not found, try to find the user in the 'admin' table
-        if (!user) {
-          user = await prisma.admin.findUnique({
-            where: {
-              email: credentials.email,
-            },
-          });
-          userType = "admin";
-        }
+          // If not found, try to find the user in the 'professor' table
+          if (!user) {
+            user = await prisma.professor.findUnique({
+              where: {
+                email: credentials.email,
+              },
+            });
+            userType = "professor";
+          }
 
-        if (!user) {
-          throw new Error("Usuário não encontrado");
-        }
+          // If not found, try to find the user in the 'admin' table
+          if (!user) {
+            user = await prisma.admin.findUnique({
+              where: {
+                email: credentials.email,
+              },
+            });
+            userType = "admin";
+          }
 
-        if (user && (await compare(credentials?.password!, user.password))) {
-          return user;
+          if (user && (await compare(credentials.password, user.password))) {
+            return user;
+          } else {
+            throw new Error("Credenciais inválidas");
+          }
+        } catch (error: any) {
+          throw new Error(error.message);
         }
       },
     }),

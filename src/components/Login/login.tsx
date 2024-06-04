@@ -8,13 +8,16 @@ import { MdPassword } from "react-icons/md";
 import { toast } from "react-toastify";
 import help from "/public/help.svg";
 import { useRouter } from "next/navigation";
+import LoadingButton from "../Buttons/Loading/loading";
 
 export default function LoginComponent() {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
   const router = useRouter();
 
   const submit = async (e: React.FormEvent) => {
+    setLoading(true);
     e.preventDefault();
     if (email.includes("@") == false) return toast.error("Email inválido");
     if (email === "" || password === "") return toast.info("Preencha todos os campos");
@@ -28,12 +31,14 @@ export default function LoginComponent() {
       });
 
       if (response?.error) {
+        setLoading(false);
         return toast.error(response.error);
       }
 
       toast.success("Login efetuado com sucesso");
       router.push("/help/dashboard");
     } catch (error) {
+      setLoading(false);
       console.error(error);
     }
 
@@ -78,10 +83,14 @@ export default function LoginComponent() {
                 </div>
               </div>
               <div className="flex justify-center">
-                <button className="flex items-center px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition duration-500">
-                  <BiSearch className="mr-1 text-white" />
-                  Login
-                </button>
+                {loading ? (
+                  <LoadingButton />
+                ) : (
+                  <button type="submit" className={`flex items-center px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition duration-500 ${loading ? "skeleton" : ""}`}>
+                    <BiSearch className="mr-1 text-white" />
+                    Login
+                  </button>
+                )}
               </div>
             </form>
           </div>
