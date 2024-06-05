@@ -20,7 +20,6 @@ async function main() {
       { materia: "Artes" },
       { materia: "Educação Física" },
     ],
-    skipDuplicates: true, // Ignora duplicados se já existirem
   });
 
   console.log("Materias criadas:", materias);
@@ -30,17 +29,16 @@ async function main() {
       {
         nome: "Lara",
         email: "larahelp@gmail.com",
-        password: "Lara123!",
+        password: "$2a$12$5W560EE67wL8IDJ.baAoZOVVuCOZzsXvq7Z7vYCf.7Lwrd/CTvddK",
         cpf: "00000000000",
       },
       {
         nome: "Robson Nonato",
         email: "robsonnonatoiii@gmail.com",
-        password: "Robson123!",
+        password: "$2a$12$10oHNPbBg./ixfTqV2KPneC0Z78ivt9Ko/6cIcRL7KoKtqjPemNeq",
         cpf: "08362023503",
       },
     ],
-    skipDuplicates: true,
   });
 
   console.log("Admins criados:", adminUsers);
