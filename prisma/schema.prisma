@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -58,7 +58,7 @@ model Professor {
   cep            String
   endereco       String
   ativo          Boolean
-  disponibilidade String
+  disponibilidade Json
   password       String
   materias       ProfessorMaterias[]
   createdAt      DateTime @default(now())

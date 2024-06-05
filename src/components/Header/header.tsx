@@ -1,5 +1,7 @@
-'use client'
+"use client";
 import { signOut } from "next-auth/react";
+import MatchButton from "./MatchButton";
+import { BiLogOutCircle } from "react-icons/bi";
 
 const Header = () => {
   const handleSignOut = () => {
@@ -18,8 +20,11 @@ const Header = () => {
       }}
     >
       <a className="btn btn-ghost text-xl">Lara Help</a>
+
+      <MatchButton />
+
       <button onClick={handleSignOut} className="btn">
-        Sair
+        <BiLogOutCircle />
       </button>
     </div>
   );

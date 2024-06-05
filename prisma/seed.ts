@@ -20,6 +20,7 @@ async function main() {
       { materia: "Artes" },
       { materia: "Educação Física" },
     ],
+    skipDuplicates: true,
   });
 
   console.log("Materias criadas:", materias);
@@ -39,6 +40,7 @@ async function main() {
         cpf: "08362023503",
       },
     ],
+    skipDuplicates: true,
   });
 
   console.log("Admins criados:", adminUsers);
