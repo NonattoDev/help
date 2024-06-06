@@ -7,79 +7,118 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-model Admin {
-  id        String   @id @default(cuid())
-  nome      String
-  email     String   @unique
-  cpf       String   @unique
-  password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-
-model Responsavel {
-  id        String   @id @default(cuid())
-  nome      String
-  email     String   @unique
-  cpf       String   @unique
-  telefone  String
-  cep       String
-  endereco  String
-  alunos    Aluno[]
-  password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model Aluno {
+model Usuarios {
   id          String   @id @default(cuid())
-  nome        String?
+  nome        String
   email       String   @unique
-  telefone    String
-  cep         String
-  endereco    String
-  ficha       String
+  cpf         String   @unique
   password    String
-  responsavelId String
-  responsavel Responsavel @relation(fields: [responsavelId], references: [id])
-  dificuldades AlunoDificuldades[]
+  accessLevel String   @default("administrativo")
+  ativo       Boolean  @default(true)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
 
-model Professor {
+model AgendaAulas {
+  id          String    @id @default(cuid())
+  alunoId     String
+  aluno       Aluno     @relation(fields: [alunoId], references: [id])
+  professorId String
+  professor   Professor @relation(fields: [professorId], references: [id])
+  data        DateTime
+  hora        String
+  local       String
+  modalidade  String
+  checkin     DateTime
+  checkout    DateTime
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Responsavel {
+  id          String   @id @default(cuid())
+  nome        String
+  email       String   @unique
+  cpf         String   @unique
+  telefone    String
+  endereco    Json
+  alunos      Aluno[]
+  password    String
+  accessLevel String   @default("responsavel")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Aluno {
+  id            String              @id @default(cuid())
+  nome          String
+  email         String              @unique
+  escola        String
+  ano_escolar   String
+  telefone      String
+  endereco      Json
+  ficha         String
+  modalidade    String
+  qtd_aulas     Int
+  data_inicio   DateTime
+  password      String
+  responsavelId String
+  responsavel   Responsavel         @relation(fields: [responsavelId], references: [id])
+  dificuldades  AlunoDificuldades[]
+  accessLevel   String              @default("aluno")
+  ativo         Boolean             @default(true)
+  createdAt     DateTime            @default(now())
+  updatedAt     DateTime            @updatedAt
+  financeiro    Financeiro[]
+  AgendaAulas   AgendaAulas[]
+}
+
+model Financeiro {
   id             String   @id @default(cuid())
-  nome           String
-  email          String   @unique
-  cpf            String   @unique
-  telefone       String
-  cep            String
-  endereco       String
-  ativo          Boolean
-  disponibilidade Json
-  password       String
-  materias       ProfessorMaterias[]
+  alunoId        String
+  aluno          Aluno    @relation(fields: [alunoId], references: [id])
+  qtd_aulas      Int
+  valor          Float
+  status         String   @default("pendente")
+  conferidoConta Boolean  @default(false)
+  dataPagamento  DateTime @default(now())
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 }
 
+model Professor {
+  id              String              @id @default(cuid())
+  nome            String
+  email           String              @unique
+  cpf             String              @unique
+  telefone        String
+  endereco        Json
+  ativo           Boolean             @default(true)
+  disponibilidade Json
+  accessLevel     String              @default("professor")
+  modalidade      Json                @default("{\"presencial\": true, \"online\": false}")
+  password        String
+  materias        ProfessorMaterias[]
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+  AgendaAulas     AgendaAulas[]
+}
+
 model Materias {
-  id        String   @id @default(cuid())
-  materia      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  alunos    AlunoDificuldades[]
+  id          String              @id @default(cuid())
+  materia     String
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @default(now())
+  alunos      AlunoDificuldades[]
   professores ProfessorMaterias[]
 }
 
 model AlunoDificuldades {
-  alunoId    String
-  materiaId  String
-  aluno      Aluno   @relation(fields: [alunoId], references: [id])
-  materia    Materias @relation(fields: [materiaId], references: [id])
-  
+  alunoId   String
+  materiaId String
+  aluno     Aluno    @relation(fields: [alunoId], references: [id])
+  materia   Materias @relation(fields: [materiaId], references: [id])
+
   @@id([alunoId, materiaId])
 }
 

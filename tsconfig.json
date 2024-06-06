@@ -22,7 +22,7 @@
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts",
-  "prisma/seeds/seed.ts",
+  "prisma/seeds/usuarios.ts",
   "prisma/migrations/*.ts",
   
 ],

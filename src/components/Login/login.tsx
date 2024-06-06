@@ -36,7 +36,7 @@ export default function LoginComponent() {
       }
 
       toast.success("Login efetuado com sucesso");
-      router.push("/help/dashboard");
+      router.push("/help/gestor/dashboard");
     } catch (error) {
       setLoading(false);
       console.error(error);

@@ -6,6 +6,37 @@ import { compare } from "bcryptjs";
 
 const prisma = new PrismaClient();
 
+interface Usuario {
+  id: string;
+  nome: string;
+  email: string;
+  cpf?: string;
+  password?: string;
+  accessLevel: "administrador" | "responsavel" | "aluno" | "professor";
+  ativo: boolean;
+  telefone?: string;
+  endereco?: {
+    cep?: string;
+    rua?: string;
+    bairro?: string;
+    cidade?: string;
+    estado?: string;
+    numero?: string;
+    referencia?: string;
+    complemento?: string;
+  };
+  escola?: string;
+  ano_escolar?: string;
+  ficha?: string;
+  modalidade?: "Presencial" | "Online";
+  qtd_aulas?: number;
+  data_inicio?: Date;
+  responsavelId?: string;
+  createdAt: Date;
+  updatedAt: Date;
+  disponibilidade?: {};
+}
+
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
@@ -20,7 +51,6 @@ export const authOptions: NextAuthOptions = {
           if (!credentials || !credentials.email || !credentials.password) throw new Error("Credenciais inválidas");
 
           let user;
-          let userType;
 
           // Try to find the user in the 'aluno' table
           user = await prisma.aluno.findUnique({
@@ -28,7 +58,6 @@ export const authOptions: NextAuthOptions = {
               email: credentials.email,
             },
           });
-          userType = "aluno";
 
           // If not found, try to find the user in the 'professor' table
           if (!user) {
@@ -37,17 +66,15 @@ export const authOptions: NextAuthOptions = {
                 email: credentials.email,
               },
             });
-            userType = "professor";
           }
 
           // If not found, try to find the user in the 'admin' table
           if (!user) {
-            user = await prisma.admin.findUnique({
+            user = await prisma.usuarios.findUnique({
               where: {
                 email: credentials.email,
               },
             });
-            userType = "admin";
           }
 
           if (user && (await compare(credentials.password, user.password))) {
@@ -67,12 +94,21 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
+        const usuario = user as Usuario;
         token.id = user.id;
+        token.nome = usuario.nome;
+        token.accessLevel = usuario.accessLevel;
+        token.ativo = usuario.ativo;
       }
       return token;
     },
     async session(params: { session: any; token: any }) {
+      console.log(params);
       params.session.id = params.token.id;
+      params.session.nome = params.token.nome;
+      params.session.accessLevel = params.token.accessLevel;
+      params.session.ativo = params.token.ativo;
+      params.session.algo = "teste";
       return params.session;
     },
   },
