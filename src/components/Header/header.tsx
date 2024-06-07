@@ -4,6 +4,7 @@ import { LogoutButton } from "./Components/LogoutButton";
 import { ManutencaoButton } from "./Components/Dropdown/Manutencao";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/lib/auth";
+import MyProfileButton from "./Components/MyProfile";
 
 const Header = async () => {
   const session = await getServerSession(authOptions);
@@ -32,7 +33,12 @@ const Header = async () => {
       </div>
 
       {/* Fim Header */}
-      <div>
+      <div
+        style={{
+          gap: "10px",
+        }}
+      >
+        <MyProfileButton id={session?.user?.id} />
         <LogoutButton />
       </div>
     </div>

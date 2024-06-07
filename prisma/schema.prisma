@@ -95,7 +95,8 @@ model Professor {
   endereco        Json
   areaFormacao    Json[]
   ativo           Boolean             @default(true)
-  disponibilidade Json    
+  disponibilidade Json                @default("{\"segunda\": \"08:00|18:00\", \"terca\": \"08:00|18:00\", \"quarta\": \"08:00|18:00\", \"quinta\": \"08:00|18:00\", \"sexta\": \"08:00|18:00\", \"sabado\": \"08:00|12:00\", \"domingo\": false}") 
+  ficha           Json[]
   accessLevel     String              @default("professor")
   modalidade      Json                @default("{\"presencial\": true, \"online\": false}")
   password        String
