@@ -1,15 +1,14 @@
-"use client";
-import { signOut } from "next-auth/react";
-import MatchButton from "./MatchButton";
-import { BiLogOutCircle } from "react-icons/bi";
+import MatchButton from "./Components/MatchButton";
+import { LogoButton } from "./Components/LogoButton";
+import { LogoutButton } from "./Components/LogoutButton";
+import { ManutencaoButton } from "./Components/Dropdown/Manutencao";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/lib/auth";
 
-const Header = () => {
-  const handleSignOut = () => {
-    signOut({
-      callbackUrl: "/",
-      redirect: true,
-    });
-  };
+const Header = async () => {
+  const session = await getServerSession(authOptions);
+
+  if (!session) return null;
 
   return (
     <div
@@ -17,15 +16,25 @@ const Header = () => {
       style={{
         width: "98%",
         margin: "10px auto",
+        display: "flex",
+        justifyContent: "space-between",
       }}
     >
-      <a className="btn btn-ghost text-xl">Lara Help</a>
+      {/* Inicio Header */}
+      <div>
+        <LogoButton userName={session?.user.nome} />
+      </div>
 
-      <MatchButton />
+      {/* Meio do Header*/}
+      <div>
+        {(session?.user.accessLevel === "administrador" || session?.user.accessLevel === "administrativo") && <MatchButton />}
+        {(session?.user.accessLevel === "administrador" || session?.user.accessLevel === "administrativo") && <ManutencaoButton />}
+      </div>
 
-      <button onClick={handleSignOut} className="btn">
-        <BiLogOutCircle />
-      </button>
+      {/* Fim Header */}
+      <div>
+        <LogoutButton />
+      </div>
     </div>
   );
 };
