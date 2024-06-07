@@ -54,7 +54,3 @@ export interface Professor {
   createdAt: Date;
   updatedAt: Date;
 }
-
-export interface EditProfessorProps {
-  professor: Professor;
-}
