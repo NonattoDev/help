@@ -4,10 +4,10 @@ export async function createProfessor(prisma: PrismaClient) {
   const professor = await prisma.professor.createMany({
     data: [
       {
-        nome: "Ana Clara",
-        email: "",
-        cpf: "",
-        telefone: "",
+        nome: "Ana Clara da Silva Pinho",
+        email: "anaclara.pinho0@gmail.com",
+        cpf: "862.429.605-67",
+        telefone: "71983637758",
         areaFormacao: [
           {
             area: "Engenharia Eletrica",
@@ -16,12 +16,12 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         ],
         endereco: {
-          rua: "",
-          numero: "",
+          rua: "Rua Mônica",
+          numero: "10",
           bairro: "Novo Horizonte",
-          cidade: "",
-          estado: "",
-          cep: "",
+          cidade: "Salvador",
+          estado: "Bahia",
+          cep: "41218032",
         },
         disponibilidade: {
           segunda: {
@@ -53,10 +53,10 @@ export async function createProfessor(prisma: PrismaClient) {
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
       {
-        nome: "Ana Rita",
-        email: "",
-        cpf: "",
-        telefone: "",
+        nome: "Ana Rita Lima Gomes",
+        email: "gomeslima.ana@outlook.com",
+        cpf: "083.465.525-05",
+        telefone: "71999841418",
         areaFormacao: [
           {
             area: "Historia",
@@ -65,12 +65,12 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         ],
         endereco: {
-          rua: "",
-          numero: "",
+          rua: "Rua Damião de Góes",
+          numero: "3",
           bairro: "Liberdade",
-          cidade: "",
-          estado: "",
-          cep: "",
+          cidade: "Salvador",
+          estado: "Bahia",
+          cep: "40325680",
         },
         disponibilidade: {
           segunda: {
@@ -102,10 +102,10 @@ export async function createProfessor(prisma: PrismaClient) {
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
       {
-        nome: "Anita Moreira",
-        email: "",
-        cpf: "",
-        telefone: "",
+        nome: "Anita Sousa dos Santos Moreira",
+        email: "anitamoreira745@gmail.com",
+        cpf: "09824950567",
+        telefone: "71996302616",
         areaFormacao: [
           {
             area: "Estudante",
@@ -114,12 +114,12 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         ],
         endereco: {
-          rua: "",
-          numero: "",
+          rua: "Rua Arlindo Fragoso",
+          numero: "98",
           bairro: "Matatu",
-          cidade: "",
-          estado: "",
-          cep: "",
+          cidade: "Salvador",
+          estado: "Bahia",
+          cep: "40255040",
         },
         disponibilidade: {
           segunda: {
@@ -151,10 +151,10 @@ export async function createProfessor(prisma: PrismaClient) {
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
       {
-        nome: "Beatriz Pires",
-        email: "",
-        cpf: "",
-        telefone: "",
+        nome: "Beatriz Pires de Novaes dos Santos",
+        email: "beatrizpires12144@gmail.com",
+        cpf: "857.988.935-96",
+        telefone: "71988156795",
         areaFormacao: [
           {
             area: "Pedagogia",
@@ -163,12 +163,12 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         ],
         endereco: {
-          rua: "",
+          rua: "Setor A",
           numero: "",
-          bairro: "Cajazeiras",
-          cidade: "",
-          estado: "",
-          cep: "",
+          bairro: "Cajazeiras 8",
+          cidade: "Salvador",
+          estado: "Bahia",
+          cep: "41338200",
         },
         disponibilidade: {
           segunda: {
@@ -200,10 +200,10 @@ export async function createProfessor(prisma: PrismaClient) {
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
       {
-        nome: "Bruna Alves",
-        email: "",
-        cpf: "",
-        telefone: "",
+        nome: "Bruna Alves Silva Cruz",
+        email: "cruz.bruna993@gmail.com",
+        cpf: "051.929.415-71",
+        telefone: "71983846555",
         areaFormacao: [
           {
             area: "Matemática",
@@ -212,12 +212,12 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         ],
         endereco: {
-          rua: "",
-          numero: "",
+          rua: "Condomínio governador José Marcelino",
+          numero: "apto 101",
           bairro: "Cabula",
-          cidade: "",
-          estado: "",
-          cep: "",
+          cidade: "Salvador",
+          estado: "Bahia",
+          cep: "41150485",
         },
         disponibilidade: {
           segunda: {
@@ -249,10 +249,10 @@ export async function createProfessor(prisma: PrismaClient) {
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
       {
-        nome: "Bianca Barreto",
-        email: "",
-        cpf: "",
-        telefone: "",
+        nome: "Bianca da Silva Barreto",
+        email: "biah.barreto@hotmail.com",
+        cpf: "035.567.075-51",
+        telefone: "71982035398",
         areaFormacao: [
           {
             area: "Matemática",
@@ -261,12 +261,12 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         ],
         endereco: {
-          rua: "",
+          rua: "Rua André Luís",
           numero: "",
-          bairro: "Avenida ACM",
-          cidade: "",
-          estado: "",
-          cep: "",
+          bairro: "Brotas",
+          cidade: "Salvador",
+          estado: "Bahia",
+          cep: "40279-070",
         },
         disponibilidade: {
           segunda: {
@@ -298,10 +298,10 @@ export async function createProfessor(prisma: PrismaClient) {
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
       {
-        nome: "Camila Tavares",
-        email: "",
-        cpf: "",
-        telefone: "",
+        nome: "Camila Ferreira Tavares",
+        email: "camilaftavares@live.com",
+        cpf: "074.738.205-08",
+        telefone: "71992835170",
         areaFormacao: [
           {
             area: "Letras",
@@ -310,12 +310,12 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         ],
         endereco: {
-          rua: "",
-          numero: "",
+          rua: "Rua Adelino Santos",
+          numero: "20",
           bairro: "Liberdade",
-          cidade: "",
-          estado: "",
-          cep: "",
+          cidade: "Salvador",
+          estado: "Bahia",
+          cep: "60420490",
         },
         disponibilidade: {
           segunda: {
@@ -347,10 +347,10 @@ export async function createProfessor(prisma: PrismaClient) {
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
       {
-        nome: "Carla Gabrielle",
-        email: "",
-        cpf: "",
-        telefone: "",
+        nome: "Carla Gabrielle Santos do Nascimento",
+        email: "carlagabrielle.nasc@gmail.com",
+        cpf: "078.903.655-00",
+        telefone: "71992561315",
         areaFormacao: [
           {
             area: "Letras",
@@ -359,12 +359,12 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         ],
         endereco: {
-          rua: "",
-          numero: "",
+          rua: "Rua da Legalidade",
+          numero: "31",
           bairro: "Caminho de Areia",
-          cidade: "",
-          estado: "",
-          cep: "",
+          cidade: "Salvador",
+          estado: "Bahia",
+          cep: "40434545",
         },
         disponibilidade: {
           segunda: {
@@ -396,10 +396,10 @@ export async function createProfessor(prisma: PrismaClient) {
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
       {
-        nome: "Daiane Teles",
-        email: "",
-        cpf: "",
-        telefone: "",
+        nome: "Daiane Santos Teles",
+        email: "Daianeteles2003@gmail.com",
+        cpf: "094.934.355-20",
+        telefone: "71986465669",
         areaFormacao: [
           {
             area: "Matemática",
@@ -408,12 +408,12 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         ],
         endereco: {
-          rua: "",
+          rua: "Travessa Bernardo Azevedo",
           numero: "",
           bairro: "Cajazeiras 8",
-          cidade: "",
-          estado: "",
-          cep: "",
+          cidade: "Salvador",
+          estado: "Bahia",
+          cep: "41330235",
         },
         disponibilidade: {
           segunda: {
@@ -445,10 +445,10 @@ export async function createProfessor(prisma: PrismaClient) {
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
       {
-        nome: "Deise",
-        email: "",
-        cpf: "",
-        telefone: "",
+        nome: "Deise Santos Souza",
+        email: "deise_souzas@hotmail.com",
+        cpf: "042.291.915-29",
+        telefone: "71992216840",
         areaFormacao: [
           {
             area: "Letras",
@@ -457,12 +457,12 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         ],
         endereco: {
-          rua: "",
+          rua: "Avenida Baixa Grande",
           numero: "",
-          bairro: "Lauro de Freitas",
-          cidade: "",
-          estado: "",
-          cep: "",
+          bairro: "Recreio Ipitanga",
+          cidade: "Lauro de Freitas",
+          estado: "Bahia",
+          cep: "42700330",
         },
         disponibilidade: {
           segunda: {
@@ -494,10 +494,10 @@ export async function createProfessor(prisma: PrismaClient) {
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
       {
-        nome: "Elias Purificação",
-        email: "",
-        cpf: "",
-        telefone: "",
+        nome: "Elias Purificação Pereira",
+        email: "profeliaspereira@gmail.com",
+        cpf: "85984554585",
+        telefone: "71993419940",
         areaFormacao: [
           {
             area: "História",
@@ -506,12 +506,12 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         ],
         endereco: {
-          rua: "",
-          numero: "",
+          rua: "Rua Adelino Santos",
+          numero: "17",
           bairro: "Curuzu",
-          cidade: "",
-          estado: "",
-          cep: "",
+          cidade: "Salvador",
+          estado: "Bahia",
+          cep: "40375430",
         },
         disponibilidade: {
           segunda: {
@@ -543,10 +543,10 @@ export async function createProfessor(prisma: PrismaClient) {
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
       {
-        nome: "Emily Coutinho",
-        email: "",
-        cpf: "",
-        telefone: "",
+        nome: "Emily Coutinho da Silva Costa",
+        email: "emilycoutinho0413@outlook.com",
+        cpf: "08541290573",
+        telefone: "719937577775",
         areaFormacao: [
           {
             area: "Pedagogia" + "Letras",
@@ -555,12 +555,12 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         ],
         endereco: {
-          rua: "",
-          numero: "",
+          rua: "Avenida professor Magalhães neto",
+          numero: "891",
           bairro: "Pituba",
-          cidade: "",
-          estado: "",
-          cep: "",
+          cidade: "Salvador",
+          estado: "Bahia",
+          cep: "41810011",
         },
         disponibilidade: {
           segunda: {
@@ -592,10 +592,10 @@ export async function createProfessor(prisma: PrismaClient) {
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
       {
-        nome: "Enzo Felipe",
-        email: "",
-        cpf: "",
-        telefone: "",
+        nome: "Enzo Felipe Dos Santos Rocha",
+        email: "enzobottesini@gmail.com",
+        cpf: "082.244.155-11",
+        telefone: "71989060347",
         areaFormacao: [
           {
             area: "Matemática",
@@ -604,12 +604,12 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         ],
         endereco: {
-          rua: "",
-          numero: "",
+          rua: "Rua Cid. Moreira",
+          numero: "24",
           bairro: "Dom Avelar",
-          cidade: "",
-          estado: "",
-          cep: "",
+          cidade: "Salvador",
+          estado: "Bahia",
+          cep: "41315010",
         },
         disponibilidade: {
           segunda: {
@@ -641,10 +641,10 @@ export async function createProfessor(prisma: PrismaClient) {
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
       {
-        nome: "Erica Reis",
-        email: "",
-        cpf: "",
-        telefone: "",
+        nome: "Erica Santos Reis",
+        email: "erica.santosreis14@gmail.com",
+        cpf: "074.618.185-03",
+        telefone: "71991464123",
         areaFormacao: [
           {
             area: "Pedagogia",
@@ -653,12 +653,12 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         ],
         endereco: {
-          rua: "",
-          numero: "",
+          rua: "Rua Tenente Valmir Alcântara",
+          numero: "458",
           bairro: "Cabula",
-          cidade: "",
-          estado: "",
-          cep: "",
+          cidade: "Salvador",
+          estado: "Bahia",
+          cep: "41150520",
         },
         disponibilidade: {
           segunda: {
@@ -690,10 +690,10 @@ export async function createProfessor(prisma: PrismaClient) {
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
       {
-        nome: "Evelym",
-        email: "",
-        cpf: "",
-        telefone: "",
+        nome: "Evelym Souza da Silva",
+        email: "evelymsilva80@gmail.com",
+        cpf: "099.483.445-45",
+        telefone: "71983031172",
         areaFormacao: [
           {
             area: "Letras",
@@ -702,12 +702,12 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         ],
         endereco: {
-          rua: "",
-          numero: "",
+          rua: "Rua Vale do Matatu",
+          numero: "5",
           bairro: "Vale do Matatu",
-          cidade: "",
-          estado: "",
-          cep: "",
+          cidade: "Salvador",
+          estado: "Bahia",
+          cep: "40255575",
         },
         disponibilidade: {
           segunda: {
@@ -739,10 +739,10 @@ export async function createProfessor(prisma: PrismaClient) {
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
       {
-        nome: "Francis",
-        email: "",
-        cpf: "",
-        telefone: "",
+        nome: "Francis Carneiro Damasio",
+        email: "francis.damasio@hotmail.com",
+        cpf: "042.387.055-64",
+        telefone: "75981357726",
         areaFormacao: [
           {
             area: "Química",
@@ -751,12 +751,12 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         ],
         endereco: {
-          rua: "",
+          rua: "Rua Engenheiro Jaime Zaverucha",
           numero: "",
           bairro: "Federação",
-          cidade: "",
-          estado: "",
-          cep: "",
+          cidade: "Salvador",
+          estado: "Bahia",
+          cep: "40235430",
         },
         disponibilidade: {
           segunda: {
@@ -788,10 +788,10 @@ export async function createProfessor(prisma: PrismaClient) {
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
       {
-        nome: "Flora Borges",
-        email: "",
-        cpf: "",
-        telefone: "",
+        nome: "Flora Batista Borges",
+        email: "flora.batista@ufba.br",
+        cpf: "056.139.295-13",
+        telefone: "71988954874",
         areaFormacao: [
           {
             area: "Odontologia",
@@ -800,12 +800,12 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         ],
         endereco: {
-          rua: "",
-          numero: "",
+          rua: "Rua Doutor Aristides de Oliveira",
+          numero: "1005",
           bairro: "Santa Mônica",
-          cidade: "",
-          estado: "",
-          cep: "",
+          cidade: "Salvador",
+          estado: "Bahia",
+          cep: "40342000",
         },
         disponibilidade: {
           segunda: {
@@ -837,10 +837,10 @@ export async function createProfessor(prisma: PrismaClient) {
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
       {
-        nome: "Gabriel Santos",
-        email: "",
-        cpf: "",
-        telefone: "",
+        nome: "Gabriel Santos de Sant'anna",
+        email: "gabriel95dosantos@gmail.com",
+        cpf: "063.083.025-89",
+        telefone: "999581453",
         areaFormacao: [
           {
             area: "Matemática",
@@ -849,12 +849,12 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         ],
         endereco: {
-          rua: "",
-          numero: "",
+          rua: "Rua da engomadeira",
+          numero: "2",
           bairro: "Engomadeira",
-          cidade: "",
-          estado: "",
-          cep: "",
+          cidade: "Salvador",
+          estado: "Bahia",
+          cep: "41200005",
         },
         disponibilidade: {
           segunda: {
@@ -886,10 +886,10 @@ export async function createProfessor(prisma: PrismaClient) {
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
       {
-        nome: "Gisele Gomes",
-        email: "",
-        cpf: "",
-        telefone: "",
+        nome: "Gisele Gomes Pastor",
+        email: "giselegomespastor@gmail.com",
+        cpf: "858.432.825-46",
+        telefone: "71982557597",
         areaFormacao: [
           {
             area: "Matemática",
@@ -898,12 +898,12 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         ],
         endereco: {
-          rua: "",
-          numero: "",
+          rua: "Alameda Boa Vista Da Ceasa",
+          numero: "5",
           bairro: "Dom Avelar",
-          cidade: "",
-          estado: "",
-          cep: "",
+          cidade: "Salvador",
+          estado: "Bahia",
+          cep: "41402370",
         },
         disponibilidade: {
           segunda: {
@@ -935,10 +935,10 @@ export async function createProfessor(prisma: PrismaClient) {
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
       {
-        nome: "Isabela Matos",
-        email: "",
-        cpf: "",
-        telefone: "",
+        nome: "Isabela Santana Matos",
+        email: "isamatos015@gmail.com",
+        cpf: "110.121.845-28",
+        telefone: "71999661637",
         areaFormacao: [
           {
             area: "",
@@ -947,12 +947,12 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         ],
         endereco: {
-          rua: "",
-          numero: "",
-          bairro: "Limoeiro",
-          cidade: "",
-          estado: "",
-          cep: "",
+          rua: "Rua vila Verde",
+          numero: "58",
+          bairro: "Mussurunga",
+          cidade: "Salvador",
+          estado: "Bahia",
+          cep: "41481542",
         },
         disponibilidade: {
           segunda: {
@@ -984,10 +984,10 @@ export async function createProfessor(prisma: PrismaClient) {
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
       {
-        nome: "Jade",
-        email: "",
-        cpf: "",
-        telefone: "",
+        nome: "Jade Narel Nascimento Simões",
+        email: "jadenarel5000@outlook.com",
+        cpf: "859.668.835-80",
+        telefone: "71991966610",
         areaFormacao: [
           {
             area: "História",
@@ -996,12 +996,12 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         ],
         endereco: {
-          rua: "",
-          numero: "",
+          rua: "Travessa Pinto",
+          numero: "18",
           bairro: "Pernambués",
-          cidade: "",
-          estado: "",
-          cep: "",
+          cidade: "Salvador",
+          estado: "Bahia",
+          cep: "41110390",
         },
         disponibilidade: {
           segunda: {
@@ -1033,10 +1033,10 @@ export async function createProfessor(prisma: PrismaClient) {
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
       {
-        nome: "Jadson",
-        email: "",
-        cpf: "",
-        telefone: "",
+        nome: "Jadson Bomfim dos Santos",
+        email: "santus.jbonfim@gmail.com",
+        cpf: "056.663.005-20",
+        telefone: "71983885404",
         areaFormacao: [
           {
             area: "História",
@@ -1045,12 +1045,12 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         ],
         endereco: {
-          rua: "",
-          numero: "",
+          rua: "5ª Travessa da rua Irmã Dulce",
+          numero: "56",
           bairro: "Narandiba",
-          cidade: "",
-          estado: "",
-          cep: "",
+          cidade: "Salvador",
+          estado: "Bahia",
+          cep: "41192345",
         },
         disponibilidade: {
           segunda: {
@@ -1082,10 +1082,10 @@ export async function createProfessor(prisma: PrismaClient) {
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
       {
-        nome: "Jamille Fiuza",
-        email: "",
-        cpf: "",
-        telefone: "",
+        nome: "Jamille Fiuza Santiago",
+        email: "jamille.fiuza@hotmail.com",
+        cpf: "046.780.185-14",
+        telefone: "75982464750",
         areaFormacao: [
           {
             area: "BI Humanidades",
@@ -1094,12 +1094,12 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         ],
         endereco: {
-          rua: "",
-          numero: "",
+          rua: "Rua Ferreira Santos",
+          numero: "160",
           bairro: "Federação",
-          cidade: "",
-          estado: "",
-          cep: "",
+          cidade: "Salvador",
+          estado: "Bahia",
+          cep: "40230040",
         },
         disponibilidade: {
           segunda: {
@@ -1131,10 +1131,10 @@ export async function createProfessor(prisma: PrismaClient) {
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
       {
-        nome: "Jaqueline Araujo",
-        email: "",
-        cpf: "",
-        telefone: "",
+        nome: "Jaqueline da Silva Araújo",
+        email: "Jaquearaujo013@gmail.com",
+        cpf: "096.221.475-26",
+        telefone: "75999292244",
         areaFormacao: [
           {
             area: "Matemática",
@@ -1143,12 +1143,12 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         ],
         endereco: {
-          rua: "",
+          rua: "Rua Almeida Sande",
           numero: "",
           bairro: "Barris",
-          cidade: "",
-          estado: "",
-          cep: "",
+          cidade: "Salvador",
+          estado: "Bahia",
+          cep: "40070-370",
         },
         disponibilidade: {
           segunda: {
@@ -1180,10 +1180,10 @@ export async function createProfessor(prisma: PrismaClient) {
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
       {
-        nome: "Lidia Magalhães",
-        email: "",
-        cpf: "",
-        telefone: "",
+        nome: "Lidia Santos Magalhães",
+        email: "lidiasmagalhaes@gmail.com",
+        cpf: "055.435.805-09",
+        telefone: "71992246077",
         areaFormacao: [
           {
             area: "Letras",
@@ -1192,12 +1192,12 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         ],
         endereco: {
-          rua: "",
-          numero: "",
+          rua: "Rua Lavínia Magalhães",
+          numero: "604",
           bairro: "Boca do Rio",
-          cidade: "",
-          estado: "",
-          cep: "",
+          cidade: "Salvador",
+          estado: "Bahia",
+          cep: "41710020",
         },
         disponibilidade: {
           segunda: {
@@ -1229,10 +1229,10 @@ export async function createProfessor(prisma: PrismaClient) {
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
       {
-        nome: "Lis",
-        email: "",
-        cpf: "",
-        telefone: "",
+        nome: "Lisiane de Souza Amorim",
+        email: "lisi_anne1998@hotmail.com",
+        cpf: "861.608.805-94",
+        telefone: "71993964271",
         areaFormacao: [
           {
             area: "Enfermagem",
@@ -1241,12 +1241,12 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         ],
         endereco: {
-          rua: "",
-          numero: "",
+          rua: "Avenida Ferreira",
+          numero: "24",
           bairro: "IAPI",
-          cidade: "",
-          estado: "",
-          cep: "",
+          cidade: "Salvador",
+          estado: "Bahia",
+          cep: "40330353",
         },
         disponibilidade: {
           segunda: {
@@ -1278,10 +1278,10 @@ export async function createProfessor(prisma: PrismaClient) {
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
       {
-        nome: "Joice Sales",
-        email: "",
-        cpf: "",
-        telefone: "",
+        nome: "Joice de Andrade Sales",
+        email: "Joiceas@ufba.br",
+        cpf: "035.274.425-10",
+        telefone: "71988769497",
         areaFormacao: [
           {
             area: "Matemática",
@@ -1290,12 +1290,12 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         ],
         endereco: {
-          rua: "",
-          numero: "",
+          rua: "Rua Vereador Zezéu Ribeiro",
+          numero: "613",
           bairro: "Fazenda Grande 1",
-          cidade: "",
-          estado: "",
-          cep: "",
+          cidade: "Salvador",
+          estado: "Bahia",
+          cep: "41345100  ",
         },
         disponibilidade: {
           segunda: {
@@ -1327,10 +1327,10 @@ export async function createProfessor(prisma: PrismaClient) {
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
       {
-        nome: "Lorena de Sá",
-        email: "",
-        cpf: "",
-        telefone: "",
+        nome: "Lorena de Sá Leal",
+        email: "lorenadesaleal@hotmail.com",
+        cpf: "07025479560",
+        telefone: "71992874854",
         areaFormacao: [
           {
             area: "Letras",
@@ -1339,12 +1339,12 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         ],
         endereco: {
-          rua: "",
-          numero: "",
+          rua: "Rua da Cacimba",
+          numero: "380",
           bairro: "Itapuã",
-          cidade: "",
-          estado: "",
-          cep: "",
+          cidade: "Salvador",
+          estado: "Bahia",
+          cep: "41610655",
         },
         disponibilidade: {
           segunda: {
@@ -1376,10 +1376,10 @@ export async function createProfessor(prisma: PrismaClient) {
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
       {
-        nome: "Louise",
-        email: "",
-        cpf: "",
-        telefone: "",
+        nome: "Louise Prado Farias Leal",
+        email: "louisepfleal@gmail.com",
+        cpf: "865.337.605-48",
+        telefone: "71999390856",
         areaFormacao: [
           {
             area: "",
@@ -1388,12 +1388,12 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         ],
         endereco: {
-          rua: "",
-          numero: "",
+          rua: "Alameda dos Flamboyants",
+          numero: "131",
           bairro: "Caminho das Árvores",
-          cidade: "",
-          estado: "",
-          cep: "",
+          cidade: "Salvador",
+          estado: "Bahia",
+          cep: "41820410",
         },
         disponibilidade: {
           segunda: {
@@ -1425,10 +1425,10 @@ export async function createProfessor(prisma: PrismaClient) {
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
       {
-        nome: "Lourran",
-        email: "",
-        cpf: "",
-        telefone: "",
+        nome: "Lourran de Novaes Oliveira",
+        email: "lourran07@hotmail.com",
+        cpf: "087.879.945-18",
+        telefone: "71999416059",
         areaFormacao: [
           {
             area: "Matemática",
@@ -1437,12 +1437,12 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         ],
         endereco: {
-          rua: "",
-          numero: "",
+          rua: "Travessa 21 de julho",
+          numero: "396",
           bairro: "Engomadeira",
-          cidade: "",
-          estado: "",
-          cep: "",
+          cidade: "Salvador",
+          estado: "Bahia",
+          cep: "41200150",
         },
         disponibilidade: {
           segunda: {
@@ -1474,10 +1474,10 @@ export async function createProfessor(prisma: PrismaClient) {
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
       {
-        nome: "Mariana Rizzi",
-        email: "",
-        cpf: "",
-        telefone: "",
+        nome: "Mariana Rizzi Santos do Carmo",
+        email: "mariana.rizzi16@gmail.com",
+        cpf: "090.243.585-07",
+        telefone: "71981536786",
         areaFormacao: [
           {
             area: "BI Humanidades",
@@ -1486,12 +1486,12 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         ],
         endereco: {
-          rua: "",
-          numero: "",
+          rua: "Rua Doutor Genésio Sales",
+          numero: "88",
           bairro: "Vila Laura",
-          cidade: "",
-          estado: "",
-          cep: "",
+          cidade: "Salvador",
+          estado: "Bahia",
+          cep: "40270240",
         },
         disponibilidade: {
           segunda: {
@@ -1523,10 +1523,10 @@ export async function createProfessor(prisma: PrismaClient) {
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
       {
-        nome: "Mateus",
-        email: "",
-        cpf: "",
-        telefone: "",
+        nome: "Mateus de Santana Silva",
+        email: "dsantanamateus@gmail.com",
+        cpf: "864.032.965-66",
+        telefone: "71991563348",
         areaFormacao: [
           {
             area: "Matemática",
@@ -1535,12 +1535,12 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         ],
         endereco: {
-          rua: "",
+          rua: "Rua José Gome Aguiar",
           numero: "",
           bairro: "Vila Canária",
-          cidade: "",
-          estado: "",
-          cep: "",
+          cidade: "Salvador",
+          estado: "Bahia",
+          cep: "41390200",
         },
         disponibilidade: {
           segunda: {
@@ -1572,10 +1572,10 @@ export async function createProfessor(prisma: PrismaClient) {
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
       {
-        nome: "Matheus Alexandre",
-        email: "",
-        cpf: "",
-        telefone: "",
+        nome: "Matheus Alexandre Araujo Santos",
+        email: "mathst1@hotmail.com",
+        cpf: "861.262.585-84",
+        telefone: "7198546-2560",
         areaFormacao: [
           {
             area: "Matemática",
@@ -1584,12 +1584,12 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         ],
         endereco: {
-          rua: "",
-          numero: "",
+          rua: "Rua Amazonas",
+          numero: "157",
           bairro: "Cabula",
-          cidade: "",
-          estado: "",
-          cep: "",
+          cidade: "Salvador",
+          estado: "Bahia",
+          cep: "41192-065",
         },
         disponibilidade: {
           segunda: {
@@ -1621,10 +1621,10 @@ export async function createProfessor(prisma: PrismaClient) {
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
       {
-        nome: "Natália Lino",
-        email: "",
-        cpf: "",
-        telefone: "",
+        nome: "Natália Lino Silva Spagnuolo",
+        email: "natalialino.s@hotmail.com",
+        cpf: "078.985.545-31",
+        telefone: "71993332905",
         areaFormacao: [
           {
             area: "Farmácia",
@@ -1633,12 +1633,12 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         ],
         endereco: {
-          rua: "",
-          numero: "",
+          rua: "Rua Cláudio Manoel da Costa",
+          numero: "Ed. Santa Rita, apt 302",
           bairro: "Garcia",
-          cidade: "",
-          estado: "",
-          cep: "",
+          cidade: "Salvador",
+          estado: "Bahia",
+          cep: "40110-180",
         },
         disponibilidade: {
           segunda: {
@@ -1670,10 +1670,10 @@ export async function createProfessor(prisma: PrismaClient) {
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
       {
-        nome: "Ravilla Miranda",
-        email: "",
-        cpf: "",
-        telefone: "",
+        nome: "Ravilla Miranda Santos",
+        email: "ravillasantos@ufba.br",
+        cpf: "858.462.595-02",
+        telefone: "71985542445",
         areaFormacao: [
           {
             area: "Matemática",
@@ -1682,12 +1682,12 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         ],
         endereco: {
-          rua: "",
+          rua: "Rua da Jamaica",
           numero: "",
           bairro: "Bairro da Paz",
-          cidade: "",
-          estado: "",
-          cep: "",
+          cidade: "Salvador",
+          estado: "Bahia",
+          cep: "41515070",
         },
         disponibilidade: {
           segunda: {
@@ -1719,10 +1719,10 @@ export async function createProfessor(prisma: PrismaClient) {
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
       {
-        nome: "Rosana",
-        email: "",
-        cpf: "",
-        telefone: "",
+        nome: "Rosana Franquetto Pitta",
+        email: "rosanafpitta@gmail.com",
+        cpf: "035.791.785-55",
+        telefone: "71991338158",
         areaFormacao: [
           {
             area: "Letras",
@@ -1731,12 +1731,12 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         ],
         endereco: {
-          rua: "",
-          numero: "",
+          rua: "Rua Amazonas",
+          numero: "528",
           bairro: "Pituba",
-          cidade: "",
-          estado: "",
-          cep: "",
+          cidade: "Salvador",
+          estado: "Bahia",
+          cep: "71991338158",
         },
         disponibilidade: {
           segunda: {
@@ -1768,10 +1768,10 @@ export async function createProfessor(prisma: PrismaClient) {
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
       {
-        nome: "Robson",
-        email: "",
-        cpf: "",
-        telefone: "",
+        nome: "Robson Ribeiro dos Santos",
+        email: "robsonstarkribeiro@gmail.com",
+        cpf: "052.839.845-83",
+        telefone: "71993581388",
         areaFormacao: [
           {
             area: "Letras",
@@ -1780,12 +1780,12 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         ],
         endereco: {
-          rua: "",
+          rua: "Rua Erotildes",
           numero: "",
           bairro: "Pernambués",
-          cidade: "",
-          estado: "",
-          cep: "",
+          cidade: "Salvador",
+          estado: "Bahia",
+          cep: "41130130",
         },
         disponibilidade: {
           segunda: {
@@ -1817,10 +1817,10 @@ export async function createProfessor(prisma: PrismaClient) {
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
       {
-        nome: "Saulo Miranda",
-        email: "",
-        cpf: "",
-        telefone: "",
+        nome: "Saulo Miranda Silva",
+        email: "saulo_miranda@outlook.com",
+        cpf: "063.505.385-36",
+        telefone: "71993474356",
         areaFormacao: [
           {
             area: "Física",
@@ -1829,12 +1829,12 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         ],
         endereco: {
-          rua: "",
+          rua: "Rua Mocambo Ilhado",
           numero: "",
           bairro: "Trobogy",
-          cidade: "",
-          estado: "",
-          cep: "",
+          cidade: "Salvador",
+          estado: "Bahia",
+          cep: "41745039",
         },
         disponibilidade: {
           segunda: {
@@ -1866,10 +1866,10 @@ export async function createProfessor(prisma: PrismaClient) {
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
       {
-        nome: "Thaise",
-        email: "",
-        cpf: "",
-        telefone: "",
+        nome: "Thaise Braga de Oliveira",
+        email: "thaiseoliveira22.1@bahiana.edu.br",
+        cpf: "101.991.855-14",
+        telefone: "71999341444",
         areaFormacao: [
           {
             area: "Estudante",
@@ -1878,12 +1878,12 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         ],
         endereco: {
-          rua: "",
+          rua: "Rua Maranhão,",
           numero: "",
           bairro: "Pituba",
-          cidade: "",
-          estado: "",
-          cep: "",
+          cidade: "Salvador",
+          estado: "Bahia",
+          cep: "41830-260",
         },
         disponibilidade: {
           segunda: {
@@ -1915,10 +1915,10 @@ export async function createProfessor(prisma: PrismaClient) {
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
       {
-        nome: "Vitor Lopes",
-        email: "",
-        cpf: "",
-        telefone: "",
+        nome: "Vitor Lopes da Silva",
+        email: "Professor.vitorlopes@gmail.com",
+        cpf: "862.554.645-55",
+        telefone: "71993109070",
         areaFormacao: [
           {
             area: "Matemática",
@@ -1927,12 +1927,12 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         ],
         endereco: {
-          rua: "",
-          numero: "",
+          rua: "Rua jogo do Carneiro",
+          numero: "152",
           bairro: "Saúde",
-          cidade: "",
-          estado: "",
-          cep: "",
+          cidade: "Salvador",
+          estado: "Bahia",
+          cep: "40045-040",
         },
         disponibilidade: {
           segunda: {
@@ -1964,10 +1964,10 @@ export async function createProfessor(prisma: PrismaClient) {
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
       {
-        nome: "Yuri Pereira",
-        email: "",
-        cpf: "",
-        telefone: "",
+        nome: "Yuri Reis Pereira",
+        email: "yurireispro@gmail.com",
+        cpf: "049.980.695-60",
+        telefone: "71991476766",
         areaFormacao: [
           {
             area: "Letras Inglês",
@@ -1976,12 +1976,12 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         ],
         endereco: {
-          rua: "",
-          numero: "",
+          rua: "Rua Wanderley Pinho",
+          numero: "1",
           bairro: "São Caetano",
-          cidade: "",
-          estado: "",
-          cep: "",
+          cidade: "Salvador",
+          estado: "Bahia",
+          cep: "40390150",
         },
         disponibilidade: {
           segunda: {
