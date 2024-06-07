@@ -9,5 +9,5 @@ export default async function Home() {
 
   if (!session) return <LoginComponent />;
 
-  return redirect("/help/gestor/dashboard");
+  return redirect("/help/admin/dashboard");
 }

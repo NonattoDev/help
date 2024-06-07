@@ -93,8 +93,9 @@ model Professor {
   cpf             String              @unique
   telefone        String
   endereco        Json
+  areaFormacao    Json[]
   ativo           Boolean             @default(true)
-  disponibilidade Json
+  disponibilidade Json    
   accessLevel     String              @default("professor")
   modalidade      Json                @default("{\"presencial\": true, \"online\": false}")
   password        String

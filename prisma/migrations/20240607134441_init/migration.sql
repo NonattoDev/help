@@ -92,6 +92,7 @@ CREATE TABLE "Professor" (
     "cpf" TEXT NOT NULL,
     "telefone" TEXT NOT NULL,
     "endereco" JSONB NOT NULL,
+    "areaFormacao" JSONB[],
     "ativo" BOOLEAN NOT NULL DEFAULT true,
     "disponibilidade" JSONB NOT NULL,
     "accessLevel" TEXT NOT NULL DEFAULT 'professor',

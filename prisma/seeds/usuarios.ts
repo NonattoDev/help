@@ -17,6 +17,12 @@ export async function createUsuarios(prisma: PrismaClient) {
         cpf: "08362023503",
         accessLevel: "administrador",
       },
+      {
+        nome: "Enzo Goncalves",
+        email: "enzogoncalves@gmail.com",
+        password: "$2a$12$9hFJsSApGhK8Bv98iOyK1eAEqw2ydWWbzQYkIvtTOJPQa2bVZr9XC",
+        cpf: "1234123123141",
+      },
     ],
     skipDuplicates: true,
   });

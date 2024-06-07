@@ -1,5 +1,5 @@
 "use client";
-import { signIn } from "next-auth/react";
+import { getSession, signIn } from "next-auth/react";
 import Image from "next/image";
 import React from "react";
 import { BiSearch } from "react-icons/bi";
@@ -35,8 +35,24 @@ export default function LoginComponent() {
         return toast.error(response.error);
       }
 
+      const session = await getSession();
+
       toast.success("Login efetuado com sucesso");
-      router.push("/help/gestor/dashboard");
+      switch (session?.user?.accessLevel) {
+        case "administrador":
+        case "administrativo":
+          router.push("/help/admin/dashboard");
+          break;
+        case "responsavel":
+        case "aluno":
+          router.push("/help/cliente/dashboard");
+          break;
+        case "professor":
+          router.push("/help/professor/dashboard");
+          break;
+        default:
+          break;
+      }
     } catch (error) {
       setLoading(false);
       console.error(error);

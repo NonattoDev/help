@@ -49,7 +49,4 @@ export async function createAlunos(prisma: PrismaClient) {
       ativo: true,
     },
   });
-
-  console.log("Aluno Criado:", aluno);
-  console.log("Responsavel Criado:", responsavel);
 }

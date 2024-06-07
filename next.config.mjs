@@ -1,9 +1,4 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  env: {
-    NEXTAUTH_SECRET: "Wv9G3/QiUTd4Yv0+L3RBMRQHtkL73hijbWHLnra9tWo=",
-    NEXTAUTH_URL: "http://192.168.1.173:3000/",
-  },
-};
+const nextConfig = {};
 
 export default nextConfig;
