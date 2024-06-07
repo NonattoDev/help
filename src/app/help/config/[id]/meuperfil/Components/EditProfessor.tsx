@@ -1,13 +1,33 @@
 "use client";
 import React from "react";
-import { Professor } from "@prisma/client";
+import { Professor } from "./interface.professor";
 
 export function EditProfessor({ professor }: any) {
   const [formData, setFormData] = React.useState<Professor>(professor);
 
+  function setNestedValue(obj: any, path: string, value: any) {
+    const keys = path.split(".");
+    const lastKey = keys.pop() as string;
+    const lastObj = keys.reduce((obj, key) => (obj[key] = obj[key] || {}), obj);
+    lastObj[lastKey] = value;
+  }
+
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = e.target;
+    setFormData((prev) => {
+      const newFormData = { ...prev };
+      setNestedValue(newFormData, name, checked);
+      return newFormData;
+    });
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData((prev) => {
+      const newFormData = { ...prev };
+      setNestedValue(newFormData, name, value);
+      return newFormData;
+    });
   };
 
   const submitEdit = async (e: React.FormEvent) => {
@@ -47,12 +67,12 @@ export function EditProfessor({ professor }: any) {
           <label className="label">
             <span className="label-text">Endereço</span>
           </label>
-          <input type="text" name="endereco.rua" value={formData.endereco.rua} onChange={handleChange} className="input input-bordered" required />
-          <input type="text" name="endereco.numero" value={formData.endereco.numero} onChange={handleChange} className="input input-bordered" required />
-          <input type="text" name="endereco.bairro" value={formData.endereco.bairro} onChange={handleChange} className="input input-bordered" required />
-          <input type="text" name="endereco.cidade" value={formData.endereco.cidade} onChange={handleChange} className="input input-bordered" required />
-          <input type="text" name="endereco.estado" value={formData.endereco.estado} onChange={handleChange} className="input input-bordered" required />
-          <input type="text" name="endereco.cep" value={formData.endereco.cep} onChange={handleChange} className="input input-bordered" required />
+          <input type="text" name="endereco.rua" value={formData?.endereco?.rua} onChange={handleChange} className="input input-bordered" required />
+          <input type="text" name="endereco.numero" value={formData?.endereco?.numero} onChange={handleChange} className="input input-bordered" required />
+          <input type="text" name="endereco.bairro" value={formData?.endereco?.bairro} onChange={handleChange} className="input input-bordered" required />
+          <input type="text" name="endereco.cidade" value={formData?.endereco?.cidade} onChange={handleChange} className="input input-bordered" required />
+          <input type="text" name="endereco.estado" value={formData?.endereco?.estado} onChange={handleChange} className="input input-bordered" required />
+          <input type="text" name="endereco.cep" value={formData?.endereco?.cep} onChange={handleChange} className="input input-bordered" required />
         </div>
         <div className="form-control">
           <label className="label">
@@ -60,14 +80,14 @@ export function EditProfessor({ professor }: any) {
           </label>
           {formData.areaFormacao.map((area, index) => (
             <div key={index} className="space-y-2">
-              <input type="text" name={`areaFormacao[${index}].area`} value={area.area} onChange={handleChange} className="input input-bordered" required />
-              <input type="text" name={`areaFormacao[${index}].semestre`} value={area.semestre} onChange={handleChange} className="input input-bordered" required />
+              <input type="text" name={`areaFormacao[${index}].area`} value={area?.area} onChange={handleChange} className="input input-bordered" required />
+              <input type="text" name={`areaFormacao[${index}].semestre`} value={area?.semestre} onChange={handleChange} className="input input-bordered" required />
               <label className="label cursor-pointer">
                 <span className="label-text">Finalizado</span>
                 <input
                   type="checkbox"
                   name={`areaFormacao[${index}].finalizado`}
-                  checked={area.finalizado}
+                  checked={area?.finalizado}
                   onChange={() => {
                     const newAreaFormacao = [...formData.areaFormacao];
                     newAreaFormacao[index].finalizado = !area.finalizado;
