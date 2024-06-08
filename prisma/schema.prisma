@@ -77,7 +77,8 @@ model Financeiro {
   id             String   @id @default(cuid())
   alunoId        String
   aluno          Aluno    @relation(fields: [alunoId], references: [id])
-  qtd_aulas      Int
+  qtd_aulas_compradas      Int
+  qtd_aulas_executadas    Int
   valor          Float
   status         String   @default("pendente")
   conferidoConta Boolean  @default(false)

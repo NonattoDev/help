@@ -57,12 +57,10 @@ async function getUserData(id: string) {
 export default async function configMeuperfilPage({ params }: { params: { id: string } }) {
   const userData = await getUserData(params.id);
 
-  console.log(userData);
   return (
     <div>
-      <h1 className="text-lg">Meu Perfil</h1>
-      <p>Olá, {userData.nome}! Esta é a página do seu perfil.</p>
-      <EditProfessor professor={userData} />
+      <p className="text-xl text-center mb-11">Olá, {userData.nome}! Esta é a página do seu perfil.</p>
+      {userData.accessLevel === "professor" && <EditProfessor professor={userData} />}
     </div>
   );
 }

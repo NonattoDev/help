@@ -73,7 +73,8 @@ CREATE TABLE "Aluno" (
 CREATE TABLE "Financeiro" (
     "id" TEXT NOT NULL,
     "alunoId" TEXT NOT NULL,
-    "qtd_aulas" INTEGER NOT NULL,
+    "qtd_aulas_compradas" INTEGER NOT NULL,
+    "qtd_aulas_executadas" INTEGER NOT NULL,
     "valor" DOUBLE PRECISION NOT NULL,
     "status" TEXT NOT NULL DEFAULT 'pendente',
     "conferidoConta" BOOLEAN NOT NULL DEFAULT false,

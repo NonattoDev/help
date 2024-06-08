@@ -8,10 +8,10 @@ const Layout: React.FC<{ children: ReactNode }> = ({ children }) => {
       <div
         className="shadow-md"
         style={{
-          width: "98%",
+          width: "95%",
           height: "100%",
-          margin: "20px auto",
-          padding: "10px",
+          margin: "25px auto",
+          padding: "30px",
         }}
       >
         {children}
