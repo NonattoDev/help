@@ -1,5 +1,5 @@
 import { authOptions } from "@/app/lib/auth";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Prisma } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { EditProfessor } from "./Components/EditProfessor";
@@ -9,41 +9,46 @@ async function getUserData(id: string) {
 
   const session = await getServerSession(authOptions);
 
-  let userData;
+  let userData: any;
 
   switch (session?.user?.accessLevel) {
     case "administrador":
     case "administrativo":
       userData = await prisma.usuarios.findUnique({
-        where: {
-          id: id,
-        },
+        where: { id: id },
       });
       break;
     case "aluno":
       userData = await prisma.aluno.findUnique({
-        where: {
-          id: id,
-        },
+        where: { id: id },
       });
       break;
     case "responsavel":
       userData = await prisma.responsavel.findUnique({
-        where: {
-          id: id,
-        },
+        where: { id: id },
       });
       break;
     case "professor":
       userData = await prisma.professor.findUnique({
-        where: {
-          id: id,
+        where: { id: id },
+        include: {
+          AgendaAulas: true,
+          materias: true,
         },
       });
+      if (userData) {
+        userData.endereco = userData.endereco as Prisma.JsonObject;
+        userData.areaFormacao = userData.areaFormacao.map((formacao: Prisma.JsonValue) => formacao as Prisma.JsonObject);
+        userData.disponibilidade = userData.disponibilidade as Prisma.JsonObject;
+        userData.modalidade = userData.modalidade as Prisma.JsonObject;
+        userData.ficha = userData.ficha.map((ficha: Prisma.JsonValue) => ficha as Prisma.JsonObject);
+      }
       break;
     default:
       break;
   }
+
+  const allMaterias = await prisma.materias.findMany();
 
   prisma.$disconnect();
 
@@ -51,16 +56,16 @@ async function getUserData(id: string) {
     redirect("/");
   }
 
-  return userData;
+  return { userData, allMaterias };
 }
 
 export default async function configMeuperfilPage({ params }: { params: { id: string } }) {
-  const userData = await getUserData(params.id);
+  const { userData, allMaterias } = await getUserData(params.id);
 
   return (
     <div>
-      <p className="text-xl text-center mb-11">Olá, {userData.nome}! Esta é a página do seu perfil.</p>
-      {userData.accessLevel === "professor" && <EditProfessor professor={userData} />}
+      <p className="text-xl text-center mb-1">Olá, {userData.nome}! Esta é a página do seu perfil.</p>
+      {userData.accessLevel === "professor" && <EditProfessor professor={userData} allMaterias={allMaterias} />}
     </div>
   );
 }

@@ -96,7 +96,7 @@ model Professor {
   endereco        Json
   areaFormacao    Json[]
   ativo           Boolean             @default(true)
-  disponibilidade Json    @default("{\"segunda\": {\"manha\": false, \"tarde\": true, \"noite\": false}, \"terca\": {\"manha\": false, \"tarde\": true, \"noite\": false}, \"quarta\": {\"manha\": false, \"tarde\": true, \"noite\": false}, \"quinta\": {\"manha\": false, \"tarde\": true, \"noite\": false}, \"sexta\": {\"manha\": false, \"tarde\": true, \"noite\": false}, \"sabado\": {\"manha\": false, \"tarde\": true, \"noite\": false}, \"domingo\": {\"manha\": false, \"tarde\": false, \"noite\": false}}")
+  disponibilidade Json @default("{\"segunda\": {\"manha\": false, \"tarde\": true, \"noite\": false}, \"terca\": {\"manha\": false, \"tarde\": true, \"noite\": false}, \"quarta\": {\"manha\": false, \"tarde\": true, \"noite\": false}, \"quinta\": {\"manha\": false, \"tarde\": true, \"noite\": false}, \"sexta\": {\"manha\": false, \"tarde\": true, \"noite\": false}, \"sabado\": {\"manha\": true, \"tarde\": false, \"noite\": false}}")
   ficha           Json[]
   accessLevel     String              @default("professor")
   modalidade      Json                @default("{\"presencial\": true, \"online\": false}")

@@ -1,16 +1,49 @@
 "use client";
 import React from "react";
-import { Professor } from "./interface.professor";
 import { BiTrash } from "react-icons/bi";
 
-export function EditProfessor({ professor }: any) {
+type Dia = "segunda" | "terca" | "quarta" | "quinta" | "sexta" | "sabado";
+type Turno = "manha" | "tarde" | "noite";
+
+interface Materia {
+  id: string;
+  materia: string;
+}
+
+interface Professor {
+  nome: string;
+  email: string;
+  cpf: string;
+  telefone: string;
+  endereco: {
+    rua: string;
+    numero: string;
+    bairro: string;
+    cidade: string;
+    estado: string;
+    cep: string;
+  };
+  areaFormacao: Array<{ area: string; semestre: string; finalizado: boolean }>;
+  modalidade: {
+    online: boolean;
+    presencial: boolean;
+  };
+  disponibilidade: {
+    [key in Dia]: {
+      [key in Turno]: boolean;
+    };
+  };
+  materias: Array<Materia>;
+}
+
+export function EditProfessor({ professor, allMaterias }: { professor: Professor; allMaterias: Materia[] }) {
   const [formData, setFormData] = React.useState<Professor>(professor);
 
   function setNestedValue(obj: any, path: string, value: any) {
     const keys = path.split(".");
     const lastKey = keys.pop() as string;
     const lastObj = keys.reduce((obj, key) => (obj[key] = obj[key] || {}), obj);
-    lastObj[lastKey] = value;
+    lastKey && (lastObj[lastKey] = value);
   }
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,13 +55,46 @@ export function EditProfessor({ professor }: any) {
     });
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => {
       const newFormData = { ...prev };
       setNestedValue(newFormData, name, value);
       return newFormData;
     });
+  };
+
+  const handleMateriasChange = (id: string) => {
+    setFormData((prev) => {
+      const newMaterias = prev.materias.some((m) => m.id === id) ? prev.materias.filter((materia) => materia.id !== id) : [...prev.materias, allMaterias.find((materia) => materia.id === id)!];
+
+      return { ...prev, materias: newMaterias };
+    });
+  };
+
+  const fetchCep = async (e: React.FocusEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    const cep = value.replace(/\D/g, "");
+    if (cep.length !== 8) return;
+
+    const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+    const data = await response.json();
+
+    if (data.erro) {
+      alert("CEP não encontrado");
+      return;
+    }
+
+    setFormData((prev) => ({
+      ...prev,
+      endereco: {
+        ...prev.endereco,
+        rua: data.logradouro,
+        bairro: data.bairro,
+        cidade: data.localidade,
+        estado: data.uf,
+      },
+    }));
   };
 
   const submitEdit = async (e: React.FormEvent) => {
@@ -71,12 +137,12 @@ export function EditProfessor({ professor }: any) {
         <div id="enderecoDiv" className="mt-8">
           <h2 className="text-md text-center font-bold mb-5">Endereço</h2>
           <div className="grid grid-cols-4 gap-4">
+            <input type="text" name="endereco.cep" value={formData?.endereco?.cep} onChange={handleChange} className="input input-bordered" onBlur={fetchCep} required />
             <input type="text" name="endereco.rua" value={formData?.endereco?.rua} onChange={handleChange} className="input input-bordered" required />
             <input type="text" name="endereco.numero" value={formData?.endereco?.numero} onChange={handleChange} className="input input-bordered" required />
             <input type="text" name="endereco.bairro" value={formData?.endereco?.bairro} onChange={handleChange} className="input input-bordered" required />
             <input type="text" name="endereco.cidade" value={formData?.endereco?.cidade} onChange={handleChange} className="input input-bordered" required />
             <input type="text" name="endereco.estado" value={formData?.endereco?.estado} onChange={handleChange} className="input input-bordered" required />
-            <input type="text" name="endereco.cep" value={formData?.endereco?.cep} onChange={handleChange} className="input input-bordered" required />
           </div>
         </div>
 
@@ -84,12 +150,18 @@ export function EditProfessor({ professor }: any) {
           <h2 className="text-md text-center font-bold mb-5">Área de Formação</h2>
           {formData.areaFormacao.map((area, index) => (
             <div key={index} className="grid grid-cols-4 gap-4 mb-5">
-              <input type="text" name={`areaFormacao[${index}].area`} value={area?.area} onChange={handleChange} className="input input-bordered" required />
-              <input type="text" name={`areaFormacao[${index}].semestre`} value={area?.semestre} onChange={handleChange} className="input input-bordered" required />
+              <input type="text" name={`areaFormacao.${index}.area`} value={area?.area} onChange={handleChange} className="input input-bordered" required />
+              <select name={`areaFormacao.${index}.semestre`} value={area?.semestre} onChange={handleChange} className="input input-bordered" required>
+                {Array.from({ length: 10 }, (_, i) => i + 1).map((semestre) => (
+                  <option key={semestre} value={semestre}>
+                    {semestre}º Semestre
+                  </option>
+                ))}
+              </select>
               <label className="label cursor-pointer">
                 <input
                   type="checkbox"
-                  name={`areaFormacao[${index}].finalizado`}
+                  name={`areaFormacao.${index}.finalizado`}
                   checked={area?.finalizado}
                   onChange={() => {
                     const newAreaFormacao = [...formData.areaFormacao];
@@ -115,6 +187,7 @@ export function EditProfessor({ professor }: any) {
             Adicionar Formação
           </button>
         </div>
+
         <div className="form-control mt-8">
           <h2 className="text-md text-center font-bold mb-5">Modalidade</h2>
           <label className="flex items-center cursor-pointer ">
@@ -143,44 +216,45 @@ export function EditProfessor({ professor }: any) {
             />
           </label>
         </div>
+
         <div className="form-control mt-8">
           <h2 className="text-md text-center font-bold mb-5">Disponibilidade</h2>
-          {["segunda", "terca", "quarta", "quinta", "sexta"].map((dia) => (
-            <div key={dia} className="space-y-2">
-              <label className="label cursor-pointer">
-                <span className="label-text">{dia.charAt(0).toUpperCase() + dia.slice(1)}</span>
+          {["segunda", "terca", "quarta", "quinta", "sexta", "sabado"].map((dia) => (
+            <div key={dia} className="mb-5">
+              <h3 className="text-sm font-bold mb-5 mt-5 text-center">{dia.charAt(0).toUpperCase() + dia.slice(1)}</h3>
+              <div className="flex justify-around">
                 {["manha", "tarde", "noite"].map((turno) => (
-                  <label key={turno} className="label cursor-pointer">
-                    <span className="label-text">{turno.charAt(0).toUpperCase() + turno.slice(1)}</span>
+                  <label key={turno} className="flex items-center cursor-pointer">
+                    <span className="text-sm mr-2">{turno.charAt(0).toUpperCase() + turno.slice(1)}</span>
                     <input
                       type="checkbox"
                       name={`disponibilidade.${dia}.${turno}`}
-                      checked={formData.disponibilidade[dia][turno]}
-                      onChange={() => {
-                        setFormData({
-                          ...formData,
-                          disponibilidade: {
-                            ...formData.disponibilidade,
-                            [dia]: {
-                              ...formData.disponibilidade[dia],
-                              [turno]: !formData.disponibilidade[dia][turno],
-                            },
-                          },
-                        });
-                      }}
+                      checked={formData.disponibilidade[dia as Dia][turno as Turno]}
+                      onChange={handleCheckboxChange}
                       className="checkbox"
                     />
                   </label>
                 ))}
-              </label>
+              </div>
             </div>
           ))}
         </div>
-        <div className="form-control">
-          <button type="submit" className="btn btn-primary">
-            Salvar
-          </button>
+
+        <div className="form-control mt-8">
+          <h2 className="text-md text-center font-bold mb-5">Matérias que Leciona</h2>
+          <div className="grid grid-cols-4 gap-4">
+            {allMaterias.map((materia) => (
+              <label key={materia.id} className="flex items-center cursor-pointer">
+                <input type="checkbox" checked={formData.materias.some((m) => m.id === materia.id)} onChange={() => handleMateriasChange(materia.id)} className="checkbox" />
+                <span className="label-text ml-2">{materia.materia}</span>
+              </label>
+            ))}
+          </div>
         </div>
+
+        <button type="submit" className="btn btn-primary mt-5 w-full">
+          Salvar
+        </button>
       </form>
     </div>
   );

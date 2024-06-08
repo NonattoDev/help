@@ -157,6 +157,11 @@ export async function createProfessor(prisma: PrismaClient) {
             tarde: false,
             noite: false,
           },
+          sabado: {
+            manha: false,
+            tarde: false,
+            noite: false,
+          },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
