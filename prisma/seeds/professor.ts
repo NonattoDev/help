@@ -49,6 +49,11 @@ export async function createProfessor(prisma: PrismaClient) {
             tarde: true,
             noite: false,
           },
+          sabado: {
+            manha: false,
+            tarde: false,
+            noite: false,
+          },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
@@ -98,6 +103,11 @@ export async function createProfessor(prisma: PrismaClient) {
             tarde: true,
             noite: false,
           },
+          sabado: {
+            manha: false,
+            tarde: false,
+            noite: false,
+          },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
@@ -144,7 +154,7 @@ export async function createProfessor(prisma: PrismaClient) {
           },
           sexta: {
             manha: false,
-            tarde: true,
+            tarde: false,
             noite: false,
           },
         },
@@ -196,6 +206,11 @@ export async function createProfessor(prisma: PrismaClient) {
             tarde: true,
             noite: false,
           },
+          sabado: {
+            manha: false,
+            tarde: false,
+            noite: false,
+          },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
@@ -243,6 +258,11 @@ export async function createProfessor(prisma: PrismaClient) {
           sexta: {
             manha: false,
             tarde: true,
+            noite: false,
+          },
+          sabado: {
+            manha: false,
+            tarde: false,
             noite: false,
           },
         },
@@ -294,6 +314,11 @@ export async function createProfessor(prisma: PrismaClient) {
             tarde: true,
             noite: false,
           },
+          sabado: {
+            manha: false,
+            tarde: false,
+            noite: false,
+          },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
@@ -343,6 +368,11 @@ export async function createProfessor(prisma: PrismaClient) {
             tarde: true,
             noite: false,
           },
+          sabado: {
+            manha: false,
+            tarde: false,
+            noite: false,
+          },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
@@ -388,6 +418,11 @@ export async function createProfessor(prisma: PrismaClient) {
             noite: false,
           },
           sexta: {
+            manha: false,
+            tarde: true,
+            noite: false,
+          },
+          sabado: {
             manha: false,
             tarde: true,
             noite: false,
@@ -441,6 +476,11 @@ export async function createProfessor(prisma: PrismaClient) {
             tarde: false,
             noite: false,
           },
+          sabado: {
+            manha: true,
+            tarde: true,
+            noite: false,
+          },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
@@ -486,6 +526,11 @@ export async function createProfessor(prisma: PrismaClient) {
             noite: false,
           },
           sexta: {
+            manha: true,
+            tarde: true,
+            noite: false,
+          },
+          sabado: {
             manha: true,
             tarde: true,
             noite: false,
@@ -539,6 +584,11 @@ export async function createProfessor(prisma: PrismaClient) {
             tarde: true,
             noite: false,
           },
+          sabado: {
+            manha: false,
+            tarde: false,
+            noite: false,
+          },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
@@ -586,6 +636,11 @@ export async function createProfessor(prisma: PrismaClient) {
           sexta: {
             manha: false,
             tarde: true,
+            noite: false,
+          },
+          sabado: {
+            manha: false,
+            tarde: false,
             noite: false,
           },
         },
@@ -637,6 +692,11 @@ export async function createProfessor(prisma: PrismaClient) {
             tarde: true,
             noite: false,
           },
+          sabado: {
+            manha: false,
+            tarde: false,
+            noite: false,
+          },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
@@ -684,6 +744,11 @@ export async function createProfessor(prisma: PrismaClient) {
           sexta: {
             manha: true,
             tarde: true,
+            noite: false,
+          },
+          sabado: {
+            manha: false,
+            tarde: false,
             noite: false,
           },
         },
@@ -735,6 +800,11 @@ export async function createProfessor(prisma: PrismaClient) {
             tarde: true,
             noite: false,
           },
+          sabado: {
+            manha: false,
+            tarde: false,
+            noite: false,
+          },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
@@ -782,6 +852,11 @@ export async function createProfessor(prisma: PrismaClient) {
           sexta: {
             manha: false,
             tarde: true,
+            noite: false,
+          },
+          sabado: {
+            manha: false,
+            tarde: false,
             noite: false,
           },
         },
@@ -833,6 +908,11 @@ export async function createProfessor(prisma: PrismaClient) {
             tarde: true,
             noite: false,
           },
+          sabado: {
+            manha: false,
+            tarde: false,
+            noite: false,
+          },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
@@ -880,6 +960,11 @@ export async function createProfessor(prisma: PrismaClient) {
           sexta: {
             manha: false,
             tarde: true,
+            noite: false,
+          },
+          sabado: {
+            manha: false,
+            tarde: false,
             noite: false,
           },
         },
@@ -931,6 +1016,11 @@ export async function createProfessor(prisma: PrismaClient) {
             tarde: true,
             noite: false,
           },
+          sabado: {
+            manha: false,
+            tarde: false,
+            noite: false,
+          },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
@@ -980,6 +1070,11 @@ export async function createProfessor(prisma: PrismaClient) {
             tarde: true,
             noite: false,
           },
+          sabado: {
+            manha: false,
+            tarde: false,
+            noite: false,
+          },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
@@ -1026,6 +1121,11 @@ export async function createProfessor(prisma: PrismaClient) {
           },
           sexta: {
             manha: true,
+            tarde: false,
+            noite: false,
+          },
+          sabado: {
+            manha: false,
             tarde: false,
             noite: false,
           },
@@ -1078,6 +1178,11 @@ export async function createProfessor(prisma: PrismaClient) {
             tarde: true,
             noite: false,
           },
+          sabado: {
+            manha: false,
+            tarde: false,
+            noite: false,
+          },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
@@ -1125,6 +1230,11 @@ export async function createProfessor(prisma: PrismaClient) {
           sexta: {
             manha: true,
             tarde: true,
+            noite: false,
+          },
+          sabado: {
+            manha: false,
+            tarde: false,
             noite: false,
           },
         },
@@ -1176,6 +1286,11 @@ export async function createProfessor(prisma: PrismaClient) {
             tarde: true,
             noite: false,
           },
+          sabado: {
+            manha: false,
+            tarde: false,
+            noite: false,
+          },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
@@ -1225,6 +1340,11 @@ export async function createProfessor(prisma: PrismaClient) {
             tarde: true,
             noite: false,
           },
+          sabado: {
+            manha: false,
+            tarde: false,
+            noite: false,
+          },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
@@ -1270,6 +1390,11 @@ export async function createProfessor(prisma: PrismaClient) {
             noite: false,
           },
           sexta: {
+            manha: true,
+            tarde: true,
+            noite: false,
+          },
+          sabado: {
             manha: true,
             tarde: true,
             noite: false,
@@ -1323,6 +1448,11 @@ export async function createProfessor(prisma: PrismaClient) {
             tarde: true,
             noite: false,
           },
+          sabado: {
+            manha: false,
+            tarde: false,
+            noite: false,
+          },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
@@ -1372,6 +1502,11 @@ export async function createProfessor(prisma: PrismaClient) {
             tarde: true,
             noite: true,
           },
+          sabado: {
+            manha: false,
+            tarde: false,
+            noite: false,
+          },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
@@ -1419,6 +1554,11 @@ export async function createProfessor(prisma: PrismaClient) {
           sexta: {
             manha: false,
             tarde: true,
+            noite: false,
+          },
+          sabado: {
+            manha: false,
+            tarde: false,
             noite: false,
           },
         },
@@ -1470,6 +1610,11 @@ export async function createProfessor(prisma: PrismaClient) {
             tarde: false,
             noite: true,
           },
+          sabado: {
+            manha: false,
+            tarde: false,
+            noite: false,
+          },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
@@ -1519,6 +1664,11 @@ export async function createProfessor(prisma: PrismaClient) {
             tarde: true,
             noite: false,
           },
+          sabado: {
+            manha: false,
+            tarde: false,
+            noite: false,
+          },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
@@ -1565,6 +1715,11 @@ export async function createProfessor(prisma: PrismaClient) {
           },
           sexta: {
             manha: true,
+            tarde: false,
+            noite: false,
+          },
+          sabado: {
+            manha: false,
             tarde: false,
             noite: false,
           },
@@ -1617,6 +1772,11 @@ export async function createProfessor(prisma: PrismaClient) {
             tarde: true,
             noite: true,
           },
+          sabado: {
+            manha: false,
+            tarde: false,
+            noite: false,
+          },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
@@ -1666,6 +1826,11 @@ export async function createProfessor(prisma: PrismaClient) {
             tarde: true,
             noite: true,
           },
+          sabado: {
+            manha: false,
+            tarde: false,
+            noite: false,
+          },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
@@ -1713,6 +1878,11 @@ export async function createProfessor(prisma: PrismaClient) {
           sexta: {
             manha: false,
             tarde: true,
+            noite: false,
+          },
+          sabado: {
+            manha: false,
+            tarde: false,
             noite: false,
           },
         },
@@ -1764,6 +1934,11 @@ export async function createProfessor(prisma: PrismaClient) {
             tarde: true,
             noite: false,
           },
+          sabado: {
+            manha: false,
+            tarde: false,
+            noite: false,
+          },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
@@ -1811,6 +1986,11 @@ export async function createProfessor(prisma: PrismaClient) {
           sexta: {
             manha: false,
             tarde: true,
+            noite: false,
+          },
+          sabado: {
+            manha: false,
+            tarde: false,
             noite: false,
           },
         },
@@ -1862,6 +2042,11 @@ export async function createProfessor(prisma: PrismaClient) {
             tarde: false,
             noite: true,
           },
+          sabado: {
+            manha: false,
+            tarde: false,
+            noite: false,
+          },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
@@ -1909,6 +2094,11 @@ export async function createProfessor(prisma: PrismaClient) {
           sexta: {
             manha: false,
             tarde: true,
+            noite: false,
+          },
+          sabado: {
+            manha: false,
+            tarde: false,
             noite: false,
           },
         },
@@ -1960,6 +2150,11 @@ export async function createProfessor(prisma: PrismaClient) {
             tarde: true,
             noite: false,
           },
+          sabado: {
+            manha: false,
+            tarde: false,
+            noite: false,
+          },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       },
@@ -2005,6 +2200,11 @@ export async function createProfessor(prisma: PrismaClient) {
             noite: false,
           },
           sexta: {
+            manha: true,
+            tarde: true,
+            noite: false,
+          },
+          sabado: {
             manha: true,
             tarde: true,
             noite: false,
