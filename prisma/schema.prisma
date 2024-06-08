@@ -12,6 +12,7 @@ model Usuarios {
   nome        String
   email       String   @unique
   cpf         String   @unique
+  cargo       String
   password    String
   accessLevel String   @default("administrativo")
   ativo       Boolean  @default(true)
