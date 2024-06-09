@@ -1,6 +1,8 @@
 "use client";
+import axios from "axios";
 import React from "react";
 import { BiTrash } from "react-icons/bi";
+import { toast } from "react-toastify";
 
 type Dia = "segunda" | "terca" | "quarta" | "quinta" | "sexta" | "sabado";
 type Turno = "manha" | "tarde" | "noite";
@@ -11,6 +13,7 @@ interface Materia {
 }
 
 interface Professor {
+  id: string;
   nome: string;
   email: string;
   cpf: string;
@@ -100,7 +103,17 @@ export function EditProfessor({ professor, allMaterias }: { professor: Professor
   const submitEdit = async (e: React.FormEvent) => {
     e.preventDefault();
     // Lógica para enviar os dados do formulário
-    console.log(formData);
+    try {
+      const response = await axios.put(`/help/config/${formData.id}/meuperfil/editar`, formData);
+
+      if (response.status === 200) {
+        toast.success("Dados atualizados com sucesso");
+      } else {
+        toast.error("Erro ao atualizar dados");
+      }
+    } catch (error) {
+      toast.error("Erro no servidor");
+    }
   };
 
   return (
