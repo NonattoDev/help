@@ -65,7 +65,7 @@ model Aluno {
   password      String
   responsavelId String
   responsavel   Responsavel         @relation(fields: [responsavelId], references: [id])
-  dificuldades  AlunoDificuldades[]
+  dificuldades  String[]
   accessLevel   String              @default("aluno")
   ativo         Boolean             @default(true)
   createdAt     DateTime            @default(now())
@@ -102,35 +102,15 @@ model Professor {
   accessLevel     String              @default("professor")
   modalidade      Json                @default("{\"presencial\": true, \"online\": false}")
   password        String
-  materias        ProfessorMaterias[]
+  materias        String[]
   createdAt       DateTime            @default(now())
   updatedAt       DateTime            @updatedAt
-  AgendaAulas     AgendaAulas[]
+  AgendaAulas     AgendaAulas[]s
 }
 
 model Materias {
-  id          String              @id @default(cuid())
+  id          String   @id @default(cuid())
   materia     String
-  createdAt   DateTime            @default(now())
-  updatedAt   DateTime            @default(now())
-  alunos      AlunoDificuldades[]
-  professores ProfessorMaterias[]
-}
-
-model AlunoDificuldades {
-  alunoId   String
-  materiaId String
-  aluno     Aluno    @relation(fields: [alunoId], references: [id])
-  materia   Materias @relation(fields: [materiaId], references: [id])
-
-  @@id([alunoId, materiaId])
-}
-
-model ProfessorMaterias {
-  professorId String
-  materiaId   String
-  professor   Professor @relation(fields: [professorId], references: [id])
-  materia     Materias  @relation(fields: [materiaId], references: [id])
-
-  @@id([professorId, materiaId])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
 }

@@ -21,31 +21,7 @@ export async function PUT(request: Request, params: any) {
         ficha: professorAtualizado.ficha,
         modalidade: professorAtualizado.modalidade,
         password: professorAtualizado.password,
-        materias: {
-          upsert: professorAtualizado.materias.map((materia: any) => ({
-            where: {
-              professorId_materiaId: {
-                professorId: idProfessor,
-                materiaId: materia.id,
-              },
-            },
-            update: {
-              materia: {
-                update: {
-                  materia: materia.materia,
-                },
-              },
-            },
-            create: {
-              materia: {
-                connectOrCreate: {
-                  where: { id: materia.id },
-                  create: { id: materia.id, materia: materia.materia },
-                },
-              },
-            },
-          })),
-        },
+        materias: professorAtualizado.materias,
       },
     });
 

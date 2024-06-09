@@ -105,6 +105,7 @@ export function EditProfessor({ professor, allMaterias }: { professor: Professor
     // Lógica para enviar os dados do formulário
     try {
       const response = await axios.put(`/help/config/${formData.id}/meuperfil/editar`, formData);
+
       if (response.status === 200) {
         toast.success("Dados atualizados com sucesso");
       } else {
