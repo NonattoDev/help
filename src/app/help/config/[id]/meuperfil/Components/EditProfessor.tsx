@@ -135,23 +135,25 @@ export function EditProfessor({ professor, allMaterias }: { professor: Professor
                   </option>
                 ))}
               </select>
-              <label className="label cursor-pointer">
-                <input
-                  type="checkbox"
-                  name={`areaFormacao.${index}.finalizado`}
-                  checked={area?.finalizado}
-                  onChange={() => {
-                    const newAreaFormacao = [...formData.areaFormacao];
-                    newAreaFormacao[index].finalizado = !area.finalizado;
-                    setFormData({ ...formData, areaFormacao: newAreaFormacao });
-                  }}
-                  className="checkbox"
-                />
-                <span className="label-text">Finalizado</span>
-              </label>
-              <button className="btn" type="button" onClick={() => setFormData({ ...formData, areaFormacao: formData.areaFormacao.filter((_, i) => i !== index) })}>
-                <BiTrash />
-              </button>
+              <div className="flex gap-16">
+                <label className="label cursor-pointer space-x-2 w-fit">
+                  <input
+                    type="checkbox"
+                    name={`areaFormacao.${index}.finalizado`}
+                    checked={area?.finalizado}
+                    onChange={() => {
+                      const newAreaFormacao = [...formData.areaFormacao];
+                      newAreaFormacao[index].finalizado = !area.finalizado;
+                      setFormData({ ...formData, areaFormacao: newAreaFormacao });
+                    }}
+                    className="checkbox"
+                  />
+                  <span className="label-text">Finalizado</span>
+                </label>
+                <button className="btn w-fit btn-error" type="button" onClick={() => setFormData({ ...formData, areaFormacao: formData.areaFormacao.filter((_, i) => i !== index) })}>
+                  <BiTrash color="#FFF" />
+                </button>
+              </div>
             </div>
           ))}
           <button
