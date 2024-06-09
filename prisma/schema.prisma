@@ -105,7 +105,7 @@ model Professor {
   materias        String[]
   createdAt       DateTime            @default(now())
   updatedAt       DateTime            @updatedAt
-  AgendaAulas     AgendaAulas[]s
+  AgendaAulas     AgendaAulas[]
 }
 
 model Materias {
