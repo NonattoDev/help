@@ -28,14 +28,14 @@ export async function PUT(request: Request, params: any) {
 
     if (!professor) {
       await prisma.$disconnect();
-      NextResponse.json({ error: "Professor não encontrado" }, { status: 404 });
+      return new Response(JSON.stringify({ error: "Professor não encontrado" }), { status: 404 });
     }
 
     await prisma.$disconnect();
-    NextResponse.json(professor, { status: 200 });
+    return new Response(JSON.stringify(professor), { status: 200 });
   } catch (error) {
     await prisma.$disconnect();
     console.error(error);
-    NextResponse.json({ error: "Erro interno do servidor!" }, { status: 500 });
+    return new Response(JSON.stringify({ error: "Erro ao atualizar o professor" }), { status: 500 });
   }
 }
