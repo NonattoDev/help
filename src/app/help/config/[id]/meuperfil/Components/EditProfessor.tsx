@@ -35,7 +35,8 @@ export function EditProfessor({ professor, allMaterias }: { professor: Professor
 
   const handleMateriasChange = (id: string) => {
     setFormData((prev) => {
-      const newMaterias = prev.materias.includes(id) ? prev.materias.filter((materiaId) => materiaId !== id) : [...prev.materias, id];
+      const newMaterias = prev.materias.some((m) => m.id === id) ? prev.materias.filter((materia) => materia.id !== id) : [...prev.materias, allMaterias.find((materia) => materia.id === id)!];
+
       return { ...prev, materias: newMaterias };
     });
   };
@@ -67,6 +68,7 @@ export function EditProfessor({ professor, allMaterias }: { professor: Professor
 
   const submitEdit = async (e: React.FormEvent) => {
     e.preventDefault();
+    // Lógica para enviar os dados do formulário
     try {
       const response = await axios.put(`/help/config/${formData.id}/meuperfil/editar`, formData);
 
@@ -169,11 +171,28 @@ export function EditProfessor({ professor, allMaterias }: { professor: Professor
           <h2 className="text-md text-center font-bold mb-5">Modalidade</h2>
           <label className="flex items-center cursor-pointer ">
             <span className="text-md mr-2">Online</span>
-            <input type="checkbox" name="modalidade.online" checked={formData?.modalidade?.online} onChange={handleCheckboxChange} className="checkbox checkbox-primary" />
+            <input
+              type="checkbox"
+              name="modalidade.online"
+              checked={formData.modalidade.online}
+              onChange={() => {
+                setFormData({ ...formData, modalidade: { ...formData.modalidade, online: !formData.modalidade.online } });
+              }}
+              className="checkbox"
+            />
           </label>
+
           <label className="flex items-center cursor-pointer">
             <span className="text-md mr-2">Presencial</span>
-            <input type="checkbox" name="modalidade.presencial" checked={formData?.modalidade?.presencial} onChange={handleCheckboxChange} className="checkbox checkbox-primary" />
+            <input
+              type="checkbox"
+              name="modalidade.presencial"
+              checked={formData.modalidade.presencial}
+              onChange={() => {
+                setFormData({ ...formData, modalidade: { ...formData.modalidade, presencial: !formData.modalidade.presencial } });
+              }}
+              className="checkbox"
+            />
           </label>
         </div>
 
@@ -199,23 +218,22 @@ export function EditProfessor({ professor, allMaterias }: { professor: Professor
             </div>
           ))}
         </div>
-        <div id="materias" className="mt-8">
-          <h2 className="text-md text-center font-bold mb-5">Matérias</h2>
+
+        <div className="form-control mt-8">
+          <h2 className="text-md text-center font-bold mb-5">Matérias que Leciona</h2>
           <div className="grid grid-cols-4 gap-4">
             {allMaterias.map((materia) => (
               <label key={materia.id} className="flex items-center cursor-pointer">
-                <input type="checkbox" name={`materias`} checked={formData.materias.includes(materia.id)} onChange={() => handleMateriasChange(materia.id)} className="checkbox" />
+                <input type="checkbox" checked={formData.materias.some((m) => m.id === materia.id)} onChange={() => handleMateriasChange(materia.id)} className="checkbox" />
                 <span className="label-text ml-2">{materia.materia}</span>
               </label>
             ))}
           </div>
         </div>
 
-        <div className="flex justify-end mt-8">
-          <button type="submit" className="btn btn-primary">
-            Salvar
-          </button>
-        </div>
+        <button type="submit" className="btn btn-primary mt-5 w-full">
+          Salvar
+        </button>
       </form>
     </div>
   );
