@@ -3,41 +3,7 @@ import axios from "axios";
 import React from "react";
 import { BiTrash } from "react-icons/bi";
 import { toast } from "react-toastify";
-
-type Dia = "segunda" | "terca" | "quarta" | "quinta" | "sexta" | "sabado";
-type Turno = "manha" | "tarde" | "noite";
-
-interface Materia {
-  id: string;
-  materia: string;
-}
-
-interface Professor {
-  id: string;
-  nome: string;
-  email: string;
-  cpf: string;
-  telefone: string;
-  endereco: {
-    rua: string;
-    numero: string;
-    bairro: string;
-    cidade: string;
-    estado: string;
-    cep: string;
-  };
-  areaFormacao: Array<{ area: string; semestre: string; finalizado: boolean }>;
-  modalidade: {
-    online: boolean;
-    presencial: boolean;
-  };
-  disponibilidade: {
-    [key in Dia]: {
-      [key in Turno]: boolean;
-    };
-  };
-  materias: string[]; // Array de IDs de matérias
-}
+import { Dia, Materia, Professor, Turno } from "./Interfaces/interface.professor";
 
 export function EditProfessor({ professor, allMaterias }: { professor: Professor; allMaterias: Materia[] }) {
   const [formData, setFormData] = React.useState<Professor>(professor);
