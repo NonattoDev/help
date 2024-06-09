@@ -9,7 +9,7 @@ interface Admin {
   cpf: string;
   telefone: string;
   endereco: {
-    rua: string;
+    rua?: string;
     numero: string;
     bairro: string;
     cidade: string;
