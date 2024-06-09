@@ -63,7 +63,7 @@ export default async function configMeuperfilPage({ params }: { params: { id: st
 
   return (
     <div>
-      <p className="text-xl text-center mb-1">Olá, {userData.nome}! Esta é a página do seu perfil.</p>
+      <p className="text-xl text-center mb-2">Olá, {userData.nome}! Esta é a página do seu perfil.</p>
       {userData.accessLevel === "professor" && <EditProfessor professor={userData} allMaterias={allMaterias} />}
     </div>
   );
