@@ -114,3 +114,10 @@ model Materias {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @default(now())
 }
+
+model Series {
+  id          String   @id @default(cuid())
+  serie       String  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
+}
