@@ -33,7 +33,6 @@ async function getUserData(id: string) {
         where: { id: id },
         include: {
           AgendaAulas: true,
-          materias: true,
         },
       });
       if (userData) {

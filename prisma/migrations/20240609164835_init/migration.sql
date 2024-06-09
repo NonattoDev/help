@@ -62,6 +62,7 @@ CREATE TABLE "Aluno" (
     "data_inicio" TIMESTAMP(3) NOT NULL,
     "password" TEXT NOT NULL,
     "responsavelId" TEXT NOT NULL,
+    "dificuldades" TEXT[],
     "accessLevel" TEXT NOT NULL DEFAULT 'aluno',
     "ativo" BOOLEAN NOT NULL DEFAULT true,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -101,6 +102,7 @@ CREATE TABLE "Professor" (
     "accessLevel" TEXT NOT NULL DEFAULT 'professor',
     "modalidade" JSONB NOT NULL DEFAULT '{"presencial": true, "online": false}',
     "password" TEXT NOT NULL,
+    "materias" TEXT[],
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -115,22 +117,6 @@ CREATE TABLE "Materias" (
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Materias_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "AlunoDificuldades" (
-    "alunoId" TEXT NOT NULL,
-    "materiaId" TEXT NOT NULL,
-
-    CONSTRAINT "AlunoDificuldades_pkey" PRIMARY KEY ("alunoId","materiaId")
-);
-
--- CreateTable
-CREATE TABLE "ProfessorMaterias" (
-    "professorId" TEXT NOT NULL,
-    "materiaId" TEXT NOT NULL,
-
-    CONSTRAINT "ProfessorMaterias_pkey" PRIMARY KEY ("professorId","materiaId")
 );
 
 -- CreateIndex
@@ -165,15 +151,3 @@ ALTER TABLE "Aluno" ADD CONSTRAINT "Aluno_responsavelId_fkey" FOREIGN KEY ("resp
 
 -- AddForeignKey
 ALTER TABLE "Financeiro" ADD CONSTRAINT "Financeiro_alunoId_fkey" FOREIGN KEY ("alunoId") REFERENCES "Aluno"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "AlunoDificuldades" ADD CONSTRAINT "AlunoDificuldades_alunoId_fkey" FOREIGN KEY ("alunoId") REFERENCES "Aluno"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "AlunoDificuldades" ADD CONSTRAINT "AlunoDificuldades_materiaId_fkey" FOREIGN KEY ("materiaId") REFERENCES "Materias"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "ProfessorMaterias" ADD CONSTRAINT "ProfessorMaterias_professorId_fkey" FOREIGN KEY ("professorId") REFERENCES "Professor"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "ProfessorMaterias" ADD CONSTRAINT "ProfessorMaterias_materiaId_fkey" FOREIGN KEY ("materiaId") REFERENCES "Materias"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
