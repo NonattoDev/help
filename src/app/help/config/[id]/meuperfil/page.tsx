@@ -35,13 +35,6 @@ async function getUserData(id: string) {
           AgendaAulas: true,
         },
       });
-      if (userData) {
-        userData.endereco = userData.endereco as Prisma.JsonObject;
-        userData.areaFormacao = userData.areaFormacao.map((formacao: Prisma.JsonValue) => formacao as Prisma.JsonObject);
-        userData.disponibilidade = userData.disponibilidade as Prisma.JsonObject;
-        userData.modalidade = userData.modalidade as Prisma.JsonObject;
-        userData.ficha = userData.ficha.map((ficha: Prisma.JsonValue) => ficha as Prisma.JsonObject);
-      }
       break;
     default:
       break;
