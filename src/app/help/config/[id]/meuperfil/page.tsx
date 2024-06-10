@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { EditProfessor } from "./Components/EditProfessor";
 import EditAluno from "./Components/EditAluno";
+import EditResponsavel from "./Components/EditResponsavel";
 
 async function getUserData(id: string) {
   const prisma = new PrismaClient();
@@ -34,6 +35,9 @@ async function getUserData(id: string) {
     case "responsavel":
       userData = await prisma.responsavel.findUnique({
         where: { id: id },
+        include: {
+          alunos: true,
+        },
       });
       break;
     case "professor":
@@ -63,6 +67,7 @@ export default async function configMeuperfilPage({ params }: { params: { id: st
       <p className="text-xl text-center mb-2">Olá, {userData.nome}! Esta é a página do seu perfil.</p>
       {userData.accessLevel === "professor" && <EditProfessor professor={userData} materias={materias} />}
       {userData.accessLevel === "aluno" && <EditAluno aluno={userData} series={series} materias={materias} />}
+      {userData.accessLevel === "responsavel" && <EditResponsavel responsavel={userData} />}
     </div>
   );
 }

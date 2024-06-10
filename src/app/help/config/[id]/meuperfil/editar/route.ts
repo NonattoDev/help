@@ -8,7 +8,6 @@ export async function PUT(request: Request, params: any) {
   const userID = params.params.id;
 
   if (senhaAntiga !== userData.password) {
-    // criptografa a senha nova
     userData.password = await bcrypt.hash(userData.password, 10);
   }
 
@@ -24,6 +23,7 @@ export async function PUT(request: Request, params: any) {
           telefone: userData.telefone,
           endereco: userData.endereco,
           ficha: userData.ficha,
+          password: userData.password,
           modalidade: userData.modalidade,
           dificuldades: userData.dificuldades,
         },
@@ -65,6 +65,29 @@ export async function PUT(request: Request, params: any) {
 
       await prisma.$disconnect();
       return new Response(JSON.stringify(professor), { status: 200 });
+    }
+
+    if (typeEdit === "responsavel") {
+      const responsavel = await prisma.responsavel.update({
+        where: { id: userID },
+        data: {
+          nome: userData.nome,
+          email: userData.email,
+          cpf: userData.cpf,
+          telefone: userData.telefone,
+          password: userData.password,
+          endereco: userData.endereco,
+        },
+      });
+
+      if (!responsavel) {
+        await prisma.$disconnect();
+        return new Response(JSON.stringify({ error: "Aluno não encontrado" }), { status: 404 });
+      }
+
+      await prisma.$disconnect();
+
+      return new Response(JSON.stringify(responsavel), { status: 200 });
     }
   } catch (error) {
     await prisma.$disconnect();

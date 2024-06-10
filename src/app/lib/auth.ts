@@ -36,6 +36,12 @@ export const authOptions: NextAuthOptions = {
           })) as any;
         }
 
+        if (!user) {
+          user = (await prisma.responsavel.findUnique({
+            where: { email: credentials.email },
+          })) as any;
+        }
+
         if (user && (await compare(credentials.password, user.password))) {
           return {
             id: user.id,
