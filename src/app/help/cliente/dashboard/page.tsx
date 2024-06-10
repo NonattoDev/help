@@ -1,13 +1,12 @@
 import { authOptions } from "@/app/lib/auth";
-import { PrismaClient } from "@prisma/client";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
+import prisma from "../../../../../prisma/prismaInstance";
 
 export const metadata: Metadata = {
   title: "Help - Cliente",
 };
 
-const prisma = new PrismaClient();
 
 async function getData() {
   const session = await getServerSession(authOptions);
@@ -30,6 +29,7 @@ async function getData() {
       });
   }
 
+  await prisma.$disconnect();
   return user;
 }
 

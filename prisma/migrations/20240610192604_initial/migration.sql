@@ -5,6 +5,7 @@ CREATE TABLE "Usuarios" (
     "email" TEXT NOT NULL,
     "cpf" TEXT NOT NULL,
     "cargo" TEXT NOT NULL,
+    "telefone" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "accessLevel" TEXT NOT NULL DEFAULT 'administrativo',
     "ativo" BOOLEAN NOT NULL DEFAULT true,

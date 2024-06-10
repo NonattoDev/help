@@ -2,7 +2,7 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 import React from "react";
-import { Administrador } from "../Interfaces/Admin";
+import { Administrador } from "./Interfaces/Admin";
 
 export default function EditAdmin({ userData }: { userData: Administrador }) {
   const [formData, setFormData] = React.useState<Administrador>(userData);
@@ -18,7 +18,11 @@ export default function EditAdmin({ userData }: { userData: Administrador }) {
   const submitEdit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.put(`/help/config/${formData.id}/meuperfil/editar`, formData);
+      const response = await axios.put(`/help/config/${formData.id}/meuperfil/editar`, {
+        formData,
+        senhaAntiga: formData.password,
+        typeEdit: "admin",
+      });
       if (response.status === 200) {
         toast.success("Dados atualizados com sucesso");
       } else {
@@ -32,7 +36,7 @@ export default function EditAdmin({ userData }: { userData: Administrador }) {
   return (
     <div>
       <form onSubmit={submitEdit}>
-        <h2 className="text-md text-center font-bold mb-5">Dados do Administrador</h2>
+        <h2 className="text-md text-center font-bold mb-5 mt-4">Dados do Administrador</h2>
         <div className="grid grid-cols-4 gap-4">
           <div className="form-control">
             <label className="label">
@@ -62,7 +66,7 @@ export default function EditAdmin({ userData }: { userData: Administrador }) {
             <label className="label">
               <span className="label-text">Cargo</span>
             </label>
-            <input type="text" name="cargo" value={formData.cargo} onChange={handleChange} className="input input-bordered" required />
+            <input disabled={formData.cargo !== "CEO"} type="text" name="cargo" value={formData.cargo} onChange={handleChange} className="input input-bordered" required />
           </div>
         </div>
 

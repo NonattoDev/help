@@ -1,7 +1,5 @@
-import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
-
-const prisma = new PrismaClient();
+import prisma from "../../../../../../../prisma/prismaInstance";
 
 export async function PUT(request: Request, params: any) {
   const { formData: userData, senhaAntiga, typeEdit } = await request.json();
@@ -12,8 +10,10 @@ export async function PUT(request: Request, params: any) {
   }
 
   try {
+    let updatedUser;
+
     if (typeEdit === "aluno") {
-      const aluno = await prisma.aluno.update({
+      updatedUser = await prisma.aluno.update({
         where: { id: userID },
         data: {
           nome: userData.nome,
@@ -28,19 +28,8 @@ export async function PUT(request: Request, params: any) {
           dificuldades: userData.dificuldades,
         },
       });
-
-      if (!aluno) {
-        await prisma.$disconnect();
-        return new Response(JSON.stringify({ error: "Aluno não encontrado" }), { status: 404 });
-      }
-
-      await prisma.$disconnect();
-
-      return new Response(JSON.stringify(aluno), { status: 200 });
-    }
-
-    if (typeEdit === "professor") {
-      const professor = await prisma.professor.update({
+    } else if (typeEdit === "professor") {
+      updatedUser = await prisma.professor.update({
         where: { id: userID },
         data: {
           nome: userData.nome,
@@ -57,18 +46,8 @@ export async function PUT(request: Request, params: any) {
           materias: userData.materias,
         },
       });
-
-      if (!professor) {
-        await prisma.$disconnect();
-        return new Response(JSON.stringify({ error: "Professor não encontrado" }), { status: 404 });
-      }
-
-      await prisma.$disconnect();
-      return new Response(JSON.stringify(professor), { status: 200 });
-    }
-
-    if (typeEdit === "responsavel") {
-      const responsavel = await prisma.responsavel.update({
+    } else if (typeEdit === "responsavel") {
+      updatedUser = await prisma.responsavel.update({
         where: { id: userID },
         data: {
           nome: userData.nome,
@@ -79,19 +58,29 @@ export async function PUT(request: Request, params: any) {
           endereco: userData.endereco,
         },
       });
-
-      if (!responsavel) {
-        await prisma.$disconnect();
-        return new Response(JSON.stringify({ error: "Aluno não encontrado" }), { status: 404 });
-      }
-
-      await prisma.$disconnect();
-
-      return new Response(JSON.stringify(responsavel), { status: 200 });
+    } else if (typeEdit === "admin") {
+      updatedUser = await prisma.usuarios.update({
+        where: { id: userID },
+        data: {
+          nome: userData.nome,
+          email: userData.email,
+          cpf: userData.cpf,
+          cargo: userData.cargo,
+          telefone: userData.telefone,
+          password: userData.password,
+        },
+      });
     }
+
+    if (!updatedUser) {
+      return new Response(JSON.stringify({ error: "Usuário não encontrado" }), { status: 404 });
+    }
+
+    return new Response(JSON.stringify(updatedUser), { status: 200 });
   } catch (error) {
-    await prisma.$disconnect();
     console.error(error);
     return new Response(JSON.stringify({ error: "Erro ao atualizar o usuário" }), { status: 500 });
+  } finally {
+    await prisma.$disconnect();
   }
 }

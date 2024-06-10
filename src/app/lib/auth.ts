@@ -1,10 +1,9 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { PrismaClient } from "@prisma/client";
 import { compare } from "bcryptjs";
+import prisma from "../../../prisma/prismaInstance";
 
-const prisma = new PrismaClient();
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -41,6 +40,8 @@ export const authOptions: NextAuthOptions = {
             where: { email: credentials.email },
           })) as any;
         }
+
+        await prisma.$disconnect();
 
         if (user && (await compare(credentials.password, user.password))) {
           return {

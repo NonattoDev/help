@@ -1,11 +1,10 @@
-import { PrismaClient } from "@prisma/client";
 import { createMaterias } from "./materias";
 import { createAlunos } from "./alunos";
 import { createUsuarios } from "./usuarios";
 import { createProfessor } from "./professor";
 import { createSeries } from "./series";
+import prisma from "../prismaInstance";
 
-const prisma = new PrismaClient();
 
 async function main() {
   await createMaterias(prisma);

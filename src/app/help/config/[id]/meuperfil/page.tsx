@@ -1,14 +1,13 @@
 import { authOptions } from "@/app/lib/auth";
-import { PrismaClient } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import EditProfessor from "./Components/EditProfessor";
 import EditAluno from "./Components/EditAluno";
 import EditResponsavel from "./Components/EditResponsavel";
 import EditAdmin from "./Components/EditAdmin";
+import prisma from "../../../../../../prisma/prismaInstance";
 
 async function getUserData(id: string) {
-  const prisma = new PrismaClient();
 
   const session = await getServerSession(authOptions);
 
