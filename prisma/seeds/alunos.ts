@@ -120,5 +120,5 @@ export async function createAlunos(prisma: PrismaClient) {
     skipDuplicates: true,
   });
 
-  console.log(alunos);
+  console.log("Alunos Criados: " + alunos);
 }
