@@ -18,6 +18,7 @@ const getData = async () => {
     disponibilidade: professor.disponibilidade as Professor["disponibilidade"],
   }));
 
+  prisma.$disconnect();
   return professores;
 };
 
