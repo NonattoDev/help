@@ -2,9 +2,10 @@ import { authOptions } from "@/app/lib/auth";
 import { PrismaClient } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import { EditProfessor } from "./Components/EditProfessor";
+import EditProfessor from "./Components/EditProfessor";
 import EditAluno from "./Components/EditAluno";
 import EditResponsavel from "./Components/EditResponsavel";
+import EditAdmin from "./Components/EditAdmin";
 
 async function getUserData(id: string) {
   const prisma = new PrismaClient();
@@ -68,6 +69,7 @@ export default async function configMeuperfilPage({ params }: { params: { id: st
       {userData.accessLevel === "professor" && <EditProfessor professor={userData} materias={materias} />}
       {userData.accessLevel === "aluno" && <EditAluno aluno={userData} series={series} materias={materias} />}
       {userData.accessLevel === "responsavel" && <EditResponsavel responsavel={userData} />}
+      {(userData.accessLevel === "administrador" || userData.accessLevel === "administrativo") && <EditAdmin userData={userData} />}
     </div>
   );
 }

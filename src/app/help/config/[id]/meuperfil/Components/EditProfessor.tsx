@@ -5,7 +5,7 @@ import { BiTrash } from "react-icons/bi";
 import { toast } from "react-toastify";
 import { Dia, Materia, Professor, Turno } from "./Interfaces/Professor";
 
-export function EditProfessor({ professor, materias }: { professor: Professor; materias: Materia[] }) {
+export default function EditProfessor({ professor, materias }: { professor: Professor; materias: Materia[] }) {
   const [formData, setFormData] = React.useState<Professor>(professor);
 
   function setNestedValue(obj: any, path: string, value: any) {
