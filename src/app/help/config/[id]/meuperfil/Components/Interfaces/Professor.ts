@@ -32,4 +32,6 @@ export interface Professor {
     };
   };
   materias: string[];
+  createdAt: Date;
+  updatedAt: Date;
 }
