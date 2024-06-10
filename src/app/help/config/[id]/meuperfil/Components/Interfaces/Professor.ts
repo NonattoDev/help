@@ -12,6 +12,7 @@ export interface Professor {
   email: string;
   cpf: string;
   telefone: string;
+  password: string;
   endereco: {
     rua: string;
     numero: string;

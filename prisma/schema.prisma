@@ -59,7 +59,7 @@ model Aluno {
   telefone      String
   endereco      Json
   ficha         String
-  modalidade    String
+  modalidade    Json            @default("{\"presencial\": true, \"online\": true}")   
   qtd_aulas     Int
   data_inicio   DateTime
   password      String

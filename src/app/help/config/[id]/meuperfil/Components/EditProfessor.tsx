@@ -3,7 +3,7 @@ import axios from "axios";
 import React from "react";
 import { BiTrash } from "react-icons/bi";
 import { toast } from "react-toastify";
-import { Dia, Materia, Professor, Turno } from "./Interfaces/interface.professor";
+import { Dia, Materia, Professor, Turno } from "./Interfaces/Professor";
 
 export function EditProfessor({ professor, allMaterias }: { professor: Professor; allMaterias: Materia[] }) {
   const [formData, setFormData] = React.useState<Professor>(professor);
@@ -68,7 +68,7 @@ export function EditProfessor({ professor, allMaterias }: { professor: Professor
   const submitEdit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.put(`/help/config/${formData.id}/meuperfil/editar`, formData);
+      const response = await axios.put(`/help/config/${formData.id}/meuperfil/editar`, { formData, senhaAntiga: professor.password, typeEdit: "professor" });
 
       if (response.status === 200) {
         toast.success("Dados atualizados com sucesso");
@@ -108,6 +108,12 @@ export function EditProfessor({ professor, allMaterias }: { professor: Professor
               <span className="label-text">Telefone</span>
             </label>
             <input type="text" name="telefone" value={formData.telefone} onChange={handleChange} className="input input-bordered" required />
+          </div>
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Senha</span>
+            </label>
+            <input type="password" name="password" value={formData.password} onChange={handleChange} className="input input-bordered" required />
           </div>
         </div>
 

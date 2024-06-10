@@ -22,7 +22,7 @@ export async function middleware(req: NextRequest) {
       const redirectUrl = token.accessLevel === "professor" ? "/help/professor/dashboard" : "/help/admin/dashboard";
       return NextResponse.redirect(new URL(redirectUrl, req.url).toString());
     }
-  } else {
+  } else if (req.nextUrl.pathname.includes("/help/professor")) {
     if (token.accessLevel !== "professor") {
       const redirectUrl = token.accessLevel === "administrador" ? "/help/admin/dashboard" : "/help/cliente/dashboard";
       return NextResponse.redirect(new URL(redirectUrl, req.url).toString());

@@ -1,3 +1,4 @@
+import { authOptions } from "@/app/lib/auth";
 import { PrismaClient } from "@prisma/client";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
@@ -9,22 +10,30 @@ export const metadata: Metadata = {
 const prisma = new PrismaClient();
 
 async function getData() {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
 
-  console.log("Session:", session);
+  let user = null;
 
-  const user = await prisma.usuarios.findUnique({
-    where: {
-      email: session?.user?.email ?? undefined,
-    },
-  });
+  switch (session?.user?.accessLevel) {
+    case "aluno":
+      user = await prisma.aluno.findUnique({
+        where: {
+          email: session?.user?.email ?? undefined,
+        },
+      });
+      break;
+    case "responsavel":
+      user = await prisma.responsavel.findUnique({
+        where: {
+          email: session?.user?.email ?? undefined,
+        },
+      });
+  }
 
-  console.log("User:", user);
-
-  return session;
+  return user;
 }
 
 export default async function ClientePage() {
   const data = await getData();
-  return <h1>Cliente Works</h1>;
+  return <h1>Página de Alunos e Responsaveis, Works!</h1>;
 }

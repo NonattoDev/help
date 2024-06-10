@@ -1,8 +1,9 @@
 import { authOptions } from "@/app/lib/auth";
-import { PrismaClient, Prisma } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { EditProfessor } from "./Components/EditProfessor";
+import EditAluno from "./Components/EditAluno";
 
 async function getUserData(id: string) {
   const prisma = new PrismaClient();
@@ -10,6 +11,8 @@ async function getUserData(id: string) {
   const session = await getServerSession(authOptions);
 
   let userData: any;
+  let allMaterias: any;
+  let series: any;
 
   switch (session?.user?.accessLevel) {
     case "administrador":
@@ -21,7 +24,11 @@ async function getUserData(id: string) {
     case "aluno":
       userData = await prisma.aluno.findUnique({
         where: { id: id },
+        include: {
+          responsavel: true,
+        },
       });
+      series = await prisma.series.findMany();
       break;
     case "responsavel":
       userData = await prisma.responsavel.findUnique({
@@ -31,16 +38,12 @@ async function getUserData(id: string) {
     case "professor":
       userData = await prisma.professor.findUnique({
         where: { id: id },
-        include: {
-          AgendaAulas: true,
-        },
       });
+      allMaterias = await prisma.materias.findMany();
       break;
     default:
       break;
   }
-
-  const allMaterias = await prisma.materias.findMany();
 
   prisma.$disconnect();
 
@@ -48,16 +51,17 @@ async function getUserData(id: string) {
     redirect("/");
   }
 
-  return { userData, allMaterias };
+  return { userData, allMaterias, series };
 }
 
 export default async function configMeuperfilPage({ params }: { params: { id: string } }) {
-  const { userData, allMaterias } = await getUserData(params.id);
+  const { userData, allMaterias, series } = await getUserData(params.id);
 
   return (
     <div>
       <p className="text-xl text-center mb-2">Olá, {userData.nome}! Esta é a página do seu perfil.</p>
       {userData.accessLevel === "professor" && <EditProfessor professor={userData} allMaterias={allMaterias} />}
+      {userData.accessLevel === "aluno" && <EditAluno aluno={userData} series={series} />}
     </div>
   );
 }

@@ -57,7 +57,7 @@ CREATE TABLE "Aluno" (
     "telefone" TEXT NOT NULL,
     "endereco" JSONB NOT NULL,
     "ficha" TEXT NOT NULL,
-    "modalidade" TEXT NOT NULL,
+    "modalidade" JSONB NOT NULL DEFAULT '{"presencial": true, "online": true}',
     "qtd_aulas" INTEGER NOT NULL,
     "data_inicio" TIMESTAMP(3) NOT NULL,
     "password" TEXT NOT NULL,
