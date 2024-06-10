@@ -11,7 +11,7 @@ async function getUserData(id: string) {
   const session = await getServerSession(authOptions);
 
   let userData: any;
-  let allMaterias: any;
+  let materias: any;
   let series: any;
 
   switch (session?.user?.accessLevel) {
@@ -28,6 +28,7 @@ async function getUserData(id: string) {
           responsavel: true,
         },
       });
+      materias = await prisma.materias.findMany();
       series = await prisma.series.findMany();
       break;
     case "responsavel":
@@ -39,7 +40,7 @@ async function getUserData(id: string) {
       userData = await prisma.professor.findUnique({
         where: { id: id },
       });
-      allMaterias = await prisma.materias.findMany();
+      materias = await prisma.materias.findMany();
       break;
     default:
       break;
@@ -51,17 +52,17 @@ async function getUserData(id: string) {
     redirect("/");
   }
 
-  return { userData, allMaterias, series };
+  return { userData, materias, series };
 }
 
 export default async function configMeuperfilPage({ params }: { params: { id: string } }) {
-  const { userData, allMaterias, series } = await getUserData(params.id);
+  const { userData, materias, series } = await getUserData(params.id);
 
   return (
     <div>
       <p className="text-xl text-center mb-2">Olá, {userData.nome}! Esta é a página do seu perfil.</p>
-      {userData.accessLevel === "professor" && <EditProfessor professor={userData} allMaterias={allMaterias} />}
-      {userData.accessLevel === "aluno" && <EditAluno aluno={userData} series={series} />}
+      {userData.accessLevel === "professor" && <EditProfessor professor={userData} materias={materias} />}
+      {userData.accessLevel === "aluno" && <EditAluno aluno={userData} series={series} materias={materias} />}
     </div>
   );
 }

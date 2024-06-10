@@ -4,8 +4,9 @@ import { Aluno } from "./Interfaces/Aluno";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { Series } from "@prisma/client";
+import { Materia } from "./Interfaces/Professor";
 
-export default function EditAluno({ aluno, series }: { aluno: Aluno; series: Series[] }) {
+export default function EditAluno({ aluno, series, materias }: { aluno: Aluno; series: Series[]; materias: Materia[] }) {
   const [formData, setFormData] = useState(aluno);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -50,6 +51,14 @@ export default function EditAluno({ aluno, series }: { aluno: Aluno; series: Ser
     }
 
     toast.success("Salvo com sucesso");
+  };
+
+  const handleMateriasChange = (id: string) => {
+    setFormData((prev) => {
+      console.log(prev);
+      const newDificuldades = prev.dificuldades.includes(id) ? prev.dificuldades.filter((materiaId) => materiaId !== id) : [...prev.dificuldades, id];
+      return { ...prev, dificuldades: newDificuldades };
+    });
   };
 
   const handleFetchCep = async (cep: string) => {
@@ -120,14 +129,69 @@ export default function EditAluno({ aluno, series }: { aluno: Aluno; series: Ser
         <div id="enderecoDiv" className="mt-8">
           <h2 className="text-md text-center font-bold mb-5">Endereço</h2>
           <div className="grid grid-cols-4 gap-4">
-            <input onBlur={(e) => handleFetchCep(e.target.value)} type="text" name="endereco.cep" value={formData.endereco.cep} onChange={handleChange} className="input input-bordered" required />
-            <input type="text" name="endereco.rua" value={formData.endereco.rua} onChange={handleChange} className="input input-bordered" required />
-            <input type="text" name="endereco.numero" value={formData.endereco.numero} onChange={handleChange} className="input input-bordered" required />
-            <input type="text" name="endereco.complemento" value={formData.endereco.complemento} onChange={handleChange} className="input input-bordered" required />
-            <input type="text" name="endereco.bairro" value={formData.endereco.bairro} onChange={handleChange} className="input input-bordered" required />
-            <input type="text" name="endereco.cidade" value={formData.endereco.cidade} onChange={handleChange} className="input input-bordered" required />
-            <input type="text" name="endereco.estado" value={formData.endereco.estado} onChange={handleChange} className="input input-bordered" required />
-            <input type="text" name="endereco.referencia" value={formData.endereco.referencia} onChange={handleChange} className="input input-bordered" required />
+            <div>
+              <label className="label">
+                <span className="label-text">CEP</span>
+              </label>
+              <input
+                onBlur={(e) => handleFetchCep(e.target.value)}
+                type="text"
+                name="endereco.cep"
+                value={formData.endereco.cep}
+                onChange={handleChange}
+                className="input input-bordered w-full"
+                required
+              />
+            </div>
+
+            <div>
+              <label className="label">
+                <span className="label-text">Rua</span>
+              </label>
+              <input type="text" name="endereco.rua" value={formData.endereco.rua} onChange={handleChange} className="input input-bordered w-full" required />
+            </div>
+
+            <div>
+              <label className="label">
+                <span className="label-text">Número</span>
+              </label>
+              <input type="text" name="endereco.numero" value={formData.endereco.numero} onChange={handleChange} className="input input-bordered w-full" required />
+            </div>
+
+            <div>
+              <label className="label">
+                <span className="label-text">Complemento</span>
+              </label>
+              <input type="text" name="endereco.complemento" value={formData.endereco.complemento} onChange={handleChange} className="input input-bordered w-full" required />
+            </div>
+
+            <div>
+              <label className="label">
+                <span className="label-text">Bairro</span>
+              </label>
+              <input type="text" name="endereco.bairro" value={formData.endereco.bairro} onChange={handleChange} className="input input-bordered w-full" required />
+            </div>
+
+            <div>
+              <label className="label">
+                <span className="label-text">Cidade</span>
+              </label>
+              <input type="text" name="endereco.cidade" value={formData.endereco.cidade} onChange={handleChange} className="input input-bordered w-full" required />
+            </div>
+
+            <div>
+              <label className="label">
+                <span className="label-text">Estado</span>
+              </label>
+              <input type="text" name="endereco.estado" value={formData.endereco.estado} onChange={handleChange} className="input input-bordered w-full" required />
+            </div>
+
+            <div>
+              <label className="label">
+                <span className="label-text">Referência</span>
+              </label>
+              <input type="text" name="endereco.referencia" value={formData.endereco.referencia} onChange={handleChange} className="input input-bordered w-full" required />
+            </div>
           </div>
         </div>
 
@@ -141,6 +205,18 @@ export default function EditAluno({ aluno, series }: { aluno: Aluno; series: Ser
             <span className="text-md mr-2">Presencial</span>
             <input type="checkbox" name="presencial" checked={formData.modalidade.presencial} onChange={handleCheckboxChange} className="checkbox checkbox-primary" />
           </label>
+        </div>
+
+        <div id="materias" className="mt-8">
+          <h2 className="text-md text-center font-bold mb-5">Quais matérias você deseja aprimorar ?</h2>
+          <div className="grid grid-cols-4 gap-4 ">
+            {materias.map((materia) => (
+              <label key={materia.id} className="flex items-center cursor-pointer">
+                <input type="checkbox" name={`dificuldades`} checked={formData.dificuldades.includes(materia.id)} onChange={() => handleMateriasChange(materia.id)} className="checkbox" />
+                <span className="label-text ml-2">{materia.materia}</span>
+              </label>
+            ))}
+          </div>
         </div>
 
         <div className="flex justify-end mt-8">

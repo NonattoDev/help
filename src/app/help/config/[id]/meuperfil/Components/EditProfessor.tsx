@@ -5,7 +5,7 @@ import { BiTrash } from "react-icons/bi";
 import { toast } from "react-toastify";
 import { Dia, Materia, Professor, Turno } from "./Interfaces/Professor";
 
-export function EditProfessor({ professor, allMaterias }: { professor: Professor; allMaterias: Materia[] }) {
+export function EditProfessor({ professor, materias }: { professor: Professor; materias: Materia[] }) {
   const [formData, setFormData] = React.useState<Professor>(professor);
 
   function setNestedValue(obj: any, path: string, value: any) {
@@ -210,7 +210,7 @@ export function EditProfessor({ professor, allMaterias }: { professor: Professor
         <div id="materias" className="mt-8">
           <h2 className="text-md text-center font-bold mb-5">Matérias</h2>
           <div className="grid grid-cols-4 gap-4 ">
-            {allMaterias.map((materia) => (
+            {materias.map((materia) => (
               <label key={materia.id} className="flex items-center cursor-pointer">
                 <input type="checkbox" name={`materias`} checked={formData.materias.includes(materia.id)} onChange={() => handleMateriasChange(materia.id)} className="checkbox" />
                 <span className="label-text ml-2">{materia.materia}</span>

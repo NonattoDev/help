@@ -25,6 +25,7 @@ export async function PUT(request: Request, params: any) {
           endereco: userData.endereco,
           ficha: userData.ficha,
           modalidade: userData.modalidade,
+          dificuldades: userData.dificuldades,
         },
       });
 
