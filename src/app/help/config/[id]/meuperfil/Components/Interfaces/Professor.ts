@@ -7,7 +7,7 @@ export interface Materia {
 }
 
 export interface Professor {
-  id: string;
+  id?: string;
   nome: string;
   email: string;
   cpf: string;
@@ -20,6 +20,8 @@ export interface Professor {
     cidade: string;
     estado: string;
     cep: string;
+    complemento: string;
+    referencia: string;
   };
   areaFormacao: Array<{ area: string; semestre: string; finalizado: boolean }>;
   modalidade: {
@@ -32,6 +34,6 @@ export interface Professor {
     };
   };
   materias: string[];
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

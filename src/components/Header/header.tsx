@@ -7,6 +7,17 @@ import { authOptions } from "@/app/lib/auth";
 import MyProfileButton from "./Components/MyProfile";
 import prisma from "../../../prisma/prismaInstance";
 import { Professor } from "@prisma/client";
+import { Suspense } from "react";
+
+export const revalidate = 10;
+
+function LoadingFallback() {
+  return (
+    <div className="p-4">
+      <p>Carregando...</p>
+    </div>
+  );
+}
 
 const getData = async () => {
   const professoresFromDB = await prisma.professor.findMany();
@@ -50,7 +61,11 @@ const Header = async () => {
       {/* Meio do Header*/}
       <div>
         {(session?.user.accessLevel === "administrador" || session?.user.accessLevel === "administrativo") && <MatchButton />}
-        {(session?.user.accessLevel === "administrador" || session?.user.accessLevel === "administrativo") && <ManutencaoButton professores={professores} />}
+        {(session?.user.accessLevel === "administrador" || session?.user.accessLevel === "administrativo") && (
+          <Suspense fallback={<LoadingFallback />}>
+            <ManutencaoButton professores={professores} />
+          </Suspense>
+        )}
       </div>
 
       {/* Fim Header */}
