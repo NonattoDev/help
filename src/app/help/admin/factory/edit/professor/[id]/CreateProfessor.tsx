@@ -4,11 +4,14 @@ import axios from "axios";
 import React from "react";
 import { BiTrash } from "react-icons/bi";
 import { toast } from "react-toastify";
-import { createEmptyProfessor } from "./utils";
-import bcrypt from "bcryptjs";
+import ReactInputMask from "react-input-mask";
+import LoadingButton from "@/components/Buttons/Loading/loading";
+import { validateCPF } from "@/utils/validateCpf";
+import createEmptyProfessor from "../../../create/professor/CreateEmptyProf";
 
 export default function CreateProfessor({ materias }: { materias: Materia[] }) {
   const [formData, setFormData] = React.useState<Professor>(createEmptyProfessor());
+  const [loading, setLoading] = React.useState(false);
 
   function setNestedValue(obj: any, path: string, value: any) {
     const keys = path.split(".");
@@ -55,8 +58,6 @@ export default function CreateProfessor({ materias }: { materias: Materia[] }) {
       return;
     }
 
-    console.log(data)
-
     setFormData((prev) => ({
       ...prev,
       endereco: {
@@ -69,18 +70,45 @@ export default function CreateProfessor({ materias }: { materias: Materia[] }) {
     }));
   };
 
-  const submitEdit = async (e: React.FormEvent) => {
+  const submitCreate = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
+    let errorCount = 0;
 
+    if (!formData.modalidade.online && !formData.modalidade.presencial) {
+      toast.info("Selecione ao menos uma modalidade");
+      errorCount = errorCount + 1;
+    }
+
+    if (formData.materias.length === 0) {
+      toast.info("Selecione ao menos uma matéria");
+      errorCount = errorCount + 1;
+    }
+
+    if (!validateCPF(formData.cpf)) errorCount++;
+
+    if (formData.areaFormacao.length > 0) {
+      for (const formacao of formData.areaFormacao) {
+        if (formacao.semestre === "") {
+          formacao.semestre = "1";
+        }
+      }
+    }
+
+    if (errorCount > 0) {
+      setLoading(false);
+      return;
+    }
     try {
-      formData.password = bcrypt.hashSync(formData.password, 10);
-
       const response = await axios.post(`/help/admin/factory/create/api/`, { formData, typeEdit: "professor" });
 
       if (response.status === 200) {
-        toast.success("Dados atualizados com sucesso");
+        toast.success("Professor cadastrado com sucesso!");
+        setFormData(createEmptyProfessor());
+        setLoading(false);
       }
     } catch (error: any) {
+      setLoading(false);
       if (error && error.response && error.response.data) {
         toast.error(error.response.data.message);
         return;
@@ -91,7 +119,7 @@ export default function CreateProfessor({ materias }: { materias: Materia[] }) {
 
   return (
     <div>
-      <form onSubmit={submitEdit}>
+      <form onSubmit={submitCreate}>
         <h2 className="text-md text-center font-bold mb-5">Dados Pessoais</h2>
         <div className="grid grid-cols-4 gap-4">
           <div className="form-control">
@@ -110,13 +138,33 @@ export default function CreateProfessor({ materias }: { materias: Materia[] }) {
             <label className="label">
               <span className="label-text">CPF</span>
             </label>
-            <input type="text" name="cpf" value={formData.cpf} onChange={handleChange} className="input input-bordered" required />
+            <ReactInputMask
+              mask={"999.999.999-99"}
+              maskPlaceholder={null}
+              alwaysShowMask={false}
+              type="text"
+              name="cpf"
+              value={formData.cpf}
+              onChange={handleChange}
+              className="input input-bordered"
+              required
+            />
           </div>
           <div className="form-control">
             <label className="label">
               <span className="label-text">Telefone</span>
             </label>
-            <input type="text" name="telefone" value={formData.telefone} onChange={handleChange} className="input input-bordered" required />
+            <ReactInputMask
+              mask="(99) 99999-9999"
+              alwaysShowMask={false}
+              maskPlaceholder={null}
+              type="text"
+              name="telefone"
+              value={formData.telefone}
+              onChange={handleChange}
+              className="input input-bordered"
+              required
+            />
           </div>
           <div className="form-control">
             <label className="label">
@@ -133,7 +181,18 @@ export default function CreateProfessor({ materias }: { materias: Materia[] }) {
               <label className="label">
                 <span className="label-text">CEP</span>
               </label>
-              <input onBlur={(e) => fetchCep(e)} type="text" name="endereco.cep" value={formData.endereco.cep} onChange={handleChange} className="input input-bordered w-full" required />
+              <ReactInputMask
+                mask={"99999999"}
+                alwaysShowMask={false}
+                maskPlaceholder={null}
+                onBlur={(e) => fetchCep(e)}
+                type="text"
+                name="endereco.cep"
+                value={formData.endereco.cep}
+                onChange={handleChange}
+                className="input input-bordered w-full"
+                required
+              />
             </div>
 
             <div>
@@ -154,7 +213,7 @@ export default function CreateProfessor({ materias }: { materias: Materia[] }) {
               <label className="label">
                 <span className="label-text">Complemento</span>
               </label>
-              <input type="text" name="endereco.complemento" value={formData.endereco.complemento} onChange={handleChange} className="input input-bordered w-full" required />
+              <input type="text" name="endereco.complemento" value={formData.endereco.complemento} onChange={handleChange} className="input input-bordered w-full" />
             </div>
 
             <div>
@@ -182,7 +241,7 @@ export default function CreateProfessor({ materias }: { materias: Materia[] }) {
               <label className="label">
                 <span className="label-text">Referência</span>
               </label>
-              <input type="text" name="endereco.referencia" value={formData.endereco.referencia} onChange={handleChange} className="input input-bordered w-full" required />
+              <input type="text" name="endereco.referencia" value={formData.endereco.referencia} onChange={handleChange} className="input input-bordered w-full" />
             </div>
           </div>
         </div>
@@ -191,8 +250,8 @@ export default function CreateProfessor({ materias }: { materias: Materia[] }) {
           <h2 className="text-md text-center font-bold mb-5">Área de Formação</h2>
           {formData.areaFormacao.map((area, index) => (
             <div key={index} className="grid grid-cols-4 gap-4 mb-5">
-              <input type="text" name={`areaFormacao.${index}.area`} value={area?.area} onChange={handleChange} className="input input-bordered" required />
-              <select name={`areaFormacao.${index}.semestre`} value={area?.semestre} onChange={handleChange} className="input input-bordered" required>
+              <input placeholder="Curso" type="text" name={`areaFormacao.${index}.area`} value={area?.area} onChange={handleChange} className="input input-bordered" required />
+              <select name={`areaFormacao.${index}.semestre`} value={area?.semestre || 1} onChange={handleChange} className="input input-bordered" required>
                 {Array.from({ length: 10 }, (_, i) => i + 1).map((semestre) => (
                   <option key={semestre} value={semestre}>
                     {semestre}º Semestre
@@ -223,7 +282,7 @@ export default function CreateProfessor({ materias }: { materias: Materia[] }) {
           <button
             type="button"
             onClick={() => {
-              setFormData({ ...formData, areaFormacao: [...formData.areaFormacao, { area: "", semestre: "", finalizado: false }] });
+              setFormData({ ...formData, areaFormacao: [...formData.areaFormacao, { area: "", semestre: "1", finalizado: false }] });
             }}
             className="btn btn-secondary w-fit mx-auto block"
           >
@@ -278,9 +337,13 @@ export default function CreateProfessor({ materias }: { materias: Materia[] }) {
         </div>
 
         <div className="flex justify-end mt-8">
-          <button type="submit" className="btn btn-primary">
-            Salvar
-          </button>
+          {loading ? (
+            <LoadingButton />
+          ) : (
+            <button type="submit" className="btn btn-primary">
+              Salvar
+            </button>
+          )}
         </div>
       </form>
     </div>

@@ -9,6 +9,13 @@ export async function PUT(request: Request, params: any) {
     userData.password = await bcrypt.hash(userData.password, 10);
   }
 
+  userData.email = userData.email.toLowerCase();
+  userData.telefone = userData.telefone.replace(/\D/g, "");
+
+  if (typeEdit !== "aluno") {
+    userData.cpf = userData.cpf.replace(/\D/g, "");
+  }
+
   try {
     let updatedUser;
 
@@ -17,7 +24,6 @@ export async function PUT(request: Request, params: any) {
         where: { id: userID },
         data: {
           nome: userData.nome,
-          email: userData.email,
           escola: userData.escola,
           ano_escolar: userData.ano_escolar,
           telefone: userData.telefone,
@@ -33,8 +39,6 @@ export async function PUT(request: Request, params: any) {
         where: { id: userID },
         data: {
           nome: userData.nome,
-          email: userData.email,
-          cpf: userData.cpf,
           telefone: userData.telefone,
           endereco: userData.endereco,
           areaFormacao: userData.areaFormacao,
@@ -51,8 +55,6 @@ export async function PUT(request: Request, params: any) {
         where: { id: userID },
         data: {
           nome: userData.nome,
-          email: userData.email,
-          cpf: userData.cpf,
           telefone: userData.telefone,
           password: userData.password,
           endereco: userData.endereco,
@@ -63,8 +65,6 @@ export async function PUT(request: Request, params: any) {
         where: { id: userID },
         data: {
           nome: userData.nome,
-          email: userData.email,
-          cpf: userData.cpf,
           cargo: userData.cargo,
           telefone: userData.telefone,
           password: userData.password,

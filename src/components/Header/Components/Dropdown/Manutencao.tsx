@@ -1,7 +1,8 @@
 import { Suspense } from "react";
+import ProfessorModalButton from "./ProfessorModal";
+import AlunoModalButton from "./AlunosModal";
+import { Aluno } from "@/app/help/config/[id]/meuperfil/Components/Interfaces/Aluno";
 import { Professor } from "@prisma/client";
-import { PiStudentFill } from "react-icons/pi";
-import ProfessorModalButton from "./Modal";
 
 function LoadingFallback() {
   return (
@@ -11,7 +12,7 @@ function LoadingFallback() {
   );
 }
 
-export function ManutencaoButton({ professores }: { professores: Professor[] | undefined | null }) {
+export function ManutencaoButton({ professores, alunos }: { professores: Professor[] | undefined | null; alunos: Aluno[] | undefined | null }) {
   return (
     <Suspense fallback={<LoadingFallback />}>
       <div className="dropdown dropdown-hover">
@@ -23,9 +24,7 @@ export function ManutencaoButton({ professores }: { professores: Professor[] | u
             <ProfessorModalButton professores={professores} />
           </li>
           <li>
-            <a>
-              <PiStudentFill /> Aluno
-            </a>
+            <AlunoModalButton alunos={alunos} />
           </li>
         </ul>
       </div>

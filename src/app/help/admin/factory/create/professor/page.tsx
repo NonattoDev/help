@@ -1,5 +1,5 @@
 import prisma from "../../../../../../../prisma/prismaInstance";
-import CreateProfessor from "../Components/CreateProfessor/CreateProfessor";
+import CreateProfessor from "./CreateProfessor";
 
 async function getDados() {
   let materias = await prisma.materias.findMany();

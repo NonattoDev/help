@@ -2,11 +2,13 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { Responsavel } from "./Interfaces/Responsavel";
+import { Series } from "@prisma/client";
 import ReactInputMask from "react-input-mask";
+import { Materia } from "@/app/help/config/[id]/meuperfil/Components/Interfaces/Professor";
+import createEmptyAluno from "./CreateEmptyAluno";
 
-export default function EditResponsavel({ responsavel }: { responsavel: Responsavel }) {
-  const [formData, setFormData] = useState(responsavel);
+export default function EditAluno({ series, materias }: { series: Series[]; materias: Materia[] }) {
+  const [formData, setFormData] = useState(createEmptyAluno());
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -24,13 +26,23 @@ export default function EditResponsavel({ responsavel }: { responsavel: Responsa
     }
   };
 
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = e.target;
+    setFormData({
+      ...formData,
+      modalidade: {
+        ...formData.modalidade,
+        [name]: checked,
+      },
+    });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const response = await axios.put(`/help/config/${formData.id}/meuperfil/editar`, {
+    const response = await axios.put(`/help/admin/factory/create/api/`, {
       formData,
-      senhaAntiga: responsavel.password,
-      typeEdit: "responsavel",
+      typeEdit: "aluno",
     });
 
     if (response.status !== 200) {
@@ -39,6 +51,13 @@ export default function EditResponsavel({ responsavel }: { responsavel: Responsa
     }
 
     toast.success("Salvo com sucesso");
+  };
+
+  const handleMateriasChange = (id: string) => {
+    setFormData((prev) => {
+      const newDificuldades = prev.dificuldades.includes(id) ? prev.dificuldades.filter((materiaId) => materiaId !== id) : [...prev.dificuldades, id];
+      return { ...prev, dificuldades: newDificuldades };
+    });
   };
 
   const handleFetchCep = async (cep: string) => {
@@ -84,23 +103,6 @@ export default function EditResponsavel({ responsavel }: { responsavel: Responsa
           </div>
           <div className="form-control">
             <label className="label">
-              <span className="label-text">CPF</span>
-            </label>
-            <ReactInputMask
-              mask={"999.999.999-99"}
-              maskPlaceholder={null}
-              alwaysShowMask={false}
-              type="text"
-              name="cpf"
-              value={formData.cpf}
-              onChange={handleChange}
-              className="input input-bordered"
-              disabled
-              required
-            />
-          </div>
-          <div className="form-control">
-            <label className="label">
               <span className="label-text">Telefone</span>
             </label>
             <ReactInputMask
@@ -121,6 +123,16 @@ export default function EditResponsavel({ responsavel }: { responsavel: Responsa
             </label>
             <input type="password" name="password" value={formData.password} onChange={handleChange} className="input input-bordered" required />
           </div>
+          <div className="form-control mt-4">
+            <label className="label">Qual sua série atual ?</label>
+            <select className="input input-bordered" name="ano_escolar" onChange={handleChange}>
+              {series.map((item) => (
+                <option key={item.id} value={item.serie}>
+                  {item.serie}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
         <div id="enderecoDiv" className="mt-8">
@@ -130,10 +142,7 @@ export default function EditResponsavel({ responsavel }: { responsavel: Responsa
               <label className="label">
                 <span className="label-text">CEP</span>
               </label>
-              <ReactInputMask
-                mask={"99999999"}
-                alwaysShowMask={false}
-                maskPlaceholder={null}
+              <input
                 onBlur={(e) => handleFetchCep(e.target.value)}
                 type="text"
                 name="endereco.cep"
@@ -192,6 +201,30 @@ export default function EditResponsavel({ responsavel }: { responsavel: Responsa
               </label>
               <input type="text" name="endereco.referencia" value={formData.endereco.referencia} onChange={handleChange} className="input input-bordered w-full" required />
             </div>
+          </div>
+        </div>
+
+        <div className="form-control mt-8">
+          <h2 className="text-md text-center font-bold mb-5">Modalidade</h2>
+          <label className="flex items-center cursor-pointer w-fit">
+            <span className="text-md mr-2">Online</span>
+            <input type="checkbox" name="online" checked={formData.modalidade.online} onChange={handleCheckboxChange} className="checkbox checkbox-primary" />
+          </label>
+          <label className="flex items-center cursor-pointer w-fit">
+            <span className="text-md mr-2">Presencial</span>
+            <input type="checkbox" name="presencial" checked={formData.modalidade.presencial} onChange={handleCheckboxChange} className="checkbox checkbox-primary" />
+          </label>
+        </div>
+
+        <div id="materias" className="mt-8">
+          <h2 className="text-md text-center font-bold mb-5">Quais matérias você deseja aprimorar ?</h2>
+          <div className="grid grid-cols-4 gap-4 ">
+            {materias.map((materia) => (
+              <label key={materia.id} className="flex items-center cursor-pointer">
+                <input type="checkbox" name={`dificuldades`} checked={formData.dificuldades.includes(materia.id)} onChange={() => handleMateriasChange(materia.id)} className="checkbox" />
+                <span className="label-text ml-2">{materia.materia}</span>
+              </label>
+            ))}
           </div>
         </div>
 

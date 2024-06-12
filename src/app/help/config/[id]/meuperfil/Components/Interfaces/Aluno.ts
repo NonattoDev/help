@@ -1,5 +1,5 @@
 export interface Aluno {
-  id: string;
+  id?: string;
   nome: string;
   email: string;
   escola: string;
@@ -21,14 +21,14 @@ export interface Aluno {
     presencial: boolean;
   };
   qtd_aulas: number;
-  data_inicio: Date;
+  data_inicio: string;
   password: string;
-  responsavelId: string;
+  responsavelId?: string;
   dificuldades: string[];
-  accessLevel: string;
-  ativo: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-  financeiro: any;
-  AgendaAulas: any;
+  accessLevel?: string;
+  ativo?: boolean;
+  financeiro?: any;
+  AgendaAulas?: any;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

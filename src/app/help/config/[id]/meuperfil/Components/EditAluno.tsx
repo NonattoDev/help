@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { Series } from "@prisma/client";
 import { Materia } from "./Interfaces/Professor";
+import ReactInputMask from "react-input-mask";
 
 export default function EditAluno({ aluno, series, materias }: { aluno: Aluno; series: Series[]; materias: Materia[] }) {
   const [formData, setFormData] = useState(aluno);
@@ -106,7 +107,17 @@ export default function EditAluno({ aluno, series, materias }: { aluno: Aluno; s
             <label className="label">
               <span className="label-text">Telefone</span>
             </label>
-            <input type="text" name="telefone" value={formData.telefone} onChange={handleChange} className="input input-bordered" required />
+            <ReactInputMask
+              mask="(99) 99999-9999"
+              alwaysShowMask={false}
+              maskPlaceholder={null}
+              type="text"
+              name="telefone"
+              value={formData.telefone}
+              onChange={handleChange}
+              className="input input-bordered"
+              required
+            />
           </div>
           <div className="form-control">
             <label className="label">

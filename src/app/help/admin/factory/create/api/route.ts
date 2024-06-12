@@ -1,10 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../../../../../../prisma/prismaInstance";
+import bcrypt from "bcryptjs";
 
 export async function POST(request: Request, params: any) {
   let { formData: userData, typeEdit } = await request.json();
 
   userData.cpf = userData.cpf.replace(/\D/g, "");
+  userData.password = bcrypt.hashSync(userData.password, 10);
+  userData.telefone = userData.telefone.replace(/\D/g, "");
+  userData.email = userData.email.toLowerCase();
 
   try {
     // Consulta para verificar a existência do usuário em várias tabelas
@@ -30,7 +34,18 @@ export async function POST(request: Request, params: any) {
     ]);
 
     if (professorExists || alunoExists || administrativoExists || usuarioExists) {
-      return NextResponse.json({ message: "User already exists" }, { status: 409 });
+      return NextResponse.json({ message: "Usuário já cadastrado no sistema!" }, { status: 409 });
+    }
+
+    // Criação do usuário
+    if (typeEdit === "professor") {
+      await prisma.professor.create({
+        data: userData,
+      });
+    } else if (typeEdit === "aluno") {
+      await prisma.aluno.create({
+        data: userData,
+      });
     }
 
     return NextResponse.json({ message: "ok" }, { status: 200 });

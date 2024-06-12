@@ -108,7 +108,7 @@ export default function ProfessorModalButton({ professores }: ProfessorModalButt
                     <td>{professor.nome}</td>
                     <td>{professor.email.toLowerCase()}</td>
                     <td>
-                      <Link className="btn btn-outline btn-sm" href={`/help/config/${professor.id}/meuperfil`}>
+                      <Link className="btn btn-outline btn-sm" onClick={closeModal} href={`/help/admin/factory/edit/professor/${professor.id}`}>
                         <BiEdit />
                       </Link>
                     </td>

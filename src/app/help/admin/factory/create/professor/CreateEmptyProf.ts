@@ -1,6 +1,6 @@
 import { Professor } from "@/app/help/config/[id]/meuperfil/Components/Interfaces/Professor";
 
-export const createEmptyProfessor = (): Professor => ({
+const createEmptyProfessor = (): Professor => ({
   nome: "",
   email: "",
   cpf: "",
@@ -32,4 +32,4 @@ export const createEmptyProfessor = (): Professor => ({
   materias: [],
 });
 
-export const createEmptyAluno = (): any => ({});
+export default createEmptyProfessor;
