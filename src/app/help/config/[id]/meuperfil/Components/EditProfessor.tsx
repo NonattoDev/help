@@ -28,6 +28,14 @@ export default function EditProfessor({ professor, materias, accessLevel }: { pr
     });
   };
 
+  const handleToggleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: checked,
+    }));
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => {
@@ -73,6 +81,7 @@ export default function EditProfessor({ professor, materias, accessLevel }: { pr
     e.preventDefault();
     setLoading(true);
     let errorCount = 0;
+    console.log(formData);
 
     if (!formData.modalidade.online && !formData.modalidade.presencial) {
       toast.info("Selecione ao menos uma modalidade");
@@ -119,7 +128,16 @@ export default function EditProfessor({ professor, materias, accessLevel }: { pr
   return (
     <div>
       <form onSubmit={submitEdit}>
-        <h2 className="text-md text-center font-bold mb-5">Dados Pessoais</h2>
+        <div>
+          <div className="form-control w-52">
+            <label className="cursor-pointer label">
+              <span className="label-text">Professor ativo ?</span>
+              <input type="checkbox" name="ativo" checked={formData.ativo} onChange={handleToggleChange} className="toggle  toggle-info" />
+            </label>
+          </div>
+
+          <h2 className="text-md text-center font-bold mb-5">Dados Pessoais</h2>
+        </div>
         <div className="grid grid-cols-4 gap-4">
           <div className="form-control">
             <label className="label">

@@ -61,17 +61,16 @@ model Aluno {
   endereco      Json
   ficha         String
   modalidade    Json            @default("{\"presencial\": true, \"online\": true}")   
-  qtd_aulas     Int
   password      String
   responsavelId String
   responsavel   Responsavel         @relation(fields: [responsavelId], references: [id])
+  financeiro    Json                
   dificuldades  String[]
   accessLevel   String              @default("aluno")
   ativo         Boolean             @default(true)
   createdAt     DateTime            @default(now())
   updatedAt     DateTime            @updatedAt
   dadosFinanceiro    Financeiro[]
-  financeiro    Json
   AgendaAulas   AgendaAulas[]
 }
 

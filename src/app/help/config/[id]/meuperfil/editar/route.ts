@@ -2,7 +2,7 @@ import bcrypt from "bcryptjs";
 import prisma from "../../../../../../../prisma/prismaInstance";
 
 export async function PUT(request: Request, params: any) {
-  const { formData: userData, senhaAntiga, typeEdit } = await request.json();
+  const { formData: userData, senhaAntiga, typeEdit, responsavelData } = await request.json();
   const userID = params.params.id;
 
   if (senhaAntiga !== userData.password) {
@@ -18,6 +18,7 @@ export async function PUT(request: Request, params: any) {
 
   try {
     let updatedUser;
+    let updateResponsavel;
 
     if (typeEdit === "aluno") {
       updatedUser = await prisma.aluno.update({
@@ -33,6 +34,11 @@ export async function PUT(request: Request, params: any) {
           modalidade: userData.modalidade,
           dificuldades: userData.dificuldades,
         },
+      });
+
+      let updateResponsavel = await prisma.responsavel.update({
+        where: { id: responsavelData.id },
+        data: responsavelData,
       });
     } else if (typeEdit === "professor") {
       updatedUser = await prisma.professor.update({
@@ -72,7 +78,7 @@ export async function PUT(request: Request, params: any) {
       });
     }
 
-    if (!updatedUser) {
+    if (!updatedUser && !updateResponsavel) {
       return new Response(JSON.stringify({ error: "Usuário não encontrado" }), { status: 404 });
     }
 

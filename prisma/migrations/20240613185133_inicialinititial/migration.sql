@@ -59,15 +59,14 @@ CREATE TABLE "Aluno" (
     "endereco" JSONB NOT NULL,
     "ficha" TEXT NOT NULL,
     "modalidade" JSONB NOT NULL DEFAULT '{"presencial": true, "online": true}',
-    "qtd_aulas" INTEGER NOT NULL,
     "password" TEXT NOT NULL,
     "responsavelId" TEXT NOT NULL,
+    "financeiro" JSONB NOT NULL,
     "dificuldades" TEXT[],
     "accessLevel" TEXT NOT NULL DEFAULT 'aluno',
     "ativo" BOOLEAN NOT NULL DEFAULT true,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "financeiro" JSONB NOT NULL,
 
     CONSTRAINT "Aluno_pkey" PRIMARY KEY ("id")
 );

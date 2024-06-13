@@ -8,7 +8,8 @@ import { Materia } from "@/app/help/config/[id]/meuperfil/Components/Interfaces/
 import createEmptyAluno from "./CreateEmptyAluno";
 import createEmptyResponsavel from "./CreateEmptyResponsavel";
 import { validateCPF } from "@/utils/validateCpf";
-import validaResponsavel from "../../create/aluno/Utils/ValidaResponsavel";
+import validaResponsavel from "@/utils/ValidaResponsavel";
+import moment from "moment";
 
 export default function CreateAluno({ series, materias }: { series: Series[]; materias: Materia[] }) {
   const [alunoData, setAlunoData] = useState(createEmptyAluno());
@@ -24,6 +25,15 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
         endereco: {
           ...alunoData.endereco,
           [enderecoKey]: value,
+        },
+      });
+    } else if (name.startsWith("financeiro.")) {
+      const financeiroKey = name.split(".")[1];
+      setAlunoData({
+        ...alunoData,
+        financeiro: {
+          ...alunoData.financeiro,
+          [financeiroKey]: value,
         },
       });
     } else {
@@ -58,6 +68,29 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
     });
   };
 
+  const formatCurrency = (value: string) => {
+    const numberValue = parseFloat(value.replace(/[^\d]/g, "")) / 100;
+    return numberValue.toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    });
+  };
+
+  const handleCurrencyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    const unformattedValue = value.replace(/[^\d]/g, ""); // Remove tudo que não é dígito
+    if (value === "") return setAlunoData((prev) => ({ ...prev, financeiro: { ...prev.financeiro, valor: "" } }));
+    const formattedValue = formatCurrency(unformattedValue);
+
+    setAlunoData((prev) => ({
+      ...prev,
+      financeiro: {
+        ...prev.financeiro,
+        [name.split(".")[1]]: formattedValue,
+      },
+    }));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -83,9 +116,18 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
 
     if (countError > 0) return;
 
+    // Remover a formatação do valor ao enviar para o backend
+    const cleanedAlunoData = {
+      ...alunoData,
+      financeiro: {
+        ...alunoData.financeiro,
+        valor: alunoData.financeiro.valor.replace(/[^\d]/g, ""),
+      },
+    };
+
     try {
       const response = await axios.post(`/help/admin/factory/create/api/`, {
-        alunoData,
+        alunoData: cleanedAlunoData,
         responsavelData,
         typeEdit: "aluno",
       });
@@ -323,13 +365,13 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
                 <label className="label">
                   <span className="label-text">Quantidade de aulas mensais</span>
                 </label>
-                <input type="number" name="qtd_aulas" value={alunoData.qtd_aulas} onChange={handleChange} className="input input-bordered w-fit" required />
+                <input type="number" name="financeiro.qtd_aulas" value={alunoData?.financeiro?.qtd_aulas} onChange={handleChange} className="input input-bordered w-fit" required max={moment().daysInMonth()} />
               </div>
               <div className="form-control ">
                 <label className="label">
                   <span className="label-text">Valor</span>
                 </label>
-                <input type="text" name="financeiro.valor" value={alunoData.financeiro.valor} onChange={handleChange} className="input input-bordered w-fit" required />
+                <input type="text" name="financeiro.valor" value={alunoData.financeiro.valor} onChange={handleCurrencyChange} className="input input-bordered w-fit" required />
               </div>
               <div className="form-control">
                 <label className="label">
@@ -340,6 +382,7 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
                   maskPlaceholder={null}
                   alwaysShowMask={false}
                   type="text"
+                  name="financeiro.dta_vencimento"
                   value={alunoData.financeiro.dta_vencimento}
                   onChange={handleChange}
                   className="input input-bordered w-fit"

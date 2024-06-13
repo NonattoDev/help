@@ -1,5 +1,5 @@
 import { Aluno } from "@/app/help/config/[id]/meuperfil/Components/Interfaces/Aluno";
-import moment from "moment";
+import { Responsavel } from "./CreateEmptyResponsavel";
 
 const createEmptyAluno = (): Aluno => ({
   nome: "",
@@ -23,13 +23,14 @@ const createEmptyAluno = (): Aluno => ({
     presencial: false,
   },
   financeiro: {
-    valor: 0,
+    qtd_aulas: 0,
+    valor: "0",
     dta_vencimento: "",
   },
   password: "",
-  qtd_aulas: 0,
   AgendaAulas: {},
   dificuldades: [],
+  responsavel: {} as Responsavel,
 });
 
 export default createEmptyAluno;

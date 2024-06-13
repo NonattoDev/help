@@ -20,13 +20,16 @@ export interface Aluno {
     online: boolean;
     presencial: boolean;
   };
-  qtd_aulas: number;
   password: string;
   responsavelId?: string;
   dificuldades: string[];
   accessLevel?: string;
   ativo?: boolean;
-  financeiro?: any;
+  financeiro: {
+    qtd_aulas: number;
+    valor: string;
+    dta_vencimento: string;
+  };
   AgendaAulas?: any;
   createdAt?: Date;
   updatedAt?: Date;
