@@ -21,7 +21,7 @@ async function getDados(id: string) {
   redirect("/");
 }
 
-export default async function createNewProfessor({ params }: { params: { id: string } }) {
+export default async function adminEditProfessor({ params }: { params: { id: string } }) {
   const { professor, materias, session } = await getDados(params.id);
 
   return <EditProfessor professor={professor} materias={materias} accessLevel={session?.user.accessLevel} />;

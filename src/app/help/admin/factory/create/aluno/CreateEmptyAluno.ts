@@ -31,6 +31,23 @@ const createEmptyAluno = (): Aluno => ({
   },
   AgendaAulas: {},
   dificuldades: [],
+  responsavel: {
+    nome: "",
+    email: "",
+    cpf: "",
+    telefone: "",
+    endereco: {
+      cep: "",
+      rua: "",
+      bairro: "",
+      cidade: "",
+      estado: "",
+      numero: "",
+      referencia: "",
+      complemento: "",
+    },
+    password: "",
+  },
 });
 
 export default createEmptyAluno;

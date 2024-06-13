@@ -7,7 +7,7 @@ import { Series } from "@prisma/client";
 import { Materia } from "./Interfaces/Professor";
 import ReactInputMask from "react-input-mask";
 
-export default function EditAluno({ aluno, series, materias }: { aluno: Aluno; series: Series[]; materias: Materia[] }) {
+export default function EditAluno({ aluno, series, materias, accessLevel }: { aluno: Aluno; series: Series[]; materias: Materia[]; accessLevel?: string }) {
   const [formData, setFormData] = useState(aluno);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
