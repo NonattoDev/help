@@ -62,7 +62,6 @@ model Aluno {
   ficha         String
   modalidade    Json            @default("{\"presencial\": true, \"online\": true}")   
   qtd_aulas     Int
-  data_inicio   DateTime @default(now())
   password      String
   responsavelId String
   responsavel   Responsavel         @relation(fields: [responsavelId], references: [id])
@@ -71,7 +70,8 @@ model Aluno {
   ativo         Boolean             @default(true)
   createdAt     DateTime            @default(now())
   updatedAt     DateTime            @updatedAt
-  financeiro    Financeiro[]
+  dadosFinanceiro    Financeiro[]
+  financeiro    Json
   AgendaAulas   AgendaAulas[]
 }
 

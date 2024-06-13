@@ -81,9 +81,9 @@ export async function createAlunos(prisma: PrismaClient) {
         online: true,
       },
       qtd_aulas: 10,
-      data_inicio: new Date(),
       responsavelId: responsavelMap["responsavelficticio1@gmail.com"],
       ativo: true,
+      financeiro: {},
     },
     {
       nome: "Bruna de Oliveira",
@@ -108,9 +108,9 @@ export async function createAlunos(prisma: PrismaClient) {
         online: false,
       },
       qtd_aulas: 8,
-      data_inicio: new Date(),
       responsavelId: responsavelMap["responsavelficticio2@gmail.com"],
       ativo: true,
+      financeiro: {},
     },
   ];
 

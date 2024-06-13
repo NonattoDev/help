@@ -305,7 +305,7 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
           </div>
 
           <div id="materias" className="mt-8">
-            <h2 className="text-md text-center font-bold mb-5">Quais matérias você deseja aprimorar ?</h2>
+            <h2 className="text-md text-center font-bold mb-5">Quais matérias esse aluno deseja aprimorar ?</h2>
             <div className="grid grid-cols-4 gap-4 ">
               {materias.map((materia) => (
                 <label key={materia.id} className="flex items-center cursor-pointer">
@@ -313,6 +313,39 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
                   <span className="label-text ml-2">{materia.materia}</span>
                 </label>
               ))}
+            </div>
+          </div>
+
+          <div id="divFinanceiro">
+            <h2 className="text-md text-center font-bold mt-8 mb-5">Financeiro</h2>
+            <div className="grid grid-cols-4 gap-4">
+              <div className="form-control ">
+                <label className="label">
+                  <span className="label-text">Quantidade de aulas mensais</span>
+                </label>
+                <input type="number" name="qtd_aulas" value={alunoData.qtd_aulas} onChange={handleChange} className="input input-bordered w-fit" required />
+              </div>
+              <div className="form-control ">
+                <label className="label">
+                  <span className="label-text">Valor</span>
+                </label>
+                <input type="text" name="financeiro.valor" value={alunoData.financeiro.valor} onChange={handleChange} className="input input-bordered w-fit" required />
+              </div>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Selecione uma data de vencimento</span>
+                </label>
+                <ReactInputMask
+                  mask="99/99"
+                  maskPlaceholder={null}
+                  alwaysShowMask={false}
+                  type="text"
+                  value={alunoData.financeiro.dta_vencimento}
+                  onChange={handleChange}
+                  className="input input-bordered w-fit"
+                  required
+                />
+              </div>
             </div>
           </div>
 

@@ -60,7 +60,6 @@ CREATE TABLE "Aluno" (
     "ficha" TEXT NOT NULL,
     "modalidade" JSONB NOT NULL DEFAULT '{"presencial": true, "online": true}',
     "qtd_aulas" INTEGER NOT NULL,
-    "data_inicio" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "password" TEXT NOT NULL,
     "responsavelId" TEXT NOT NULL,
     "dificuldades" TEXT[],
@@ -68,6 +67,7 @@ CREATE TABLE "Aluno" (
     "ativo" BOOLEAN NOT NULL DEFAULT true,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "financeiro" JSONB NOT NULL,
 
     CONSTRAINT "Aluno_pkey" PRIMARY KEY ("id")
 );
