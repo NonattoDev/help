@@ -129,12 +129,14 @@ export default function EditProfessor({ professor, materias, accessLevel }: { pr
     <div>
       <form onSubmit={submitEdit}>
         <div>
-          <div className="form-control w-52">
-            <label className="cursor-pointer label">
-              <span className="label-text">Professor ativo ?</span>
-              <input type="checkbox" name="ativo" checked={formData.ativo} onChange={handleToggleChange} className="toggle  toggle-info" />
-            </label>
-          </div>
+          {accessLevel?.startsWith("admin") && (
+            <div className="form-control w-52">
+              <label className="cursor-pointer label">
+                <span className="label-text">Professor ativo ?</span>
+                <input type="checkbox" name="ativo" checked={formData.ativo} onChange={handleToggleChange} className="toggle  toggle-info" />
+              </label>
+            </div>
+          )}
 
           <h2 className="text-md text-center font-bold mb-5">Dados Pessoais</h2>
         </div>

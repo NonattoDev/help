@@ -2,11 +2,10 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { Responsavel } from "./Interfaces/Responsavel";
-import ReactInputMask from "react-input-mask";
+import Responsavel from "./Interfaces/Responsavel";
 
 export default function EditResponsavel({ responsavel }: { responsavel: Responsavel }) {
-  const [formData, setFormData] = useState(responsavel);
+  const [formData, setFormData] = useState<Responsavel>(responsavel);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -84,36 +83,9 @@ export default function EditResponsavel({ responsavel }: { responsavel: Responsa
           </div>
           <div className="form-control">
             <label className="label">
-              <span className="label-text">CPF</span>
-            </label>
-            <ReactInputMask
-              mask={"999.999.999-99"}
-              maskPlaceholder={null}
-              alwaysShowMask={false}
-              type="text"
-              name="cpf"
-              value={formData.cpf}
-              onChange={handleChange}
-              className="input input-bordered"
-              disabled
-              required
-            />
-          </div>
-          <div className="form-control">
-            <label className="label">
               <span className="label-text">Telefone</span>
             </label>
-            <ReactInputMask
-              mask="(99) 99999-9999"
-              alwaysShowMask={false}
-              maskPlaceholder={null}
-              type="text"
-              name="telefone"
-              value={formData.telefone}
-              onChange={handleChange}
-              className="input input-bordered"
-              required
-            />
+            <input type="text" name="telefone" value={formData.telefone} onChange={handleChange} className="input input-bordered" required />
           </div>
           <div className="form-control">
             <label className="label">
@@ -130,10 +102,7 @@ export default function EditResponsavel({ responsavel }: { responsavel: Responsa
               <label className="label">
                 <span className="label-text">CEP</span>
               </label>
-              <ReactInputMask
-                mask={"99999999"}
-                alwaysShowMask={false}
-                maskPlaceholder={null}
+              <input
                 onBlur={(e) => handleFetchCep(e.target.value)}
                 type="text"
                 name="endereco.cep"
@@ -192,6 +161,34 @@ export default function EditResponsavel({ responsavel }: { responsavel: Responsa
               </label>
               <input type="text" name="endereco.referencia" value={formData.endereco.referencia} onChange={handleChange} className="input input-bordered w-full" required />
             </div>
+          </div>
+        </div>
+
+        <div id="alunosPorResponsavelDiv">
+          <h2 className="text-md text-center font-bold mt-8 mb-5">Dados de alunos</h2>
+          <div className="overflow-x-auto">
+            <table className="table w-full">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nome</th>
+                  <th>E-mail</th>
+                  <th>Telefone</th>
+                  <th>Ativo</th>
+                </tr>
+              </thead>
+              <tbody>
+                {formData.alunos?.map((aluno) => (
+                  <tr key={aluno.id}>
+                    <td>{aluno.id}</td>
+                    <td>{aluno.nome}</td>
+                    <td>{aluno.email}</td>
+                    <td>{aluno.telefone}</td>
+                    <td>{aluno.ativo ? "Ativo" : "Desativado"}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
 

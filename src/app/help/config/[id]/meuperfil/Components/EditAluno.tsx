@@ -8,7 +8,8 @@ import { Materia } from "./Interfaces/Professor";
 import { validateCPF } from "../../../../../../utils/validateCpf";
 import validaResponsavel from "../../../../../../utils/ValidaResponsavel";
 import moment from "moment";
-import { Aluno, Responsavel } from "./Interfaces/Aluno";
+import Aluno from "./Interfaces/Aluno";
+import Responsavel from "./Interfaces/Responsavel";
 import { redirect } from "next/navigation";
 
 export default function EditAluno({ aluno, series, materias, accessLevel }: { aluno: Aluno; series: Series[]; materias: Materia[]; accessLevel?: string }) {
