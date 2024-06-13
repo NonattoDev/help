@@ -21,7 +21,7 @@ export interface Aluno {
     presencial: boolean;
   };
   qtd_aulas: number;
-  data_inicio: string;
+  data_inicio?: string;
   password: string;
   responsavelId?: string;
   dificuldades: string[];

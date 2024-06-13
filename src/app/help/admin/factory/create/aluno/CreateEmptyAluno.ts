@@ -1,5 +1,4 @@
 import { Aluno } from "@/app/help/config/[id]/meuperfil/Components/Interfaces/Aluno";
-import moment from "moment";
 
 const createEmptyAluno = (): Aluno => ({
   nome: "",
@@ -24,30 +23,8 @@ const createEmptyAluno = (): Aluno => ({
   },
   password: "",
   qtd_aulas: 0,
-  data_inicio: moment().format("DD-MM-YYYY"),
-  financeiro: {
-    dta_vencimento: "",
-    valor: 0,
-  },
   AgendaAulas: {},
   dificuldades: [],
-  responsavel: {
-    nome: "",
-    email: "",
-    cpf: "",
-    telefone: "",
-    endereco: {
-      cep: "",
-      rua: "",
-      bairro: "",
-      cidade: "",
-      estado: "",
-      numero: "",
-      referencia: "",
-      complemento: "",
-    },
-    password: "",
-  },
 });
 
 export default createEmptyAluno;

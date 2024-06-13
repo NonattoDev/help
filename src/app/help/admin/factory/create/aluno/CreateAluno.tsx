@@ -6,33 +6,53 @@ import { Series } from "@prisma/client";
 import ReactInputMask from "react-input-mask";
 import { Materia } from "@/app/help/config/[id]/meuperfil/Components/Interfaces/Professor";
 import createEmptyAluno from "./CreateEmptyAluno";
+import createEmptyResponsavel from "./CreateEmptyResponsavel";
+import { validateCPF } from "@/utils/validateCpf";
+import validaResponsavel from "../../create/aluno/Utils/ValidaResponsavel";
 
 export default function CreateAluno({ series, materias }: { series: Series[]; materias: Materia[] }) {
-  const [formData, setFormData] = useState(createEmptyAluno());
+  const [alunoData, setAlunoData] = useState(createEmptyAluno());
+  const [responsavelData, setResponsavelData] = useState(createEmptyResponsavel());
   const [activeTab, setActiveTab] = useState("dadosPessoais");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     if (name.startsWith("endereco.")) {
       const enderecoKey = name.split(".")[1];
-      setFormData({
-        ...formData,
+      setAlunoData({
+        ...alunoData,
         endereco: {
-          ...formData.endereco,
+          ...alunoData.endereco,
           [enderecoKey]: value,
         },
       });
     } else {
-      setFormData({ ...formData, [name]: value });
+      setAlunoData({ ...alunoData, [name]: value });
+    }
+  };
+
+  const handleResponsavelChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    if (name.startsWith("endereco.")) {
+      const enderecoKey = name.split(".")[1];
+      setResponsavelData({
+        ...responsavelData,
+        endereco: {
+          ...responsavelData.endereco,
+          [enderecoKey]: value,
+        },
+      });
+    } else {
+      setResponsavelData({ ...responsavelData, [name]: value });
     }
   };
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target;
-    setFormData({
-      ...formData,
+    setAlunoData({
+      ...alunoData,
       modalidade: {
-        ...formData.modalidade,
+        ...alunoData.modalidade,
         [name]: checked,
       },
     });
@@ -40,24 +60,48 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(formData);
-    return;
 
-    const response = await axios.put(`/help/admin/factory/create/api/`, {
-      formData,
-      typeEdit: "aluno",
-    });
+    let countError = 0;
 
-    if (response.status !== 200) {
-      toast.error("Erro ao salvar");
-      return;
+    if (alunoData.dificuldades.length === 0) {
+      toast.error("Selecione ao menos uma matéria");
+      countError++;
     }
 
-    toast.success("Salvo com sucesso");
+    if ((alunoData.modalidade.online === false && alunoData.modalidade.presencial === false) || (!alunoData.modalidade.online && !alunoData.modalidade.presencial)) {
+      toast.error("Selecione ao menos uma modalidade");
+      countError++;
+    }
+
+    if (alunoData.ano_escolar === "") {
+      alunoData.ano_escolar = "1 ano";
+    }
+
+    // Verifica responsavel
+    if (!validaResponsavel(responsavelData)) countError++;
+    if (!validateCPF(responsavelData.cpf)) countError++;
+
+    if (countError > 0) return;
+
+    try {
+      const response = await axios.post(`/help/admin/factory/create/api/`, {
+        alunoData,
+        responsavelData,
+        typeEdit: "aluno",
+      });
+
+      toast.success("Salvo com sucesso");
+    } catch (error: any) {
+      if (error && error.response && error.response.data) {
+        toast.error(error.response.data.message);
+        return;
+      }
+      toast.error("Error ao criar aluno e responsável");
+    }
   };
 
   const handleMateriasChange = (id: string) => {
-    setFormData((prev) => {
+    setAlunoData((prev) => {
       const newDificuldades = prev.dificuldades.includes(id) ? prev.dificuldades.filter((materiaId) => materiaId !== id) : [...prev.dificuldades, id];
       return { ...prev, dificuldades: newDificuldades };
     });
@@ -76,10 +120,10 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
     }
 
     if (activeTab === "dadosPessoais") {
-      setFormData({
-        ...formData,
+      setAlunoData({
+        ...alunoData,
         endereco: {
-          ...formData.endereco,
+          ...alunoData.endereco,
           rua: response.data.logradouro,
           bairro: response.data.bairro,
           cidade: response.data.localidade,
@@ -89,18 +133,14 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
     }
 
     if (activeTab === "dadosResponsaveis") {
-      setFormData({
-        ...formData,
-        responsavel: {
-          ...formData.responsavel,
-          endereco: {
-            ...formData.responsavel?.endereco,
-            cep: formData.responsavel?.endereco.cep || "",
-            rua: response.data.logradouro,
-            bairro: response.data.bairro,
-            cidade: response.data.localidade,
-            estado: response.data.uf,
-          },
+      setResponsavelData({
+        ...responsavelData,
+        endereco: {
+          ...responsavelData.endereco,
+          rua: response.data.logradouro,
+          bairro: response.data.bairro,
+          cidade: response.data.localidade,
+          estado: response.data.uf,
         },
       });
     }
@@ -108,7 +148,7 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
 
   return (
     <div>
-      <div role="tablist" className="tabs tabs-bordered">
+      <div role="tablist" className="tabs tabs-boxed">
         <a role="tab" className={`tab ${activeTab === "dadosPessoais" ? "tab-active" : ""}`} onClick={() => setActiveTab("dadosPessoais")}>
           Dados do Aluno
         </a>
@@ -125,13 +165,13 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
               <label className="label">
                 <span className="label-text">Nome</span>
               </label>
-              <input type="text" name="nome" value={formData.nome} onChange={handleChange} className="input input-bordered" required />
+              <input type="text" name="nome" value={alunoData.nome} onChange={handleChange} className="input input-bordered" required />
             </div>
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Email</span>
               </label>
-              <input type="email" name="email" value={formData.email} onChange={handleChange} className="input input-bordered" required />
+              <input type="email" name="email" value={alunoData.email} onChange={handleChange} className="input input-bordered" required />
             </div>
             <div className="form-control">
               <label className="label">
@@ -143,7 +183,7 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
                 maskPlaceholder={null}
                 type="text"
                 name="telefone"
-                value={formData.telefone}
+                value={alunoData.telefone}
                 onChange={handleChange}
                 className="input input-bordered"
                 required
@@ -153,10 +193,23 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
               <label className="label">
                 <span className="label-text">Senha</span>
               </label>
-              <input type="password" name="password" value={formData.password} onChange={handleChange} className="input input-bordered" required />
+              <input type="password" name="password" value={alunoData.password} onChange={handleChange} className="input input-bordered" required />
             </div>
-            <div className="form-control mt-4">
-              <label className="label">Qual sua série atual ?</label>
+          </div>
+
+          <h2 className="text-md text-center font-bold mt-5 mb-5">Dados Escolares</h2>
+          <div className="grid grid-cols-4 gap-4">
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Escola</span>
+              </label>
+              <input type="text" name="escola" value={alunoData.escola} onChange={handleChange} className="input input-bordered" required />
+            </div>
+
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Ano Escolar</span>
+              </label>
               <select className="input input-bordered" name="ano_escolar" onChange={handleChange}>
                 {series.map((item) => (
                   <option key={item.id} value={item.serie}>
@@ -174,11 +227,14 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
                 <label className="label">
                   <span className="label-text">CEP</span>
                 </label>
-                <input
+                <ReactInputMask
+                  mask={"99999999"}
+                  alwaysShowMask={false}
+                  maskPlaceholder={null}
                   onBlur={(e) => handleFetchCep(e.target.value)}
                   type="text"
                   name="endereco.cep"
-                  value={formData.endereco.cep}
+                  value={alunoData.endereco.cep}
                   onChange={handleChange}
                   className="input input-bordered w-full"
                   required
@@ -189,49 +245,49 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
                 <label className="label">
                   <span className="label-text">Rua</span>
                 </label>
-                <input type="text" name="endereco.rua" value={formData.endereco.rua} onChange={handleChange} className="input input-bordered w-full" required />
+                <input type="text" name="endereco.rua" value={alunoData.endereco.rua} onChange={handleChange} className="input input-bordered w-full" required />
               </div>
 
               <div>
                 <label className="label">
                   <span className="label-text">Número</span>
                 </label>
-                <input type="text" name="endereco.numero" value={formData.endereco.numero} onChange={handleChange} className="input input-bordered w-full" required />
+                <input type="text" name="endereco.numero" value={alunoData.endereco.numero} onChange={handleChange} className="input input-bordered w-full" required />
               </div>
 
               <div>
                 <label className="label">
                   <span className="label-text">Complemento</span>
                 </label>
-                <input type="text" name="endereco.complemento" value={formData.endereco.complemento} onChange={handleChange} className="input input-bordered w-full" required />
+                <input type="text" name="endereco.complemento" value={alunoData.endereco.complemento} onChange={handleChange} className="input input-bordered w-full" required />
               </div>
 
               <div>
                 <label className="label">
                   <span className="label-text">Bairro</span>
                 </label>
-                <input type="text" name="endereco.bairro" value={formData.endereco.bairro} onChange={handleChange} className="input input-bordered w-full" required />
+                <input type="text" name="endereco.bairro" value={alunoData.endereco.bairro} onChange={handleChange} className="input input-bordered w-full" required />
               </div>
 
               <div>
                 <label className="label">
                   <span className="label-text">Cidade</span>
                 </label>
-                <input type="text" name="endereco.cidade" value={formData.endereco.cidade} onChange={handleChange} className="input input-bordered w-full" required />
+                <input type="text" name="endereco.cidade" value={alunoData.endereco.cidade} onChange={handleChange} className="input input-bordered w-full" required />
               </div>
 
               <div>
                 <label className="label">
                   <span className="label-text">Estado</span>
                 </label>
-                <input type="text" name="endereco.estado" value={formData.endereco.estado} onChange={handleChange} className="input input-bordered w-full" required />
+                <input type="text" name="endereco.estado" value={alunoData.endereco.estado} onChange={handleChange} className="input input-bordered w-full" required />
               </div>
 
               <div>
                 <label className="label">
                   <span className="label-text">Referência</span>
                 </label>
-                <input type="text" name="endereco.referencia" value={formData.endereco.referencia} onChange={handleChange} className="input input-bordered w-full" required />
+                <input type="text" name="endereco.referencia" value={alunoData.endereco.referencia} onChange={handleChange} className="input input-bordered w-full" required />
               </div>
             </div>
           </div>
@@ -240,11 +296,11 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
             <h2 className="text-md text-center font-bold mb-5">Modalidade</h2>
             <label className="flex items-center cursor-pointer w-fit">
               <span className="text-md mr-2">Online</span>
-              <input type="checkbox" name="online" checked={formData.modalidade.online} onChange={handleCheckboxChange} className="checkbox checkbox-primary" />
+              <input type="checkbox" name="online" checked={alunoData.modalidade.online} onChange={handleCheckboxChange} className="checkbox checkbox-primary" />
             </label>
             <label className="flex items-center cursor-pointer w-fit">
               <span className="text-md mr-2">Presencial</span>
-              <input type="checkbox" name="presencial" checked={formData.modalidade.presencial} onChange={handleCheckboxChange} className="checkbox checkbox-primary" />
+              <input type="checkbox" name="presencial" checked={alunoData.modalidade.presencial} onChange={handleCheckboxChange} className="checkbox checkbox-primary" />
             </label>
           </div>
 
@@ -253,7 +309,7 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
             <div className="grid grid-cols-4 gap-4 ">
               {materias.map((materia) => (
                 <label key={materia.id} className="flex items-center cursor-pointer">
-                  <input type="checkbox" name={`dificuldades`} checked={formData.dificuldades.includes(materia.id)} onChange={() => handleMateriasChange(materia.id)} className="checkbox" />
+                  <input type="checkbox" name={`dificuldades`} checked={alunoData.dificuldades.includes(materia.id)} onChange={() => handleMateriasChange(materia.id)} className="checkbox" />
                   <span className="label-text ml-2">{materia.materia}</span>
                 </label>
               ))}
@@ -270,19 +326,35 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
 
       {activeTab === "dadosResponsaveis" && (
         <div>
-          <h2 className="text-md text-center font-bold mb-5">Dados Responsáveis</h2>
+          <h2 className="text-md text-center font-bold mt-5 mb-5">Dados Responsáveis</h2>
           <div className="grid grid-cols-4 gap-4">
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Nome</span>
               </label>
-              <input type="text" name="responsavel.nome" value={formData.responsavel?.nome} onChange={handleChange} className="input input-bordered" required />
+              <input type="text" name="nome" value={responsavelData?.nome} onChange={handleResponsavelChange} className="input input-bordered" required />
             </div>
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Email</span>
               </label>
-              <input type="email" name="responsavel.email" value={formData.responsavel?.email} onChange={handleChange} className="input input-bordered" required />
+              <input type="email" name="email" value={responsavelData?.email} onChange={handleResponsavelChange} className="input input-bordered" required />
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">CPF</span>
+              </label>
+              <ReactInputMask
+                mask={"999.999.999-99"}
+                maskPlaceholder={null}
+                alwaysShowMask={false}
+                type="text"
+                name="cpf"
+                value={responsavelData.cpf}
+                onChange={handleResponsavelChange}
+                className="input input-bordered"
+                required
+              />
             </div>
             <div className="form-control">
               <label className="label">
@@ -293,9 +365,9 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
                 alwaysShowMask={false}
                 maskPlaceholder={null}
                 type="text"
-                name="responsavel.telefone"
-                value={formData.responsavel?.telefone}
-                onChange={handleChange}
+                name="telefone"
+                value={responsavelData?.telefone}
+                onChange={handleResponsavelChange}
                 className="input input-bordered"
                 required
               />
@@ -304,7 +376,7 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
               <label className="label">
                 <span className="label-text">Senha</span>
               </label>
-              <input type="password" name="responsavel.password" value={formData.responsavel?.password} onChange={handleChange} className="input input-bordered" required />
+              <input type="password" name="password" value={responsavelData?.password} onChange={handleResponsavelChange} className="input input-bordered" required />
             </div>
           </div>
           <div id="enderecoDiv" className="mt-8">
@@ -314,12 +386,15 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
                 <label className="label">
                   <span className="label-text">CEP</span>
                 </label>
-                <input
+                <ReactInputMask
+                  mask={"99999999"}
+                  alwaysShowMask={false}
+                  maskPlaceholder={null}
                   onBlur={(e) => handleFetchCep(e.target.value)}
                   type="text"
-                  name="responsavel.endereco.cep"
-                  value={formData.responsavel?.endereco?.cep}
-                  onChange={handleChange}
+                  name="endereco.cep"
+                  value={responsavelData.endereco.cep}
+                  onChange={handleResponsavelChange}
                   className="input input-bordered w-full"
                   required
                 />
@@ -329,56 +404,49 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
                 <label className="label">
                   <span className="label-text">Rua</span>
                 </label>
-                <input type="text" name="responsavel.endereco.rua" value={formData.responsavel?.endereco.rua} onChange={handleChange} className="input input-bordered w-full" required />
+                <input type="text" name="endereco.rua" value={responsavelData?.endereco.rua} onChange={handleResponsavelChange} className="input input-bordered w-full" required />
               </div>
 
               <div>
                 <label className="label">
                   <span className="label-text">Número</span>
                 </label>
-                <input type="text" name="responsavel.endereco.numero" value={formData.responsavel?.endereco.numero} onChange={handleChange} className="input input-bordered w-full" required />
+                <input type="text" name="endereco.numero" value={responsavelData?.endereco.numero} onChange={handleResponsavelChange} className="input input-bordered w-full" required />
               </div>
 
               <div>
                 <label className="label">
                   <span className="label-text">Complemento</span>
                 </label>
-                <input
-                  type="text"
-                  name="responsavel.endereco.complemento"
-                  value={formData.responsavel?.endereco.complemento}
-                  onChange={handleChange}
-                  className="input input-bordered w-full"
-                  required
-                />
+                <input type="text" name="endereco.complemento" value={responsavelData?.endereco.complemento} onChange={handleResponsavelChange} className="input input-bordered w-full" required />
               </div>
 
               <div>
                 <label className="label">
                   <span className="label-text">Bairro</span>
                 </label>
-                <input type="text" name="responsavel.endereco.bairro" value={formData.responsavel?.endereco.bairro} onChange={handleChange} className="input input-bordered w-full" required />
+                <input type="text" name="endereco.bairro" value={responsavelData?.endereco.bairro} onChange={handleResponsavelChange} className="input input-bordered w-full" required />
               </div>
 
               <div>
                 <label className="label">
                   <span className="label-text">Cidade</span>
                 </label>
-                <input type="text" name="responsavel.endereco.cidade" value={formData.responsavel?.endereco.cidade} onChange={handleChange} className="input input-bordered w-full" required />
+                <input type="text" name="endereco.cidade" value={responsavelData?.endereco.cidade} onChange={handleResponsavelChange} className="input input-bordered w-full" required />
               </div>
 
               <div>
                 <label className="label">
                   <span className="label-text">Estado</span>
                 </label>
-                <input type="text" name="responsavel.endereco.estado" value={formData.responsavel?.endereco.estado} onChange={handleChange} className="input input-bordered w-full" required />
+                <input type="text" name="endereco.estado" value={responsavelData?.endereco.estado} onChange={handleResponsavelChange} className="input input-bordered w-full" required />
               </div>
 
               <div>
                 <label className="label">
                   <span className="label-text">Referência</span>
                 </label>
-                <input type="text" name="responsavel.endereco.referencia" value={formData.responsavel?.endereco.referencia} onChange={handleChange} className="input input-bordered w-full" required />
+                <input type="text" name="endereco.referencia" value={responsavelData?.endereco.referencia} onChange={handleResponsavelChange} className="input input-bordered w-full" required />
               </div>
             </div>
           </div>

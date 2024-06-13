@@ -60,7 +60,7 @@ CREATE TABLE "Aluno" (
     "ficha" TEXT NOT NULL,
     "modalidade" JSONB NOT NULL DEFAULT '{"presencial": true, "online": true}',
     "qtd_aulas" INTEGER NOT NULL,
-    "data_inicio" TIMESTAMP(3) NOT NULL,
+    "data_inicio" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "password" TEXT NOT NULL,
     "responsavelId" TEXT NOT NULL,
     "dificuldades" TEXT[],
