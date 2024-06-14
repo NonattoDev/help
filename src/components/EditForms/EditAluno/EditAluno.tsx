@@ -38,28 +38,28 @@ export default function EditAluno({ aluno, series, materias, accessLevel }: Prop
   const [responsavelData, setResponsavelData] = useState<Responsavel>(aluno.responsavel);
   const [activeTab, setActiveTab] = useState("dadosPessoais");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     if (name.startsWith("endereco.")) {
       const enderecoKey = name.split(".")[1];
-      setAlunoData({
-        ...alunoData,
+      setAlunoData((prev) => ({
+        ...prev,
         endereco: {
-          ...alunoData.endereco,
+          ...prev.endereco,
           [enderecoKey]: value,
         },
-      });
+      }));
     } else if (name.startsWith("financeiro.")) {
       const financeiroKey = name.split(".")[1];
-      setAlunoData({
-        ...alunoData,
+      setAlunoData((prev) => ({
+        ...prev,
         financeiro: {
-          ...alunoData.financeiro,
+          ...prev.financeiro,
           [financeiroKey]: value,
         },
-      });
+      }));
     } else {
-      setAlunoData({ ...alunoData, [name]: value });
+      setAlunoData((prev) => ({ ...prev, [name]: value }));
     }
   };
 

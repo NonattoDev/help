@@ -10,11 +10,7 @@ import { Professor } from "@prisma/client";
 import { Suspense } from "react";
 
 function LoadingFallback() {
-  return (
-    <div className="p-4">
-      <p>Carregando...</p>
-    </div>
-  );
+  return <div className="p-4 skeleton"></div>;
 }
 
 const getData = async () => {

@@ -162,6 +162,13 @@ const DadosPessoaisForm: React.FC<Props> = ({ alunoData, series, materias, acces
         </div>
       </div>
 
+      <div id="ficha" className="mt-8">
+        <h2 className="text-md text-center font-bold mb-5">Ficha do Aluno</h2>
+        <div id="textArea" className="flex justify-center w-full">
+          <textarea className="textarea textarea-info w-3/4 h-44" placeholder="Digite aqui a ficha do aluno" name="ficha" value={alunoData.ficha} onChange={handleChange}></textarea>
+        </div>
+      </div>
+
       <div className="form-control mt-8">
         <h2 className="text-md text-center font-bold mb-5">Modalidade</h2>
         <label className="flex items-center cursor-pointer w-fit">
