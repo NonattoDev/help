@@ -3,7 +3,7 @@
 import React from "react";
 import { Series } from "@prisma/client";
 import ReactInputMask from "react-input-mask";
-import { Materia } from "@/interfaces/Professor";
+import Materia from "@/interfaces/Materia";
 import moment from "moment";
 
 interface Props {

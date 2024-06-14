@@ -1,12 +1,7 @@
 export type Dia = "segunda" | "terca" | "quarta" | "quinta" | "sexta" | "sabado";
 export type Turno = "manha" | "tarde" | "noite";
 
-export interface Materia {
-  id: string;
-  materia: string;
-}
-
-export interface Professor {
+export default interface Professor {
   id?: string;
   nome: string;
   email: string;

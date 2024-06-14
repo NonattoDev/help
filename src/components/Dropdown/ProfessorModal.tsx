@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { Professor } from "@prisma/client";
 import { GiTeacher } from "react-icons/gi";
 import { BiEdit, BiSearch } from "react-icons/bi";
 import { createPortal } from "react-dom";
@@ -9,6 +8,7 @@ import Link from "next/link";
 import "@/components/Dropdown/styles/custom-scrollbar.scss";
 import { CgUserAdd } from "react-icons/cg";
 import LoadingButton from "@/components/Buttons/LoadingButton";
+import Professor from "@/interfaces/Professor";
 
 interface ProfessorModalButtonProps {
   professores: Professor[] | undefined | null;

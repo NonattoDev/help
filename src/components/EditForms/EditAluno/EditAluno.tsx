@@ -3,7 +3,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { Series } from "@prisma/client";
-import { Materia } from "@/interfaces/Professor";
+import Materia from "@/interfaces/Materia";
 import { validateCPF } from "@/utils/validateCpf";
 import validaResponsavel from "@/utils/ValidaResponsavel";
 import moment from "moment";
