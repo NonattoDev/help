@@ -2,7 +2,7 @@ import prisma from "../../../../../../../prisma/prismaInstance";
 import CreateProfessor from "./CreateProfessor";
 
 async function getDados() {
-  const materias = await prisma.materias.findMany();
+  let materias = await prisma.materias.findMany();
 
   return materias;
 }

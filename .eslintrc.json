@@ -1,31 +1,5 @@
-
-
 {
-  "parser": "@typescript-eslint/parser",
-  "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:jsx-a11y/recommended",
-    "plugin:import/errors",
-    "plugin:import/warnings",
-    "plugin:import/typescript",
-    "next/core-web-vitals"
-  ],
-  "plugins": ["@typescript-eslint", "react", "react-hooks", "jsx-a11y", "import"],
-  "env": {
-    "browser": true,
-    "es2021": true,
-    "node": true
-  },
-  "settings": {
-    "react": {
-      "version": "detect"
-    }
-  },
-  "rules": {
-    // Adicione suas regras personalizadas aqui
-  }
+  "extends": "next/core-web-vitals"
+  
 }
-
 
