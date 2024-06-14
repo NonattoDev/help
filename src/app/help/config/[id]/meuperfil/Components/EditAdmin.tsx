@@ -3,6 +3,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import React from "react";
 import { Administrador } from "./Interfaces/Admin";
+import ReactInputMask from "react-input-mask";
+import { validateCPF } from "@/utils/validateCpf";
 
 export default function EditAdmin({ userData }: { userData: Administrador }) {
   const [formData, setFormData] = React.useState<Administrador>(userData);
@@ -17,6 +19,11 @@ export default function EditAdmin({ userData }: { userData: Administrador }) {
 
   const submitEdit = async (e: React.FormEvent) => {
     e.preventDefault();
+    let errorCount = 0;
+
+    if (!validateCPF(formData.cpf)) errorCount++;
+
+    if (errorCount > 0) return;
     try {
       const response = await axios.put(`/help/config/${formData.id}/meuperfil/editar`, {
         formData,
@@ -54,13 +61,33 @@ export default function EditAdmin({ userData }: { userData: Administrador }) {
             <label className="label">
               <span className="label-text">CPF</span>
             </label>
-            <input type="text" name="cpf" value={formData.cpf} onChange={handleChange} className="input input-bordered" required />
+            <ReactInputMask
+              mask={"999.999.999-99"}
+              maskPlaceholder={null}
+              alwaysShowMask={false}
+              type="text"
+              name="cpf"
+              value={formData.cpf}
+              onChange={handleChange}
+              className="input input-bordered"
+              required
+            />
           </div>
           <div className="form-control">
             <label className="label">
               <span className="label-text">Telefone</span>
             </label>
-            <input type="text" name="telefone" value={formData.telefone} onChange={handleChange} className="input input-bordered" required />
+            <ReactInputMask
+              mask="(99) 99999-9999"
+              alwaysShowMask={false}
+              maskPlaceholder={null}
+              type="text"
+              name="telefone"
+              value={formData.telefone}
+              onChange={handleChange}
+              className="input input-bordered"
+              required
+            />
           </div>
           <div className="form-control">
             <label className="label">

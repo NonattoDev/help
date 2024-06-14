@@ -4,7 +4,6 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { compare } from "bcryptjs";
 import prisma from "../../../prisma/prismaInstance";
 
-
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
@@ -16,7 +15,7 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         if (!credentials || !credentials.email || !credentials.password) {
-          throw new Error("Credenciais inválidas");
+          throw new Error("Usuário ou senha incorretos!");
         }
 
         let user = (await prisma.aluno.findUnique({
@@ -54,7 +53,7 @@ export const authOptions: NextAuthOptions = {
             updatedAt: user.updatedAt,
           };
         } else {
-          throw new Error("Credenciais inválidas");
+          throw new Error("Usuário ou senha incorretos!");
         }
       },
     }),

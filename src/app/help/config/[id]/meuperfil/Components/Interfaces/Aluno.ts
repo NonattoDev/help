@@ -1,5 +1,7 @@
-export interface Aluno {
-  id: string;
+import Responsavel from "./Responsavel";
+
+export default interface Aluno {
+  id?: string;
   nome: string;
   email: string;
   escola: string;
@@ -20,15 +22,18 @@ export interface Aluno {
     online: boolean;
     presencial: boolean;
   };
-  qtd_aulas: number;
-  data_inicio: Date;
   password: string;
-  responsavelId: string;
+  responsavelId?: string;
   dificuldades: string[];
-  accessLevel: string;
-  ativo: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-  financeiro: any;
-  AgendaAulas: any;
+  accessLevel?: string;
+  ativo?: boolean;
+  financeiro: {
+    qtd_aulas: number;
+    valor: string;
+    dta_vencimento: string;
+  };
+  AgendaAulas?: any;
+  createdAt?: Date;
+  updatedAt?: Date;
+  responsavel?: Responsavel;
 }

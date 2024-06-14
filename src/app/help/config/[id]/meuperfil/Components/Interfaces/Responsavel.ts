@@ -1,5 +1,7 @@
-export interface Responsavel {
-  id: string;
+import Aluno from "./Aluno";
+
+export default interface Responsavel {
+  id?: string;
   nome: string;
   email: string;
   cpf: string;
@@ -7,15 +9,16 @@ export interface Responsavel {
   endereco: {
     cep: string;
     rua: string;
-    numero: string;
     bairro: string;
     cidade: string;
     estado: string;
+    numero: string;
     referencia: string;
     complemento: string;
   };
   password: string;
-  accessLevel: string;
-  createdAt: string;
-  updatedAt: string;
+  accessLevel?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  alunos?: Aluno[];
 }

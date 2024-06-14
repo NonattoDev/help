@@ -8,7 +8,6 @@ import EditAdmin from "./Components/EditAdmin";
 import prisma from "../../../../../../prisma/prismaInstance";
 
 async function getUserData(id: string) {
-
   const session = await getServerSession(authOptions);
 
   let userData: any;

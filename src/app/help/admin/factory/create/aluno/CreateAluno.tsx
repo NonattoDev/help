@@ -4,20 +4,16 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { Series } from "@prisma/client";
 import ReactInputMask from "react-input-mask";
-import { Materia } from "./Interfaces/Professor";
-import { validateCPF } from "../../../../../../utils/validateCpf";
-import validaResponsavel from "../../../../../../utils/ValidaResponsavel";
+import { Materia } from "@/app/help/config/[id]/meuperfil/Components/Interfaces/Professor";
+import createEmptyAluno from "./CreateEmptyAluno";
+import createEmptyResponsavel from "./CreateEmptyResponsavel";
+import { validateCPF } from "@/utils/validateCpf";
+import validaResponsavel from "@/utils/ValidaResponsavel";
 import moment from "moment";
-import Aluno from "./Interfaces/Aluno";
-import Responsavel from "./Interfaces/Responsavel";
-import { redirect } from "next/navigation";
 
-export default function EditAluno({ aluno, series, materias, accessLevel }: { aluno: Aluno; series: Series[]; materias: Materia[]; accessLevel?: string }) {
-  if (!aluno.responsavel) {
-    redirect("/");
-  }
-  const [alunoData, setAlunoData] = useState(aluno);
-  const [responsavelData, setResponsavelData] = useState<Responsavel>(aluno.responsavel);
+export default function CreateAluno({ series, materias }: { series: Series[]; materias: Materia[] }) {
+  const [alunoData, setAlunoData] = useState(createEmptyAluno());
+  const [responsavelData, setResponsavelData] = useState(createEmptyResponsavel());
   const [activeTab, setActiveTab] = useState("dadosPessoais");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -82,9 +78,8 @@ export default function EditAluno({ aluno, series, materias, accessLevel }: { al
 
   const handleCurrencyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-
     const unformattedValue = value.replace(/[^\d]/g, ""); // Remove tudo que não é dígito
-    if (value === "") return setAlunoData((prev) => ({ ...prev, financeiro: { ...prev.financeiro, valor: "0" } }));
+    if (value === "") return setAlunoData((prev) => ({ ...prev, financeiro: { ...prev.financeiro, valor: "" } }));
     const formattedValue = formatCurrency(unformattedValue);
 
     setAlunoData((prev) => ({
@@ -117,7 +112,7 @@ export default function EditAluno({ aluno, series, materias, accessLevel }: { al
 
     // Verifica responsavel
     if (!validaResponsavel(responsavelData)) countError++;
-    if (!validateCPF(responsavelData?.cpf)) countError++;
+    if (!validateCPF(responsavelData.cpf)) countError++;
 
     if (countError > 0) return;
 
@@ -131,10 +126,9 @@ export default function EditAluno({ aluno, series, materias, accessLevel }: { al
     };
 
     try {
-      const response = await axios.put(`/help/config/${alunoData.id}/meuperfil/editar/`, {
-        formData: cleanedAlunoData,
+      const response = await axios.post(`/help/admin/factory/create/api/`, {
+        alunoData: cleanedAlunoData,
         responsavelData,
-        senhaAntiga: alunoData.password,
         typeEdit: "aluno",
       });
 
@@ -219,15 +213,7 @@ export default function EditAluno({ aluno, series, materias, accessLevel }: { al
               <label className="label">
                 <span className="label-text">Email</span>
               </label>
-              <input
-                type="email"
-                name="email"
-                value={alunoData.email}
-                onChange={handleChange}
-                className="input input-bordered"
-                required
-                disabled={accessLevel !== "administrador" && accessLevel !== "administrativo"}
-              />
+              <input type="email" name="email" value={alunoData.email} onChange={handleChange} className="input input-bordered" required />
             </div>
             <div className="form-control">
               <label className="label">
@@ -379,30 +365,13 @@ export default function EditAluno({ aluno, series, materias, accessLevel }: { al
                 <label className="label">
                   <span className="label-text">Quantidade de aulas mensais</span>
                 </label>
-                <input
-                  type="number"
-                  name="financeiro.qtd_aulas"
-                  value={alunoData?.financeiro?.qtd_aulas}
-                  onChange={handleChange}
-                  className="input input-bordered w-fit"
-                  required
-                  max={moment().daysInMonth()}
-                  disabled={accessLevel !== "administrador" && accessLevel !== "administrativo"}
-                />
+                <input type="number" name="financeiro.qtd_aulas" value={alunoData?.financeiro?.qtd_aulas} onChange={handleChange} className="input input-bordered w-fit" required max={moment().daysInMonth()} />
               </div>
               <div className="form-control ">
                 <label className="label">
                   <span className="label-text">Valor</span>
                 </label>
-                <input
-                  type="text"
-                  name="financeiro.valor"
-                  value={alunoData.financeiro.valor}
-                  onChange={handleCurrencyChange}
-                  className="input input-bordered w-fit"
-                  required
-                  disabled={accessLevel !== "administrador" && accessLevel !== "administrativo"}
-                />
+                <input type="text" name="financeiro.valor" value={alunoData.financeiro.valor} onChange={handleCurrencyChange} className="input input-bordered w-fit" required />
               </div>
               <div className="form-control">
                 <label className="label">
@@ -418,7 +387,6 @@ export default function EditAluno({ aluno, series, materias, accessLevel }: { al
                   onChange={handleChange}
                   className="input input-bordered w-fit"
                   required
-                  disabled={accessLevel !== "administrador" && accessLevel !== "administrativo"}
                 />
               </div>
             </div>
@@ -446,15 +414,7 @@ export default function EditAluno({ aluno, series, materias, accessLevel }: { al
               <label className="label">
                 <span className="label-text">Email</span>
               </label>
-              <input
-                type="email"
-                name="email"
-                value={responsavelData?.email}
-                onChange={handleResponsavelChange}
-                className="input input-bordered"
-                required
-                disabled={accessLevel !== "administrador" && accessLevel !== "administrativo"}
-              />
+              <input type="email" name="email" value={responsavelData?.email} onChange={handleResponsavelChange} className="input input-bordered" required />
             </div>
             <div className="form-control">
               <label className="label">
@@ -469,7 +429,6 @@ export default function EditAluno({ aluno, series, materias, accessLevel }: { al
                 value={responsavelData.cpf}
                 onChange={handleResponsavelChange}
                 className="input input-bordered"
-                disabled={accessLevel !== "administrador" && accessLevel !== "administrativo"}
                 required
               />
             </div>

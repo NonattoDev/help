@@ -1,9 +1,12 @@
+import Link from "next/link";
 import packageJson from "../../../../package.json";
 
 export async function LogoButton({ userName }: { userName: string }) {
   return (
     <div className="flex flex-col items-start">
-      <a className="btn btn-ghost text-xl">Lara Help</a>
+      <Link href="/" className="btn btn-ghost text-xl">
+        Lara Help
+      </Link>
       <span
         className="text-sm"
         style={{

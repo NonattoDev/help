@@ -4,6 +4,7 @@ export async function createAlunos(prisma: PrismaClient) {
   // Crie responsáveis primeiro
   const responsaveisData = [
     {
+<<<<<<< HEAD
       nome: "Priscila de Santana",
       email: "pspibio@gmail.com",
       cpf: "791.064.555-49",
@@ -50,11 +51,26 @@ export async function createAlunos(prisma: PrismaClient) {
         estado: "Bahia",
         cep: "41741-170",
         complemento: "Condomínio Parque Tropical, torre Sol, aptº 101",
+=======
+      nome: "Laís Sônia Rezende",
+      email: "laissoniarezende@vuyu.es",
+      cpf: "94641339457",
+      telefone: "66999629620",
+      endereco: {
+        rua: "Avenida das Acácias",
+        numero: "546",
+        bairro: "Setor Residencial Sul",
+        cidade: "Sinop",
+        estado: "MT",
+        cep: "78550059",
+        complemento: "Complemento Ficticio",
+>>>>>>> 2faddd0c6426d1e13ee4f3257978b897bb487c60
         referencia: "Referencia Ficticia",
       },
       password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
     },
     {
+<<<<<<< HEAD
       nome: "Amanda Lima",
       email: "Amandasabrina_@hotmail.com",
       cpf: "80428827500",
@@ -221,6 +237,21 @@ export async function createAlunos(prisma: PrismaClient) {
         cep: "41830260",
         complemento: "Edf Mansão Vela Branca, apto 901",
         referencia: "Próximo Hotel Manhatan",
+=======
+      nome: "Raul Ricardo Breno Farias",
+      email: "raul-farias70@netwis.com.br",
+      cpf: "53501568029",
+      telefone: "27987441439",
+      endereco: {
+        rua: "Rua Ivo Beltrame",
+        numero: "379",
+        bairro: "Boa Vista",
+        cidade: "São Mateus",
+        estado: "ES",
+        cep: "29931270",
+        complemento: "Complemento Exemplo",
+        referencia: "Referencia Exemplo",
+>>>>>>> 2faddd0c6426d1e13ee4f3257978b897bb487c60
       },
       password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
     },
@@ -246,6 +277,7 @@ export async function createAlunos(prisma: PrismaClient) {
   // Dados dos alunos
   const alunosData = [
     {
+<<<<<<< HEAD
       nome: "Adam de Santana Soares Pinto Pereira",
       email: "adampereira1@gmail.com",
       escola: "Salesiano do Salvador",
@@ -260,6 +292,22 @@ export async function createAlunos(prisma: PrismaClient) {
         cep: "40.261-075",
         complemento: "Ed. Félix, Apt. 01",
         referencia: "Próximo à Escola Estadual Santa Rita",
+=======
+      nome: "Mirella Esther Rodrigues",
+      email: "mirella-rodrigues94@gmailo.com",
+      escola: "Escola Mundo e Criação",
+      ano_escolar: "1º Ano",
+      telefone: "44986975139",
+      endereco: {
+        rua: "Avenida Prefeito Antônio Teodoro de Oliveira",
+        numero: "631",
+        bairro: "Jardim Santa Cruz",
+        cidade: "Campo Mourão",
+        estado: "PR",
+        cep: "87309596",
+        complemento: "Complemento Ficticio",
+        referencia: "Referencia Ficticia",
+>>>>>>> 2faddd0c6426d1e13ee4f3257978b897bb487c60
       },
       password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       ficha: "Ficha Ficticia",
@@ -267,12 +315,22 @@ export async function createAlunos(prisma: PrismaClient) {
         presencial: true,
         online: false,
       },
+<<<<<<< HEAD
       qtd_aulas: 8,
       data_inicio: new Date(),
       responsavelId: responsavelMap["adampereira1@gmail.com"],
+=======
+      responsavelId: responsavelMap["raul-farias70@netwis.com.br"],
+>>>>>>> 2faddd0c6426d1e13ee4f3257978b897bb487c60
       ativo: true,
+      financeiro: {
+        qtd_aulas: 7,
+        valor: "445",
+        dta_vencimento: "10/12",
+      },
     },
     {
+<<<<<<< HEAD
       nome: "Adenilson Augusto Leal Neto",
       email: "",
       escola: "Mediterrâneo",
@@ -314,6 +372,22 @@ export async function createAlunos(prisma: PrismaClient) {
         cep: "41741-170",
         complemento: "Condomínio Parque Tropical, torre Sol, aptº 101",
         referencia: "",
+=======
+      nome: "Tomás Kaique Lima",
+      email: "tomas_lima@live.co.uk",
+      escola: "Marista",
+      ano_escolar: "2º Ano",
+      telefone: "71999157059",
+      endereco: {
+        rua: "Rua Otacílio Colaço da Costa",
+        numero: "610",
+        bairro: "Monte Santo",
+        cidade: "Campina Grande",
+        estado: "PB",
+        cep: "58400815",
+        complemento: "Complemento Exemplo",
+        referencia: "Referencia Exemplo",
+>>>>>>> 2faddd0c6426d1e13ee4f3257978b897bb487c60
       },
       password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
       ficha: "Ficha Exemplo",
@@ -321,6 +395,7 @@ export async function createAlunos(prisma: PrismaClient) {
         presencial: true,
         online: false,
       },
+<<<<<<< HEAD
       qtd_aulas: 8,
       data_inicio: new Date(),
       responsavelId: responsavelMap[""],
@@ -567,7 +642,15 @@ export async function createAlunos(prisma: PrismaClient) {
       qtd_aulas: 4,
       data_inicio: new Date(),
       responsavelId: responsavelMap[""],
+=======
+      responsavelId: responsavelMap["laissoniarezende@vuyu.es"],
+>>>>>>> 2faddd0c6426d1e13ee4f3257978b897bb487c60
       ativo: true,
+      financeiro: {
+        qtd_aulas: 4,
+        valor: "245",
+        dta_vencimento: "10/12",
+      },
     },
   ];
 

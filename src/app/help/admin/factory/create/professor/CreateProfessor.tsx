@@ -1,15 +1,16 @@
 "use client";
+import { Dia, Materia, Professor, Turno } from "@/app/help/config/[id]/meuperfil/Components/Interfaces/Professor";
 import axios from "axios";
 import React from "react";
 import { BiTrash } from "react-icons/bi";
 import { toast } from "react-toastify";
-import { Dia, Materia, Professor, Turno } from "./Interfaces/Professor";
-import { validateCPF } from "@/utils/validateCpf";
+import createEmptyProfessor from "./CreateEmptyProf";
 import ReactInputMask from "react-input-mask";
 import LoadingButton from "@/components/Buttons/Loading/loading";
+import { validateCPF } from "@/utils/validateCpf";
 
-export default function EditProfessor({ professor, materias, accessLevel }: { professor: Professor; materias: Materia[]; accessLevel?: string }) {
-  const [formData, setFormData] = React.useState<Professor>(professor);
+export default function CreateProfessor({ materias }: { materias: Materia[] }) {
+  const [formData, setFormData] = React.useState<Professor>(createEmptyProfessor());
   const [loading, setLoading] = React.useState(false);
 
   function setNestedValue(obj: any, path: string, value: any) {
@@ -26,14 +27,6 @@ export default function EditProfessor({ professor, materias, accessLevel }: { pr
       setNestedValue(newFormData, name, checked);
       return newFormData;
     });
-  };
-
-  const handleToggleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, checked } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: checked,
-    }));
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -57,11 +50,11 @@ export default function EditProfessor({ professor, materias, accessLevel }: { pr
     const cep = value.replace(/\D/g, "");
     if (cep.length !== 8) return;
 
-    const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
-    const data = await response.json();
+    const response = await axios(`https://viacep.com.br/ws/${cep}/json/`);
+    const data = response.data;
 
-    if (data.erro) {
-      alert("CEP não encontrado");
+    if (!data) {
+      toast.info("CEP não encontrado");
       return;
     }
 
@@ -77,11 +70,10 @@ export default function EditProfessor({ professor, materias, accessLevel }: { pr
     }));
   };
 
-  const submitEdit = async (e: React.FormEvent) => {
+  const submitCreate = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     let errorCount = 0;
-    console.log(formData);
 
     if (!formData.modalidade.online && !formData.modalidade.presencial) {
       toast.info("Selecione ao menos uma modalidade");
@@ -93,9 +85,7 @@ export default function EditProfessor({ professor, materias, accessLevel }: { pr
       errorCount = errorCount + 1;
     }
 
-    if (!validateCPF(formData.cpf)) {
-      errorCount = errorCount + 1;
-    }
+    if (!validateCPF(formData.cpf)) errorCount++;
 
     if (formData.areaFormacao.length > 0) {
       for (const formacao of formData.areaFormacao) {
@@ -109,37 +99,28 @@ export default function EditProfessor({ professor, materias, accessLevel }: { pr
       setLoading(false);
       return;
     }
-
     try {
-      const response = await axios.put(`/help/config/${formData.id}/meuperfil/editar`, { formData, senhaAntiga: professor.password, typeEdit: "professor" });
+      const response = await axios.post(`/help/admin/factory/create/api/`, { formData, typeEdit: "professor" });
 
       if (response.status === 200) {
-        toast.success("Dados atualizados com sucesso");
+        toast.success("Professor cadastrado com sucesso!");
+        setFormData(createEmptyProfessor());
         setLoading(false);
-      } else {
-        setLoading(false);
-        toast.error("Erro ao atualizar dados");
       }
-    } catch (error) {
-      toast.error("Erro no servidor");
+    } catch (error: any) {
+      setLoading(false);
+      if (error && error.response && error.response.data) {
+        toast.error(error.response.data.message);
+        return;
+      }
+      toast.error("Erro ao atualizar dados");
     }
   };
 
   return (
     <div>
-      <form onSubmit={submitEdit}>
-        <div>
-          {accessLevel?.startsWith("admin") && (
-            <div className="form-control w-52">
-              <label className="cursor-pointer label">
-                <span className="label-text">Professor ativo ?</span>
-                <input type="checkbox" name="ativo" checked={formData.ativo} onChange={handleToggleChange} className="toggle  toggle-info" />
-              </label>
-            </div>
-          )}
-
-          <h2 className="text-md text-center font-bold mb-5">Dados Pessoais</h2>
-        </div>
+      <form onSubmit={submitCreate}>
+        <h2 className="text-md text-center font-bold mb-5">Dados Pessoais</h2>
         <div className="grid grid-cols-4 gap-4">
           <div className="form-control">
             <label className="label">
@@ -166,7 +147,6 @@ export default function EditProfessor({ professor, materias, accessLevel }: { pr
               value={formData.cpf}
               onChange={handleChange}
               className="input input-bordered"
-              disabled={accessLevel !== "administrador"}
               required
             />
           </div>
@@ -228,6 +208,7 @@ export default function EditProfessor({ professor, materias, accessLevel }: { pr
               </label>
               <input type="text" name="endereco.numero" value={formData.endereco.numero} onChange={handleChange} className="input input-bordered w-full" required />
             </div>
+
             <div>
               <label className="label">
                 <span className="label-text">Complemento</span>
@@ -269,8 +250,8 @@ export default function EditProfessor({ professor, materias, accessLevel }: { pr
           <h2 className="text-md text-center font-bold mb-5">Área de Formação</h2>
           {formData.areaFormacao.map((area, index) => (
             <div key={index} className="grid grid-cols-4 gap-4 mb-5">
-              <input type="text" name={`areaFormacao.${index}.area`} value={area?.area} onChange={handleChange} className="input input-bordered" required />
-              <select name={`areaFormacao.${index}.semestre`} value={area?.semestre} onChange={handleChange} className="input input-bordered" required>
+              <input placeholder="Curso" type="text" name={`areaFormacao.${index}.area`} value={area?.area} onChange={handleChange} className="input input-bordered" required />
+              <select name={`areaFormacao.${index}.semestre`} value={area?.semestre || 1} onChange={handleChange} className="input input-bordered" required>
                 {Array.from({ length: 10 }, (_, i) => i + 1).map((semestre) => (
                   <option key={semestre} value={semestre}>
                     {semestre}º Semestre

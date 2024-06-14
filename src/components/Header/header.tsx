@@ -6,30 +6,47 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/lib/auth";
 import MyProfileButton from "./Components/MyProfile";
 import prisma from "../../../prisma/prismaInstance";
-import { Professor } from "@prisma/client";
+import { Aluno, Professor } from "@prisma/client";
+import { Suspense } from "react";
+
+export const revalidate = 10;
+
+function LoadingFallback() {
+  return (
+    <div className="p-4">
+      <p>Carregando...</p>
+    </div>
+  );
+}
 
 const getData = async () => {
   const professoresFromDB = await prisma.professor.findMany();
 
+  const alunos = await prisma.aluno.findMany();
+
   const professores: Professor[] = professoresFromDB.map((professor) => ({
     ...professor,
-    endereco: professor.endereco as Professor["endereco"], // Faça cast para o tipo esperado
+    endereco: professor.endereco as Professor["endereco"],
     areaFormacao: professor.areaFormacao as Professor["areaFormacao"],
     disponibilidade: professor.disponibilidade as Professor["disponibilidade"],
   }));
 
   prisma.$disconnect();
-  return professores;
+
+  return { alunos, professores };
 };
 
 const Header = async () => {
   const session = await getServerSession(authOptions);
-  let professores: Professor[] | undefined;
+  let professores: any;
+  let alunos: any;
 
   if (!session) return null;
 
   if (session?.user.accessLevel === "administrador" || session?.user.accessLevel === "administrativo") {
-    professores = await getData();
+    const data = await getData();
+    professores = data.professores;
+    alunos = data.alunos;
   }
 
   return (
@@ -50,7 +67,11 @@ const Header = async () => {
       {/* Meio do Header*/}
       <div>
         {(session?.user.accessLevel === "administrador" || session?.user.accessLevel === "administrativo") && <MatchButton />}
-        {(session?.user.accessLevel === "administrador" || session?.user.accessLevel === "administrativo") && <ManutencaoButton professores={professores} />}
+        {(session?.user.accessLevel === "administrador" || session?.user.accessLevel === "administrativo") && (
+          <Suspense fallback={<LoadingFallback />}>
+            <ManutencaoButton professores={professores} alunos={alunos} />
+          </Suspense>
+        )}
       </div>
 
       {/* Fim Header */}

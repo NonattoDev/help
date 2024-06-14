@@ -2,11 +2,10 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { Responsavel } from "./Interfaces/Responsavel";
+import Responsavel from "./Interfaces/Responsavel";
 
 export default function EditResponsavel({ responsavel }: { responsavel: Responsavel }) {
-  console.log(responsavel);
-  const [formData, setFormData] = useState(responsavel);
+  const [formData, setFormData] = useState<Responsavel>(responsavel);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -162,6 +161,34 @@ export default function EditResponsavel({ responsavel }: { responsavel: Responsa
               </label>
               <input type="text" name="endereco.referencia" value={formData.endereco.referencia} onChange={handleChange} className="input input-bordered w-full" required />
             </div>
+          </div>
+        </div>
+
+        <div id="alunosPorResponsavelDiv">
+          <h2 className="text-md text-center font-bold mt-8 mb-5">Dados de alunos</h2>
+          <div className="overflow-x-auto">
+            <table className="table w-full">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nome</th>
+                  <th>E-mail</th>
+                  <th>Telefone</th>
+                  <th>Ativo</th>
+                </tr>
+              </thead>
+              <tbody>
+                {formData.alunos?.map((aluno) => (
+                  <tr key={aluno.id}>
+                    <td>{aluno.id}</td>
+                    <td>{aluno.nome}</td>
+                    <td>{aluno.email}</td>
+                    <td>{aluno.telefone}</td>
+                    <td>{aluno.ativo ? "Ativo" : "Desativado"}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
 
