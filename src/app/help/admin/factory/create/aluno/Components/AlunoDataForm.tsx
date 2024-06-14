@@ -2,7 +2,7 @@
 import React from "react";
 import ReactInputMask from "react-input-mask";
 import { Series } from "@prisma/client";
-import { Materia } from "@/app/help/config/[id]/meuperfil/Components/Interfaces/Professor";
+import { Materia } from "@/Interfaces/Professor";
 
 interface AlunoDataFormProps {
   formData: any;

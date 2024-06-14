@@ -1,4 +1,4 @@
-import { Professor } from "@/app/help/config/[id]/meuperfil/Components/Interfaces/Professor";
+import { Professor } from "@/Interfaces/Professor";
 
 const createEmptyProfessor = (): Professor => ({
   nome: "",

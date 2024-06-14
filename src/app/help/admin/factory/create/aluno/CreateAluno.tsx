@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { Series } from "@prisma/client";
 import ReactInputMask from "react-input-mask";
-import { Materia } from "@/app/help/config/[id]/meuperfil/Components/Interfaces/Professor";
+import { Materia } from "@/Interfaces/Professor";
 import createEmptyAluno from "./CreateEmptyAluno";
 import createEmptyResponsavel from "./CreateEmptyResponsavel";
 import { validateCPF } from "@/utils/validateCpf";
@@ -78,7 +78,7 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
 
   const handleCurrencyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    const unformattedValue = value.replace(/[^\d]/g, ""); // Remove tudo que não é dígito
+    const unformattedValue = value.replace(/[^\d]/g, "");
     if (value === "") return setAlunoData((prev) => ({ ...prev, financeiro: { ...prev.financeiro, valor: "" } }));
     const formattedValue = formatCurrency(unformattedValue);
 
@@ -365,7 +365,15 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
                 <label className="label">
                   <span className="label-text">Quantidade de aulas mensais</span>
                 </label>
-                <input type="number" name="financeiro.qtd_aulas" value={alunoData?.financeiro?.qtd_aulas} onChange={handleChange} className="input input-bordered w-fit" required max={moment().daysInMonth()} />
+                <input
+                  type="number"
+                  name="financeiro.qtd_aulas"
+                  value={alunoData?.financeiro?.qtd_aulas}
+                  onChange={handleChange}
+                  className="input input-bordered w-fit"
+                  required
+                  max={moment().daysInMonth()}
+                />
               </div>
               <div className="form-control ">
                 <label className="label">
