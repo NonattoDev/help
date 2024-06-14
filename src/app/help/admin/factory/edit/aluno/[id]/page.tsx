@@ -5,10 +5,10 @@ import { authOptions } from "@/app/lib/auth";
 import EditAluno from "@/components/EditForms/EditAluno/EditAluno";
 
 async function getDados(id: string) {
-  let session = await getServerSession(authOptions);
-  let materias = await prisma.materias.findMany();
-  let series = await prisma.series.findMany();
-  let aluno: any = await prisma.aluno.findUnique({
+  const session = await getServerSession(authOptions);
+  const materias = await prisma.materias.findMany();
+  const series = await prisma.series.findMany();
+  const aluno: any = await prisma.aluno.findUnique({
     where: {
       id,
     },
