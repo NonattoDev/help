@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { Series } from "@prisma/client";
@@ -16,9 +16,25 @@ export default function EditAluno({ aluno, series, materias, accessLevel }: { al
   if (!aluno.responsavel) {
     redirect("/");
   }
-  const [alunoData, setAlunoData] = useState(aluno);
+
+  const formatDate = (date: Date | string) => {
+    return moment(date).format("YYYY-MM-DD");
+  };
+
+  const [alunoData, setAlunoData] = useState({
+    ...aluno,
+    data_nascimento: aluno.data_nascimento ? formatDate(aluno.data_nascimento) : "",
+  });
+
   const [responsavelData, setResponsavelData] = useState<Responsavel>(aluno.responsavel);
   const [activeTab, setActiveTab] = useState("dadosPessoais");
+
+  useEffect(() => {
+    setAlunoData({
+      ...alunoData,
+      data_nascimento: aluno.data_nascimento ? formatDate(aluno.data_nascimento) : "",
+    });
+  }, [aluno]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -273,6 +289,12 @@ export default function EditAluno({ aluno, series, materias, accessLevel }: { al
                   </option>
                 ))}
               </select>
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Data de Nascimento</span>
+              </label>
+              <input type="date" className="input input-bordered" name="data_nascimento" value={alunoData.data_nascimento} onChange={handleChange} />
             </div>
           </div>
 

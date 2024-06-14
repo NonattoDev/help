@@ -63,7 +63,12 @@ export async function createAlunos(prisma: PrismaClient) {
       email: "adampereira1@gmail.com",
       escola: "Escola Ficticia",
       ano_escolar: "1º Ano",
+<<<<<<< HEAD
       telefone: "71999157057",
+=======
+      telefone: "44986975139",
+      data_nascimento: new Date("2013-06-06"),
+>>>>>>> 5cfaa06a58bdcafb95b8206e8046f609cfc2c3a6
       endereco: {
         rua: "Rua Ficticia",
         numero: "000",
@@ -122,7 +127,12 @@ export async function createAlunos(prisma: PrismaClient) {
       email: "brunaoliveira1@gmail.com",
       escola: "Escola Exemplo",
       ano_escolar: "2º Ano",
+<<<<<<< HEAD
       telefone: "71988032139",
+=======
+      telefone: "71999157059",
+      data_nascimento: new Date("2013-06-06"),
+>>>>>>> 5cfaa06a58bdcafb95b8206e8046f609cfc2c3a6
       endereco: {
         rua: "Rua Amazonas",
         numero: "78",

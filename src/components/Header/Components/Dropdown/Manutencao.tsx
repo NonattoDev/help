@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import ProfessorModalButton from "./ProfessorModal";
 import AlunoModalButton from "./AlunosModal";
-import { Aluno } from "@/Interfaces/Aluno";
+import Aluno from "@/Interfaces/Aluno";
 import { Professor } from "@prisma/client";
 
 function LoadingFallback() {
