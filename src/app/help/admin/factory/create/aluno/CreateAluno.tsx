@@ -9,8 +9,9 @@ import createEmptyResponsavel from "./CreateEmptyResponsavel";
 import { validateCPF } from "@/utils/validateCpf";
 import validaResponsavel from "@/utils/ValidaResponsavel";
 import moment from "moment";
+import { Materia } from "@/interfaces/professor.interface";
 
-export default function CreateAluno({ series, materias }: { series: Series[]; materias: any[] }) {
+export default function CreateAluno({ series, materias }: { series: Series[]; materias: Materia[] }) {
   const [alunoData, setAlunoData] = useState(createEmptyAluno());
   const [responsavelData, setResponsavelData] = useState(createEmptyResponsavel());
   const [activeTab, setActiveTab] = useState("dadosPessoais");
