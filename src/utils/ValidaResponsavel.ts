@@ -1,4 +1,4 @@
-import Responsavel from "@/interfaces/Responsavel";
+import Responsavel from "@/interfaces/responsavel.interface";
 import { toast } from "react-toastify";
 
 export function validaResponsavel(responsavelData: Responsavel): boolean {

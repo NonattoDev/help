@@ -4,14 +4,13 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { Series } from "@prisma/client";
 import ReactInputMask from "react-input-mask";
-import { Materia } from "@/interfaces/Professor";
 import createEmptyAluno from "./CreateEmptyAluno";
 import createEmptyResponsavel from "./CreateEmptyResponsavel";
 import { validateCPF } from "@/utils/validateCpf";
 import validaResponsavel from "@/utils/ValidaResponsavel";
 import moment from "moment";
 
-export default function CreateAluno({ series, materias }: { series: Series[]; materias: Materia[] }) {
+export default function CreateAluno({ series, materias }: { series: Series[]; materias: any[] }) {
   const [alunoData, setAlunoData] = useState(createEmptyAluno());
   const [responsavelData, setResponsavelData] = useState(createEmptyResponsavel());
   const [activeTab, setActiveTab] = useState("dadosPessoais");

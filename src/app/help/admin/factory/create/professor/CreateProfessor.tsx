@@ -1,5 +1,5 @@
 "use client";
-import { Dia, Materia, Professor, Turno } from "@/interfaces/Professor";
+import { Dia, Materia, Professor, Turno } from "@/interfaces/professor.interface";
 import axios from "axios";
 import React from "react";
 import { BiTrash } from "react-icons/bi";

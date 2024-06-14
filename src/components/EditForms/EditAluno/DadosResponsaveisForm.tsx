@@ -2,7 +2,7 @@
 
 import React from "react";
 import ReactInputMask from "react-input-mask";
-import Responsavel from "@/interfaces/Responsavel";
+import Responsavel from "@/interfaces/responsavel.interface";
 
 interface Props {
   responsavelData: Responsavel;

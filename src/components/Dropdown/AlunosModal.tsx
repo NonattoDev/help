@@ -7,7 +7,7 @@ import "@/components/Dropdown/styles/custom-scrollbar.scss";
 import { CgUserAdd } from "react-icons/cg";
 import LoadingButton from "@/components/Buttons/LoadingButton";
 import { PiStudent } from "react-icons/pi";
-import Aluno from "@/interfaces/Aluno";
+import Aluno from "@/interfaces/aluno.interface";
 
 interface AlunoModalButtonProps {
   alunos: Aluno[] | undefined | null;

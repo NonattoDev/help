@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
-import Responsavel from "@/interfaces/Responsavel";
+import Responsavel from "@/interfaces/responsavel.interface";
 
 export default function EditResponsavel({ responsavel }: { responsavel: Responsavel }) {
   const [formData, setFormData] = useState<Responsavel>(responsavel);
