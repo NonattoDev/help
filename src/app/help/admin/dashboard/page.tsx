@@ -1,9 +1,20 @@
+import CardAlunosAlert from "@/components/Admin/Dashboard/CardAlunosAlert";
 import { Metadata } from "next";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Help - Administrativo",
 };
 
+function LoadingFallback() {
+  return <div className="skeleton w-full h-96"></div>;
+}
+
 export default async function AdministrativoPage() {
-  return <h1>Administrativo Works</h1>;
+  return (
+    <Suspense fallback={<LoadingFallback />}>
+      <h1 className="text-center font-bold text-2xl ">Dashboard</h1>
+      <CardAlunosAlert />
+    </Suspense>
+  );
 }

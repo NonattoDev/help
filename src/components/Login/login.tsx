@@ -8,7 +8,7 @@ import { MdPassword } from "react-icons/md";
 import { toast } from "react-toastify";
 import help from "/public/help.svg";
 import { useRouter } from "next/navigation";
-import LoadingButton from "../Buttons/Loading/loading";
+import LoadingButton from "../Buttons/LoadingButton";
 
 export default function LoginComponent() {
   const [email, setEmail] = React.useState("");

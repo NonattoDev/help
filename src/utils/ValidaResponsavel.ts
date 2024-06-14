@@ -1,5 +1,5 @@
+import Responsavel from "@/interfaces/responsavel.interface";
 import { toast } from "react-toastify";
-import { Responsavel } from "../../../../../config/[id]/meuperfil/Components/Interfaces/Responsavel";
 
 export function validaResponsavel(responsavelData: Responsavel): boolean {
   let isValid = true;

@@ -30,12 +30,20 @@ model AgendaAulas {
   data        DateTime
   hora        String
   local       String
-  modalidade  String
-  checkin     DateTime
-  checkout    DateTime
+  modalidade  Modalidade
+  finalizada  Boolean   @default(false)
+  cancelada   Boolean   @default(false)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+
+  @@unique([professorId, data, hora])
 }
+
+enum Modalidade {
+  PRESENCIAL
+  ONLINE
+}
+
 
 model Responsavel {
   id          String   @id @default(cuid())

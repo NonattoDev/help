@@ -4,40 +4,40 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { Series } from "@prisma/client";
 import ReactInputMask from "react-input-mask";
-import { Materia } from "@/Interfaces/Professor";
 import createEmptyAluno from "./CreateEmptyAluno";
 import createEmptyResponsavel from "./CreateEmptyResponsavel";
 import { validateCPF } from "@/utils/validateCpf";
 import validaResponsavel from "@/utils/ValidaResponsavel";
 import moment from "moment";
+import { Materia } from "@/interfaces/professor.interface";
 
 export default function CreateAluno({ series, materias }: { series: Series[]; materias: Materia[] }) {
   const [alunoData, setAlunoData] = useState(createEmptyAluno());
   const [responsavelData, setResponsavelData] = useState(createEmptyResponsavel());
   const [activeTab, setActiveTab] = useState("dadosPessoais");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     if (name.startsWith("endereco.")) {
       const enderecoKey = name.split(".")[1];
-      setAlunoData({
-        ...alunoData,
+      setAlunoData((prev) => ({
+        ...prev,
         endereco: {
-          ...alunoData.endereco,
+          ...prev.endereco,
           [enderecoKey]: value,
         },
-      });
+      }));
     } else if (name.startsWith("financeiro.")) {
       const financeiroKey = name.split(".")[1];
-      setAlunoData({
-        ...alunoData,
+      setAlunoData((prev) => ({
+        ...prev,
         financeiro: {
-          ...alunoData.financeiro,
+          ...prev.financeiro,
           [financeiroKey]: value,
         },
-      });
+      }));
     } else {
-      setAlunoData({ ...alunoData, [name]: value });
+      setAlunoData((prev) => ({ ...prev, [name]: value }));
     }
   };
 
@@ -45,27 +45,27 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
     const { name, value } = e.target;
     if (name.startsWith("endereco.")) {
       const enderecoKey = name.split(".")[1];
-      setResponsavelData({
-        ...responsavelData,
+      setResponsavelData((prev) => ({
+        ...prev,
         endereco: {
-          ...responsavelData.endereco,
+          ...prev.endereco,
           [enderecoKey]: value,
         },
-      });
+      }));
     } else {
-      setResponsavelData({ ...responsavelData, [name]: value });
+      setResponsavelData((prev) => ({ ...prev, [name]: value }));
     }
   };
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target;
-    setAlunoData({
-      ...alunoData,
+    setAlunoData((prev) => ({
+      ...prev,
       modalidade: {
-        ...alunoData.modalidade,
+        ...prev.modalidade,
         [name]: checked,
       },
-    });
+    }));
   };
 
   const formatCurrency = (value: string) => {
@@ -79,7 +79,13 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
   const handleCurrencyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     const unformattedValue = value.replace(/[^\d]/g, "");
-    if (value === "") return setAlunoData((prev) => ({ ...prev, financeiro: { ...prev.financeiro, valor: "" } }));
+    if (value === "") {
+      setAlunoData((prev) => ({
+        ...prev,
+        financeiro: { ...prev.financeiro, valor: 0 },
+      }));
+      return;
+    }
     const formattedValue = formatCurrency(unformattedValue);
 
     setAlunoData((prev) => ({
@@ -121,7 +127,7 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
       ...alunoData,
       financeiro: {
         ...alunoData.financeiro,
-        valor: alunoData.financeiro.valor.replace(/[^\d]/g, ""),
+        valor: alunoData.financeiro.valor,
       },
     };
 
@@ -162,29 +168,29 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
     }
 
     if (activeTab === "dadosPessoais") {
-      setAlunoData({
-        ...alunoData,
+      setAlunoData((prev) => ({
+        ...prev,
         endereco: {
-          ...alunoData.endereco,
+          ...prev.endereco,
           rua: response.data.logradouro,
           bairro: response.data.bairro,
           cidade: response.data.localidade,
           estado: response.data.uf,
         },
-      });
+      }));
     }
 
     if (activeTab === "dadosResponsaveis") {
-      setResponsavelData({
-        ...responsavelData,
+      setResponsavelData((prev) => ({
+        ...prev,
         endereco: {
-          ...responsavelData.endereco,
+          ...prev.endereco,
           rua: response.data.logradouro,
           bairro: response.data.bairro,
           cidade: response.data.localidade,
           estado: response.data.uf,
         },
-      });
+      }));
     }
   };
 
@@ -355,6 +361,13 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
                   <span className="label-text ml-2">{materia.materia}</span>
                 </label>
               ))}
+            </div>
+          </div>
+
+          <div id="ficha" className="mt-8">
+            <h2 className="text-md text-center font-bold mb-5">Ficha do Aluno</h2>
+            <div id="textArea" className="flex justify-center w-full">
+              <textarea className="textarea textarea-info w-3/4 h-44" placeholder="Digite aqui a ficha do aluno" name="ficha" value={alunoData.ficha} onChange={handleChange}></textarea>
             </div>
           </div>
 

@@ -6,9 +6,9 @@ import { GiTeacher } from "react-icons/gi";
 import { BiEdit, BiSearch } from "react-icons/bi";
 import { createPortal } from "react-dom";
 import Link from "next/link";
-import "./Styles/custom-scrollbar.scss";
+import "@/components/Dropdown/styles/custom-scrollbar.scss";
 import { CgUserAdd } from "react-icons/cg";
-import LoadingButton from "@/components/Buttons/Loading/loading";
+import LoadingButton from "@/components/Buttons/LoadingButton";
 
 interface ProfessorModalButtonProps {
   professores: Professor[] | undefined | null;

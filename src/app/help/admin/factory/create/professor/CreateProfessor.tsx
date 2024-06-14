@@ -1,12 +1,12 @@
 "use client";
-import { Dia, Materia, Professor, Turno } from "@/Interfaces/Professor";
+import { Dia, Materia, Professor, Turno } from "@/interfaces/professor.interface";
 import axios from "axios";
 import React from "react";
 import { BiTrash } from "react-icons/bi";
 import { toast } from "react-toastify";
 import createEmptyProfessor from "./CreateEmptyProf";
 import ReactInputMask from "react-input-mask";
-import LoadingButton from "@/components/Buttons/Loading/loading";
+import LoadingButton from "@/components/Buttons/LoadingButton";
 import { validateCPF } from "@/utils/validateCpf";
 
 export default function CreateProfessor({ materias }: { materias: Materia[] }) {

@@ -3,10 +3,10 @@ import axios from "axios";
 import React from "react";
 import { BiTrash } from "react-icons/bi";
 import { toast } from "react-toastify";
-import { Dia, Materia, Professor, Turno } from "../../../../../../Interfaces/Professor";
+import { Dia, Materia, Professor, Turno } from "@/interfaces/professor.interface";
 import { validateCPF } from "@/utils/validateCpf";
 import ReactInputMask from "react-input-mask";
-import LoadingButton from "@/components/Buttons/Loading/loading";
+import LoadingButton from "@/components/Buttons/LoadingButton";
 
 export default function EditProfessor({ professor, materias, accessLevel }: { professor: Professor; materias: Materia[]; accessLevel?: string }) {
   const [formData, setFormData] = React.useState<Professor>(professor);

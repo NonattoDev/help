@@ -1,4 +1,4 @@
-import Responsavel from "./Responsavel";
+import Responsavel from "./responsavel.interface";
 
 export default interface Aluno {
   id?: string;
@@ -30,7 +30,7 @@ export default interface Aluno {
   ativo?: boolean;
   financeiro: {
     qtd_aulas: number;
-    valor: string;
+    valor: number;
     dta_vencimento: string;
   };
   AgendaAulas?: any;

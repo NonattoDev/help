@@ -1,22 +1,16 @@
-import MatchButton from "./Components/MatchButton";
-import { LogoButton } from "./Components/LogoButton";
-import { LogoutButton } from "./Components/LogoutButton";
-import { ManutencaoButton } from "./Components/Dropdown/Manutencao";
+import MatchButton from "../Buttons/MatchButton";
+import { LogoButton } from "@/components/Buttons/LogoButton";
+import { LogoutButton } from "@/components/Buttons/LogoutButton";
+import { ManutencaoButton } from "@/components/Dropdown/Manutencao";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/lib/auth";
-import MyProfileButton from "./Components/MyProfile";
+import MyProfileButton from "@/components/Buttons/MyProfileButton";
 import prisma from "../../../prisma/prismaInstance";
-import { Aluno, Professor } from "@prisma/client";
+import { Professor } from "@prisma/client";
 import { Suspense } from "react";
 
-export const revalidate = 10;
-
 function LoadingFallback() {
-  return (
-    <div className="p-4">
-      <p>Carregando...</p>
-    </div>
-  );
+  return <div className="p-4 skeleton"></div>;
 }
 
 const getData = async () => {

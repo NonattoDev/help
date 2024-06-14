@@ -1,4 +1,4 @@
-import Aluno from "./Aluno";
+import Aluno from "./aluno.interface";
 
 export default interface Responsavel {
   id?: string;

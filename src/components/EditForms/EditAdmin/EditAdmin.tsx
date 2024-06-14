@@ -2,7 +2,7 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 import React from "react";
-import { Administrador } from "../../../../../../Interfaces/Admin";
+import { Administrador } from "@/interfaces/admin.interface";
 import ReactInputMask from "react-input-mask";
 import { validateCPF } from "@/utils/validateCpf";
 

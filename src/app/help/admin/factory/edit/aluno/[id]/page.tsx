@@ -2,7 +2,7 @@ import prisma from "../../../../../../../../prisma/prismaInstance";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/lib/auth";
-import EditAluno from "@/app/help/config/[id]/meuperfil/Components/EditAluno";
+import EditAluno from "@/components/EditForms/EditAluno/EditAluno";
 
 async function getDados(id: string) {
   let session = await getServerSession(authOptions);
@@ -19,7 +19,6 @@ async function getDados(id: string) {
 
   await prisma.$disconnect();
   if (aluno) {
-    console.log(aluno);
     return { aluno, materias, session, series };
   }
 

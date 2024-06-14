@@ -1,4 +1,4 @@
-import Aluno from "@/Interfaces/Aluno";
+import Aluno from "@/interfaces/aluno.interface";
 import { Responsavel } from "./CreateEmptyResponsavel";
 
 const createEmptyAluno = (): Aluno => ({
@@ -7,6 +7,7 @@ const createEmptyAluno = (): Aluno => ({
   escola: "",
   ano_escolar: "",
   telefone: "",
+  data_nascimento: "",
   endereco: {
     rua: "",
     numero: "",
@@ -24,7 +25,7 @@ const createEmptyAluno = (): Aluno => ({
   },
   financeiro: {
     qtd_aulas: 0,
-    valor: "0",
+    valor: 0,
     dta_vencimento: "",
   },
   password: "",

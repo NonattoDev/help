@@ -1,5 +1,5 @@
 import Link from "next/link";
-import packageJson from "../../../../package.json";
+import packageJson from "../../../package.json";
 
 export async function LogoButton({ userName }: { userName: string }) {
   return (
