@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { Series } from "@prisma/client";
@@ -28,13 +28,6 @@ export default function EditAluno({ aluno, series, materias, accessLevel }: { al
 
   const [responsavelData, setResponsavelData] = useState<Responsavel>(aluno.responsavel);
   const [activeTab, setActiveTab] = useState("dadosPessoais");
-
-  useEffect(() => {
-    setAlunoData({
-      ...alunoData,
-      data_nascimento: aluno.data_nascimento ? formatDate(aluno.data_nascimento) : "",
-    });
-  }, [aluno]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;

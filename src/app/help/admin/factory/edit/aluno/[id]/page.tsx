@@ -19,7 +19,6 @@ async function getDados(id: string) {
 
   await prisma.$disconnect();
   if (aluno) {
-    console.log(aluno);
     return { aluno, materias, session, series };
   }
 

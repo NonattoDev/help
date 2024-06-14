@@ -1,4 +1,3 @@
-// AlunoDataForm.tsx
 import React from "react";
 import ReactInputMask from "react-input-mask";
 import { Series } from "@prisma/client";

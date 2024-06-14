@@ -1,5 +1,6 @@
 import bcrypt from "bcryptjs";
 import prisma from "../../../../../../../prisma/prismaInstance";
+import moment from "moment";
 
 export async function PUT(request: Request, params: any) {
   const { formData: userData, senhaAntiga, typeEdit, responsavelData } = await request.json();
@@ -33,10 +34,11 @@ export async function PUT(request: Request, params: any) {
           password: userData.password,
           modalidade: userData.modalidade,
           dificuldades: userData.dificuldades,
+          data_nascimento: moment(userData.data_nascimento).toDate(),
         },
       });
 
-      let updateResponsavel = await prisma.responsavel.update({
+      await prisma.responsavel.update({
         where: { id: responsavelData.id },
         data: responsavelData,
       });
