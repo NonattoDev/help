@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import prisma from "../../../../../../../prisma/prismaInstance";
 import moment from "moment";
+import parseCurrency from "@/utils/FormatCurrency";
 
 export async function PUT(request: Request, params: any) {
   const { formData: userData, senhaAntiga, typeEdit, responsavelData } = await request.json();
@@ -22,14 +23,19 @@ export async function PUT(request: Request, params: any) {
     let updateResponsavel;
 
     if (typeEdit === "aluno") {
+      if (userData.financeiro && typeof userData.financeiro.valor === "string") {
+        userData.financeiro.valor = parseCurrency(userData.financeiro.valor);
+      }
       updatedUser = await prisma.aluno.update({
         where: { id: userID },
         data: {
           nome: userData.nome,
           escola: userData.escola,
+          email: userData.email,
           ano_escolar: userData.ano_escolar,
           telefone: userData.telefone,
           endereco: userData.endereco,
+          financeiro: userData.financeiro,
           ficha: userData.ficha,
           password: userData.password,
           modalidade: userData.modalidade,
