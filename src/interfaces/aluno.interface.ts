@@ -37,4 +37,5 @@ export default interface Aluno {
   createdAt?: Date;
   updatedAt?: Date;
   responsavel?: Responsavel;
+  dadosFinanceiro?: any;
 }
