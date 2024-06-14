@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { Dia, Materia, Professor, Turno } from "@/interfaces/Professor";
 import { validateCPF } from "@/utils/validateCpf";
 import ReactInputMask from "react-input-mask";
-import LoadingButton from "@/components/Buttons/Loading/loading";
+import LoadingButton from "@/components/Buttons/Loading/LoadingButton";
 
 export default function EditProfessor({ professor, materias, accessLevel }: { professor: Professor; materias: Materia[]; accessLevel?: string }) {
   const [formData, setFormData] = React.useState<Professor>(professor);

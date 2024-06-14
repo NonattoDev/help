@@ -1,10 +1,10 @@
-import MatchButton from "./components/MatchButton";
-import { LogoButton } from "./components/LogoButton";
-import { LogoutButton } from "./components/LogoutButton";
-import { ManutencaoButton } from "./components/Dropdown/Manutencao";
+import MatchButton from "../Buttons/MatchButton";
+import { LogoButton } from "@/components/Buttons/LogoButton";
+import { LogoutButton } from "@/components/Buttons/LogoutButton";
+import { ManutencaoButton } from "@/components/Dropdown/Manutencao";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/lib/auth";
-import MyProfileButton from "./components/MyProfile";
+import MyProfileButton from "@/components/Buttons/MyProfileButton";
 import prisma from "../../../prisma/prismaInstance";
 import { Professor } from "@prisma/client";
 import { Suspense } from "react";

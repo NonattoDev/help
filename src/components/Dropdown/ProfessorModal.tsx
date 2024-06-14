@@ -1,19 +1,20 @@
 "use client";
+
 import { useState, useEffect, useCallback } from "react";
+import { Professor } from "@prisma/client";
+import { GiTeacher } from "react-icons/gi";
 import { BiEdit, BiSearch } from "react-icons/bi";
 import { createPortal } from "react-dom";
 import Link from "next/link";
 import "./Styles/custom-scrollbar.scss";
 import { CgUserAdd } from "react-icons/cg";
-import LoadingButton from "@/components/Buttons/Loading/loading";
-import { PiStudent } from "react-icons/pi";
-import Aluno from "@/interfaces/Aluno";
+import LoadingButton from "@/components/Buttons/Loading/LoadingButton";
 
-interface AlunoModalButtonProps {
-  alunos: Aluno[] | undefined | null;
+interface ProfessorModalButtonProps {
+  professores: Professor[] | undefined | null;
 }
 
-export default function AlunoModalButton({ alunos }: AlunoModalButtonProps) {
+export default function ProfessorModalButton({ professores }: ProfessorModalButtonProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -62,13 +63,13 @@ export default function AlunoModalButton({ alunos }: AlunoModalButtonProps) {
     }
   };
 
-  const filteredAlunos = alunos?.filter((aluno) => aluno.nome.toLowerCase().includes(searchTerm.toLowerCase()));
+  const filteredProfessores = professores?.filter((professor) => professor.nome.toLowerCase().includes(searchTerm.toLowerCase()));
 
-  const indexOfLastAluno = currentPage * resultsPerPage;
-  const indexOfFirstAluno = indexOfLastAluno - resultsPerPage;
-  const currentAlunos = filteredAlunos?.slice(indexOfFirstAluno, indexOfLastAluno);
+  const indexOfLastProfessor = currentPage * resultsPerPage;
+  const indexOfFirstProfessor = indexOfLastProfessor - resultsPerPage;
+  const currentProfessores = filteredProfessores?.slice(indexOfFirstProfessor, indexOfLastProfessor);
 
-  const totalPages = Math.ceil((filteredAlunos?.length || 0) / resultsPerPage);
+  const totalPages = Math.ceil((filteredProfessores?.length || 0) / resultsPerPage);
 
   const modalContent = (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50 modal-overlay" onClick={handleOutsideClick}>
@@ -76,23 +77,23 @@ export default function AlunoModalButton({ alunos }: AlunoModalButtonProps) {
         <button className="absolute top-5 right-2 text-gray-500 hover:text-gray-700" onClick={closeModal}>
           ✖
         </button>
-        <h2 className="font-bold text-2xl mb-8 text-center">Lista de Alunos</h2>
+        <h2 className="font-bold text-2xl mb-8 text-center">Lista de Professores</h2>
         <label className="input input-bordered flex items-center gap-2">
           <BiSearch className="w-4 h-4 opacity-70" />
-          <input type="search" className="grow text-center" placeholder="Pesquisar por aluno" onChange={(e) => handleSearch(e.target.value)} />
+          <input type="search" className="grow text-center" placeholder="Pesquisar por professor" onChange={(e) => handleSearch(e.target.value)} />
         </label>
         <div className="mt-2">
           {loading ? (
             <LoadingButton />
           ) : (
-            <Link onClick={closeModal} href={"/help/admin/factory/create/aluno"} className="btn btn-primary">
-              <CgUserAdd /> Adicionar Aluno
+            <Link onClick={closeModal} href={"/help/admin/factory/create/professor"} className="btn btn-primary">
+              <CgUserAdd /> Adicionar Professor
             </Link>
           )}
         </div>
 
         <div className="py-4">
-          {currentAlunos && currentAlunos.length > 0 ? (
+          {currentProfessores && currentProfessores.length > 0 ? (
             <table className="table w-full">
               <thead>
                 <tr>
@@ -102,12 +103,12 @@ export default function AlunoModalButton({ alunos }: AlunoModalButtonProps) {
                 </tr>
               </thead>
               <tbody>
-                {currentAlunos.map((aluno) => (
-                  <tr key={aluno.id}>
-                    <td>{aluno.nome}</td>
-                    <td>{aluno.email.toLowerCase()}</td>
+                {currentProfessores.map((professor) => (
+                  <tr key={professor.id}>
+                    <td>{professor.nome}</td>
+                    <td>{professor.email.toLowerCase()}</td>
                     <td>
-                      <Link className="btn btn-outline btn-sm" onClick={closeModal} href={`/help/admin/factory/edit/aluno/${aluno.id}`}>
+                      <Link className="btn btn-outline btn-sm" onClick={closeModal} href={`/help/admin/factory/edit/professor/${professor.id}`}>
                         <BiEdit />
                       </Link>
                     </td>
@@ -116,7 +117,7 @@ export default function AlunoModalButton({ alunos }: AlunoModalButtonProps) {
               </tbody>
             </table>
           ) : (
-            <p className="text-center">Nenhum aluno encontrado.</p>
+            <p className="text-center">Nenhum professor encontrado.</p>
           )}
         </div>
         <div className="flex justify-between items-center mt-4">
@@ -147,7 +148,7 @@ export default function AlunoModalButton({ alunos }: AlunoModalButtonProps) {
   return (
     <>
       <a onClick={openModal} className="cursor-pointer">
-        <PiStudent /> Aluno
+        <GiTeacher /> Professor
       </a>
 
       {isModalOpen && createPortal(modalContent, document.body)}
