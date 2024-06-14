@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from "react";
 import { BiEdit, BiSearch } from "react-icons/bi";
 import { createPortal } from "react-dom";
 import Link from "next/link";
-import "@/components/Dropdown/styles/custom-scrollbar";
+import "@/components/Dropdown/styles/custom-scrollbar.scss";
 import { CgUserAdd } from "react-icons/cg";
 import LoadingButton from "@/components/Buttons/LoadingButton";
 import { PiStudent } from "react-icons/pi";
