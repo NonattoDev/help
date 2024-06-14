@@ -1,4 +1,4 @@
-import EditProfessor from "@/components/EditForms/EditProfessor";
+import EditProfessor from "@/components/EditForms/EditProfessor/EditProfessor";
 import prisma from "../../../../../../../../prisma/prismaInstance";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
