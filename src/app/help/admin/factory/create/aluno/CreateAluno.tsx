@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { Series } from "@prisma/client";
 import ReactInputMask from "react-input-mask";
-import { Materia } from "@/Interfaces/Professor";
+import { Materia } from "@/interfaces/Professor";
 import createEmptyAluno from "./CreateEmptyAluno";
 import createEmptyResponsavel from "./CreateEmptyResponsavel";
 import { validateCPF } from "@/utils/validateCpf";

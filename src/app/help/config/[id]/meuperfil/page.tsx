@@ -1,10 +1,10 @@
 import { authOptions } from "@/app/lib/auth";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import EditProfessor from "./Components/EditProfessor";
-import EditAluno from "./Components/EditAluno";
-import EditResponsavel from "./Components/EditResponsavel";
-import EditAdmin from "./Components/EditAdmin";
+import EditProfessor from "./components/EditProfessor";
+import EditAluno from "./components/EditAluno";
+import EditResponsavel from "./components/EditResponsavel";
+import EditAdmin from "./components/EditAdmin";
 import prisma from "../../../../../../prisma/prismaInstance";
 
 async function getUserData(id: string) {

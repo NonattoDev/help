@@ -1,4 +1,4 @@
-import Aluno from "@/Interfaces/Aluno";
+import Aluno from "@/interfaces/Aluno";
 import { Responsavel } from "./CreateEmptyResponsavel";
 
 const createEmptyAluno = (): Aluno => ({

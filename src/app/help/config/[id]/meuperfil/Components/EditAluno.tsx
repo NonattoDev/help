@@ -4,12 +4,12 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { Series } from "@prisma/client";
 import ReactInputMask from "react-input-mask";
-import { Materia } from "@/Interfaces/Professor";
+import { Materia } from "@/interfaces/Professor";
 import { validateCPF } from "@/utils/validateCpf";
 import validaResponsavel from "@/utils/ValidaResponsavel";
 import moment from "moment";
-import Aluno from "@/Interfaces/Aluno";
-import Responsavel from "@/Interfaces/Responsavel";
+import Aluno from "@/interfaces/Aluno";
+import Responsavel from "@/interfaces/Responsavel";
 import { redirect } from "next/navigation";
 
 export default function EditAluno({ aluno, series, materias, accessLevel }: { aluno: Aluno; series: Series[]; materias: Materia[]; accessLevel?: string }) {
@@ -93,7 +93,7 @@ export default function EditAluno({ aluno, series, materias, accessLevel }: { al
     const { name, value } = e.target;
 
     const unformattedValue = value.replace(/[^\d]/g, ""); // Remove tudo que não é dígito
-    if (value === "") return setAlunoData((prev) => ({ ...prev, financeiro: { ...prev.financeiro, valor: "0" } }));
+    if (value === "") return setAlunoData((prev) => ({ ...prev, financeiro: { ...prev.financeiro, valor: 0 } }));
     const formattedValue = formatCurrency(unformattedValue);
 
     setAlunoData((prev) => ({
@@ -135,7 +135,7 @@ export default function EditAluno({ aluno, series, materias, accessLevel }: { al
       ...alunoData,
       financeiro: {
         ...alunoData.financeiro,
-        valor: alunoData.financeiro.valor.replace(/[^\d]/g, ""),
+        valor: alunoData.financeiro.valor,
       },
     };
 

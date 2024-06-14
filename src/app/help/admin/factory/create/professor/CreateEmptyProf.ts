@@ -1,4 +1,4 @@
-import { Professor } from "@/Interfaces/Professor";
+import { Professor } from "@/interfaces/Professor";
 
 const createEmptyProfessor = (): Professor => ({
   nome: "",
