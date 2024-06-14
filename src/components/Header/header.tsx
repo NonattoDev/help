@@ -6,8 +6,8 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/lib/auth";
 import MyProfileButton from "@/components/Buttons/MyProfileButton";
 import prisma from "../../../prisma/prismaInstance";
-import { Suspense } from "react";
 import { Professor } from "@prisma/client";
+import { Suspense } from "react";
 
 function LoadingFallback() {
   return (
