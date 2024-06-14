@@ -4,12 +4,12 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { Series } from "@prisma/client";
 import ReactInputMask from "react-input-mask";
-import { Materia } from "./Interfaces/Professor";
-import { validateCPF } from "../../../../../../utils/validateCpf";
-import validaResponsavel from "../../../../../../utils/ValidaResponsavel";
+import { Materia } from "@/Interfaces/Professor";
+import { validateCPF } from "@/utils/validateCpf";
+import validaResponsavel from "@/utils/ValidaResponsavel";
 import moment from "moment";
-import Aluno from "./Interfaces/Aluno";
-import Responsavel from "./Interfaces/Responsavel";
+import Aluno from "@/Interfaces/Aluno";
+import Responsavel from "@/Interfaces/Responsavel";
 import { redirect } from "next/navigation";
 
 export default function EditAluno({ aluno, series, materias, accessLevel }: { aluno: Aluno; series: Series[]; materias: Materia[]; accessLevel?: string }) {

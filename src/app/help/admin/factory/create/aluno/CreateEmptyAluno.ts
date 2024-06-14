@@ -1,4 +1,4 @@
-import { Aluno } from "@/app/help/config/[id]/meuperfil/Components/Interfaces/Aluno";
+import Aluno from "@/Interfaces/Aluno";
 import { Responsavel } from "./CreateEmptyResponsavel";
 
 const createEmptyAluno = (): Aluno => ({
