@@ -9,8 +9,6 @@ import prisma from "../../../prisma/prismaInstance";
 import { Professor } from "@prisma/client";
 import { Suspense } from "react";
 
-export const revalidate = 10;
-
 function LoadingFallback() {
   return (
     <div className="p-4">
