@@ -6,6 +6,7 @@ export default interface Aluno {
   email: string;
   escola: string;
   ano_escolar: string;
+  data_nascimento: Date | string;
   telefone: string;
   endereco: {
     cep: string;

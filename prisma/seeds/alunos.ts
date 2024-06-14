@@ -64,6 +64,7 @@ export async function createAlunos(prisma: PrismaClient) {
       escola: "Escola Mundo e Criação",
       ano_escolar: "1º Ano",
       telefone: "44986975139",
+      data_nascimento: new Date("2013-06-06"),
       endereco: {
         rua: "Avenida Prefeito Antônio Teodoro de Oliveira",
         numero: "631",
@@ -94,6 +95,7 @@ export async function createAlunos(prisma: PrismaClient) {
       escola: "Marista",
       ano_escolar: "2º Ano",
       telefone: "71999157059",
+      data_nascimento: new Date("2013-06-06"),
       endereco: {
         rua: "Rua Otacílio Colaço da Costa",
         numero: "610",

@@ -55,6 +55,7 @@ CREATE TABLE "Aluno" (
     "email" TEXT NOT NULL,
     "escola" TEXT NOT NULL,
     "ano_escolar" TEXT NOT NULL,
+    "data_nascimento" TIMESTAMP(3) NOT NULL,
     "telefone" TEXT NOT NULL,
     "endereco" JSONB NOT NULL,
     "ficha" TEXT NOT NULL,
