@@ -7,6 +7,7 @@ const createEmptyAluno = (): Aluno => ({
   escola: "",
   ano_escolar: "",
   telefone: "",
+  data_nascimento: "",
   endereco: {
     rua: "",
     numero: "",
