@@ -6,7 +6,7 @@ import { BiTrash } from "react-icons/bi";
 import { toast } from "react-toastify";
 import createEmptyProfessor from "./CreateEmptyProf";
 import ReactInputMask from "react-input-mask";
-import LoadingButton from "@/components/Buttons/Loading/LoadingButton";
+import LoadingButton from "@/components/Buttons/LoadingButton";
 import { validateCPF } from "@/utils/validateCpf";
 
 export default function CreateProfessor({ materias }: { materias: Materia[] }) {

@@ -3,9 +3,9 @@ import { useState, useEffect, useCallback } from "react";
 import { BiEdit, BiSearch } from "react-icons/bi";
 import { createPortal } from "react-dom";
 import Link from "next/link";
-import "./Styles/custom-scrollbar.scss";
+import "@/components/Dropdown/styles/custom-scrollbar";
 import { CgUserAdd } from "react-icons/cg";
-import LoadingButton from "@/components/Buttons/Loading/LoadingButton";
+import LoadingButton from "@/components/Buttons/LoadingButton";
 import { PiStudent } from "react-icons/pi";
 import Aluno from "@/interfaces/Aluno";
 

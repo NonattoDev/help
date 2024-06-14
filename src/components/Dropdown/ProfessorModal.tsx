@@ -8,7 +8,7 @@ import { createPortal } from "react-dom";
 import Link from "next/link";
 import "./Styles/custom-scrollbar.scss";
 import { CgUserAdd } from "react-icons/cg";
-import LoadingButton from "@/components/Buttons/Loading/LoadingButton";
+import LoadingButton from "@/components/Buttons/LoadingButton";
 
 interface ProfessorModalButtonProps {
   professores: Professor[] | undefined | null;
