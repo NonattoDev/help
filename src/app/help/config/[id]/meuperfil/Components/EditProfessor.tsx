@@ -3,7 +3,7 @@ import axios from "axios";
 import React from "react";
 import { BiTrash } from "react-icons/bi";
 import { toast } from "react-toastify";
-import { Dia, Materia, Professor, Turno } from "../../../../../../interfaces/Professor";
+import { Dia, Materia, Professor, Turno } from "@/interfaces/Professor";
 import { validateCPF } from "@/utils/validateCpf";
 import ReactInputMask from "react-input-mask";
 import LoadingButton from "@/components/Buttons/Loading/loading";

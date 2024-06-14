@@ -79,7 +79,7 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
   const handleCurrencyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     const unformattedValue = value.replace(/[^\d]/g, "");
-    if (value === "") return setAlunoData((prev) => ({ ...prev, financeiro: { ...prev.financeiro, valor: "" } }));
+    if (value === "") return setAlunoData((prev) => ({ ...prev, financeiro: { ...prev.financeiro, valor: 0 } }));
     const formattedValue = formatCurrency(unformattedValue);
 
     setAlunoData((prev) => ({
@@ -121,7 +121,7 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
       ...alunoData,
       financeiro: {
         ...alunoData.financeiro,
-        valor: alunoData.financeiro.valor.replace(/[^\d]/g, ""),
+        valor: alunoData.financeiro.valor,
       },
     };
 
