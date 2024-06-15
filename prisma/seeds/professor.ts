@@ -1,6 +1,13 @@
 import { PrismaClient } from "@prisma/client";
 
 export async function createProfessor(prisma: PrismaClient) {
+  const series = await prisma.series.findMany();
+
+  const seriesMap: Record<string, string> = {};
+  series.forEach((serie) => {
+    seriesMap[serie.serie] = serie.serie;
+  });
+
   const professor = await prisma.professor.createMany({
     data: [
       {
@@ -56,6 +63,7 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
+        turmas_habilitadas: [seriesMap["1 ano"], seriesMap["2 ano"], seriesMap["3 ano"]],
       },
       {
         nome: "Ana Rita Lima Gomes",
@@ -110,6 +118,7 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
+        turmas_habilitadas: [seriesMap["1 ano"], seriesMap["2 ano"], seriesMap["3 ano"]],
       },
       {
         nome: "Anita Sousa dos Santos Moreira",
@@ -164,6 +173,7 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
+        turmas_habilitadas: [seriesMap["1 ano"], seriesMap["2 ano"], seriesMap["3 ano"]],
       },
       {
         nome: "Beatriz Pires de Novaes dos Santos",
@@ -218,6 +228,7 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
+        turmas_habilitadas: [seriesMap["1 ano"], seriesMap["2 ano"], seriesMap["3 ano"]],
       },
       {
         nome: "Bruna Alves Silva Cruz",
@@ -272,6 +283,7 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
+        turmas_habilitadas: [seriesMap["1 ano"], seriesMap["2 ano"], seriesMap["3 ano"]],
       },
       {
         nome: "Bianca da Silva Barreto",
@@ -326,6 +338,7 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
+        turmas_habilitadas: [seriesMap["1 ano"], seriesMap["2 ano"], seriesMap["3 ano"]],
       },
       {
         nome: "Camila Ferreira Tavares",
@@ -380,6 +393,7 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
+        turmas_habilitadas: [seriesMap["1 ano"], seriesMap["2 ano"], seriesMap["3 ano"]],
       },
       {
         nome: "Carla Gabrielle Santos do Nascimento",
@@ -434,6 +448,7 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
+        turmas_habilitadas: [seriesMap["1 ano"], seriesMap["2 ano"], seriesMap["3 ano"]],
       },
       {
         nome: "Daiane Santos Teles",
@@ -488,6 +503,7 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
+        turmas_habilitadas: [seriesMap["1 ano"], seriesMap["2 ano"], seriesMap["3 ano"]],
       },
       {
         nome: "Deise Santos Souza",
@@ -542,6 +558,7 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
+        turmas_habilitadas: [seriesMap["1 ano"], seriesMap["2 ano"], seriesMap["3 ano"]],
       },
       {
         nome: "Elias Purificação Pereira",
@@ -596,6 +613,7 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
+        turmas_habilitadas: [seriesMap["1 ano"], seriesMap["2 ano"], seriesMap["3 ano"]],
       },
       {
         nome: "Emily Coutinho da Silva Costa",
@@ -650,6 +668,7 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
+        turmas_habilitadas: [seriesMap["1 ano"], seriesMap["2 ano"], seriesMap["3 ano"]],
       },
       {
         nome: "Enzo Felipe Dos Santos Rocha",
@@ -704,6 +723,7 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
+        turmas_habilitadas: [seriesMap["1 ano"], seriesMap["2 ano"], seriesMap["3 ano"]],
       },
       {
         nome: "Erica Santos Reis",
@@ -758,6 +778,7 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
+        turmas_habilitadas: [seriesMap["1 ano"], seriesMap["2 ano"], seriesMap["3 ano"]],
       },
       {
         nome: "Evelym Souza da Silva",
@@ -812,6 +833,7 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
+        turmas_habilitadas: [seriesMap["1 ano"], seriesMap["2 ano"], seriesMap["3 ano"]],
       },
       {
         nome: "Francis Carneiro Damasio",
@@ -866,6 +888,7 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
+        turmas_habilitadas: [seriesMap["1 ano"], seriesMap["2 ano"], seriesMap["3 ano"]],
       },
       {
         nome: "Flora Batista Borges",
@@ -920,6 +943,7 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
+        turmas_habilitadas: [seriesMap["1 ano"], seriesMap["2 ano"], seriesMap["3 ano"]],
       },
       {
         nome: "Gabriel Santos de Sant'anna",
@@ -974,6 +998,7 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
+        turmas_habilitadas: [seriesMap["1 ano"], seriesMap["2 ano"], seriesMap["3 ano"]],
       },
       {
         nome: "Gisele Gomes Pastor",
@@ -1028,6 +1053,7 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
+        turmas_habilitadas: [seriesMap["1 ano"], seriesMap["2 ano"], seriesMap["3 ano"]],
       },
       {
         nome: "Isabela Santana Matos",
@@ -1082,6 +1108,7 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
+        turmas_habilitadas: [seriesMap["1 ano"], seriesMap["2 ano"], seriesMap["3 ano"]],
       },
       {
         nome: "Jade Narel Nascimento Simões",
@@ -1136,6 +1163,7 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
+        turmas_habilitadas: [seriesMap["1 ano"], seriesMap["2 ano"], seriesMap["3 ano"]],
       },
       {
         nome: "Jadson Bomfim dos Santos",
@@ -1190,6 +1218,7 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
+        turmas_habilitadas: [seriesMap["1 ano"], seriesMap["2 ano"], seriesMap["3 ano"]],
       },
       {
         nome: "Jamille Fiuza Santiago",
@@ -1244,6 +1273,7 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
+        turmas_habilitadas: [seriesMap["1 ano"], seriesMap["2 ano"], seriesMap["3 ano"]],
       },
       {
         nome: "Jaqueline da Silva Araújo",
@@ -1298,6 +1328,7 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
+        turmas_habilitadas: [seriesMap["1 ano"], seriesMap["2 ano"], seriesMap["3 ano"]],
       },
       {
         nome: "Lidia Santos Magalhães",
@@ -1352,6 +1383,7 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
+        turmas_habilitadas: [seriesMap["1 ano"], seriesMap["2 ano"], seriesMap["3 ano"]],
       },
       {
         nome: "Lisiane de Souza Amorim",
@@ -1406,6 +1438,7 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
+        turmas_habilitadas: [seriesMap["1 ano"], seriesMap["2 ano"], seriesMap["3 ano"]],
       },
       {
         nome: "Joice de Andrade Sales",
@@ -1460,6 +1493,7 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
+        turmas_habilitadas: [seriesMap["1 ano"], seriesMap["2 ano"], seriesMap["3 ano"]],
       },
       {
         nome: "Lorena de Sá Leal",
@@ -1514,6 +1548,7 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
+        turmas_habilitadas: [seriesMap["1 ano"], seriesMap["2 ano"], seriesMap["3 ano"]],
       },
       {
         nome: "Louise Prado Farias Leal",
@@ -1568,6 +1603,7 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
+        turmas_habilitadas: [seriesMap["1 ano"], seriesMap["2 ano"], seriesMap["3 ano"]],
       },
       {
         nome: "Lourran de Novaes Oliveira",
@@ -1622,6 +1658,7 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
+        turmas_habilitadas: [seriesMap["1 ano"], seriesMap["2 ano"], seriesMap["3 ano"]],
       },
       {
         nome: "Mariana Rizzi Santos do Carmo",
@@ -1676,6 +1713,7 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
+        turmas_habilitadas: [seriesMap["1 ano"], seriesMap["2 ano"], seriesMap["3 ano"]],
       },
       {
         nome: "Mateus de Santana Silva",
@@ -1730,6 +1768,7 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
+        turmas_habilitadas: [seriesMap["1 ano"], seriesMap["2 ano"], seriesMap["3 ano"]],
       },
       {
         nome: "Matheus Alexandre Araujo Santos",
@@ -1784,6 +1823,7 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
+        turmas_habilitadas: [seriesMap["1 ano"], seriesMap["2 ano"], seriesMap["3 ano"]],
       },
       {
         nome: "Natália Lino Silva Spagnuolo",
@@ -1838,6 +1878,7 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
+        turmas_habilitadas: [seriesMap["1 ano"], seriesMap["2 ano"], seriesMap["3 ano"]],
       },
       {
         nome: "Ravilla Miranda Santos",
@@ -1892,6 +1933,7 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
+        turmas_habilitadas: [seriesMap["1 ano"], seriesMap["2 ano"], seriesMap["3 ano"]],
       },
       {
         nome: "Rosana Franquetto Pitta",
@@ -1946,6 +1988,7 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
+        turmas_habilitadas: [seriesMap["1 ano"], seriesMap["2 ano"], seriesMap["3 ano"]],
       },
       {
         nome: "Robson Ribeiro dos Santos",
@@ -2000,6 +2043,7 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
+        turmas_habilitadas: [seriesMap["1 ano"], seriesMap["2 ano"], seriesMap["3 ano"]],
       },
       {
         nome: "Saulo Miranda Silva",
@@ -2054,6 +2098,7 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
+        turmas_habilitadas: [seriesMap["1 ano"], seriesMap["2 ano"], seriesMap["3 ano"]],
       },
       {
         nome: "Thaise Braga de Oliveira",
@@ -2108,6 +2153,7 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
+        turmas_habilitadas: [seriesMap["1 ano"], seriesMap["2 ano"], seriesMap["3 ano"]],
       },
       {
         nome: "Vitor Lopes da Silva",
@@ -2162,6 +2208,7 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
+        turmas_habilitadas: [seriesMap["1 ano"], seriesMap["2 ano"], seriesMap["3 ano"]],
       },
       {
         nome: "Yuri Reis Pereira",
@@ -2216,6 +2263,7 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         },
         password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
+        turmas_habilitadas: [seriesMap["1 ano"], seriesMap["2 ano"], seriesMap["3 ano"]],
       },
     ],
   });

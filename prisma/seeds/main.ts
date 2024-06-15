@@ -5,13 +5,12 @@ import { createProfessor } from "./professor";
 import { createSeries } from "./series";
 import prisma from "../prismaInstance";
 
-
 async function main() {
+  await createSeries(prisma);
   await createMaterias(prisma);
   await createAlunos(prisma);
   await createUsuarios(prisma);
   await createProfessor(prisma);
-  await createSeries(prisma);
 }
 
 main()

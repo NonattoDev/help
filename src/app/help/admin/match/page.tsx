@@ -14,8 +14,6 @@ const getMatchDados = async () => {
     },
   });
 
-  console.log(alunos);
-
   return { alunos };
 };
 

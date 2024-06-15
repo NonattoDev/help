@@ -22,19 +22,19 @@ model Usuarios {
 }
 
 model AgendaAulas {
-  id          String    @id @default(cuid())
+  id          String     @id @default(cuid())
   alunoId     String
-  aluno       Aluno     @relation(fields: [alunoId], references: [id])
+  aluno       Aluno      @relation(fields: [alunoId], references: [id])
   professorId String
-  professor   Professor @relation(fields: [professorId], references: [id])
+  professor   Professor  @relation(fields: [professorId], references: [id])
   data        DateTime
   hora        String
   local       String
   modalidade  Modalidade
-  finalizada  Boolean   @default(false)
-  cancelada   Boolean   @default(false)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  finalizada  Boolean    @default(false)
+  cancelada   Boolean    @default(false)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
 
   @@unique([professorId, data, hora])
 }
@@ -43,7 +43,6 @@ enum Modalidade {
   PRESENCIAL
   ONLINE
 }
-
 
 model Responsavel {
   id          String   @id @default(cuid())
@@ -98,23 +97,24 @@ model Financeiro {
 }
 
 model Professor {
-  id              String        @id @default(cuid())
-  nome            String
-  email           String        @unique
-  cpf             String        @unique
-  telefone        String
-  endereco        Json
-  areaFormacao    Json[]
-  ativo           Boolean       @default(true)
-  disponibilidade Json          @default("{\"segunda\": {\"manha\": false, \"tarde\": true, \"noite\": false}, \"terca\": {\"manha\": false, \"tarde\": true, \"noite\": false}, \"quarta\": {\"manha\": false, \"tarde\": true, \"noite\": false}, \"quinta\": {\"manha\": false, \"tarde\": true, \"noite\": false}, \"sexta\": {\"manha\": false, \"tarde\": true, \"noite\": false}, \"sabado\": {\"manha\": true, \"tarde\": false, \"noite\": false}}")
-  ficha           Json[]
-  accessLevel     String        @default("professor")
-  modalidade      Json          @default("{\"presencial\": true, \"online\": false}")
-  password        String
-  materias        String[]
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
-  AgendaAulas     AgendaAulas[]
+  id                 String        @id @default(cuid())
+  nome               String
+  email              String        @unique
+  cpf                String        @unique
+  telefone           String
+  endereco           Json
+  areaFormacao       Json[]
+  turmas_habilitadas String[]
+  ativo              Boolean       @default(true)
+  disponibilidade    Json          @default("{\"segunda\": {\"manha\": false, \"tarde\": true, \"noite\": false}, \"terca\": {\"manha\": false, \"tarde\": true, \"noite\": false}, \"quarta\": {\"manha\": false, \"tarde\": true, \"noite\": false}, \"quinta\": {\"manha\": false, \"tarde\": true, \"noite\": false}, \"sexta\": {\"manha\": false, \"tarde\": true, \"noite\": false}, \"sabado\": {\"manha\": true, \"tarde\": false, \"noite\": false}}")
+  ficha              Json[]
+  accessLevel        String        @default("professor")
+  modalidade         Json          @default("{\"presencial\": true, \"online\": false}")
+  password           String
+  materias           String[]
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+  AgendaAulas        AgendaAulas[]
 }
 
 model Materias {
@@ -125,8 +125,8 @@ model Materias {
 }
 
 model Series {
-  id        String   @id @default(cuid())
-  serie     String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  id          String     @id @default(cuid())
+  serie       String
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @default(now())
 }
