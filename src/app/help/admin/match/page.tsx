@@ -1,5 +1,5 @@
 import prisma from "../../../../../prisma/prismaInstance";
-import MatchApp from "./MatchApp";
+import MatchApp from "./components/MatchApp";
 
 const getMatchDados = async () => {
   const alunos = await prisma.aluno.findMany({

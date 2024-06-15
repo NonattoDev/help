@@ -2,26 +2,39 @@
 
 "use client";
 import { Aluno } from "@prisma/client";
-import SelectAluno from "./components/SelectAluno";
+import SelectAluno from "./SelectAluno";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import SelectProfessor from "./SelectProfessor";
 
 interface MatchAppProps {
   alunos: Aluno[];
 }
 
+enum Page {
+  SELECTALUNO,
+  SELECTPROFESSOR,
+  MATCH,
+}
+
 export default function MatchApp({ alunos }: MatchAppProps) {
-  const [IdAluno, setIdAluno] = useState<string>("");
+  const [page, setPage] = useState<Page>(Page.SELECTALUNO);
 
   function handleSelectAluno(e: React.ChangeEvent<HTMLSelectElement>) {
     const { name, value } = e.target;
-    setIdAluno(value);
-    toast.success(`Aluno selecionado: ${value}`);
+
+    const alunoFiltered: Aluno | undefined = alunos.find((aluno) => aluno.id === value);
+
+    if (!alunoFiltered) return toast.error("Aluno não encontrado");
+
+    toast.success(`Aluno selecionado: ${alunoFiltered.nome}`);
+    setPage(Page.SELECTPROFESSOR);
   }
 
   return (
     <div>
-      <SelectAluno alunos={alunos} handleSelectAluno={handleSelectAluno} />
+      {page === Page.SELECTALUNO && <SelectAluno alunos={alunos} handleSelectAluno={handleSelectAluno} />}
+      {page === Page.SELECTPROFESSOR && <SelectProfessor />}
     </div>
   );
 }

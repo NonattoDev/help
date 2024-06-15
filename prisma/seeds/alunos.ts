@@ -5,6 +5,23 @@ export async function createAlunos(prisma: PrismaClient) {
   // Crie responsáveis primeiro
   const responsaveisData = [
     {
+      nome: "Priscila de Santana",
+      email: "pspibio@gmail.com",
+      cpf: "79106455549",
+      telefone: "71999157057",
+      endereco: {
+        rua: "Rua Poetisa Cora Coralina",
+        numero: "45",
+        bairro: "Bairro Ficticio",
+        cidade: "Salvador",
+        estado: "Bahia",
+        cep: "40261075",
+        complemento: "Ed. Félix, Apt. 01",
+        referencia: "Próximo à Escola Estadual Santa Rita",
+      },
+      password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
+    },
+    {
       nome: "Leina",
       email: "aniel2@gmail.com",
       cpf: "77659970500",
@@ -44,7 +61,7 @@ export async function createAlunos(prisma: PrismaClient) {
   const alunosData = [
     {
       nome: "Adenilson Augusto Leal Neto",
-      email: "",
+      email: "adenilsonteste@gmail.com",
       data_nascimento: moment().toDate(),
       escola: "Mediterrâneo",
       ano_escolar: "9º Ano",
@@ -75,7 +92,7 @@ export async function createAlunos(prisma: PrismaClient) {
     },
     {
       nome: "Aila Vitória Bispo Araujo",
-      email: "",
+      email: "aila@teste.com",
       data_nascimento: moment().toDate(),
       escola: "",
       ano_escolar: "3º Ano do Ensino Médio",
@@ -97,6 +114,37 @@ export async function createAlunos(prisma: PrismaClient) {
         online: false,
       },
       responsavelId: responsavelMap["aniel2@gmail.com"],
+      ativo: true,
+      financeiro: {
+        qtd_aulas: 8,
+        valor: "400",
+        dta_vencimento: "05/24",
+      },
+    },
+    {
+      nome: "Adam de Santana Soares Pinto Pereira",
+      email: "",
+      data_nascimento: moment().toDate(),
+      escola: "Salesiano do Salvador",
+      ano_escolar: "6º Ano",
+      telefone: "71999157057",
+      endereco: {
+        rua: "Rua Poetisa Cora Coralina",
+        numero: "45",
+        bairro: "Santa Teresa",
+        cidade: "Salvador",
+        estado: "Bahia",
+        cep: "40265070",
+        complemento: "Ed. Félix, Apt. 01, Luiz Anselmo",
+        referencia: "Próximo à Escola Estadual Santa Rita",
+      },
+      password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
+      ficha: "Ficha Ficticia",
+      modalidade: {
+        presencial: true,
+        online: false,
+      },
+      responsavelId: responsavelMap["pspibio@gmail.com"],
       ativo: true,
       financeiro: {
         qtd_aulas: 8,
