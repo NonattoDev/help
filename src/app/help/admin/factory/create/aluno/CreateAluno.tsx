@@ -148,9 +148,9 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
     }
   };
 
-  const handleMateriasChange = (id: string) => {
+  const handleMateriasChange = (materia: string) => {
     setAlunoData((prev) => {
-      const newDificuldades = prev.dificuldades.includes(id) ? prev.dificuldades.filter((materiaId) => materiaId !== id) : [...prev.dificuldades, id];
+      const newDificuldades = prev.dificuldades.includes(materia) ? prev.dificuldades.filter((materiaName) => materiaName !== materia) : [...prev.dificuldades, materia];
       return { ...prev, dificuldades: newDificuldades };
     });
   };
@@ -357,7 +357,7 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
             <div className="grid grid-cols-4 gap-4 ">
               {materias.map((materia) => (
                 <label key={materia.id} className="flex items-center cursor-pointer">
-                  <input type="checkbox" name={`dificuldades`} checked={alunoData.dificuldades.includes(materia.id)} onChange={() => handleMateriasChange(materia.id)} className="checkbox" />
+                  <input type="checkbox" name={`dificuldades`} checked={alunoData.dificuldades.includes(materia.materia)} onChange={() => handleMateriasChange(materia.materia)} className="checkbox" />
                   <span className="label-text ml-2">{materia.materia}</span>
                 </label>
               ))}

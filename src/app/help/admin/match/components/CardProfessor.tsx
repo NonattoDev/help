@@ -1,9 +1,11 @@
+import { Aluno } from "@prisma/client";
 import { Professor } from "@/interfaces/professor.interface";
 
 interface PropsCardProfessor {
+  aluno: Aluno;
   professor: Professor;
 }
-export default function CardProfessor({ professor }: PropsCardProfessor) {
+export default function CardProfessor({ professor, aluno }: PropsCardProfessor) {
   return (
     <div className="card card-compact w-80 bg-base-100 shadow-xl">
       <figure>
@@ -16,9 +18,9 @@ export default function CardProfessor({ professor }: PropsCardProfessor) {
           <p>{professor.endereco.bairro}</p>
           <p>{professor.endereco.rua}</p>
         </div>
-        <div id="materiasQueLeciona" className="card-actions justify-end">
+        <div id="materiasQueLeciona" className="card-actions justify-start">
           {professor.materias.map((materia) => (
-            <button key={materia} className="btn btn-sm btn-primary">
+            <button key={materia} className={`btn btn-sm ${aluno.dificuldades.includes(materia) ? "btn-success text-white" : "btn-info"}`}>
               {materia}
             </button>
           ))}

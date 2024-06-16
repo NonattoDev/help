@@ -10,6 +10,7 @@ import { Aluno } from "@prisma/client";
 // Já estar próximo da região do aluno
 
 export const getProfessores = async (aluno: Aluno) => {
+  console.log(aluno.dificuldades)
   const professores = await prisma.professor.findMany({
     where: {
       turmas_habilitadas: {

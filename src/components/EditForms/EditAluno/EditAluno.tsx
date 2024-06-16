@@ -91,9 +91,9 @@ export default function EditAluno({ aluno, series, materias, accessLevel }: Prop
     });
   };
 
-  const handleMateriasChange = (id: string) => {
+  const handleMateriasChange = (materia: string) => {
     setAlunoData((prev) => {
-      const newDificuldades = prev.dificuldades.includes(id) ? prev.dificuldades.filter((materiaId) => materiaId !== id) : [...prev.dificuldades, id];
+      const newDificuldades = prev.dificuldades.includes(materia) ? prev.dificuldades.filter((materiaName) => materiaName !== materia) : [...prev.dificuldades, materia];
       return { ...prev, dificuldades: newDificuldades };
     });
   };
