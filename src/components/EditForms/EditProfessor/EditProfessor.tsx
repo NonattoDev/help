@@ -7,8 +7,16 @@ import { Dia, Materia, Professor, Turno } from "@/interfaces/professor.interface
 import { validateCPF } from "@/utils/validateCpf";
 import ReactInputMask from "react-input-mask";
 import LoadingButton from "@/components/Buttons/LoadingButton";
+import { Series } from "@/interfaces/series.interface";
 
-export default function EditProfessor({ professor, materias, accessLevel }: { professor: Professor; materias: Materia[]; accessLevel?: string }) {
+interface EditProfessorProps {
+  professor: Professor;
+  materias: Materia[];
+  series: Series[];
+  accessLevel?: string;
+}
+
+export default function EditProfessor({ professor, materias, accessLevel, series }: EditProfessorProps) {
   const [formData, setFormData] = React.useState<Professor>(professor);
   const [loading, setLoading] = React.useState(false);
 
@@ -49,6 +57,13 @@ export default function EditProfessor({ professor, materias, accessLevel }: { pr
     setFormData((prev) => {
       const newMaterias = prev.materias.includes(materia) ? prev.materias.filter((materiaName) => materiaName !== materia) : [...prev.materias, materia];
       return { ...prev, materias: newMaterias };
+    });
+  };
+
+  const handleTurmasChange = (turmaName: string) => {
+    setFormData((prevData) => {
+      const newTurmas = prevData.turmas_habilitadas.includes(turmaName) ? prevData.turmas_habilitadas.filter((turma) => turma !== turmaName) : [...prevData.turmas_habilitadas, turmaName];
+      return { ...prevData, turmas_habilitadas: newTurmas };
     });
   };
 
@@ -350,6 +365,18 @@ export default function EditProfessor({ professor, materias, accessLevel }: { pr
               <label key={materia.id} className="flex items-center cursor-pointer">
                 <input type="checkbox" name={`materias`} checked={formData.materias.includes(materia.materia)} onChange={() => handleMateriasChange(materia.materia)} className="checkbox" />
                 <span className="label-text ml-2">{materia.materia}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+
+        <div id="turmas_habilitadas" className="mt-8">
+          <h2 className="text-md text-center font-bold mb-5">Turmas que está apto a lecionar</h2>
+          <div className="grid grid-cols-4 gap-4">
+            {series.map((serie) => (
+              <label key={serie.id} className="flex items-center cursor-pointer">
+                <input type="checkbox" name="turmas_habilitadas" checked={formData.turmas_habilitadas.includes(serie.serie)} onChange={() => handleTurmasChange(serie.serie)} className="checkbox" />
+                <span className="label-text ml-2">{serie.serie}</span>
               </label>
             ))}
           </div>

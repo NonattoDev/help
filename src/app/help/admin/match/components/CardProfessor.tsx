@@ -1,9 +1,9 @@
 import { Aluno } from "@prisma/client";
-import { Professor } from "@/interfaces/professor.interface";
+import { ProfessoresMatch } from "./Actions/GetProfessores";
 
 interface PropsCardProfessor {
   aluno: Aluno;
-  professor: Professor;
+  professor: ProfessoresMatch;
 }
 export default function CardProfessor({ professor, aluno }: PropsCardProfessor) {
   return (
@@ -17,6 +17,7 @@ export default function CardProfessor({ professor, aluno }: PropsCardProfessor) 
           {/* Criar uma server action que recebe o endereco do aluno e do professor e com api do Google Maps retorna km de distancia */}
           <p>{professor.endereco.bairro}</p>
           <p>{professor.endereco.rua}</p>
+          <span className="badge badge-accent">{professor.distanciaEmKm} km</span>
         </div>
         <div id="materiasQueLeciona" className="card-actions justify-start">
           {professor.materias.map((materia) => (

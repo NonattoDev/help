@@ -30,6 +30,7 @@ const createEmptyProfessor = (): Professor => ({
     sabado: { manha: false, tarde: false, noite: false },
   },
   materias: [],
+  turmas_habilitadas: [],
 });
 
 export default createEmptyProfessor;

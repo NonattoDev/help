@@ -10,8 +10,7 @@ import SelectAluno from "./SelectAluno";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import ShowProfessores from "./ShowProfessores";
-import { Professor } from "@/interfaces/professor.interface";
-import { getProfessores } from "./Actions/GetProfessores";
+import { ProfessoresMatch, getProfessores } from "./Actions/GetProfessores";
 
 interface MatchAppProps {
   alunos: Aluno[];
@@ -26,7 +25,7 @@ enum Page {
 export default function MatchApp({ alunos }: MatchAppProps) {
   const [page, setPage] = useState<Page>(Page.SELECTALUNO);
   const [alunoSelected, setAlunoSelected] = useState<Aluno>();
-  const [professores, setProfessores] = useState<Professor[]>();
+  const [professores, setProfessores] = useState<ProfessoresMatch[]>();
 
   async function handleSelectAluno(e: React.ChangeEvent<HTMLSelectElement>) {
     const { name, value } = e.target;
@@ -40,7 +39,7 @@ export default function MatchApp({ alunos }: MatchAppProps) {
     // Define o aluno selecionado
     setAlunoSelected(alunoFiltered);
     // Busca os professores de acordo com o aluno selecionado
-    const professores = await getProfessores(alunoFiltered as Aluno);
+    const professores = await getProfessores(alunoFiltered as any);
     // Se não houver professores, exibe um erro
     if (!professores || professores.length === 0) return toast.error("Não foi possível buscar os professores");
     // Define os professores

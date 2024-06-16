@@ -8,8 +8,14 @@ import createEmptyProfessor from "./CreateEmptyProf";
 import ReactInputMask from "react-input-mask";
 import LoadingButton from "@/components/Buttons/LoadingButton";
 import { validateCPF } from "@/utils/validateCpf";
+import { Series } from "@/interfaces/series.interface";
 
-export default function CreateProfessor({ materias }: { materias: Materia[] }) {
+interface CreateProfessorProps {
+  materias: Materia[];
+  series: Series[];
+}
+
+export default function CreateProfessor({ materias, series }: CreateProfessorProps) {
   const [formData, setFormData] = React.useState<Professor>(createEmptyProfessor());
   const [loading, setLoading] = React.useState(false);
 
@@ -42,6 +48,14 @@ export default function CreateProfessor({ materias }: { materias: Materia[] }) {
     setFormData((prev) => {
       const newMaterias = prev.materias.includes(materia) ? prev.materias.filter((materiaName) => materiaName !== materia) : [...prev.materias, materia];
       return { ...prev, materias: newMaterias };
+    });
+  };
+
+  const handleTurmasChange = (turmaName: string) => {
+    console.log(turmaName);
+    setFormData((prevData) => {
+      const newTurmas = prevData.turmas_habilitadas.includes(turmaName) ? prevData.turmas_habilitadas.filter((turma) => turma !== turmaName) : [...prevData.turmas_habilitadas, turmaName];
+      return { ...prevData, turmas_habilitadas: newTurmas };
     });
   };
 
@@ -331,6 +345,18 @@ export default function CreateProfessor({ materias }: { materias: Materia[] }) {
               <label key={materia.id} className="flex items-center cursor-pointer">
                 <input type="checkbox" name={`materias`} checked={formData.materias.includes(materia.materia)} onChange={() => handleMateriasChange(materia.materia)} className="checkbox" />
                 <span className="label-text ml-2">{materia.materia}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+
+        <div id="turmas_habilitadas" className="mt-8">
+          <h2 className="text-md text-center font-bold mb-5">Turmas que está apto a lecionar</h2>
+          <div className="grid grid-cols-4 gap-4">
+            {series.map((serie) => (
+              <label key={serie.id} className="flex items-center cursor-pointer">
+                <input type="checkbox" name="turmas_habilitadas" onChange={() => handleTurmasChange(serie.serie)} className="checkbox" />
+                <span className="label-text ml-2">{serie.serie}</span>
               </label>
             ))}
           </div>

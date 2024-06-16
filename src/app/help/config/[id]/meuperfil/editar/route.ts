@@ -62,6 +62,7 @@ export async function PUT(request: Request, params: any) {
           modalidade: userData.modalidade,
           password: userData.password,
           materias: userData.materias,
+          turmas_habilitadas: userData.turmas_habilitadas,
         },
       });
     } else if (typeEdit === "responsavel") {

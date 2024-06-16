@@ -3,12 +3,13 @@ import CreateProfessor from "./CreateProfessor";
 
 async function getDados() {
   let materias = await prisma.materias.findMany();
+  let series = await prisma.series.findMany();
 
-  return materias;
+  return { materias, series };
 }
 
 export default async function createNewProfessor() {
-  const materias = await getDados();
+  const { materias, series } = await getDados();
 
-  return <CreateProfessor materias={materias} />;
+  return <CreateProfessor materias={materias} series={series} />;
 }

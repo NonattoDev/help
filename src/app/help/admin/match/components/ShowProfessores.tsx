@@ -1,11 +1,11 @@
 "use client";
 
 import { Aluno } from "@prisma/client";
-import { Professor } from "@/interfaces/professor.interface";
 import CardProfessor from "./CardProfessor";
+import { ProfessoresMatch } from "./Actions/GetProfessores";
 
 interface ShowProfessores {
-  professores: Professor[];
+  professores: ProfessoresMatch[];
   aluno: Aluno;
 }
 

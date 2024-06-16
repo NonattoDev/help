@@ -13,6 +13,7 @@ export interface Professor {
   cpf: string;
   telefone: string;
   password: string;
+  turmas_habilitadas: string[];
   endereco: {
     rua: string;
     numero: string;

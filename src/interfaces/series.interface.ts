@@ -1,6 +1,6 @@
 export interface Series {
   id: string;
-  name: string;
-  createdAt: string;
-  updatedAt: string;
+  serie: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
