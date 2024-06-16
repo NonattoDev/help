@@ -44,6 +44,7 @@ async function getUserData(id: string) {
         where: { id: id },
       });
       materias = await prisma.materias.findMany();
+      series = await prisma.series.findMany();
       break;
     default:
       break;
