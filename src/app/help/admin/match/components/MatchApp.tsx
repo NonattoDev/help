@@ -9,7 +9,7 @@ import { Aluno } from "@prisma/client";
 import SelectAluno from "./SelectAluno";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import SelectProfessor from "./SelectProfessor";
+import ShowProfessores from "./ShowProfessores";
 import { Professor } from "@/interfaces/professor.interface";
 import { getProfessores } from "./Actions/GetProfessores";
 
@@ -19,21 +19,24 @@ interface MatchAppProps {
 
 enum Page {
   SELECTALUNO,
-  SELECTPROFESSOR,
+  SHOWPROFESSORES,
   MATCH,
 }
 
 export default function MatchApp({ alunos }: MatchAppProps) {
   const [page, setPage] = useState<Page>(Page.SELECTALUNO);
-  const [alunoSelected, setAlunoSelected] = useState<Aluno | undefined>(undefined);
+  const [alunoSelected, setAlunoSelected] = useState<Aluno>();
   const [professores, setProfessores] = useState<Professor[]>();
 
   async function handleSelectAluno(e: React.ChangeEvent<HTMLSelectElement>) {
     const { name, value } = e.target;
     // Filtra o aluno selecionado
-    const alunoFiltered: Aluno | undefined = alunos.find((aluno) => aluno.id === value);
+    const alunoFiltered = alunos.find((aluno) => aluno.id === value);
     // Se o aluno não for encontrado, exibe um erro
-    if (!alunoFiltered) return toast.error("Aluno não encontrado");
+    if (!alunoFiltered) {
+      toast.error("Aluno não encontrado");
+      return;
+    }
     // Define o aluno selecionado
     setAlunoSelected(alunoFiltered);
     // Busca os professores de acordo com o aluno selecionado
@@ -44,14 +47,14 @@ export default function MatchApp({ alunos }: MatchAppProps) {
     setProfessores(professores);
     // Exibe uma mensagem de sucesso
     toast.success(`Aluno selecionado: ${alunoFiltered.nome}`);
-    //  Define a página como SELECTPROFESSOR
-    setPage(Page.SELECTPROFESSOR);
+    //  Define a página como AGENDA
+    setPage(Page.SHOWPROFESSORES);
   }
 
   return (
     <div>
       {page === Page.SELECTALUNO && <SelectAluno alunos={alunos} handleSelectAluno={handleSelectAluno} />}
-      {page === Page.SELECTPROFESSOR && <SelectProfessor professores={professores!} />}
+      {page === Page.SHOWPROFESSORES && <ShowProfessores aluno={alunoSelected as Aluno} professores={professores!} />}
     </div>
   );
 }

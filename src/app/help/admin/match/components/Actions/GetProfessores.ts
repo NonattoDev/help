@@ -18,11 +18,9 @@ export const getProfessores = async (aluno: Aluno) => {
     },
   });
 
-  console.log(professores);
-
   const professoresFiltrados = professores.filter((professor) => professor.materias.some((materia) => aluno.dificuldades.includes(materia)));
 
   console.log(professoresFiltrados);
 
-  return professores as unknown as Professor[];
+  return professoresFiltrados as unknown as Professor[];
 };

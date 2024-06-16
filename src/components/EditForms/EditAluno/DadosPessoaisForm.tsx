@@ -81,7 +81,7 @@ const DadosPessoaisForm: React.FC<Props> = ({ alunoData, series, materias, acces
           <label className="label">
             <span className="label-text">Ano Escolar</span>
           </label>
-          <select className="input input-bordered" name="ano_escolar" onChange={handleChange}>
+          <select className="input input-bordered" name="ano_escolar" onChange={handleChange} value={alunoData.ano_escolar}>
             {series.map((item) => (
               <option key={item.id} value={item.serie}>
                 {item.serie}

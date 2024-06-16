@@ -64,7 +64,7 @@ export async function createAlunos(prisma: PrismaClient) {
       email: "adenilsonteste@gmail.com",
       data_nascimento: moment().toDate(),
       escola: "Mediterrâneo",
-      ano_escolar: "9º Ano",
+      ano_escolar: "9 ano",
       telefone: "71991773362",
       endereco: {
         rua: "Rua das pitangueiras",
@@ -95,7 +95,7 @@ export async function createAlunos(prisma: PrismaClient) {
       email: "aila@teste.com",
       data_nascimento: moment().toDate(),
       escola: "",
-      ano_escolar: "3º Ano do Ensino Médio",
+      ano_escolar: "3 Série do Ensino Médio",
       telefone: "7192994794",
       endereco: {
         rua: "Tv. Albertino Cabral Henrique",
@@ -126,7 +126,7 @@ export async function createAlunos(prisma: PrismaClient) {
       email: "",
       data_nascimento: moment().toDate(),
       escola: "Salesiano do Salvador",
-      ano_escolar: "6º Ano",
+      ano_escolar: "6 ano",
       telefone: "71999157057",
       endereco: {
         rua: "Rua Poetisa Cora Coralina",

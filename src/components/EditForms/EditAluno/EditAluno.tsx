@@ -59,6 +59,7 @@ export default function EditAluno({ aluno, series, materias, accessLevel }: Prop
         },
       }));
     } else {
+      console.log(name, value);
       setAlunoData((prev) => ({ ...prev, [name]: value }));
     }
   };
