@@ -1,6 +1,6 @@
 {
   "name": "help",
-  "version": "1.0.0",
+  "version": "Pré-Alpha 1.0.0",
   "private": true,
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seeds/main.ts"
