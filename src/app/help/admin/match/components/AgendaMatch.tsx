@@ -2,6 +2,7 @@
 
 import { Aluno } from "@prisma/client";
 import { ProfessoresMatch } from "./Actions/GetProfessores";
+import { useState } from "react";
 
 interface AgendaMatchProps {
   professor: ProfessoresMatch;
@@ -28,10 +29,41 @@ Pacote de 1 hora e 30 minutos: 5 aulas
 Pacote de 2 horas: 4 aulas
 
 */
-export default async function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
+
+enum Step {
+  SELECTDATA,
+  SELECTHORARIODISPONIVEL,
+}
+
+export default function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
+  const [step, setStep] = useState<Step>(Step.SELECTDATA);
+  const [date, setDate] = useState<string>("");
+
+  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDate(e.target.value);
+    setStep(Step.SELECTHORARIODISPONIVEL);
+  };
+
   return (
     <div>
-      <h1>Agenda Match</h1>
+      {step === Step.SELECTDATA && (
+        <div>
+          <input type="date" className="input input-bordered" value={date} onChange={handleDateChange} />
+        </div>
+      )}
+      {step === Step.SELECTHORARIODISPONIVEL && (
+        <div>
+          <button type="button" className="btn btn-ghost btn-primary">
+            09:00
+          </button>
+          <button type="button" className="btn btn-ghost btn-primary">
+            10:00
+          </button>
+          <button type="button" className="btn btn-ghost btn-primary">
+            11:00
+          </button>
+        </div>
+      )}
     </div>
   );
 }
