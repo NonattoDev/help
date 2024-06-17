@@ -18,7 +18,9 @@ interface CreateProfessorProps {
 export default function CreateProfessor({ materias, series }: CreateProfessorProps) {
   const [formData, setFormData] = React.useState<Professor>(createEmptyProfessor());
   const [loading, setLoading] = React.useState(false);
+  const [selectedImage, setSelectedImage] = React.useState<string>("https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg");
 
+  
   function setNestedValue(obj: any, path: string, value: any) {
     const keys = path.split(".");
     const lastKey = keys.pop() as string;
@@ -119,6 +121,7 @@ export default function CreateProfessor({ materias, series }: CreateProfessorPro
       if (response.status === 200) {
         toast.success("Professor cadastrado com sucesso!");
         setFormData(createEmptyProfessor());
+        setSelectedImage("https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg");
         setLoading(false);
       }
     } catch (error: any) {
@@ -131,10 +134,48 @@ export default function CreateProfessor({ materias, series }: CreateProfessorPro
     }
   };
 
+  // Seletor de imagem
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+
+    if (file) {
+      try {
+        await uploadImage(file);
+      } catch (error) {
+        console.log("Erro ao enviar imagem para o servidor", error);
+      }
+    }
+  };
+
+  const uploadImage = async (file: File) => {
+    const base64 = await getBase64(file);
+    setSelectedImage(base64);
+    setFormData((prev) => ({ ...prev, img_url: base64 }));
+  };
+
+  const getBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = (error) => reject(error);
+    });
+  };
+
   return (
     <div>
       <form onSubmit={submitCreate}>
-        <h2 className="text-md text-center font-bold mb-5">Dados Pessoais</h2>
+        <div id="profilePic" className="flex justify-between items-center">
+          <div className="avatar ml-5 flex">
+            <div className="w-24 rounded-full flex cursor-pointer" onClick={() => document.getElementById("fileInput")?.click()}>
+              <img src={selectedImage} alt="Profile" />
+            </div>
+            <input type="file" id="fileInput" style={{ display: "none" }} onChange={handleFileChange} />
+          </div>
+          <h2 className="text-md text-center font-bold mb-5 align-middle">Dados Pessoais</h2>
+          <div className="w-24 mr-5"></div>
+        </div>
+
         <div className="grid grid-cols-4 gap-4">
           <div className="form-control">
             <label className="label">

@@ -19,6 +19,7 @@ interface EditProfessorProps {
 export default function EditProfessor({ professor, materias, accessLevel, series }: EditProfessorProps) {
   const [formData, setFormData] = React.useState<Professor>(professor);
   const [loading, setLoading] = React.useState(false);
+  const [selectedImage, setSelectedImage] = React.useState<string>(professor.img_url ? professor.img_url : "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg");
 
   function setNestedValue(obj: any, path: string, value: any) {
     const keys = path.split(".");
@@ -92,6 +93,34 @@ export default function EditProfessor({ professor, materias, accessLevel, series
     }));
   };
 
+  // Seletor de imagem
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+
+    if (file) {
+      try {
+        await uploadImage(file);
+      } catch (error) {
+        console.log("Erro ao enviar imagem para o servidor", error);
+      }
+    }
+  };
+
+  const uploadImage = async (file: File) => {
+    const base64 = await getBase64(file);
+    setSelectedImage(base64);
+    setFormData((prev) => ({ ...prev, img_url: base64 }));
+  };
+
+  const getBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = (error) => reject(error);
+    });
+  };
+
   const submitEdit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -144,16 +173,23 @@ export default function EditProfessor({ professor, materias, accessLevel, series
     <div>
       <form onSubmit={submitEdit}>
         <div>
-          {accessLevel?.startsWith("admin") && (
-            <div className="form-control w-52">
-              <label className="cursor-pointer label">
-                <span className="label-text">Professor ativo ?</span>
-                <input type="checkbox" name="ativo" checked={formData.ativo} onChange={handleToggleChange} className="toggle  toggle-info" />
-              </label>
+          <div id="profilePic" className="flex justify-between items-center">
+            <div className="avatar ml-5 flex">
+              <div className="w-24 rounded-full flex cursor-pointer" onClick={() => document.getElementById("fileInput")?.click()}>
+                <img src={selectedImage} alt="Profile" />
+              </div>
+              <input type="file" id="fileInput" style={{ display: "none" }} onChange={handleFileChange} />
             </div>
-          )}
-
-          <h2 className="text-md text-center font-bold mb-5">Dados Pessoais</h2>
+            <h2 className="text-md text-center font-bold mb-5 align-middle">Dados Pessoais</h2>
+            <div className="w-24 mr-5">
+              {accessLevel?.startsWith("admin") && (
+                <label className="cursor-pointer label gap-2">
+                  <input type="checkbox" name="ativo" checked={formData.ativo} onChange={handleToggleChange} className="toggle toggle-info" />
+                  <span className="label-text">{formData.ativo ? "Ativo" : "Desativado"}</span>
+                </label>
+              )}
+            </div>
+          </div>
         </div>
         <div className="grid grid-cols-4 gap-4">
           <div className="form-control">
