@@ -41,7 +41,7 @@ export default function MatchApp({ alunos }: MatchAppProps) {
     // Busca os professores de acordo com o aluno selecionado
     const professores = await getProfessores(alunoFiltered as any);
     // Se não houver professores, exibe um erro
-    if (!professores || professores.length === 0) return toast.error("Não foi possível buscar os professores");
+    if (!professores || professores.length === 0) return toast.error("Não foram encontrados professores que correspondam ao aluno selecionado.");
     // Define os professores
     setProfessores(professores);
     // Exibe uma mensagem de sucesso

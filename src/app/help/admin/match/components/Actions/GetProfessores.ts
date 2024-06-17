@@ -23,7 +23,10 @@ export const getProfessores = async (aluno: Aluno) => {
     },
   });
 
+  if (!professores) return [];
   let professoresFiltrados = professores.filter((professor) => professor.materias.some((materia) => aluno.dificuldades.includes(materia)));
+
+  if (professoresFiltrados.length === 0) return [];
 
   for (let prof of professoresFiltrados) {
     const professor = prof as unknown as ProfessoresMatch;
