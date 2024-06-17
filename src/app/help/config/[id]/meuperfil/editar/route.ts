@@ -63,6 +63,7 @@ export async function PUT(request: Request, params: any) {
           password: userData.password,
           materias: userData.materias,
           turmas_habilitadas: userData.turmas_habilitadas,
+          img_url: userData.img_url,
         },
       });
     } else if (typeEdit === "responsavel") {

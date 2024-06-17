@@ -20,10 +20,5 @@ const getMatchDados = async () => {
 export default async function Match() {
   const { alunos } = await getMatchDados();
 
-  return (
-    <div>
-      <h2 className="text-center text-2xl text-bold text-black">MatchApp</h2>
-      <MatchApp alunos={alunos} />
-    </div>
-  );
+  return <MatchApp alunos={alunos} />;
 }

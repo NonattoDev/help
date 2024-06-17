@@ -11,6 +11,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import ShowProfessores from "./ShowProfessores";
 import { ProfessoresMatch, getProfessores } from "./Actions/GetProfessores";
+import AgendaMatch from "./AgendaMatch";
 
 interface MatchAppProps {
   alunos: Aluno[];
@@ -19,13 +20,14 @@ interface MatchAppProps {
 enum Page {
   SELECTALUNO,
   SHOWPROFESSORES,
-  MATCH,
+  AGENDAMATCH,
 }
 
 export default function MatchApp({ alunos }: MatchAppProps) {
   const [page, setPage] = useState<Page>(Page.SELECTALUNO);
-  const [alunoSelected, setAlunoSelected] = useState<Aluno>();
   const [professores, setProfessores] = useState<ProfessoresMatch[]>();
+  const [alunoSelected, setAlunoSelected] = useState<Aluno>();
+  const [professorSelected, setProfessorSelected] = useState<ProfessoresMatch>();
 
   async function handleSelectAluno(e: React.ChangeEvent<HTMLSelectElement>) {
     const { name, value } = e.target;
@@ -46,14 +48,21 @@ export default function MatchApp({ alunos }: MatchAppProps) {
     setProfessores(professores);
     // Exibe uma mensagem de sucesso
     toast.success(`Aluno selecionado: ${alunoFiltered.nome}`);
-    //  Define a página como AGENDA
+    //  Define a página como AGENDAMATCH
     setPage(Page.SHOWPROFESSORES);
   }
+
+  const selectProfessor = (professor: ProfessoresMatch) => {
+    // Define o professor selecionado
+    setProfessorSelected(professor);
+    setPage(Page.AGENDAMATCH);
+  };
 
   return (
     <div>
       {page === Page.SELECTALUNO && <SelectAluno alunos={alunos} handleSelectAluno={handleSelectAluno} />}
-      {page === Page.SHOWPROFESSORES && <ShowProfessores aluno={alunoSelected as Aluno} professores={professores!} />}
+      {page === Page.SHOWPROFESSORES && <ShowProfessores aluno={alunoSelected as Aluno} professores={professores!} selectProfessor={selectProfessor} />}
+      {page === Page.AGENDAMATCH && <AgendaMatch professor={professorSelected!} aluno={alunoSelected!} />}
     </div>
   );
 }

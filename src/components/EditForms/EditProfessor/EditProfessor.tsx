@@ -8,6 +8,7 @@ import { validateCPF } from "@/utils/validateCpf";
 import ReactInputMask from "react-input-mask";
 import LoadingButton from "@/components/Buttons/LoadingButton";
 import { Series } from "@/interfaces/series.interface";
+import Pica from "pica";
 
 interface EditProfessorProps {
   professor: Professor;
@@ -19,7 +20,9 @@ interface EditProfessorProps {
 export default function EditProfessor({ professor, materias, accessLevel, series }: EditProfessorProps) {
   const [formData, setFormData] = React.useState<Professor>(professor);
   const [loading, setLoading] = React.useState(false);
-  const [selectedImage, setSelectedImage] = React.useState<string>(professor.img_url ? professor.img_url : "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg");
+  const [selectedImage, setSelectedImage] = React.useState<string>(professor.img_url ? professor.img_url : "https://i0.wp.com/sbcf.fr/wp-content/uploads/2018/03/sbcf-default-avatar.png?ssl=1");
+
+  const pica = Pica();
 
   function setNestedValue(obj: any, path: string, value: any) {
     const keys = path.split(".");
@@ -77,7 +80,7 @@ export default function EditProfessor({ professor, materias, accessLevel, series
     const data = await response.json();
 
     if (data.erro) {
-      alert("CEP não encontrado");
+      toast.info("CEP não encontrado");
       return;
     }
 
@@ -93,23 +96,55 @@ export default function EditProfessor({ professor, materias, accessLevel, series
     }));
   };
 
-  // Seletor de imagem
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
 
+    if (file?.type !== "image/jpeg" && file?.type !== "image/png" && file?.type !== "image/jpg") {
+      toast.error("Formato de imagem inválido. Por favor, selecione uma imagem no formato .jpeg ou .png ou .jpg");
+      return;
+    }
+
     if (file) {
       try {
-        await uploadImage(file);
+        const resizedImage = await resizeImage(file, 300, 300);
+        const base64 = await getBase64(resizedImage);
+        setFormData((prev) => ({ ...prev, img_url: base64 }));
       } catch (error) {
-        console.log("Erro ao enviar imagem para o servidor", error);
+        console.log("Erro ao redimensionar a imagem", error);
       }
     }
   };
 
-  const uploadImage = async (file: File) => {
-    const base64 = await getBase64(file);
-    setSelectedImage(base64);
-    setFormData((prev) => ({ ...prev, img_url: base64 }));
+  const resizeImage = (file: File, width: number, height: number): Promise<File> => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.src = URL.createObjectURL(file);
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        pica
+          .resize(img, canvas, {
+            quality: 3,
+          })
+          .then((result: any) => {
+            canvas.toBlob((blob) => {
+              if (blob) {
+                const resizedFile = new File([blob], file.name, { type: file.type });
+                resolve(resizedFile);
+              } else {
+                reject(new Error("Erro ao criar blob"));
+              }
+            }, file.type);
+          })
+          .catch((error: any) => {
+            reject(error);
+          });
+      };
+      img.onerror = (error) => {
+        reject(error);
+      };
+    });
   };
 
   const getBase64 = (file: File): Promise<string> => {
@@ -125,7 +160,6 @@ export default function EditProfessor({ professor, materias, accessLevel, series
     e.preventDefault();
     setLoading(true);
     let errorCount = 0;
-    console.log(formData);
 
     if (!formData.modalidade.online && !formData.modalidade.presencial) {
       toast.info("Selecione ao menos uma modalidade");
@@ -134,6 +168,11 @@ export default function EditProfessor({ professor, materias, accessLevel, series
 
     if (formData.materias.length === 0) {
       toast.info("Selecione ao menos uma matéria");
+      errorCount = errorCount + 1;
+    }
+
+    if (formData.turmas_habilitadas.length === 0) {
+      toast.info("Selecione ao menos uma turma");
       errorCount = errorCount + 1;
     }
 
@@ -178,7 +217,7 @@ export default function EditProfessor({ professor, materias, accessLevel, series
               <div className="w-24 rounded-full flex cursor-pointer" onClick={() => document.getElementById("fileInput")?.click()}>
                 <img src={selectedImage} alt="Profile" />
               </div>
-              <input type="file" id="fileInput" style={{ display: "none" }} onChange={handleFileChange} />
+              <input type="file" id="fileInput" style={{ display: "none" }} onChange={handleFileChange} accept=".png, .jpg, .jpeg" />
             </div>
             <h2 className="text-md text-center font-bold mb-5 align-middle">Dados Pessoais</h2>
             <div className="w-24 mr-5">

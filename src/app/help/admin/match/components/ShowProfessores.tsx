@@ -7,9 +7,10 @@ import { ProfessoresMatch } from "./Actions/GetProfessores";
 interface ShowProfessores {
   professores: ProfessoresMatch[];
   aluno: Aluno;
+  selectProfessor: any;
 }
 
-export default function ShowProfessores({ professores, aluno }: ShowProfessores) {
+export default function ShowProfessores({ professores, aluno, selectProfessor }: ShowProfessores) {
   // Ordenar os professores pela distância em km (do menor para o maior)
   const sortedProfessores = [...professores].sort((a, b) => a.distanciaEmKm - b.distanciaEmKm);
 
@@ -20,7 +21,7 @@ export default function ShowProfessores({ professores, aluno }: ShowProfessores)
         <div className="grid grid-cols-4 gap-8">
           {sortedProfessores.map((professor) => (
             <div key={professor.id}>
-              <CardProfessor aluno={aluno} professor={professor} />
+              <CardProfessor aluno={aluno} professor={professor} selectProfessor={selectProfessor} />
             </div>
           ))}
         </div>

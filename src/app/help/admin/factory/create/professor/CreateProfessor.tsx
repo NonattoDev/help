@@ -9,6 +9,7 @@ import ReactInputMask from "react-input-mask";
 import LoadingButton from "@/components/Buttons/LoadingButton";
 import { validateCPF } from "@/utils/validateCpf";
 import { Series } from "@/interfaces/series.interface";
+import Pica from "pica";
 
 interface CreateProfessorProps {
   materias: Materia[];
@@ -18,22 +19,66 @@ interface CreateProfessorProps {
 export default function CreateProfessor({ materias, series }: CreateProfessorProps) {
   const [formData, setFormData] = React.useState<Professor>(createEmptyProfessor());
   const [loading, setLoading] = React.useState(false);
-  const [selectedImage, setSelectedImage] = React.useState<string>("https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg");
 
-  
-  function setNestedValue(obj: any, path: string, value: any) {
-    const keys = path.split(".");
-    const lastKey = keys.pop() as string;
-    const lastObj = keys.reduce((obj, key) => (obj[key] = obj[key] || {}), obj);
-    lastKey && (lastObj[lastKey] = value);
-  }
+  const pica = Pica();
 
-  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, checked } = e.target;
-    setFormData((prev) => {
-      const newFormData = { ...prev };
-      setNestedValue(newFormData, name, checked);
-      return newFormData;
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+
+    if (file?.type !== "image/jpeg" && file?.type !== "image/png" && file?.type !== "image/jpg") {
+      toast.error("Formato de imagem inválido. Por favor, selecione uma imagem no formato .jpeg ou .png ou .jpg");
+      return;
+    }
+
+    if (file) {
+      try {
+        const resizedImage = await resizeImage(file, 300, 300);
+        const base64 = await getBase64(resizedImage);
+        setFormData((prev) => ({ ...prev, img_url: base64 }));
+      } catch (error) {
+        console.log("Erro ao redimensionar a imagem", error);
+      }
+    }
+  };
+
+  const resizeImage = (file: File, width: number, height: number): Promise<File> => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.src = URL.createObjectURL(file);
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        pica
+          .resize(img, canvas, {
+            quality: 3,
+          })
+          .then((result: any) => {
+            canvas.toBlob((blob) => {
+              if (blob) {
+                const resizedFile = new File([blob], file.name, { type: file.type });
+                resolve(resizedFile);
+              } else {
+                reject(new Error("Erro ao criar blob"));
+              }
+            }, file.type);
+          })
+          .catch((error: any) => {
+            reject(error);
+          });
+      };
+      img.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
+
+  const getBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = (error) => reject(error);
     });
   };
 
@@ -46,45 +91,21 @@ export default function CreateProfessor({ materias, series }: CreateProfessorPro
     });
   };
 
-  const handleMateriasChange = (materia: string) => {
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = e.target;
     setFormData((prev) => {
-      const newMaterias = prev.materias.includes(materia) ? prev.materias.filter((materiaName) => materiaName !== materia) : [...prev.materias, materia];
-      return { ...prev, materias: newMaterias };
+      const newFormData = { ...prev };
+      setNestedValue(newFormData, name, checked);
+      return newFormData;
     });
   };
 
-  const handleTurmasChange = (turmaName: string) => {
-    console.log(turmaName);
-    setFormData((prevData) => {
-      const newTurmas = prevData.turmas_habilitadas.includes(turmaName) ? prevData.turmas_habilitadas.filter((turma) => turma !== turmaName) : [...prevData.turmas_habilitadas, turmaName];
-      return { ...prevData, turmas_habilitadas: newTurmas };
-    });
-  };
-
-  const fetchCep = async (e: React.FocusEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    const cep = value.replace(/\D/g, "");
-    if (cep.length !== 8) return;
-
-    const response = await axios(`https://viacep.com.br/ws/${cep}/json/`);
-    const data = response.data;
-
-    if (!data) {
-      toast.info("CEP não encontrado");
-      return;
-    }
-
-    setFormData((prev) => ({
-      ...prev,
-      endereco: {
-        ...prev.endereco,
-        rua: data.logradouro,
-        bairro: data.bairro,
-        cidade: data.localidade,
-        estado: data.uf,
-      },
-    }));
-  };
+  function setNestedValue(obj: any, path: string, value: any) {
+    const keys = path.split(".");
+    const lastKey = keys.pop() as string;
+    const lastObj = keys.reduce((obj, key) => (obj[key] = obj[key] || {}), obj);
+    lastKey && (lastObj[lastKey] = value);
+  }
 
   const submitCreate = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -98,6 +119,11 @@ export default function CreateProfessor({ materias, series }: CreateProfessorPro
 
     if (formData.materias.length === 0) {
       toast.info("Selecione ao menos uma matéria");
+      errorCount = errorCount + 1;
+    }
+
+    if (formData.turmas_habilitadas.length === 0) {
+      toast.info("Selecione ao menos uma turma");
       errorCount = errorCount + 1;
     }
 
@@ -121,7 +147,6 @@ export default function CreateProfessor({ materias, series }: CreateProfessorPro
       if (response.status === 200) {
         toast.success("Professor cadastrado com sucesso!");
         setFormData(createEmptyProfessor());
-        setSelectedImage("https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg");
         setLoading(false);
       }
     } catch (error: any) {
@@ -134,31 +159,42 @@ export default function CreateProfessor({ materias, series }: CreateProfessorPro
     }
   };
 
-  // Seletor de imagem
-  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
+  const fetchCep = async (e: React.FocusEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    const cep = value.replace(/\D/g, "");
+    if (cep.length !== 8) return;
 
-    if (file) {
-      try {
-        await uploadImage(file);
-      } catch (error) {
-        console.log("Erro ao enviar imagem para o servidor", error);
-      }
+    const response = await axios(`https://viacep.com.br/ws/${cep}/json/`);
+    const data = response.data;
+
+    if (data.erro) {
+      toast.info("CEP não encontrado");
+      return;
     }
+
+    setFormData((prev) => ({
+      ...prev,
+      endereco: {
+        ...prev.endereco,
+        rua: data.logradouro,
+        bairro: data.bairro,
+        cidade: data.localidade,
+        estado: data.uf,
+      },
+    }));
   };
 
-  const uploadImage = async (file: File) => {
-    const base64 = await getBase64(file);
-    setSelectedImage(base64);
-    setFormData((prev) => ({ ...prev, img_url: base64 }));
+  const handleMateriasChange = (materia: string) => {
+    setFormData((prev) => {
+      const newMaterias = prev.materias.includes(materia) ? prev.materias.filter((materiaName) => materiaName !== materia) : [...prev.materias, materia];
+      return { ...prev, materias: newMaterias };
+    });
   };
 
-  const getBase64 = (file: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = (error) => reject(error);
+  const handleTurmasChange = (turmaName: string) => {
+    setFormData((prevData) => {
+      const newTurmas = prevData.turmas_habilitadas.includes(turmaName) ? prevData.turmas_habilitadas.filter((turma) => turma !== turmaName) : [...prevData.turmas_habilitadas, turmaName];
+      return { ...prevData, turmas_habilitadas: newTurmas };
     });
   };
 
@@ -168,9 +204,9 @@ export default function CreateProfessor({ materias, series }: CreateProfessorPro
         <div id="profilePic" className="flex justify-between items-center">
           <div className="avatar ml-5 flex">
             <div className="w-24 rounded-full flex cursor-pointer" onClick={() => document.getElementById("fileInput")?.click()}>
-              <img src={selectedImage} alt="Profile" />
+              <img src={formData.img_url || "https://i0.wp.com/sbcf.fr/wp-content/uploads/2018/03/sbcf-default-avatar.png?ssl=1"} alt="Profile" />
             </div>
-            <input type="file" id="fileInput" style={{ display: "none" }} onChange={handleFileChange} />
+            <input type="file" id="fileInput" style={{ display: "none" }} onChange={handleFileChange} accept="image/png, image/jpeg" />
           </div>
           <h2 className="text-md text-center font-bold mb-5 align-middle">Dados Pessoais</h2>
           <div className="w-24 mr-5"></div>

@@ -21,6 +21,10 @@ export const getProfessores = async (aluno: Aluno) => {
         has: aluno.ano_escolar,
       },
     },
+    include: {
+      // Esse include é necessário para que vejamos a agenda do professor e possamos mostrar o calendário de disponibilidade com datas desabilitadas
+      AgendaAulas: true,
+    },
   });
 
   if (!professores) return [];
