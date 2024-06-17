@@ -5,6 +5,8 @@ async function getDados() {
   let materias = await prisma.materias.findMany();
   let series = await prisma.series.findMany();
 
+  await prisma.$disconnect();
+
   return { materias, series };
 }
 

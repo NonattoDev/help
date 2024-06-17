@@ -5513,5 +5513,7 @@ export async function createAlunos(prisma: PrismaClient) {
     skipDuplicates: true,
   });
 
+  await prisma.$disconnect();
+
   console.log("Alunos Criados: " + alunos);
 }

@@ -68,6 +68,8 @@ export async function POST(request: Request, params: any) {
       });
     }
 
+    await prisma.$disconnect();
+
     return NextResponse.json({ message: "ok" }, { status: 200 });
   } catch (error) {
     console.error(error);

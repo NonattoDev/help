@@ -33,5 +33,7 @@ export async function createUsuarios(prisma: PrismaClient) {
     skipDuplicates: true,
   });
 
+  await prisma.$disconnect();
+
   console.log("Usuários criados:", Usuarios);
 }

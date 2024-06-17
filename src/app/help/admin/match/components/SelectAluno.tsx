@@ -8,7 +8,10 @@ interface SelectAlunoProps {
 export default function SelectAluno({ alunos, handleSelectAluno }: SelectAlunoProps) {
   return (
     <div>
-      <select className="select input-bordered" name="alunosSelect" id="selectAlunos" onChange={handleSelectAluno}>
+      <select className="select input-bordered" name="alunosSelect" id="selectAlunos" onChange={handleSelectAluno} value={""}>
+        <option disabled value="">
+          Selecione um aluno para fazer o match
+        </option>
         {alunos.map((aluno) => (
           <option key={aluno.id} value={aluno.id}>
             {aluno.nome}

@@ -2268,5 +2268,7 @@ export async function createProfessor(prisma: PrismaClient) {
     ],
   });
 
+  await prisma.$disconnect();
+
   console.log("Professores criados:", professor);
 }

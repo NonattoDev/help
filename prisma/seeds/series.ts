@@ -18,5 +18,8 @@ export async function createSeries(prisma: PrismaClient) {
     ],
     skipDuplicates: true,
   });
+
+  await prisma.$disconnect();
+
   console.log("Series criadas:", series);
 }

@@ -24,5 +24,8 @@ export async function createMaterias(prisma: PrismaClient) {
     ],
     skipDuplicates: true,
   });
+
+  await prisma.$disconnect();
+
   console.log("Materias criadas:", materias);
 }
