@@ -36,6 +36,7 @@ enum Step {
 }
 
 export default function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
+  console.log(professor, aluno);
   const [step, setStep] = useState<Step>(Step.SELECTDATA);
   const [date, setDate] = useState<string>("");
 
