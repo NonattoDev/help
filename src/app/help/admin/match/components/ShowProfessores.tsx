@@ -15,7 +15,7 @@ export default function ShowProfessores({ professores, aluno }: ShowProfessores)
 
   return (
     <>
-      <h2 className="text-center text-2xl font-semibold"> Professores que correspondem ao aluno </h2>
+      <h2 className="text-center text-2xl font-semibold my-8"> Professores que correspondem ao aluno </h2>
       <div className="flex justify-around">
         <div className="grid grid-cols-4 gap-8">
           {sortedProfessores.map((professor) => (

@@ -101,6 +101,7 @@ CREATE TABLE "Professor" (
     "endereco" JSONB NOT NULL,
     "areaFormacao" JSONB[],
     "turmas_habilitadas" TEXT[],
+    "img_url" TEXT,
     "ativo" BOOLEAN NOT NULL DEFAULT true,
     "disponibilidade" JSONB NOT NULL DEFAULT '{"segunda": {"manha": false, "tarde": true, "noite": false}, "terca": {"manha": false, "tarde": true, "noite": false}, "quarta": {"manha": false, "tarde": true, "noite": false}, "quinta": {"manha": false, "tarde": true, "noite": false}, "sexta": {"manha": false, "tarde": true, "noite": false}, "sabado": {"manha": true, "tarde": false, "noite": false}}',
     "ficha" JSONB[],

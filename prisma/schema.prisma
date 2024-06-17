@@ -105,6 +105,7 @@ model Professor {
   endereco           Json
   areaFormacao       Json[]
   turmas_habilitadas String[]
+  img_url            String?
   ativo              Boolean       @default(true)
   disponibilidade    Json          @default("{\"segunda\": {\"manha\": false, \"tarde\": true, \"noite\": false}, \"terca\": {\"manha\": false, \"tarde\": true, \"noite\": false}, \"quarta\": {\"manha\": false, \"tarde\": true, \"noite\": false}, \"quinta\": {\"manha\": false, \"tarde\": true, \"noite\": false}, \"sexta\": {\"manha\": false, \"tarde\": true, \"noite\": false}, \"sabado\": {\"manha\": true, \"tarde\": false, \"noite\": false}}")
   ficha              Json[]
@@ -125,8 +126,8 @@ model Materias {
 }
 
 model Series {
-  id          String     @id @default(cuid())
-  serie       String
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @default(now())
+  id        String   @id @default(cuid())
+  serie     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
 }
