@@ -11,6 +11,65 @@ export async function createProfessor(prisma: PrismaClient) {
   const professor = await prisma.professor.createMany({
     data: [
       {
+        nome: "Robson José Santos Nonato Filho",
+        email: "robsonnonatoiiii@gmail.com",
+        cpf: "029.635.985-80",
+        telefone: "71981234567",
+        areaFormacao: [
+          {
+            area: "Matemática",
+            semestre: "5",
+            finalizado: true,
+          },
+        ],
+        endereco: {
+          rua: "Rua orlando imbassahy",
+          numero: "377",
+          bairro: "Stella Maris",
+          cidade: "Salvador",
+          estado: "BA",
+          cep: "41600200",
+          complemento: "Casa 2A",
+          referencia: "Via C",
+        },
+        disponibilidade: {
+          segunda: {
+            manha: true,
+            tarde: true,
+            noite: false,
+          },
+          terca: {
+            manha: true,
+            tarde: true,
+            noite: false,
+          },
+          quarta: {
+            manha: true,
+            tarde: true,
+            noite: false,
+          },
+          quinta: {
+            manha: true,
+            tarde: true,
+            noite: false,
+          },
+          sexta: {
+            manha: true,
+            tarde: true,
+            noite: false,
+          },
+          sabado: {
+            manha: false,
+            tarde: false,
+            noite: false,
+          },
+        },
+        password: "$2a$12$10oHNPbBg./ixfTqV2KPneC0Z78ivt9Ko/6cIcRL7KoKtqjPemNeq",
+        turmas_habilitadas: ["1 Série do Ensino Médio", "2 Série do Ensino Médio", " 3 Série do Ensino Médio"],
+        materias: ["Matemática", "Física", "Química", "Geografia"],
+      },
+
+      {
         nome: "Ana Clara da Silva Pinho",
         email: "anaclara.pinho0@gmail.com",
         cpf: "862.429.605-67",
