@@ -1,3 +1,5 @@
+import { AgendaAulas } from "@prisma/client";
+
 export type Dia = "segunda" | "terca" | "quarta" | "quinta" | "sexta" | "sabado";
 export type Turno = "manha" | "tarde" | "noite";
 
@@ -37,6 +39,7 @@ export interface Professor {
   materias: string[];
   ativo?: boolean;
   img_url?: string;
+  AgendaAulas?: AgendaAulas[];
   createdAt?: Date;
   updatedAt?: Date;
 }

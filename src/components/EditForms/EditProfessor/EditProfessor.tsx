@@ -108,6 +108,7 @@ export default function EditProfessor({ professor, materias, accessLevel, series
       try {
         const resizedImage = await resizeImage(file, 300, 300);
         const base64 = await getBase64(resizedImage);
+        setSelectedImage(base64);
         setFormData((prev) => ({ ...prev, img_url: base64 }));
       } catch (error) {
         console.log("Erro ao redimensionar a imagem", error);

@@ -4,17 +4,13 @@ import { Aluno } from "@prisma/client";
 import { ProfessoresMatch } from "./Actions/GetProfessores";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { saveAgenda } from "./Actions/SaveAgenda";
+import moment from "moment";
 
 interface AgendaMatchProps {
   professor: ProfessoresMatch;
   aluno: Aluno;
 }
-
-// Observacoes da agenda e de regra de negocio
-// As aulas iniciam sempre as 9 horas e a ultima aula só pode iniciar até as 20 horas
-// Para aulas Presenciais o intervalo entre uma aula e outra deve ser de 30 minutos
-// Para Aulas Online não há intervalo entre as aulas
-// Existem pacotes de aulas de 1h, 1h30 e 2h
 
 enum Step {
   SELECTDATA,
@@ -23,17 +19,31 @@ enum Step {
   SELECTHORARIODISPONIVEL,
 }
 
-const horariosDisponiveis = ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00"];
+// Função para gerar horários disponíveis
+const gerarHorariosDisponiveis = (inicio: string, fim: string, intervalo: number) => {
+  const horarios = [];
+  let current = moment(inicio, "HH:mm");
+
+  while (current.format("HH:mm") <= fim) {
+    horarios.push(current.format("HH:mm"));
+    current.add(intervalo, "minutes");
+  }
+
+  return horarios;
+};
+
+const horariosDisponiveis = gerarHorariosDisponiveis("09:00", "20:00", 60);
 
 export default function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
   const [step, setStep] = useState<Step>(Step.SELECTDATA);
   const [date, setDate] = useState<string>("");
   const [modalidade, setModalidade] = useState<string>("");
   const [duracao, setDuracao] = useState<number>(0);
-  const [agendamentos, setAgendamentos] = useState<{ horario: string; modalidade: string; duracao: number }[]>([]);
+  const [agendamentos, setAgendamentos] = useState<{ hora: string; modalidade: string; duracao: number }[]>([]);
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDate(e.target.value);
+    const selectedDate = e.target.value;
+    setDate(selectedDate);
     setStep(Step.SELECTMODALIDADE);
   };
 
@@ -47,41 +57,71 @@ export default function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
     setStep(Step.SELECTHORARIODISPONIVEL);
   };
 
-  const handleHorarioClick = (horario: string) => {
-    setAgendamentos([...agendamentos, { horario, modalidade, duracao }]);
+  const handleHorarioClick = async (hora: string) => {
+    setAgendamentos([...agendamentos, { hora, modalidade, duracao }]);
 
     let AgendaAula = {
-      aluno: aluno.id,
-      professor: professor.id,
-      horario,
-      modalidade,
+      alunoId: aluno.id,
+      professorId: professor.id,
+      data: moment(date).toDate(),
+      hora,
+      modalidade: modalidade.toUpperCase(),
       duracao,
       local: "",
     };
 
-    if (modalidade === "presencial") {
+    if (modalidade === "PRESENCIAL") {
       AgendaAula.local = professor.endereco.bairro;
     }
 
-    toast.success(`Aula agendada para o dia ${date} às ${horario} com duração de ${duracao}h`);
+    await saveAgenda(AgendaAula as any);
+
+    toast.success(`Aula agendada para o dia ${date} às ${hora} com duração de ${duracao}h`);
+    setStep(Step.SELECTDATA);
   };
 
   const filtrarHorarios = () => {
-    let horariosFiltrados = [...horariosDisponiveis];
+    let horariosFiltrados = gerarHorariosDisponiveis("09:00", "20:00", 60);
 
-    agendamentos.forEach((agendamento) => {
-      const startHour = parseInt(agendamento.horario.split(":")[0]);
-      const endHour = startHour + agendamento.duracao;
+    professor?.AgendaAulas?.forEach((agendamento) => {
+      const agendamentoDate = moment(agendamento.data).format("YYYY-MM-DD");
+      if (agendamentoDate === date) {
+        const startHour = parseInt(agendamento.hora.split(":")[0]);
+        const startMinute = parseInt(agendamento.hora.split(":")[1]);
+        const durationInMinutes = agendamento.duracao * 60;
+        const endMinute = startMinute + durationInMinutes;
+        const endHour = startHour + Math.floor(endMinute / 60);
+        const endMinutesAdjusted = endMinute % 60;
 
-      for (let i = startHour; i < endHour; i++) {
-        const index = horariosFiltrados.indexOf(`${i.toString().padStart(2, "0")}:00`);
-        if (index > -1) horariosFiltrados.splice(index, 1);
-      }
+        // Remover horários ocupados
+        for (let hour = startHour; hour < endHour; hour++) {
+          const time = `${hour.toString().padStart(2, "0")}:00`;
+          const index = horariosFiltrados.indexOf(time);
+          if (index > -1) horariosFiltrados.splice(index, 1);
+        }
 
-      if (agendamento.modalidade === "presencial") {
-        const intervalEnd = endHour + 0.5; // Adding 30 minutes interval
-        const index = horariosFiltrados.indexOf(`${Math.floor(intervalEnd).toString().padStart(2, "0")}:00`);
-        if (index > -1) horariosFiltrados.splice(index, 1);
+        if (endMinutesAdjusted > 0) {
+          const time = `${endHour.toString().padStart(2, "0")}:00`;
+          const index = horariosFiltrados.indexOf(time);
+          if (index > -1) horariosFiltrados.splice(index, 1);
+        }
+
+        if (modalidade === "PRESENCIAL") {
+          const intervalEndHour = endHour;
+          const intervalEndMinute = endMinutesAdjusted + 30;
+          const intervalAdjustedEndHour = intervalEndHour + Math.floor(intervalEndMinute / 60);
+          const intervalAdjustedEndMinute = intervalEndMinute % 60;
+
+          if (intervalAdjustedEndMinute > 0) {
+            const intervalTime = `${intervalAdjustedEndHour.toString().padStart(2, "0")}:${intervalAdjustedEndMinute.toString().padStart(2, "0")}`;
+            const index = horariosFiltrados.indexOf(intervalTime);
+            if (index > -1) horariosFiltrados.splice(index, 1);
+          } else {
+            const intervalTime = `${intervalAdjustedEndHour.toString().padStart(2, "0")}:00`;
+            const index = horariosFiltrados.indexOf(intervalTime);
+            if (index > -1) horariosFiltrados.splice(index, 1);
+          }
+        }
       }
     });
 
@@ -101,11 +141,11 @@ export default function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
           <label className="text-1xl font-bold">Selecione a modalidade da aula</label>
           <div className="flex gap-5">
             <label>
-              <input type="radio" value="online" className="radio radio-sm mr-1" checked={modalidade === "online"} onChange={handleModalidadeChange} />
+              <input type="radio" value="ONLINE" className="radio radio-sm mr-1" checked={modalidade === "ONLINE"} onChange={handleModalidadeChange} />
               Online
             </label>
             <label>
-              <input type="radio" value="presencial" className="radio radio-sm mr-1" checked={modalidade === "presencial"} onChange={handleModalidadeChange} />
+              <input type="radio" value="PRESENCIAL" className="radio radio-sm mr-1" checked={modalidade === "PRESENCIAL"} onChange={handleModalidadeChange} />
               Presencial
             </label>
           </div>
@@ -131,9 +171,9 @@ export default function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
         <div className="flex flex-col items-center justify-center gap-6">
           <label className="text-1xl font-bold">Selecione um horário disponível</label>
           <div className="grid grid-cols-6 gap-4">
-            {filtrarHorarios().map((horario) => (
-              <button key={horario} type="button" className="btn btn-info" onClick={() => handleHorarioClick(horario)}>
-                {horario}
+            {filtrarHorarios().map((hora) => (
+              <button key={hora} type="button" className="btn btn-info" onClick={() => handleHorarioClick(hora)}>
+                {hora}
               </button>
             ))}
           </div>

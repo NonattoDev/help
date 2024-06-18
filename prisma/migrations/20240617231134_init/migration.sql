@@ -26,6 +26,7 @@ CREATE TABLE "AgendaAulas" (
     "data" TIMESTAMP(3) NOT NULL,
     "hora" TEXT NOT NULL,
     "local" TEXT NOT NULL,
+    "duracao" DOUBLE PRECISION NOT NULL,
     "modalidade" "Modalidade" NOT NULL,
     "finalizada" BOOLEAN NOT NULL DEFAULT false,
     "cancelada" BOOLEAN NOT NULL DEFAULT false,

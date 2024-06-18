@@ -17,6 +17,7 @@ const client = new Client({});
 export const getProfessores = async (aluno: Aluno) => {
   const professores = await prisma.professor.findMany({
     where: {
+      ativo: true,
       turmas_habilitadas: {
         has: aluno.ano_escolar,
       },

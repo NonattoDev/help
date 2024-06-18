@@ -30,6 +30,7 @@ model AgendaAulas {
   data        DateTime
   hora        String
   local       String
+  duracao     Float
   modalidade  Modalidade
   finalizada  Boolean    @default(false)
   cancelada   Boolean    @default(false)
