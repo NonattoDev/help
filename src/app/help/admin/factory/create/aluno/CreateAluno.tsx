@@ -10,11 +10,13 @@ import { validateCPF } from "@/utils/validateCpf";
 import validaResponsavel from "@/utils/ValidaResponsavel";
 import moment from "moment";
 import { Materia } from "@/interfaces/professor.interface";
+import verifyPassword from "@/utils/VerifyPassword";
 
 export default function CreateAluno({ series, materias }: { series: Series[]; materias: Materia[] }) {
   const [alunoData, setAlunoData] = useState(createEmptyAluno());
   const [responsavelData, setResponsavelData] = useState(createEmptyResponsavel());
   const [activeTab, setActiveTab] = useState("dadosPessoais");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -115,6 +117,13 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
     if (alunoData.ano_escolar === "") {
       alunoData.ano_escolar = "1 ano";
     }
+
+    if (alunoData.password !== confirmPassword) {
+      toast.error("As senhas não são iguais");
+      countError++;
+    }
+
+    if (!verifyPassword(alunoData.password)) countError++;
 
     // Verifica responsavel
     if (!validaResponsavel(responsavelData)) countError++;
@@ -242,6 +251,12 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
                 <span className="label-text">Senha</span>
               </label>
               <input type="password" name="password" value={alunoData.password} onChange={handleChange} className="input input-bordered" required />
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Confirme a senha</span>
+              </label>
+              <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className="input input-bordered" required />
             </div>
           </div>
 

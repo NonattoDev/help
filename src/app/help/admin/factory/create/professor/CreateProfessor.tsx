@@ -10,6 +10,7 @@ import LoadingButton from "@/components/Buttons/LoadingButton";
 import { validateCPF } from "@/utils/validateCpf";
 import { Series } from "@/interfaces/series.interface";
 import Pica from "pica";
+import verifyPassword from "@/utils/VerifyPassword";
 
 interface CreateProfessorProps {
   materias: Materia[];
@@ -19,6 +20,7 @@ interface CreateProfessorProps {
 export default function CreateProfessor({ materias, series }: CreateProfessorProps) {
   const [formData, setFormData] = React.useState<Professor>(createEmptyProfessor());
   const [loading, setLoading] = React.useState(false);
+  const [confirmPassword, setConfirmPassword] = React.useState("");
 
   const pica = Pica();
 
@@ -136,6 +138,13 @@ export default function CreateProfessor({ materias, series }: CreateProfessorPro
         }
       }
     }
+
+    if (formData.password !== confirmPassword) {
+      toast.error("As senhas não conferem");
+      errorCount = errorCount + 1;
+    }
+
+    if (!verifyPassword(formData.password)) errorCount++;
 
     if (errorCount > 0) {
       setLoading(false);
@@ -262,6 +271,12 @@ export default function CreateProfessor({ materias, series }: CreateProfessorPro
               <span className="label-text">Senha</span>
             </label>
             <input type="password" name="password" value={formData.password} onChange={handleChange} className="input input-bordered" required />
+          </div>
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Confirme a senha</span>
+            </label>
+            <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className="input input-bordered" required />
           </div>
         </div>
 
