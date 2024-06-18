@@ -65,10 +65,9 @@ export async function createProfessor(prisma: PrismaClient) {
           },
         },
         password: "$2a$12$10oHNPbBg./ixfTqV2KPneC0Z78ivt9Ko/6cIcRL7KoKtqjPemNeq",
-        turmas_habilitadas: ["1 Série do Ensino Médio", "2 Série do Ensino Médio", " 3 Série do Ensino Médio"],
+        turmas_habilitadas: ["1 Série do Ensino Médio", "2 Série do Ensino Médio", "3 Série do Ensino Médio"],
         materias: ["Matemática", "Física", "Química", "Geografia"],
       },
-
       {
         nome: "Ana Clara da Silva Pinho",
         email: "anaclara.pinho0@gmail.com",
