@@ -6,6 +6,9 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { saveAgenda } from "./Actions/SaveAgenda";
 import moment from "moment";
+import "moment/locale/pt-br";
+
+moment.locale("pt-br");
 
 interface AgendaMatchProps {
   professor: ProfessoresMatch;
@@ -14,6 +17,7 @@ interface AgendaMatchProps {
 
 enum Step {
   SELECTDIA,
+  SELECTDATE,
   SELECTMODALIDADE,
   SELECTDURACAO,
   SELECTHORARIODISPONIVEL,
@@ -59,7 +63,7 @@ const diasDaSemana: { [key: string]: string } = {
 };
 
 export default function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
-  const [step, setStep] = useState<Step>(Step.SELECTDIA);
+  const [step, setStep] = useState<Step>(Step.SELECTDATE);
   const [date, setDate] = useState<string>("");
   const [diaSemana, setDiaSemana] = useState<string>("");
   const [modalidade, setModalidade] = useState<string>("");
@@ -68,7 +72,10 @@ export default function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedDate = e.target.value;
+    console.log(selectedDate);
+    toast.info(`voce selecionou a data ${moment(selectedDate).format("DD/MM/YYYY")} dia da semana ${moment(selectedDate).format("dddd")}`);
     setDate(selectedDate);
+    return;
     setStep(Step.SELECTMODALIDADE);
   };
 
@@ -107,7 +114,7 @@ export default function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
     await saveAgenda(AgendaAula as any);
 
     toast.success(`Aula agendada para o dia ${date} às ${hora} com duração de ${duracao}h`);
-    setStep(Step.SELECTDIA);
+    setStep(Step.SELECTDATE);
   };
 
   const filtrarHorarios = () => {
@@ -180,6 +187,12 @@ export default function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
               </button>
             ))}
           </div>
+        </div>
+      )}
+      {step === Step.SELECTDATE && (
+        <div className="flex flex-col items-center justify-center gap-6">
+          <label className="text-1xl font-bold">Selecione uma data</label>
+          <input type="date" value={date} className="input input-bordered" onChange={handleDateChange} />
         </div>
       )}
       {step === Step.SELECTMODALIDADE && (
