@@ -13,10 +13,25 @@ interface AgendaMatchProps {
 }
 
 enum Step {
-  SELECTDATA,
+  SELECTDIA,
   SELECTMODALIDADE,
   SELECTDURACAO,
   SELECTHORARIODISPONIVEL,
+}
+
+interface Disponibilidade {
+  manha: boolean;
+  tarde: boolean;
+  noite: boolean;
+}
+
+interface ProfessorDisponibilidade {
+  segunda: Disponibilidade;
+  terca: Disponibilidade;
+  quarta: Disponibilidade;
+  quinta: Disponibilidade;
+  sexta: Disponibilidade;
+  sabado: Disponibilidade;
 }
 
 // Função para gerar horários disponíveis
@@ -34,9 +49,19 @@ const gerarHorariosDisponiveis = (inicio: string, fim: string, intervalo: number
 
 const horariosDisponiveis = gerarHorariosDisponiveis("09:00", "20:00", 60);
 
+const diasDaSemana: { [key: string]: string } = {
+  segunda: "Segunda-Feira",
+  terca: "Terça-Feira",
+  quarta: "Quarta-Feira",
+  quinta: "Quinta-Feira",
+  sexta: "Sexta-Feira",
+  sabado: "Sábado",
+};
+
 export default function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
-  const [step, setStep] = useState<Step>(Step.SELECTDATA);
+  const [step, setStep] = useState<Step>(Step.SELECTDIA);
   const [date, setDate] = useState<string>("");
+  const [diaSemana, setDiaSemana] = useState<string>("");
   const [modalidade, setModalidade] = useState<string>("");
   const [duracao, setDuracao] = useState<number>(0);
   const [agendamentos, setAgendamentos] = useState<{ hora: string; modalidade: string; duracao: number }[]>([]);
@@ -44,6 +69,11 @@ export default function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedDate = e.target.value;
     setDate(selectedDate);
+    setStep(Step.SELECTMODALIDADE);
+  };
+
+  const handleDiaChange = (dia: string) => {
+    setDiaSemana(dia);
     setStep(Step.SELECTMODALIDADE);
   };
 
@@ -77,7 +107,7 @@ export default function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
     await saveAgenda(AgendaAula as any);
 
     toast.success(`Aula agendada para o dia ${date} às ${hora} com duração de ${duracao}h`);
-    setStep(Step.SELECTDATA);
+    setStep(Step.SELECTDIA);
   };
 
   const filtrarHorarios = () => {
@@ -130,10 +160,26 @@ export default function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
 
   return (
     <div>
-      {step === Step.SELECTDATA && (
+      {step === Step.SELECTDIA && (
         <div className="flex flex-col items-center justify-center gap-6">
-          <label className="text-1xl font-bold">Selecione uma data</label>
-          <input type="date" className="input input-bordered" value={date} onChange={handleDateChange} />
+          <label className="text-1xl font-bold">Selecione um dia da semana</label>
+          <div className="flex gap-5">
+            {Object.keys(diasDaSemana).map((dia) => (
+              <button
+                key={dia}
+                className="btn btn-primary"
+                name={dia}
+                disabled={
+                  !professor.disponibilidade[dia as keyof ProfessorDisponibilidade]?.manha &&
+                  !professor.disponibilidade[dia as keyof ProfessorDisponibilidade]?.tarde &&
+                  !professor.disponibilidade[dia as keyof ProfessorDisponibilidade]?.noite
+                }
+                onClick={() => handleDiaChange(dia)}
+              >
+                {diasDaSemana[dia as keyof typeof diasDaSemana]}
+              </button>
+            ))}
+          </div>
         </div>
       )}
       {step === Step.SELECTMODALIDADE && (

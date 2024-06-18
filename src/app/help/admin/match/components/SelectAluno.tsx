@@ -9,8 +9,7 @@ interface SelectAlunoProps {
 export default function SelectAluno({ alunos, handleSelectAluno, alunoSelected }: SelectAlunoProps) {
   return (
     <div className="flex flex-col justify-center align-middle items-center">
-      <h2 className="text-center font-bold text-1xl">Selecione um aluno para fazer o match</h2>
-
+      <h2 className="text-center font-bold text-1xl mb-4">Selecione um aluno para fazer o match</h2>
       <select className="select input-bordered w-2/12" name="alunosSelect" id="selectAlunos" onChange={handleSelectAluno} value={alunoSelected?.id ? alunoSelected.id : ""}>
         <option disabled value="">
           Selecione
