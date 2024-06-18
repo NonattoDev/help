@@ -72,8 +72,9 @@ export default function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedDate = e.target.value;
-    console.log(selectedDate);
     toast.info(`voce selecionou a data ${moment(selectedDate).format("DD/MM/YYYY")} dia da semana ${moment(selectedDate).format("dddd")}`);
+    console.log(moment(selectedDate).add("7", "day").format("dddd"));
+    console.log(moment(selectedDate).add("7", "day").format("DD/MM/YYYY"));
     setDate(selectedDate);
     return;
     setStep(Step.SELECTMODALIDADE);
