@@ -35,8 +35,9 @@ export const getProfessores = async (aluno: Aluno) => {
 
   for (let prof of professoresFiltrados) {
     const professor = prof as unknown as ProfessoresMatch;
-    const distancia = await calcularDistancia(aluno?.endereco?.cep, professor.endereco?.cep);
-    professor.distanciaEmKm = distancia;
+    // const distancia = await calcularDistancia(aluno?.endereco?.cep, professor.endereco?.cep);
+    // professor.distanciaEmKm = distancia;
+    professor.distanciaEmKm = 20;
   }
 
   return professoresFiltrados as unknown as ProfessoresMatch[];
