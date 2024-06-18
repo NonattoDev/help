@@ -73,8 +73,6 @@ export default function EditAluno({ aluno, series, materias, accessLevel }: Prop
 
     if (name === "password" && alunoData.password !== aluno.password) {
       setShowConfirmPassword(true);
-    } else if (name === "confirmPassword" && responsavelData.password === aluno.responsavel?.password) {
-      setShowResponsavelConfirmPassword(false);
     }
   };
 
@@ -91,6 +89,10 @@ export default function EditAluno({ aluno, series, materias, accessLevel }: Prop
       });
     } else {
       setResponsavelData({ ...responsavelData, [name]: value });
+    }
+
+    if (name === "password" && responsavelData.password !== aluno.responsavel?.password) {
+      setShowResponsavelConfirmPassword(true);
     }
   };
 
@@ -196,6 +198,14 @@ export default function EditAluno({ aluno, series, materias, accessLevel }: Prop
     }
 
     if (!validaResponsavel(responsavelData)) countError++;
+
+    if (responsavelData.password !== aluno.responsavel?.password && responsavelData.password !== confirmResponsavelPassword) {
+      toast.error("Senhas do responsável não coincidem");
+      countError++;
+    } else {
+      if (!verifyPassword(responsavelData.password)) countError++;
+    }
+
     if (!validateCPF(responsavelData?.cpf)) countError++;
     if (countError > 0) return;
 
