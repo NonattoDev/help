@@ -16,9 +16,25 @@ interface Props {
   handleMateriasChange: any;
   handleFetchCep: any;
   handleCurrencyChange: any;
+  setConfirmPassword: any;
+  showConfirmPassword: any;
+  confirmPassword: any;
 }
 
-const DadosPessoaisForm: React.FC<Props> = ({ alunoData, series, materias, accessLevel, handleChange, handleCheckboxChange, handleMateriasChange, handleFetchCep, handleCurrencyChange }) => {
+const DadosPessoaisForm: React.FC<Props> = ({
+  alunoData,
+  series,
+  materias,
+  accessLevel,
+  handleChange,
+  handleCheckboxChange,
+  handleMateriasChange,
+  handleFetchCep,
+  handleCurrencyChange,
+  setConfirmPassword,
+  showConfirmPassword,
+  confirmPassword,
+}) => {
   return (
     <form>
       <h2 className="text-md text-center font-bold mt-5 mb-5">Dados Pessoais</h2>
@@ -67,6 +83,14 @@ const DadosPessoaisForm: React.FC<Props> = ({ alunoData, series, materias, acces
           </label>
           <input type="password" name="password" value={alunoData.password} onChange={handleChange} className="input input-bordered" required />
         </div>
+        {showConfirmPassword && (
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Confirme a senha</span>
+            </label>
+            <input type="password" name="confirmPassword" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className="input input-bordered" required />
+          </div>
+        )}
       </div>
 
       <h2 className="text-md text-center font-bold mt-5 mb-5">Dados Escolares</h2>

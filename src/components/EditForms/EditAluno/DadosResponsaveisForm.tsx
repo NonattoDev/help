@@ -9,9 +9,20 @@ interface Props {
   accessLevel: string;
   handleResponsavelChange: any;
   handleFetchCep: any;
+  setResponsavelConfirmPassword: any;
+  showResponsavelConfirmPassword: any;
+  confirmResponsavelPassword: any;
 }
 
-const DadosResponsaveisForm: React.FC<Props> = ({ responsavelData, accessLevel, handleResponsavelChange, handleFetchCep }) => {
+const DadosResponsaveisForm: React.FC<Props> = ({
+  responsavelData,
+  accessLevel,
+  handleResponsavelChange,
+  handleFetchCep,
+  setResponsavelConfirmPassword,
+  showResponsavelConfirmPassword,
+  confirmResponsavelPassword,
+}) => {
   return (
     <form>
       <h2 className="text-md text-center font-bold mt-5 mb-5">Dados Responsáveis</h2>
@@ -75,6 +86,21 @@ const DadosResponsaveisForm: React.FC<Props> = ({ responsavelData, accessLevel, 
           </label>
           <input type="password" name="password" value={responsavelData?.password} onChange={handleResponsavelChange} className="input input-bordered" required />
         </div>
+        {showResponsavelConfirmPassword && (
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Confirme a senha</span>
+            </label>
+            <input
+              type="password"
+              name="confirmPassword"
+              value={confirmResponsavelPassword}
+              onChange={(e) => setResponsavelConfirmPassword(e.target.value)}
+              className="input input-bordered"
+              required
+            />
+          </div>
+        )}
       </div>
 
       <div id="enderecoDiv" className="mt-8">

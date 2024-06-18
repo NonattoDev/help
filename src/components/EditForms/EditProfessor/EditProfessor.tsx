@@ -9,6 +9,7 @@ import ReactInputMask from "react-input-mask";
 import LoadingButton from "@/components/Buttons/LoadingButton";
 import { Series } from "@/interfaces/series.interface";
 import Pica from "pica";
+import verifyPassword from "@/utils/VerifyPassword";
 
 interface EditProfessorProps {
   professor: Professor;
@@ -21,6 +22,10 @@ export default function EditProfessor({ professor, materias, accessLevel, series
   const [formData, setFormData] = React.useState<Professor>(professor);
   const [loading, setLoading] = React.useState(false);
   const [selectedImage, setSelectedImage] = React.useState<string>(professor.img_url ? professor.img_url : "https://i0.wp.com/sbcf.fr/wp-content/uploads/2018/03/sbcf-default-avatar.png?ssl=1");
+
+  // Logica de confirmacao de senha
+  const [confirmPassword, setConfirmPassword] = React.useState<string>("");
+  const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
 
   const pica = Pica();
 
@@ -50,11 +55,16 @@ export default function EditProfessor({ professor, materias, accessLevel, series
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
+
     setFormData((prev) => {
       const newFormData = { ...prev };
       setNestedValue(newFormData, name, value);
       return newFormData;
     });
+
+    if (name === "password" && formData.password !== professor.password) {
+      setShowConfirmPassword(true);
+    }
   };
 
   const handleMateriasChange = (materia: string) => {
@@ -189,6 +199,13 @@ export default function EditProfessor({ professor, materias, accessLevel, series
       }
     }
 
+    if (formData.password !== professor.password && formData.password !== confirmPassword) {
+      toast.error("Senhas não coincidem");
+      errorCount = errorCount + 1;
+    } else {
+      if (!verifyPassword(formData.password)) errorCount++;
+    }
+
     if (errorCount > 0) {
       setLoading(false);
       return;
@@ -283,6 +300,14 @@ export default function EditProfessor({ professor, materias, accessLevel, series
             </label>
             <input type="password" name="password" value={formData.password} onChange={handleChange} className="input input-bordered" required />
           </div>
+          {showConfirmPassword && (
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Confirmar Senha</span>
+              </label>
+              <input type="password" name="confirmPassword" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className="input input-bordered" required />
+            </div>
+          )}
         </div>
 
         <div id="enderecoDiv" className="mt-8">

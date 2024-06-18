@@ -121,9 +121,9 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
     if (alunoData.password !== confirmPassword) {
       toast.error("As senhas não são iguais");
       countError++;
+    } else {
+      if (!verifyPassword(alunoData.password)) countError++;
     }
-
-    if (!verifyPassword(alunoData.password)) countError++;
 
     // Verifica responsavel
     if (!validaResponsavel(responsavelData)) countError++;

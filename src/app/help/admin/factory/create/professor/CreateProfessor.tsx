@@ -142,9 +142,9 @@ export default function CreateProfessor({ materias, series }: CreateProfessorPro
     if (formData.password !== confirmPassword) {
       toast.error("As senhas não conferem");
       errorCount = errorCount + 1;
+    } else {
+      if (!verifyPassword(formData.password)) errorCount++;
     }
-
-    if (!verifyPassword(formData.password)) errorCount++;
 
     if (errorCount > 0) {
       setLoading(false);

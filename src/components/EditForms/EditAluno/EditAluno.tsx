@@ -13,6 +13,7 @@ import { redirect } from "next/navigation";
 import Tabs from "./Tabs";
 import DadosPessoaisForm from "./DadosPessoaisForm";
 import DadosResponsaveisForm from "./DadosResponsaveisForm";
+import verifyPassword from "@/utils/VerifyPassword";
 
 interface Props {
   aluno: Aluno;
@@ -35,8 +36,16 @@ export default function EditAluno({ aluno, series, materias, accessLevel }: Prop
     data_nascimento: aluno.data_nascimento ? formatDate(aluno.data_nascimento) : "",
   });
 
+  // Logica de confirmacao de senha do aluno
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const [responsavelData, setResponsavelData] = useState<Responsavel>(aluno.responsavel);
   const [activeTab, setActiveTab] = useState("dadosPessoais");
+
+  // Logica de confirmacao de senha do responsavel
+  const [confirmResponsavelPassword, setResponsavelConfirmPassword] = useState<string>("");
+  const [showResponsavelConfirmPassword, setShowResponsavelConfirmPassword] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -59,8 +68,13 @@ export default function EditAluno({ aluno, series, materias, accessLevel }: Prop
         },
       }));
     } else {
-      console.log(name, value);
       setAlunoData((prev) => ({ ...prev, [name]: value }));
+    }
+
+    if (name === "password" && alunoData.password !== aluno.password) {
+      setShowConfirmPassword(true);
+    } else if (name === "confirmPassword" && responsavelData.password === aluno.responsavel?.password) {
+      setShowResponsavelConfirmPassword(false);
     }
   };
 
@@ -173,6 +187,14 @@ export default function EditAluno({ aluno, series, materias, accessLevel }: Prop
     if (alunoData.ano_escolar === "") {
       alunoData.ano_escolar = "1 ano";
     }
+
+    if (alunoData.password !== aluno.password && alunoData.password !== confirmPassword) {
+      toast.error("Senhas não coincidem");
+      countError++;
+    } else {
+      if (!verifyPassword(alunoData.password)) countError++;
+    }
+
     if (!validaResponsavel(responsavelData)) countError++;
     if (!validateCPF(responsavelData?.cpf)) countError++;
     if (countError > 0) return;
@@ -216,10 +238,21 @@ export default function EditAluno({ aluno, series, materias, accessLevel }: Prop
           handleMateriasChange={handleMateriasChange}
           handleFetchCep={handleFetchCep}
           handleCurrencyChange={handleCurrencyChange}
+          setConfirmPassword={setConfirmPassword}
+          showConfirmPassword={showConfirmPassword}
+          confirmPassword={confirmPassword}
         />
       )}
       {activeTab === "dadosResponsaveis" && (
-        <DadosResponsaveisForm responsavelData={responsavelData} accessLevel={accessLevel!} handleResponsavelChange={handleResponsavelChange} handleFetchCep={handleFetchCep} />
+        <DadosResponsaveisForm
+          responsavelData={responsavelData}
+          accessLevel={accessLevel!}
+          handleResponsavelChange={handleResponsavelChange}
+          handleFetchCep={handleFetchCep}
+          setResponsavelConfirmPassword={setResponsavelConfirmPassword}
+          showResponsavelConfirmPassword={showResponsavelConfirmPassword}
+          confirmResponsavelPassword={confirmResponsavelPassword}
+        />
       )}
       <div className="flex justify-end mt-8">
         <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
