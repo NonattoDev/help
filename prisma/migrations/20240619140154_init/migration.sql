@@ -23,8 +23,9 @@ CREATE TABLE "AgendaAulas" (
     "id" TEXT NOT NULL,
     "alunoId" TEXT NOT NULL,
     "professorId" TEXT NOT NULL,
-    "data" TIMESTAMP(3) NOT NULL,
-    "hora" TEXT NOT NULL,
+    "data" TEXT NOT NULL,
+    "horaInicio" TEXT NOT NULL,
+    "horaFinal" TEXT NOT NULL,
     "local" TEXT NOT NULL,
     "duracao" DOUBLE PRECISION NOT NULL,
     "modalidade" "Modalidade" NOT NULL,
@@ -143,7 +144,7 @@ CREATE UNIQUE INDEX "Usuarios_email_key" ON "Usuarios"("email");
 CREATE UNIQUE INDEX "Usuarios_cpf_key" ON "Usuarios"("cpf");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "AgendaAulas_professorId_data_hora_key" ON "AgendaAulas"("professorId", "data", "hora");
+CREATE UNIQUE INDEX "AgendaAulas_professorId_data_horaInicio_horaFinal_key" ON "AgendaAulas"("professorId", "data", "horaInicio", "horaFinal");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Responsavel_email_key" ON "Responsavel"("email");

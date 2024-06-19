@@ -8,6 +8,8 @@ import { saveAgenda } from "./Actions/SaveAgenda";
 import moment from "moment";
 import "moment/locale/pt-br";
 import { BiLeftArrow, BiRightArrowCircle } from "react-icons/bi";
+import ReactInputMask from "react-input-mask";
+import Agenda from "@/components/Agenda/Agenda";
 
 moment.locale("pt-br");
 
@@ -37,38 +39,24 @@ interface ProfessorDisponibilidade {
   sabado: Disponibilidade;
 }
 
-// Função para gerar horários disponíveis
-const gerarHorariosDisponiveis = (inicio: string, fim: string, intervalo: number) => {
-  const horarios = [];
-  let current = moment(inicio, "HH:mm");
-
-  while (current.format("HH:mm") <= fim) {
-    horarios.push(current.format("HH:mm"));
-    current.add(intervalo, "minutes");
-  }
-
-  return horarios;
-};
-
-const horariosDisponiveis = gerarHorariosDisponiveis("09:00", "20:00", 60);
-
-const diasDaSemana: { [key: string]: string } = {
-  segunda: "Segunda-Feira",
-  terca: "Terça-Feira",
-  quarta: "Quarta-Feira",
-  quinta: "Quinta-Feira",
-  sexta: "Sexta-Feira",
-  sabado: "Sábado",
-};
-
 export default function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
   const [step, setStep] = useState<Step>(Step.SELECTDATE);
   const [date, setDate] = useState<string>("");
   const [modalidade, setModalidade] = useState<string>("");
-  const [duracao, setDuracao] = useState<number>(0);
-  const [agendamentos, setAgendamentos] = useState<{ hora: string; modalidade: string; duracao: number }[]>([]);
+
+  const [horaInicio, setHoraInicio] = useState<string>("");
+  const [horaFinal, setHoraFinal] = useState<string>("");
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let errorCount = 0;
+    // Se a data for antes do dia atual, não pode marcar
+    if (moment(e.target.value).isBefore(moment().format("YYYY-MM-DD"))) {
+      toast.error("Data inválida");
+      errorCount++;
+    }
+
+    if (errorCount > 0) return;
+
     setDate(e.target.value);
   };
 
@@ -77,20 +65,47 @@ export default function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
     setStep(Step.SELECTHORARIODISPONIVEL);
   };
 
-  const handleDuracaoChange = (duracao: number) => {
-    setDuracao(duracao);
-    setStep(Step.SELECTHORARIODISPONIVEL);
-  };
+  const handleAgendar = async () => {
+    const horaInicioMoment = moment(horaInicio, "HH:mm");
+    const horaFinalMoment = moment(horaFinal, "HH:mm");
 
-  const handleHorarioClick = async () => {
-    const hora = "09:00";
-    setAgendamentos([...agendamentos, { hora, modalidade, duracao }]);
+    let errorCount = 0;
+
+    if (!horaInicioMoment.isValid()) {
+      toast.error("Horário de início inválido");
+      errorCount++;
+    }
+
+    if (!horaFinalMoment.isValid()) {
+      toast.error("Horário de final inválido");
+      errorCount++;
+    }
+
+    if (horaInicioMoment.isAfter(horaFinalMoment)) {
+      toast.error("Horário de início não pode ser maior que o horário final");
+      errorCount++;
+    }
+
+    if (horaInicioMoment.isSame(horaFinalMoment)) {
+      toast.error("Horário de início não pode ser igual ao horário final");
+      errorCount++;
+    }
+
+    if (errorCount > 0) return;
+
+    if (modalidade === "PRESENCIAL") {
+      // Adiciona 30 minutos para o deslocamento
+      horaFinalMoment.add(30, "minutes");
+    }
+
+    const duracao = horaFinalMoment.diff(horaInicioMoment, "minutes");
 
     let AgendaAula = {
       alunoId: aluno.id,
       professorId: professor.id,
-      data: moment(date).toDate(),
-      hora,
+      data: moment(date).format("YYYY-MM-DD"),
+      horaInicio,
+      horaFinal,
       modalidade: modalidade.toUpperCase(),
       duracao,
       local: "",
@@ -100,9 +115,22 @@ export default function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
       AgendaAula.local = professor.endereco.bairro;
     }
 
-    await saveAgenda(AgendaAula as any);
+    const response = await saveAgenda(AgendaAula as any);
 
-    toast.success(`Aula agendada para o dia ${date} às ${hora} com duração de ${duracao}h`);
+    if (response && response.error) return toast.error(response.error);
+
+    setTimeout(() => {
+      toast.success(`Agenda salva com sucesso!`);
+    }, 3000);
+
+    setTimeout(() => {
+      toast.info(`Se desejar, você pode cancelar a aula a qualquer momento.`);
+    }, 6000);
+
+    setTimeout(() => {
+      toast.success(`Retornamos você para a seleção de data.`);
+    }, 9000);
+
     setStep(Step.SELECTDATE);
   };
 
@@ -112,7 +140,6 @@ export default function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
     } else if (step === Step.SELECTMODALIDADE) {
       setStep(Step.SELECTDATE);
     } else if (step === Step.SELECTHORARIODISPONIVEL) {
-      setDuracao(0);
       setStep(Step.SELECTMODALIDADE);
     }
   };
@@ -168,11 +195,47 @@ export default function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
       {step === Step.SELECTHORARIODISPONIVEL && (
         <div className="flex flex-col items-center justify-center gap-6">
           <label className="text-1xl font-bold">Digite um horário</label>
-          <input type="text" className="input input-bordered input-sm" placeholder="Inicio" />
-          <input type="text" className="input input-bordered input-sm" placeholder="Final da Aula" />
-          <button className="btn" onClick={handleHorarioClick}>
+          <div className="formControl">
+            <label className="label">
+              <span className="label-text">Inicio aula</span>
+            </label>
+            <ReactInputMask
+              mask="99:99"
+              maskPlaceholder={null}
+              alwaysShowMask={false}
+              onChange={(e) => setHoraInicio(e.target.value)}
+              name="horaInicio"
+              type="text"
+              className="input input-bordered input-sm"
+              placeholder="Inicio"
+            />
+          </div>
+          <div className="formControl">
+            <label className="label">
+              <span className="label-text">Final aula</span>
+            </label>
+            <ReactInputMask
+              mask="99:99"
+              maskPlaceholder={null}
+              alwaysShowMask={false}
+              onChange={(e) => setHoraFinal(e.target.value)}
+              name="horaFim"
+              type="text"
+              className="input input-bordered input-sm"
+              placeholder="Final da Aula"
+            />
+          </div>
+
+          <button className="btn" onClick={handleAgendar}>
             Agendar
           </button>
+
+          {(professor.AgendaAulas?.length as any) > 0 && (
+            <>
+              <div className="text-center font-bold text-1xl">Agenda do professor {professor.nome}</div>
+              <Agenda AgendaAulas={professor.AgendaAulas as any} />
+            </>
+          )}
         </div>
       )}
     </div>

@@ -47,19 +47,19 @@ const Header = async () => {
     <div
       className="navbar bg-base-100 shadow-md"
       style={{
-        width: "98%",
+        width: "97%",
         margin: "10px auto",
         display: "flex",
         justifyContent: "space-between",
       }}
     >
       {/* Inicio Header */}
-      <div>
+      <div className="w-1/4 justify-start">
         <LogoButton userName={session?.user.nome} />
       </div>
 
       {/* Meio do Header*/}
-      <div>
+      <div className="w-1/4 justify-center">
         {(session?.user.accessLevel === "administrador" || session?.user.accessLevel === "administrativo") && <MatchButton />}
         {(session?.user.accessLevel === "administrador" || session?.user.accessLevel === "administrativo") && (
           <Suspense fallback={<LoadingFallback />}>
@@ -70,6 +70,7 @@ const Header = async () => {
 
       {/* Fim Header */}
       <div
+        className="w-1/4 flex justify-end"
         style={{
           gap: "10px",
         }}

@@ -27,8 +27,9 @@ model AgendaAulas {
   aluno       Aluno      @relation(fields: [alunoId], references: [id])
   professorId String
   professor   Professor  @relation(fields: [professorId], references: [id])
-  data        DateTime
-  hora        String
+  data        String
+  horaInicio  String
+  horaFinal     String
   local       String
   duracao     Float
   modalidade  Modalidade
@@ -37,7 +38,7 @@ model AgendaAulas {
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
 
-  @@unique([professorId, data, hora])
+  @@unique([professorId, data, horaInicio, horaFinal])
 }
 
 enum Modalidade {
