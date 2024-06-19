@@ -62,7 +62,7 @@ export default function MatchApp({ alunos }: MatchAppProps) {
     <div>
       {page === Page.SELECTALUNO && <SelectAluno alunos={alunos} handleSelectAluno={handleSelectAluno} alunoSelected={alunoSelected as Aluno | undefined} />}
       {page === Page.SHOWPROFESSORES && <ShowProfessores aluno={alunoSelected as Aluno} professores={professores!} selectProfessor={selectProfessor} />}
-      {page === Page.AGENDAMATCH && <AgendaMatch professor={professorSelected!} aluno={alunoSelected!} />}
+      {page === Page.AGENDAMATCH && <AgendaMatch professor={professorSelected!} aluno={alunoSelected! as any} />}
     </div>
   );
 }

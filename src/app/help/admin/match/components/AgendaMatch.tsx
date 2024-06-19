@@ -7,16 +7,16 @@ import { toast } from "react-toastify";
 import { saveAgenda } from "./Actions/SaveAgenda";
 import moment from "moment";
 import "moment/locale/pt-br";
+import { BiLeftArrow } from "react-icons/bi";
 
 moment.locale("pt-br");
 
 interface AgendaMatchProps {
   professor: ProfessoresMatch;
-  aluno: Aluno;
+  aluno: Aluno & { AgendaAulas: any[]; financeiro: { qtd_aulas: number } };
 }
 
 enum Step {
-  SELECTDIA,
   SELECTDATE,
   SELECTMODALIDADE,
   SELECTDURACAO,
@@ -65,23 +65,12 @@ const diasDaSemana: { [key: string]: string } = {
 export default function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
   const [step, setStep] = useState<Step>(Step.SELECTDATE);
   const [date, setDate] = useState<string>("");
-  const [diaSemana, setDiaSemana] = useState<string>("");
   const [modalidade, setModalidade] = useState<string>("");
   const [duracao, setDuracao] = useState<number>(0);
   const [agendamentos, setAgendamentos] = useState<{ hora: string; modalidade: string; duracao: number }[]>([]);
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedDate = e.target.value;
-    toast.info(`voce selecionou a data ${moment(selectedDate).format("DD/MM/YYYY")} dia da semana ${moment(selectedDate).format("dddd")}`);
-    console.log(moment(selectedDate).add("7", "day").format("dddd"));
-    console.log(moment(selectedDate).add("7", "day").format("DD/MM/YYYY"));
-    setDate(selectedDate);
-    return;
-    setStep(Step.SELECTMODALIDADE);
-  };
-
-  const handleDiaChange = (dia: string) => {
-    setDiaSemana(dia);
+    setDate(e.target.value);
     setStep(Step.SELECTMODALIDADE);
   };
 
@@ -166,34 +155,37 @@ export default function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
     return horariosFiltrados;
   };
 
+  const handleVoltar = () => {
+    if (step === Step.SELECTDATE) {
+      window.location.reload();
+    } else if (step === Step.SELECTMODALIDADE) {
+      setStep(Step.SELECTDATE);
+    } else if (step === Step.SELECTDURACAO) {
+      setModalidade("");
+      setStep(Step.SELECTMODALIDADE);
+    } else if (step === Step.SELECTHORARIODISPONIVEL) {
+      setDuracao(0);
+      setStep(Step.SELECTDURACAO);
+    }
+  };
+
+  // Verificar quantas aulas o aluno já tem marcadas ESSE mes
+  const qtdAulasMarcadas = aluno.AgendaAulas.filter((agenda) => moment(agenda.data).format("MM-YYYY") === moment().format("MM-YYYY")).length;
+
   return (
     <div>
-      {step === Step.SELECTDIA && (
-        <div className="flex flex-col items-center justify-center gap-6">
-          <label className="text-1xl font-bold">Selecione um dia da semana</label>
-          <div className="flex gap-5">
-            {Object.keys(diasDaSemana).map((dia) => (
-              <button
-                key={dia}
-                className="btn btn-primary"
-                name={dia}
-                disabled={
-                  !professor.disponibilidade[dia as keyof ProfessorDisponibilidade]?.manha &&
-                  !professor.disponibilidade[dia as keyof ProfessorDisponibilidade]?.tarde &&
-                  !professor.disponibilidade[dia as keyof ProfessorDisponibilidade]?.noite
-                }
-                onClick={() => handleDiaChange(dia)}
-              >
-                {diasDaSemana[dia as keyof typeof diasDaSemana]}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
+      <button className="btn btn-info rounded-[20px]" onClick={handleVoltar}>
+        <BiLeftArrow />
+      </button>
       {step === Step.SELECTDATE && (
-        <div className="flex flex-col items-center justify-center gap-6">
-          <label className="text-1xl font-bold">Selecione uma data</label>
-          <input type="date" value={date} className="input input-bordered" onChange={handleDateChange} />
+        <div className="flex flex-col justify-center gap-6">
+          <label className="text-1xl font-bold text-end">
+            {aluno.nome} tem {aluno.financeiro?.qtd_aulas - qtdAulasMarcadas} aulas restantes
+          </label>
+          <label className="text-1xl font-bold text-center">Selecione uma data</label>
+          <div className="flex justify-center">
+            <input type="date" className="input input-bordered" value={date} onChange={handleDateChange} />
+          </div>
         </div>
       )}
       {step === Step.SELECTMODALIDADE && (
