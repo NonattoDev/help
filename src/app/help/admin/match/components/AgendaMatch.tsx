@@ -47,6 +47,9 @@ export default function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
   const [horaInicio, setHoraInicio] = useState<string>("");
   const [horaFinal, setHoraFinal] = useState<string>("");
 
+  // Agenda aulas do professor
+  const [agendaAulas, setAgendaAulas] = useState<any[]>(professor?.AgendaAulas as any[]);
+
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let errorCount = 0;
     // Se a data for antes do dia atual, não pode marcar
@@ -117,19 +120,10 @@ export default function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
 
     const response = await saveAgenda(AgendaAula as any);
 
+    setAgendaAulas([...agendaAulas, response.data]);
+
     if (response && response.error) return toast.error(response.error);
-
-    setTimeout(() => {
-      toast.success(`Agenda salva com sucesso!`);
-    }, 3000);
-
-    setTimeout(() => {
-      toast.info(`Se desejar, você pode cancelar a aula a qualquer momento.`);
-    }, 6000);
-
-    setTimeout(() => {
-      toast.success(`Retornamos você para a seleção de data.`);
-    }, 9000);
+    toast.success(response.success);
 
     setStep(Step.SELECTDATE);
   };
@@ -230,10 +224,10 @@ export default function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
             Agendar
           </button>
 
-          {(professor.AgendaAulas?.length as any) > 0 && (
+          {(agendaAulas?.length as any) > 0 && (
             <>
               <div className="text-center font-bold text-1xl">Agenda do professor {professor.nome}</div>
-              <Agenda AgendaAulas={professor.AgendaAulas as any} />
+              <Agenda AgendaAulas={agendaAulas} />
             </>
           )}
         </div>

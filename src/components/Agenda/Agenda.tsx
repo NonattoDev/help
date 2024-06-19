@@ -6,6 +6,7 @@ import { MdCancel } from "react-icons/md";
 import { toast } from "react-toastify";
 import { CancelAula } from "../../app/help/admin/match/components/Actions/CancelAula";
 import { useState } from "react";
+import { FaCheckCircle } from "react-icons/fa";
 
 interface AgendaProps {
   AgendaAulas: AgendaAulas[] | undefined;
@@ -48,10 +49,20 @@ export default function Agenda({ AgendaAulas }: AgendaProps) {
               <div className="status-info">Aluno: {agenda.aluno.nome}</div>
               <div className="status-info">Modalidade: {agenda.modalidade === "ONLINE" ? "Online" : "Presencial"}</div>
             </div>
-            <div className="stat-desc text-success text-end mt-5">{agenda.cancelada ? "A aula está cancelada" : "Aula confirmada"}</div>
-            <button className={`btn btn-error ${agenda.cancelada ? "cursor-not-allowed" : "cursor-pointer"}`} onClick={() => handleCancelAula(agenda.id)} disabled={agenda.cancelada}>
-              <MdCancel />
-            </button>
+            <div>
+              {agenda.cancelada && <div className="stat-desc text-error text-center mt-5">Aula cancelada</div>}
+              {agenda.finalizada && <div className="stat-desc text-success text-center my-2">Aula concluída</div>}
+            </div>
+            {moment().isBefore(moment(agenda.data)) && !agenda.cancelada && (
+              <button className={`btn btn-error ${agenda.cancelada ? "cursor-not-allowed" : "cursor-pointer"}`} onClick={() => handleCancelAula(agenda.id)} disabled={agenda.cancelada}>
+                <MdCancel />
+              </button>
+            )}
+            {agenda.finalizada && (
+              <button className="btn btn-success">
+                <FaCheckCircle color="white" />
+              </button>
+            )}
           </div>
         );
       })}
