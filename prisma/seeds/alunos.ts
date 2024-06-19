@@ -120,6 +120,7 @@ export async function createAlunos(prisma: PrismaClient) {
         valor: "400",
         dta_vencimento: "05/24",
       },
+      dificuldades: ["Matemática", "Espanhol", "Biologia", "Geografia"],
     },
     {
       nome: "Adam de Santana Soares Pinto Pereira",

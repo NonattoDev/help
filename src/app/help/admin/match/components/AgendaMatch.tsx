@@ -127,9 +127,11 @@ export default function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
       </button>
       {step === Step.SELECTDATE && (
         <div className="flex flex-col justify-center gap-6">
-          <label className="text-1xl font-bold text-end">
-            {aluno.nome} tem {aluno.financeiro?.qtd_aulas - qtdAulasMarcadas} aulas restantes para o mês de {moment(date).format("MMMM")}
-          </label>
+          {date && (
+            <label className="text-1xl font-bold text-end">
+              {aluno.nome} tem {aluno.financeiro?.qtd_aulas - qtdAulasMarcadas} aulas restantes para o mês de {moment(date).format("MMMM")}
+            </label>
+          )}
           <label className="text-1xl font-bold text-center">Selecione uma data</label>
           <div className="flex justify-center">
             <input type="date" className="input input-bordered" value={date} onChange={handleDateChange} />
