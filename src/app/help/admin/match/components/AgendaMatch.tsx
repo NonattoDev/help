@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { saveAgenda } from "./Actions/SaveAgenda";
 import moment from "moment";
 import "moment/locale/pt-br";
-import { BiLeftArrow } from "react-icons/bi";
+import { BiLeftArrow, BiRightArrowCircle } from "react-icons/bi";
 
 moment.locale("pt-br");
 
@@ -19,7 +19,6 @@ interface AgendaMatchProps {
 enum Step {
   SELECTDATE,
   SELECTMODALIDADE,
-  SELECTDURACAO,
   SELECTHORARIODISPONIVEL,
 }
 
@@ -71,12 +70,11 @@ export default function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDate(e.target.value);
-    setStep(Step.SELECTMODALIDADE);
   };
 
   const handleModalidadeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setModalidade(e.target.value);
-    setStep(Step.SELECTDURACAO);
+    setStep(Step.SELECTHORARIODISPONIVEL);
   };
 
   const handleDuracaoChange = (duracao: number) => {
@@ -84,7 +82,8 @@ export default function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
     setStep(Step.SELECTHORARIODISPONIVEL);
   };
 
-  const handleHorarioClick = async (hora: string) => {
+  const handleHorarioClick = async () => {
+    const hora = "09:00";
     setAgendamentos([...agendamentos, { hora, modalidade, duracao }]);
 
     let AgendaAula = {
@@ -107,70 +106,19 @@ export default function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
     setStep(Step.SELECTDATE);
   };
 
-  const filtrarHorarios = () => {
-    let horariosFiltrados = gerarHorariosDisponiveis("09:00", "20:00", 60);
-
-    professor?.AgendaAulas?.forEach((agendamento) => {
-      const agendamentoDate = moment(agendamento.data).format("YYYY-MM-DD");
-      if (agendamentoDate === date) {
-        const startHour = parseInt(agendamento.hora.split(":")[0]);
-        const startMinute = parseInt(agendamento.hora.split(":")[1]);
-        const durationInMinutes = agendamento.duracao * 60;
-        const endMinute = startMinute + durationInMinutes;
-        const endHour = startHour + Math.floor(endMinute / 60);
-        const endMinutesAdjusted = endMinute % 60;
-
-        // Remover horários ocupados
-        for (let hour = startHour; hour < endHour; hour++) {
-          const time = `${hour.toString().padStart(2, "0")}:00`;
-          const index = horariosFiltrados.indexOf(time);
-          if (index > -1) horariosFiltrados.splice(index, 1);
-        }
-
-        if (endMinutesAdjusted > 0) {
-          const time = `${endHour.toString().padStart(2, "0")}:00`;
-          const index = horariosFiltrados.indexOf(time);
-          if (index > -1) horariosFiltrados.splice(index, 1);
-        }
-
-        if (modalidade === "PRESENCIAL") {
-          const intervalEndHour = endHour;
-          const intervalEndMinute = endMinutesAdjusted + 30;
-          const intervalAdjustedEndHour = intervalEndHour + Math.floor(intervalEndMinute / 60);
-          const intervalAdjustedEndMinute = intervalEndMinute % 60;
-
-          if (intervalAdjustedEndMinute > 0) {
-            const intervalTime = `${intervalAdjustedEndHour.toString().padStart(2, "0")}:${intervalAdjustedEndMinute.toString().padStart(2, "0")}`;
-            const index = horariosFiltrados.indexOf(intervalTime);
-            if (index > -1) horariosFiltrados.splice(index, 1);
-          } else {
-            const intervalTime = `${intervalAdjustedEndHour.toString().padStart(2, "0")}:00`;
-            const index = horariosFiltrados.indexOf(intervalTime);
-            if (index > -1) horariosFiltrados.splice(index, 1);
-          }
-        }
-      }
-    });
-
-    return horariosFiltrados;
-  };
-
   const handleVoltar = () => {
     if (step === Step.SELECTDATE) {
       window.location.reload();
     } else if (step === Step.SELECTMODALIDADE) {
       setStep(Step.SELECTDATE);
-    } else if (step === Step.SELECTDURACAO) {
-      setModalidade("");
-      setStep(Step.SELECTMODALIDADE);
     } else if (step === Step.SELECTHORARIODISPONIVEL) {
       setDuracao(0);
-      setStep(Step.SELECTDURACAO);
+      setStep(Step.SELECTMODALIDADE);
     }
   };
 
   // Verificar quantas aulas o aluno já tem marcadas ESSE mes
-  const qtdAulasMarcadas = aluno.AgendaAulas.filter((agenda) => moment(agenda.data).format("MM-YYYY") === moment().format("MM-YYYY")).length;
+  const qtdAulasMarcadas = aluno.AgendaAulas.filter((agenda) => moment(agenda.data).format("MM-YYYY") === moment(date).format("MM-YYYY")).length;
 
   return (
     <div>
@@ -180,11 +128,23 @@ export default function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
       {step === Step.SELECTDATE && (
         <div className="flex flex-col justify-center gap-6">
           <label className="text-1xl font-bold text-end">
-            {aluno.nome} tem {aluno.financeiro?.qtd_aulas - qtdAulasMarcadas} aulas restantes
+            {aluno.nome} tem {aluno.financeiro?.qtd_aulas - qtdAulasMarcadas} aulas restantes para o mês de {moment(date).format("MMMM")}
           </label>
           <label className="text-1xl font-bold text-center">Selecione uma data</label>
           <div className="flex justify-center">
             <input type="date" className="input input-bordered" value={date} onChange={handleDateChange} />
+          </div>
+          <div className="flex justify-center">
+            <button
+              className="btn btn-primary"
+              onClick={() => {
+                if (!date) return toast.error("Selecione uma data");
+                if (qtdAulasMarcadas >= aluno.financeiro.qtd_aulas) return toast.error("Aluno já atingiu o limite de aulas para o mês");
+                setStep(Step.SELECTMODALIDADE);
+              }}
+            >
+              <BiRightArrowCircle />
+            </button>
           </div>
         </div>
       )}
@@ -203,32 +163,14 @@ export default function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
           </div>
         </div>
       )}
-      {step === Step.SELECTDURACAO && (
-        <div className="flex flex-col items-center justify-center gap-6">
-          <label className="text-1xl font-bold">Selecione a duração da aula</label>
-          <div className="flex gap-4">
-            <button type="button" className="btn btn-info text-white" onClick={() => handleDuracaoChange(1)}>
-              1h
-            </button>
-            <button type="button" className="btn btn-info text-white" onClick={() => handleDuracaoChange(1.5)}>
-              1h30
-            </button>
-            <button type="button" className="btn btn-info text-white" onClick={() => handleDuracaoChange(2)}>
-              2h
-            </button>
-          </div>
-        </div>
-      )}
       {step === Step.SELECTHORARIODISPONIVEL && (
         <div className="flex flex-col items-center justify-center gap-6">
-          <label className="text-1xl font-bold">Selecione um horário disponível</label>
-          <div className="grid grid-cols-6 gap-4">
-            {filtrarHorarios().map((hora) => (
-              <button key={hora} type="button" className="btn btn-info" onClick={() => handleHorarioClick(hora)}>
-                {hora}
-              </button>
-            ))}
-          </div>
+          <label className="text-1xl font-bold">Digite um horário</label>
+          <input type="text" className="input input-bordered input-sm" placeholder="Inicio" />
+          <input type="text" className="input input-bordered input-sm" placeholder="Final da Aula" />
+          <button className="btn" onClick={handleHorarioClick}>
+            Agendar
+          </button>
         </div>
       )}
     </div>
