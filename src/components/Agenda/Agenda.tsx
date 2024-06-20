@@ -8,7 +8,7 @@ import { CancelAula } from "../../app/help/admin/match/components/Actions/Cancel
 import { useState } from "react";
 import { FaCheckCircle } from "react-icons/fa";
 import { BiEdit } from "react-icons/bi";
-import Modal from "../Modal/Modal";
+import Modal from "../Modal/ModalEditAula";
 
 interface AgendaProps {
   AgendaAulas: AgendaAulas[] | undefined;
@@ -46,38 +46,40 @@ export default function Agenda({ AgendaAulas }: AgendaProps) {
   };
 
   return (
-    <div className="grid grid-cols-5 gap-4">
-      {agendaAulas?.map((agenda) => {
-        return (
-          <div className="stat shadow-md rounded-md bg-slate-200" key={agenda.id}>
-            <BiEdit onClick={() => handleEditClick(agenda)} className="cursor-pointer" />
+    <>
+      <div className="grid grid-cols-5 gap-4">
+        {agendaAulas?.map((agenda) => {
+          return (
+            <div className="stat shadow-md rounded-md bg-slate-200" key={agenda.id}>
+              <BiEdit onClick={() => handleEditClick(agenda)} className="cursor-pointer" />
 
-            <div className="stat-value text-center">{moment(agenda.data).format("DD/MM/YY")}</div>
-            <div className="text-info text-end">
-              {agenda.horaInicio} - {agenda.horaFinal}
+              <div className="stat-value text-center">{moment(agenda.data).format("DD/MM/YY")}</div>
+              <div className="text-info text-end">
+                {agenda.horaInicio} - {agenda.horaFinal}
+              </div>
+              <div className="my-2">
+                <div className="status-info">Aluno: {agenda.aluno.nome}</div>
+                <div className="status-info">Modalidade: {agenda.modalidade === "ONLINE" ? "Online" : "Presencial"}</div>
+              </div>
+              <div>
+                {agenda.cancelada && <div className="stat-desc text-error text-center mt-5">Aula cancelada</div>}
+                {agenda.finalizada && <div className="stat-desc text-success text-center my-2">Aula concluída</div>}
+              </div>
+              {moment().isBefore(moment(agenda.data)) && !agenda.cancelada && (
+                <button className={`btn btn-error ${agenda.cancelada ? "cursor-not-allowed" : "cursor-pointer"}`} onClick={() => handleCancelAula(agenda.id)} disabled={agenda.cancelada}>
+                  <MdCancel />
+                </button>
+              )}
+              {agenda.finalizada && (
+                <button className="btn btn-success">
+                  <FaCheckCircle color="white" />
+                </button>
+              )}
             </div>
-            <div className="my-2">
-              <div className="status-info">Aluno: {agenda.aluno.nome}</div>
-              <div className="status-info">Modalidade: {agenda.modalidade === "ONLINE" ? "Online" : "Presencial"}</div>
-            </div>
-            <div>
-              {agenda.cancelada && <div className="stat-desc text-error text-center mt-5">Aula cancelada</div>}
-              {agenda.finalizada && <div className="stat-desc text-success text-center my-2">Aula concluída</div>}
-            </div>
-            {moment().isBefore(moment(agenda.data)) && !agenda.cancelada && (
-              <button className={`btn btn-error ${agenda.cancelada ? "cursor-not-allowed" : "cursor-pointer"}`} onClick={() => handleCancelAula(agenda.id)} disabled={agenda.cancelada}>
-                <MdCancel />
-              </button>
-            )}
-            {agenda.finalizada && (
-              <button className="btn btn-success">
-                <FaCheckCircle color="white" />
-              </button>
-            )}
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
       {selectedAula && <Modal agendaAula={selectedAula} onClose={handleCloseModal} />}
-    </div>
+    </>
   );
 }
