@@ -61,7 +61,14 @@ export async function GET() {
 
   console.log("Aniversariantes encontrados", aniversariantes);
 
+  // http://localhost:3000/api/aniversariantes
+
   // Aqui você pode adicionar a lógica para enviar as felicitações
+
+  // instalar a dependencia do Nodemailer
+  // Configurar o nodemailer para enviar os e-mails
+  // Enviar os e-mails para os aniversariantes
+  // Não enviar o final, ir me avisando a cada passo.
 
   return NextResponse.json({ message: "Aniversariantes encontrados", aniversariantes });
 }
