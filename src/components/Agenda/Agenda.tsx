@@ -7,6 +7,8 @@ import { toast } from "react-toastify";
 import { CancelAula } from "../../app/help/admin/match/components/Actions/CancelAula";
 import { useState } from "react";
 import { FaCheckCircle } from "react-icons/fa";
+import { BiEdit } from "react-icons/bi";
+import Modal from "../Modal/Modal";
 
 interface AgendaProps {
   AgendaAulas: AgendaAulas[] | undefined;
@@ -19,21 +21,28 @@ interface AgendaAulas extends PrismaAgendaAulas {
 
 export default function Agenda({ AgendaAulas }: AgendaProps) {
   const [agendaAulas, setAgendaAulas] = useState<AgendaAulas[] | undefined>(AgendaAulas);
+  const [selectedAula, setSelectedAula] = useState<AgendaAulas | null>(null);
 
   const handleCancelAula = async (aulaId: string) => {
     const aulaCancelada = await CancelAula(aulaId);
 
     if (!aulaCancelada) return toast.error("Erro ao cancelar a aula");
 
-    // Modifica o estado da aula para cancelada
     const aulaIndex = agendaAulas?.findIndex((agenda) => agenda.id === aulaId);
     const aula = agendaAulas?.[aulaIndex as number];
     aula!.cancelada = true;
 
-    // Atualiza o estado
     setAgendaAulas([...agendaAulas!]);
 
     toast.info(`A aula com id ${aulaId} foi cancelada com sucesso!`);
+  };
+
+  const handleEditClick = (aula: AgendaAulas) => {
+    setSelectedAula(aula);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedAula(null);
   };
 
   return (
@@ -41,6 +50,8 @@ export default function Agenda({ AgendaAulas }: AgendaProps) {
       {agendaAulas?.map((agenda) => {
         return (
           <div className="stat shadow-md rounded-md bg-slate-200" key={agenda.id}>
+            <BiEdit onClick={() => handleEditClick(agenda)} className="cursor-pointer" />
+
             <div className="stat-value text-center">{moment(agenda.data).format("DD/MM/YY")}</div>
             <div className="text-info text-end">
               {agenda.horaInicio} - {agenda.horaFinal}
@@ -66,6 +77,7 @@ export default function Agenda({ AgendaAulas }: AgendaProps) {
           </div>
         );
       })}
+      {selectedAula && <Modal agendaAula={selectedAula} onClose={handleCloseModal} />}
     </div>
   );
 }
