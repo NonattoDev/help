@@ -9,7 +9,7 @@ import moment from "moment";
 import "moment/locale/pt-br";
 import { BiLeftArrow, BiRightArrowCircle } from "react-icons/bi";
 import ReactInputMask from "react-input-mask";
-import Agenda from "@/components/Agenda/Agenda";
+import AgendaCard from "@/components/AgendaCard/AgendaCard";
 
 moment.locale("pt-br");
 
@@ -227,7 +227,7 @@ export default function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
           {(agendaAulas?.length as any) > 0 && (
             <>
               <div className="text-center font-bold text-1xl">Agenda do professor {professor.nome}</div>
-              <Agenda AgendaAulas={agendaAulas} />
+              <AgendaCard AgendaAulas={agendaAulas} />
             </>
           )}
         </div>

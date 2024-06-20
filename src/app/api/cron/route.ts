@@ -1,15 +1,12 @@
 // app/api/cron/route.ts
 import { NextResponse } from "next/server";
+import prisma from "../../../../prisma/prismaInstance";
 
+// Esse cron rodará todos os dias as 00:00
 export async function GET() {
-  console.log("rodou o CRON");
   // Enviar felicitaçoes de aniversarios de professor e de aluno
-  const result = await fetch("http://worldtimeapi.org/api/timezone/America/Chicago", {
-    cache: "no-store",
-  });
-  const data = await result.json();
+  const professores = await prisma.professor.findMany();
+  const alunos = await prisma.aluno.findMany();
 
-  console.log(data);
-
-  return NextResponse.json({ datetime: data.datetime });
+  return NextResponse.json({ message: "Hello World" });
 }

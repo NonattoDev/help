@@ -14,6 +14,7 @@ export async function createProfessor(prisma: PrismaClient) {
         nome: "Robson José Santos Nonato Filho",
         email: "robsonnonatoiiii@gmail.com",
         cpf: "029.635.985-80",
+        data_nascimento: moment(),
         telefone: "71981234567",
         areaFormacao: [
           {
@@ -74,6 +75,7 @@ export async function createProfessor(prisma: PrismaClient) {
         nome: "Ana Clara da Silva Pinho",
         email: "anaclara.pinho0@gmail.com",
         cpf: "862.429.605-67",
+        data_nascimento: moment(),
         telefone: "71983637758",
         areaFormacao: [
           {
@@ -129,6 +131,7 @@ export async function createProfessor(prisma: PrismaClient) {
         nome: "Ana Rita Lima Gomes",
         email: "gomeslima.ana@outlook.com",
         cpf: "083.465.525-05",
+        data_nascimento: moment(),
         telefone: "71999841418",
         areaFormacao: [
           {
@@ -184,6 +187,7 @@ export async function createProfessor(prisma: PrismaClient) {
         nome: "Anita Sousa dos Santos Moreira",
         email: "anitamoreira745@gmail.com",
         cpf: "09824950567",
+        data_nascimento: moment(),
         telefone: "71996302616",
         areaFormacao: [
           {
@@ -239,6 +243,7 @@ export async function createProfessor(prisma: PrismaClient) {
         nome: "Beatriz Pires de Novaes dos Santos",
         email: "beatrizpires12144@gmail.com",
         cpf: "857.988.935-96",
+        data_nascimento: moment(),
         telefone: "71988156795",
         areaFormacao: [
           {
@@ -294,6 +299,7 @@ export async function createProfessor(prisma: PrismaClient) {
         nome: "Bruna Alves Silva Cruz",
         email: "cruz.bruna993@gmail.com",
         cpf: "051.929.415-71",
+        data_nascimento: moment(),
         telefone: "71983846555",
         areaFormacao: [
           {
@@ -349,6 +355,7 @@ export async function createProfessor(prisma: PrismaClient) {
         nome: "Bianca da Silva Barreto",
         email: "biah.barreto@hotmail.com",
         cpf: "035.567.075-51",
+        data_nascimento: moment(),
         telefone: "71982035398",
         areaFormacao: [
           {
@@ -404,6 +411,7 @@ export async function createProfessor(prisma: PrismaClient) {
         nome: "Camila Ferreira Tavares",
         email: "camilaftavares@live.com",
         cpf: "074.738.205-08",
+        data_nascimento: moment(),
         telefone: "71992835170",
         areaFormacao: [
           {
@@ -459,6 +467,7 @@ export async function createProfessor(prisma: PrismaClient) {
         nome: "Carla Gabrielle Santos do Nascimento",
         email: "carlagabrielle.nasc@gmail.com",
         cpf: "078.903.655-00",
+        data_nascimento: moment(),
         telefone: "71992561315",
         areaFormacao: [
           {
@@ -514,6 +523,7 @@ export async function createProfessor(prisma: PrismaClient) {
         nome: "Daiane Santos Teles",
         email: "Daianeteles2003@gmail.com",
         cpf: "094.934.355-20",
+        data_nascimento: moment(),
         telefone: "71986465669",
         areaFormacao: [
           {
@@ -569,6 +579,7 @@ export async function createProfessor(prisma: PrismaClient) {
         nome: "Deise Santos Souza",
         email: "deise_souzas@hotmail.com",
         cpf: "042.291.915-29",
+        data_nascimento: moment(),
         telefone: "71992216840",
         areaFormacao: [
           {
@@ -624,6 +635,7 @@ export async function createProfessor(prisma: PrismaClient) {
         nome: "Elias Purificação Pereira",
         email: "profeliaspereira@gmail.com",
         cpf: "85984554585",
+        data_nascimento: moment(),
         telefone: "71993419940",
         areaFormacao: [
           {
@@ -679,6 +691,7 @@ export async function createProfessor(prisma: PrismaClient) {
         nome: "Emily Coutinho da Silva Costa",
         email: "emilycoutinho0413@outlook.com",
         cpf: "08541290573",
+        data_nascimento: moment(),
         telefone: "719937577775",
         areaFormacao: [
           {
@@ -734,6 +747,7 @@ export async function createProfessor(prisma: PrismaClient) {
         nome: "Enzo Felipe Dos Santos Rocha",
         email: "enzobottesini@gmail.com",
         cpf: "082.244.155-11",
+        data_nascimento: moment(),
         telefone: "71989060347",
         areaFormacao: [
           {
@@ -789,6 +803,7 @@ export async function createProfessor(prisma: PrismaClient) {
         nome: "Erica Santos Reis",
         email: "erica.santosreis14@gmail.com",
         cpf: "074.618.185-03",
+        data_nascimento: moment(),
         telefone: "71991464123",
         areaFormacao: [
           {
@@ -844,6 +859,7 @@ export async function createProfessor(prisma: PrismaClient) {
         nome: "Evelym Souza da Silva",
         email: "evelymsilva80@gmail.com",
         cpf: "099.483.445-45",
+        data_nascimento: moment(),
         telefone: "71983031172",
         areaFormacao: [
           {
@@ -899,6 +915,7 @@ export async function createProfessor(prisma: PrismaClient) {
         nome: "Francis Carneiro Damasio",
         email: "francis.damasio@hotmail.com",
         cpf: "042.387.055-64",
+        data_nascimento: moment(),
         telefone: "75981357726",
         areaFormacao: [
           {
@@ -954,6 +971,7 @@ export async function createProfessor(prisma: PrismaClient) {
         nome: "Flora Batista Borges",
         email: "flora.batista@ufba.br",
         cpf: "056.139.295-13",
+        data_nascimento: moment(),
         telefone: "71988954874",
         areaFormacao: [
           {
@@ -1009,6 +1027,7 @@ export async function createProfessor(prisma: PrismaClient) {
         nome: "Gabriel Santos de Sant'anna",
         email: "gabriel95dosantos@gmail.com",
         cpf: "063.083.025-89",
+        data_nascimento: moment(),
         telefone: "999581453",
         areaFormacao: [
           {
@@ -1064,6 +1083,7 @@ export async function createProfessor(prisma: PrismaClient) {
         nome: "Gisele Gomes Pastor",
         email: "giselegomespastor@gmail.com",
         cpf: "858.432.825-46",
+        data_nascimento: moment(),
         telefone: "71982557597",
         areaFormacao: [
           {
@@ -1119,6 +1139,7 @@ export async function createProfessor(prisma: PrismaClient) {
         nome: "Isabela Santana Matos",
         email: "isamatos015@gmail.com",
         cpf: "110.121.845-28",
+        data_nascimento: moment(),
         telefone: "71999661637",
         areaFormacao: [
           {
@@ -1174,6 +1195,7 @@ export async function createProfessor(prisma: PrismaClient) {
         nome: "Jade Narel Nascimento Simões",
         email: "jadenarel5000@outlook.com",
         cpf: "859.668.835-80",
+        data_nascimento: moment(),
         telefone: "71991966610",
         areaFormacao: [
           {
@@ -1229,6 +1251,7 @@ export async function createProfessor(prisma: PrismaClient) {
         nome: "Jadson Bomfim dos Santos",
         email: "santus.jbonfim@gmail.com",
         cpf: "056.663.005-20",
+        data_nascimento: moment(),
         telefone: "71983885404",
         areaFormacao: [
           {
@@ -1284,6 +1307,7 @@ export async function createProfessor(prisma: PrismaClient) {
         nome: "Jamille Fiuza Santiago",
         email: "jamille.fiuza@hotmail.com",
         cpf: "046.780.185-14",
+        data_nascimento: moment(),
         telefone: "75982464750",
         areaFormacao: [
           {
@@ -1339,6 +1363,7 @@ export async function createProfessor(prisma: PrismaClient) {
         nome: "Jaqueline da Silva Araújo",
         email: "Jaquearaujo013@gmail.com",
         cpf: "096.221.475-26",
+        data_nascimento: moment(),
         telefone: "75999292244",
         areaFormacao: [
           {
@@ -1394,6 +1419,7 @@ export async function createProfessor(prisma: PrismaClient) {
         nome: "Lidia Santos Magalhães",
         email: "lidiasmagalhaes@gmail.com",
         cpf: "055.435.805-09",
+        data_nascimento: moment(),
         telefone: "71992246077",
         areaFormacao: [
           {
@@ -1449,6 +1475,7 @@ export async function createProfessor(prisma: PrismaClient) {
         nome: "Lisiane de Souza Amorim",
         email: "lisi_anne1998@hotmail.com",
         cpf: "861.608.805-94",
+        data_nascimento: moment(),
         telefone: "71993964271",
         areaFormacao: [
           {
@@ -1504,6 +1531,7 @@ export async function createProfessor(prisma: PrismaClient) {
         nome: "Joice de Andrade Sales",
         email: "Joiceas@ufba.br",
         cpf: "035.274.425-10",
+        data_nascimento: moment(),
         telefone: "71988769497",
         areaFormacao: [
           {
@@ -1559,6 +1587,7 @@ export async function createProfessor(prisma: PrismaClient) {
         nome: "Lorena de Sá Leal",
         email: "lorenadesaleal@hotmail.com",
         cpf: "07025479560",
+        data_nascimento: moment(),
         telefone: "71992874854",
         areaFormacao: [
           {
@@ -1614,6 +1643,7 @@ export async function createProfessor(prisma: PrismaClient) {
         nome: "Louise Prado Farias Leal",
         email: "louisepfleal@gmail.com",
         cpf: "865.337.605-48",
+        data_nascimento: moment(),
         telefone: "71999390856",
         areaFormacao: [
           {
@@ -1669,6 +1699,7 @@ export async function createProfessor(prisma: PrismaClient) {
         nome: "Lourran de Novaes Oliveira",
         email: "lourran07@hotmail.com",
         cpf: "087.879.945-18",
+        data_nascimento: moment(),
         telefone: "71999416059",
         areaFormacao: [
           {
@@ -1724,6 +1755,7 @@ export async function createProfessor(prisma: PrismaClient) {
         nome: "Mariana Rizzi Santos do Carmo",
         email: "mariana.rizzi16@gmail.com",
         cpf: "090.243.585-07",
+        data_nascimento: moment(),
         telefone: "71981536786",
         areaFormacao: [
           {
@@ -1779,6 +1811,7 @@ export async function createProfessor(prisma: PrismaClient) {
         nome: "Mateus de Santana Silva",
         email: "dsantanamateus@gmail.com",
         cpf: "864.032.965-66",
+        data_nascimento: moment(),
         telefone: "71991563348",
         areaFormacao: [
           {
@@ -1834,6 +1867,7 @@ export async function createProfessor(prisma: PrismaClient) {
         nome: "Matheus Alexandre Araujo Santos",
         email: "mathst1@hotmail.com",
         cpf: "861.262.585-84",
+        data_nascimento: moment(),
         telefone: "7198546-2560",
         areaFormacao: [
           {
@@ -1889,6 +1923,7 @@ export async function createProfessor(prisma: PrismaClient) {
         nome: "Natália Lino Silva Spagnuolo",
         email: "natalialino.s@hotmail.com",
         cpf: "078.985.545-31",
+        data_nascimento: moment(),
         telefone: "71993332905",
         areaFormacao: [
           {
@@ -1944,6 +1979,7 @@ export async function createProfessor(prisma: PrismaClient) {
         nome: "Ravilla Miranda Santos",
         email: "ravillasantos@ufba.br",
         cpf: "858.462.595-02",
+        data_nascimento: moment(),
         telefone: "71985542445",
         areaFormacao: [
           {
@@ -1999,6 +2035,7 @@ export async function createProfessor(prisma: PrismaClient) {
         nome: "Rosana Franquetto Pitta",
         email: "rosanafpitta@gmail.com",
         cpf: "035.791.785-55",
+        data_nascimento: moment(),
         telefone: "71991338158",
         areaFormacao: [
           {
@@ -2054,6 +2091,7 @@ export async function createProfessor(prisma: PrismaClient) {
         nome: "Robson Ribeiro dos Santos",
         email: "robsonstarkribeiro@gmail.com",
         cpf: "052.839.845-83",
+        data_nascimento: moment(),
         telefone: "71993581388",
         areaFormacao: [
           {
@@ -2109,6 +2147,7 @@ export async function createProfessor(prisma: PrismaClient) {
         nome: "Saulo Miranda Silva",
         email: "saulo_miranda@outlook.com",
         cpf: "063.505.385-36",
+        data_nascimento: moment(),
         telefone: "71993474356",
         areaFormacao: [
           {
@@ -2164,6 +2203,7 @@ export async function createProfessor(prisma: PrismaClient) {
         nome: "Thaise Braga de Oliveira",
         email: "thaiseoliveira22.1@bahiana.edu.br",
         cpf: "101.991.855-14",
+        data_nascimento: moment(),
         telefone: "71999341444",
         areaFormacao: [
           {
@@ -2219,6 +2259,7 @@ export async function createProfessor(prisma: PrismaClient) {
         nome: "Vitor Lopes da Silva",
         email: "Professor.vitorlopes@gmail.com",
         cpf: "862.554.645-55",
+        data_nascimento: moment(),
         telefone: "71993109070",
         areaFormacao: [
           {
@@ -2274,6 +2315,7 @@ export async function createProfessor(prisma: PrismaClient) {
         nome: "Yuri Reis Pereira",
         email: "yurireispro@gmail.com",
         cpf: "049.980.695-60",
+        data_nascimento: moment(),
         telefone: "71991476766",
         areaFormacao: [
           {

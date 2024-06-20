@@ -6,8 +6,7 @@ import { MdCancel } from "react-icons/md";
 import { toast } from "react-toastify";
 import { CancelAula } from "../../app/help/admin/match/components/Actions/CancelAula";
 import { useState } from "react";
-import { FaCheckCircle } from "react-icons/fa";
-import { BiEdit } from "react-icons/bi";
+import { FaCheckCircle, FaPencilAlt, FaRoute } from "react-icons/fa";
 import Modal from "../Modal/ModalEditAula";
 
 interface AgendaProps {
@@ -19,7 +18,7 @@ interface AgendaAulas extends PrismaAgendaAulas {
   professor: Professor;
 }
 
-export default function Agenda({ AgendaAulas }: AgendaProps) {
+export default function AgendaCard({ AgendaAulas }: AgendaProps) {
   const [agendaAulas, setAgendaAulas] = useState<AgendaAulas[] | undefined>(AgendaAulas);
   const [selectedAula, setSelectedAula] = useState<AgendaAulas | null>(null);
 
@@ -45,27 +44,52 @@ export default function Agenda({ AgendaAulas }: AgendaProps) {
     setSelectedAula(null);
   };
 
+  const handleOpenRoute = (agenda: AgendaAulas) => {
+    toast.info("Abrindo rota");
+    window.open(`https://www.google.com/maps/dir/${agenda.professor.endereco.cep}, ${agenda.professor.endereco.rua}/${agenda.aluno.endereco.cep},${agenda.aluno.endereco.rua}`);
+  };
+
+  const handleUpdatedAula = (aula: AgendaAulas) => {
+    const aulaIndex = agendaAulas?.findIndex((agenda) => agenda.id === aula.id);
+    agendaAulas![aulaIndex as number] = aula;
+
+    setAgendaAulas([...agendaAulas!]);
+  };
+
   return (
     <>
       <div className="grid grid-cols-5 gap-4">
         {agendaAulas?.map((agenda) => {
+          const aulaDateTime = moment(`${agenda.data} ${agenda.horaInicio}`, "YYYY-MM-DD HH:mm");
+
           return (
             <div className="stat shadow-md rounded-md bg-slate-200" key={agenda.id}>
-              <BiEdit onClick={() => handleEditClick(agenda)} className="cursor-pointer" />
-
-              <div className="stat-value text-center">{moment(agenda.data).format("DD/MM/YY")}</div>
+              <div className="flex justify-between items-center">
+                <button className="btn btn-warning btn-sm" onClick={() => handleEditClick(agenda)}>
+                  <FaPencilAlt />
+                </button>
+                <div className="flex-1 stat-value text-center">{moment(agenda.data).format("DD/MM/YY")}</div>
+              </div>
               <div className="text-info text-end">
                 {agenda.horaInicio} - {agenda.horaFinal}
               </div>
               <div className="my-2">
                 <div className="status-info">Aluno: {agenda.aluno.nome}</div>
                 <div className="status-info">Modalidade: {agenda.modalidade === "ONLINE" ? "Online" : "Presencial"}</div>
+                {agenda.modalidade === "PRESENCIAL" && (
+                  <div className="flex justify-between align-middle justify-items-center">
+                    <div className="status-info">Local: {agenda.aluno?.endereco?.bairro}</div>
+                    <button className="btn btn-info" onClick={() => handleOpenRoute(agenda)}>
+                      <FaRoute color="white" />
+                    </button>
+                  </div>
+                )}
               </div>
               <div>
-                {agenda.cancelada && <div className="stat-desc text-error text-center mt-5">Aula cancelada</div>}
+                {agenda.cancelada ? <div className="stat-desc text-error text-center mt-5">Aula cancelada</div> : <div className="stat-desc text-success text-center mt-5">Aula confirmada</div>}
                 {agenda.finalizada && <div className="stat-desc text-success text-center my-2">Aula concluída</div>}
               </div>
-              {moment().isBefore(moment(agenda.data)) && !agenda.cancelada && (
+              {aulaDateTime.isAfter(moment()) && !agenda.cancelada && (
                 <button className={`btn btn-error ${agenda.cancelada ? "cursor-not-allowed" : "cursor-pointer"}`} onClick={() => handleCancelAula(agenda.id)} disabled={agenda.cancelada}>
                   <MdCancel />
                 </button>
@@ -79,7 +103,7 @@ export default function Agenda({ AgendaAulas }: AgendaProps) {
           );
         })}
       </div>
-      {selectedAula && <Modal agendaAula={selectedAula} onClose={handleCloseModal} />}
+      {selectedAula && <Modal agendaAula={selectedAula} onClose={handleCloseModal} handleUpdatedAula={handleUpdatedAula} />}
     </>
   );
 }

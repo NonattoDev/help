@@ -12,14 +12,7 @@ export default function CardProfessor({ professor, aluno, selectProfessor }: Pro
   return (
     <div className="card card-compact w-80 bg-base-100 shadow-xl">
       <figure>
-        <Image
-          width={300}
-          height={300}
-          className="rounded-xl shadow-lg"
-          src={professor?.img_url ? professor.img_url : "/assets/img/default-avatar.png"}
-          alt={professor.nome}
-          style={{ objectFit: "cover" }}
-        />
+        <Image width={300} height={400} className="rounded-xl shadow-lg" src={professor?.img_url ? professor.img_url : "/assets/img/default-avatar.png"} alt={professor.nome} />
       </figure>
       <div className="card-body">
         <h2 className="card-title">{professor.nome}</h2>

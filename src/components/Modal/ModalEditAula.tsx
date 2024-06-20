@@ -1,13 +1,17 @@
+import { updateAula } from "@/app/help/admin/match/components/Actions/updateAula";
 import { AgendaAulas } from "@prisma/client";
+import moment from "moment";
 import { useState } from "react";
 import ReactInputMask from "react-input-mask";
+import { toast } from "react-toastify";
 
 interface ModalProps {
   agendaAula: AgendaAulas | null;
+  handleUpdatedAula: any;
   onClose: () => void;
 }
 
-export default function ModalEditAula({ agendaAula, onClose }: ModalProps) {
+export default function ModalEditAula({ agendaAula, onClose, handleUpdatedAula }: ModalProps) {
   const [aula, setAula] = useState<AgendaAulas | null>(agendaAula);
 
   const handleDataChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,9 +29,46 @@ export default function ModalEditAula({ agendaAula, onClose }: ModalProps) {
   };
 
   const saveEdit = async () => {
+    let errorCount = 0;
+
+    if (!aula?.data) {
+      toast.error("Data não pode ser vazia");
+      errorCount++;
+    }
+    if (!aula?.horaInicio) {
+      toast.error("Hora de inicio não pode ser vazia");
+      errorCount++;
+    }
+    if (!aula?.horaFinal) {
+      toast.error("Hora final não pode ser vazia");
+      errorCount++;
+    }
+
+    if (aula && aula.horaFinal && aula?.horaInicio && aula?.horaInicio >= aula?.horaFinal) {
+      toast.error("A hora inicio da aula não pode ser após o fim, e nem igual!");
+      errorCount++;
+    }
+
+    if (errorCount > 0) return;
+
     // Implementar a lógica de salvar aula
-    console.log(aula);
+    const update = await updateAula(aula!);
+
+    if (!update) return toast.error("Erro ao atualizar aula");
+
+    if (update.error) return toast.error(update.error);
+
+    toast.success(update.success);
+    setAula(update.data as AgendaAulas);
+    handleUpdatedAula(update.data as AgendaAulas);
+    onClose();
   };
+
+  if (!aula) return null;
+
+  const horaInicio = moment(aula.horaInicio, "HH:mm");
+  const horaFinal = moment(aula.horaFinal, "HH:mm");
+  const duracao = horaFinal.diff(horaInicio, "minutes");
 
   return (
     <dialog id="my_modal_2" className="modal" open={!!agendaAula}>
@@ -66,6 +107,7 @@ export default function ModalEditAula({ agendaAula, onClose }: ModalProps) {
                 mask="99:99"
                 maskPlaceholder={null}
                 alwaysShowMask={false}
+                value={aula.horaInicio}
                 onChange={(e) => setAula({ ...aula, horaInicio: e.target.value })}
                 name="horaInicio"
                 type="text"
@@ -81,6 +123,7 @@ export default function ModalEditAula({ agendaAula, onClose }: ModalProps) {
                 mask="99:99"
                 maskPlaceholder={null}
                 alwaysShowMask={false}
+                value={aula.horaFinal}
                 onChange={(e) => setAula({ ...aula, horaFinal: e.target.value })}
                 name="horaFinal"
                 type="text"
@@ -88,8 +131,8 @@ export default function ModalEditAula({ agendaAula, onClose }: ModalProps) {
                 placeholder="Final da Aula"
               />
             </div>
-            <p className="py-4">Local: {aula.local}</p>
-            <p className="py-4">Duração: {aula.duracao}min</p>
+            {aula.modalidade === "PRESENCIAL" && <p className="mt-5">Local: {aula.local}</p>}
+            <p className="my-2">Duração: {duracao} minutos</p>
           </div>
         )}
         <div className="modal-action">

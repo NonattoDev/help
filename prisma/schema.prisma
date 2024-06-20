@@ -11,6 +11,7 @@ model Usuarios {
   id          String   @id @default(cuid())
   nome        String
   email       String   @unique
+  data_nascimento DateTime
   cpf         String   @unique
   cargo       String
   telefone    String
@@ -102,6 +103,7 @@ model Professor {
   id                 String        @id @default(cuid())
   nome               String
   email              String        @unique
+  data_nascimento    DateTime
   cpf                String        @unique
   telefone           String
   endereco           Json
