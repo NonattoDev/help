@@ -4,10 +4,10 @@ import { AgendaAulas as PrismaAgendaAulas } from "@prisma/client";
 import moment from "moment";
 import { MdCancel } from "react-icons/md";
 import { toast } from "react-toastify";
-import { CancelAula } from "../../app/help/admin/match/components/Actions/CancelAula";
+import { CancelAula } from "../../../app/help/admin/match/components/Actions/CancelAula";
 import { useState } from "react";
 import { FaCheckCircle, FaPencilAlt, FaRoute } from "react-icons/fa";
-import Modal from "../Modal/ModalEditAula";
+import Modal from "../../Modal/ModalEditAula";
 
 interface AgendaProps {
   AgendaAulas: AgendaAulas[] | undefined;

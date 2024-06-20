@@ -4,6 +4,7 @@ const createEmptyProfessor = (): Professor => ({
   nome: "",
   email: "",
   cpf: "",
+  data_nascimento: new Date(),
   telefone: "",
   password: "",
   endereco: {

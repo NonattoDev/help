@@ -16,6 +16,7 @@ export interface Professor {
   telefone: string;
   password: string;
   turmas_habilitadas: string[];
+  data_nascimento: Date;
   endereco: {
     rua: string;
     numero: string;

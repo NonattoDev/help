@@ -11,6 +11,7 @@ import { validateCPF } from "@/utils/validateCpf";
 import { Series } from "@/interfaces/series.interface";
 import Pica from "pica";
 import verifyPassword from "@/utils/VerifyPassword";
+import moment from "moment";
 
 interface CreateProfessorProps {
   materias: Materia[];
@@ -249,6 +250,12 @@ export default function CreateProfessor({ materias, series }: CreateProfessorPro
               className="input input-bordered"
               required
             />
+          </div>
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Data de Nascimento</span>
+            </label>
+            <input type="date" name="data_nascimento" value={moment(formData.data_nascimento).format("YYYY-MM-DD")} onChange={handleChange} className="input input-bordered" required />
           </div>
           <div className="form-control">
             <label className="label">

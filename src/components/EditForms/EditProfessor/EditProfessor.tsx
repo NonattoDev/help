@@ -10,6 +10,7 @@ import LoadingButton from "@/components/Buttons/LoadingButton";
 import { Series } from "@/interfaces/series.interface";
 import Pica from "pica";
 import verifyPassword from "@/utils/VerifyPassword";
+import moment from "moment";
 
 interface EditProfessorProps {
   professor: Professor;
@@ -278,6 +279,14 @@ export default function EditProfessor({ professor, materias, accessLevel, series
               required
             />
           </div>
+
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Data de Nascimento</span>
+            </label>
+            <input type="date" name="data_nascimento" value={moment(formData.data_nascimento).format("YYYY-MM-DD")} onChange={handleChange} className="input input-bordered" required />
+          </div>
+
           <div className="form-control">
             <label className="label">
               <span className="label-text">Telefone</span>

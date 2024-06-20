@@ -3,6 +3,7 @@ export interface Administrador {
   nome: string;
   email: string;
   cpf: string;
+  data_nascimento: Date;
   telefone: string;
   cargo: string;
   password: string;

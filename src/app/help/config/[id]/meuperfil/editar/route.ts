@@ -58,6 +58,7 @@ export async function PUT(request: Request, params: any) {
           areaFormacao: userData.areaFormacao,
           ativo: userData.ativo,
           disponibilidade: userData.disponibilidade,
+          data_nascimento: moment(userData.data_nascimento).toDate(),
           ficha: userData.ficha,
           modalidade: userData.modalidade,
           password: userData.password,
@@ -84,6 +85,7 @@ export async function PUT(request: Request, params: any) {
           cargo: userData.cargo,
           telefone: userData.telefone,
           password: userData.password,
+          data_nascimento: moment(userData.data_nascimento).toDate(),
         },
       });
     }

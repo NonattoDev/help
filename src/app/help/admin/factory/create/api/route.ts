@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../../../../../../prisma/prismaInstance";
 import bcrypt from "bcryptjs";
+import moment from "moment";
 
 export async function POST(request: Request, params: any) {
   let { formData: userData, typeEdit, alunoData, responsavelData } = await request.json();
@@ -54,7 +55,7 @@ export async function POST(request: Request, params: any) {
     // Criação do usuário
     if (typeEdit === "professor") {
       await prisma.professor.create({
-        data: userData,
+        data: { ...userData, data_nascimento: moment(userData.data_nascimento).toDate() },
       });
     } else if (typeEdit === "aluno") {
       const responsavel = await prisma.responsavel.create({
@@ -64,7 +65,7 @@ export async function POST(request: Request, params: any) {
       alunoData.responsavelId = responsavel.id;
 
       await prisma.aluno.create({
-        data: alunoData,
+        data: { ...alunoData, data_nascimento: moment(alunoData.data_nascimento).toDate() },
       });
     }
 

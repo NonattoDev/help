@@ -232,6 +232,12 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
             </div>
             <div className="form-control">
               <label className="label">
+                <span className="label-text">Data de Nascimento</span>
+              </label>
+              <input type="date" name="data_nascimento" value={moment(alunoData.data_nascimento).format("YYYY-MM-DD")} onChange={handleChange} className="input input-bordered" required />
+            </div>
+            <div className="form-control">
+              <label className="label">
                 <span className="label-text">Telefone</span>
               </label>
               <ReactInputMask

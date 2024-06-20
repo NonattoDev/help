@@ -8,6 +8,7 @@ import MyProfileButton from "@/components/Buttons/MyProfileButton";
 import prisma from "../../../prisma/prismaInstance";
 import { Professor } from "@prisma/client";
 import { Suspense } from "react";
+import AgendaDropdown from "../Agenda/Agenda";
 
 function LoadingFallback() {
   return <div className="p-4 skeleton"></div>;
@@ -66,6 +67,7 @@ const Header = async () => {
             <ManutencaoButton professores={professores} alunos={alunos} />
           </Suspense>
         )}
+        {(session?.user.accessLevel === "administrador" || session?.user.accessLevel === "administrativo") && <AgendaDropdown />}
       </div>
 
       {/* Fim Header */}

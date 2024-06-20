@@ -5,9 +5,15 @@ import React from "react";
 import { Administrador } from "@/interfaces/admin.interface";
 import ReactInputMask from "react-input-mask";
 import { validateCPF } from "@/utils/validateCpf";
+import verifyPassword from "@/utils/VerifyPassword";
+import moment from "moment";
 
 export default function EditAdmin({ userData }: { userData: Administrador }) {
   const [formData, setFormData] = React.useState<Administrador>(userData);
+
+  // Logica de confirmacao de senha
+  const [confirmPassword, setConfirmPassword] = React.useState<string>("");
+  const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -15,6 +21,10 @@ export default function EditAdmin({ userData }: { userData: Administrador }) {
       ...prev,
       [name]: value,
     }));
+
+    if (name === "password" && formData.password !== userData.password) {
+      setShowConfirmPassword(true);
+    }
   };
 
   const submitEdit = async (e: React.FormEvent) => {
@@ -23,11 +33,18 @@ export default function EditAdmin({ userData }: { userData: Administrador }) {
 
     if (!validateCPF(formData.cpf)) errorCount++;
 
+    if (formData.password !== userData.password && formData.password !== confirmPassword) {
+      toast.error("Senhas não coincidem");
+      errorCount = errorCount + 1;
+    } else {
+      if (!verifyPassword(formData.password)) errorCount++;
+    }
+
     if (errorCount > 0) return;
     try {
       const response = await axios.put(`/help/config/${formData.id}/meuperfil/editar`, {
         formData,
-        senhaAntiga: formData.password,
+        senhaAntiga: userData.password,
         typeEdit: "admin",
       });
       if (response.status === 200) {
@@ -75,6 +92,12 @@ export default function EditAdmin({ userData }: { userData: Administrador }) {
           </div>
           <div className="form-control">
             <label className="label">
+              <span className="label-text">Data de Nascimento</span>
+            </label>
+            <input type="date" name="data_nascimento" value={moment(formData.data_nascimento).format("YYYY-MM-DD")} onChange={handleChange} className="input input-bordered" required />
+          </div>
+          <div className="form-control">
+            <label className="label">
               <span className="label-text">Telefone</span>
             </label>
             <ReactInputMask
@@ -95,6 +118,20 @@ export default function EditAdmin({ userData }: { userData: Administrador }) {
             </label>
             <input disabled={formData.cargo !== "CEO"} type="text" name="cargo" value={formData.cargo} onChange={handleChange} className="input input-bordered" required />
           </div>
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Senha</span>
+            </label>
+            <input type="password" name="password" value={formData.password} onChange={handleChange} className="input input-bordered" required />
+          </div>
+          {showConfirmPassword && (
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Confirmar Senha</span>
+              </label>
+              <input type="password" name="confirmPassword" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className="input input-bordered" required />
+            </div>
+          )}
         </div>
 
         <button type="submit" className="btn btn-primary mt-5 w-full">

@@ -9,7 +9,7 @@ import moment from "moment";
 import "moment/locale/pt-br";
 import { BiLeftArrow, BiRightArrowCircle } from "react-icons/bi";
 import ReactInputMask from "react-input-mask";
-import AgendaCard from "@/components/AgendaCard/AgendaCard";
+import AgendaCard from "@/components/Agenda/AgendaCard/AgendaCard";
 
 moment.locale("pt-br");
 
