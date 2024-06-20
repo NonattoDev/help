@@ -2,6 +2,8 @@
 import { NextResponse } from "next/server";
 import prisma from "../../../../prisma/prismaInstance";
 import moment from "moment";
+import nodemailer from "nodemailer";
+import { transporter } from "@/utils/Nodemailer";
 
 // Esse cron rodará todos os dias as 00:00
 export async function GET() {
@@ -53,22 +55,67 @@ export async function GET() {
     },
   });
 
-  const aniversariantes = {
-    professores,
-    alunos,
-    usuarios,
-  };
+  const nodeMailer = require("nodemailer");
 
-  console.log("Aniversariantes encontrados", aniversariantes);
+  // Fazer para Alunos
+  for (const aluno of alunos) {
+    const mailOptions = {
+      from: "devhelpreforcoescolar@gmail.com",
+      to: "enzogoncalves@gmail.com",
+      subject: "Feliz Aniversário",
+      text: `Olá ${aluno.nome}`,
+      html: `<h1>Olá ${aluno.nome}</h1>`,
+    };
 
-  // http://localhost:3000/api/aniversariantes
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email enviado: " + info.response);
+      }
+    });
+  }
 
-  // Aqui você pode adicionar a lógica para enviar as felicitações
+  // Fazer para Professores
+  for (const prof of professores) {
+    const mailOptions = {
+      from: "devhelpreforcoescolar@gmail.com",
+      to: "enzogoncalves@gmail.com",
+      subject: "Feliz Aniversário",
+      text: `Olá ${prof.nome}`,
+      html: `<h1>Olá ${prof.nome}</h1>`,
+    };
 
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email enviado: " + info.response);
+      }
+    });
+  }
+
+  // Fazer para Usuarios
+  for (const user of usuarios) {
+    const mailOptions = {
+      from: "devhelpreforcoescolar@gmail.com",
+      to: "enzogoncalves@gmail.com",
+      subject: "Feliz Aniversário",
+      text: `Olá ${user.nome}`,
+      html: `<h1>Olá ${user.nome}</h1>`,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email enviado: " + info.response);
+      }
+    });
+  }
+  return NextResponse.json({ message: "Aniversariantes encontrados" });
   // instalar a dependencia do Nodemailer
   // Configurar o nodemailer para enviar os e-mails
   // Enviar os e-mails para os aniversariantes
   // Não enviar o final, ir me avisando a cada passo.
-
-  return NextResponse.json({ message: "Aniversariantes encontrados", aniversariantes });
 }
