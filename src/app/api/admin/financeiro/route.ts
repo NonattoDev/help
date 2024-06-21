@@ -6,6 +6,7 @@ import moment from "moment";
 // Esta rota será acessada toda sexta-feira
 export async function GET() {
   try {
+    return NextResponse.json({ message: "Rota de transações financeiras." });
     // Ao entrar na sexta feira ele vai buscar na agendaAulas todas as aulas que foram feitas naquela semana
     const agendaAulas = await prisma.agendaAulas.findMany({
       where: {
