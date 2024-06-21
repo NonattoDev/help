@@ -18,6 +18,7 @@ export default function AgendaProfessores({ professores }: SelectProfessoresAgen
   const [showDate, setShowDate] = useState(false);
   const [allPeriodo, setAllPeriodo] = useState(false);
   const [mesAnoFiltro, setMesAnoFiltro] = useState(false);
+  const [onlyWeek, setOnlyWeek] = useState(false);
 
   const HandleSelectChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
     setProfessor(event.target.value);
@@ -34,8 +35,13 @@ export default function AgendaProfessores({ professores }: SelectProfessoresAgen
       toast.error("Selecione uma data");
       return;
     }
+
+    if (onlyWeek) {
+      setAllPeriodo(false);
+      setMesAnoFiltro(false);
+    }
     // Buscar a agenda do professor
-    const agendasProfessor = await GetProfessorAgenda(professor, allPeriodo, mesAnoFiltro, mesAnoFiltro ? moment(date).format("YYYY-MM") : date);
+    const agendasProfessor = await GetProfessorAgenda(professor, allPeriodo, mesAnoFiltro, onlyWeek, mesAnoFiltro ? moment(date).format("YYYY-MM") : date);
 
     if (!agendasProfessor) {
       toast.error("Erro interno de servidor");
@@ -59,17 +65,32 @@ export default function AgendaProfessores({ professores }: SelectProfessoresAgen
         <div className="my-5">
           <div className="flex flex-col">
             <span className="text-1xl font-semibold mb-2 text-center">Selecione uma data</span>
-            <input disabled={allPeriodo} type="date" value={date} onChange={handleDateChange} className="input input-bordered" />
+            <input disabled={allPeriodo || onlyWeek} type="date" value={date} onChange={handleDateChange} className="input input-bordered" />
           </div>
 
           <div className="flex my-6 gap-2 items-center">
             <span className="text-md">Considerar apenas mês e ano</span>
-            <input className="checkbox" type="checkbox" name="mesAno" checked={mesAnoFiltro} onChange={() => setMesAnoFiltro(!mesAnoFiltro)} />
+            <input disabled={onlyWeek} className="checkbox" type="checkbox" name="mesAno" checked={mesAnoFiltro} onChange={() => setMesAnoFiltro(!mesAnoFiltro)} />
+          </div>
+
+          <div className="flex my-6 gap-2 items-center">
+            <span className="text-md">Trazer agenda semanal</span>
+            <input
+              className="checkbox"
+              type="checkbox"
+              name="onlyWeek"
+              checked={onlyWeek}
+              onChange={() => {
+                setOnlyWeek(!onlyWeek);
+                setAllPeriodo(false);
+                setMesAnoFiltro(false);
+              }}
+            />
           </div>
 
           <div className="flex my-6 gap-2 items-center">
             <span className="text-md">Trazer todos os períodos</span>
-            <input className="checkbox" type="checkbox" name="allPeriodo" checked={allPeriodo} onChange={() => setAllPeriodo(!allPeriodo)} />
+            <input disabled={onlyWeek} className="checkbox" type="checkbox" name="allPeriodo" checked={allPeriodo} onChange={() => setAllPeriodo(!allPeriodo)} />
           </div>
 
           <div className="flex justify-center">
