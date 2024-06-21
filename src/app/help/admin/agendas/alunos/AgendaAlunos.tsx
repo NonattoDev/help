@@ -19,7 +19,7 @@ export default function AgendaAlunos({ alunos }: SelectAlunosAgendaProps) {
   const [showDate, setShowDate] = useState(false);
   const [allPeriodo, setAllPeriodo] = useState(false);
   const [mesAnoFiltro, setMesAnoFiltro] = useState(false);
-  const [onlyWeek, setOnlyWeek] = useState(false);
+  const [onlyWeek, setOnlyWeek] = useState(true);
 
   const HandleSelectChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
     setAluno(event.target.value);
@@ -62,16 +62,11 @@ export default function AgendaAlunos({ alunos }: SelectAlunosAgendaProps) {
   return (
     <>
       <div className="flex flex-col justify-center items-center">
-        <h1 className="text-2xl font-semibold mb-6">Agenda dos professores</h1>
+        <h1 className="text-2xl font-semibold mb-6">Agenda dos alunos</h1>
         <SelectAlunosAgenda alunos={alunos} HandleSelectChange={HandleSelectChange} />
         {showDate && (
           <div className="my-5">
-            <div className="flex flex-col">
-              <span className="text-1xl font-semibold mb-2 text-center">Selecione uma data</span>
-              <input disabled={allPeriodo || onlyWeek} type="date" value={date} onChange={handleDateChange} className="input input-bordered" />
-            </div>
-
-            <div className="flex my-6 gap-2 items-center">
+            <div className="flex gap-2 justify-center items-center mb-2 w-full">
               <span className="text-md">Trazer agenda semanal</span>
               <input
                 className="checkbox"
@@ -86,15 +81,24 @@ export default function AgendaAlunos({ alunos }: SelectAlunosAgendaProps) {
               />
             </div>
 
-            <div className="flex my-6 gap-2 items-center">
-              <span className="text-md">Considerar apenas mês e ano</span>
-              <input disabled={onlyWeek} className="checkbox" type="checkbox" name="mesAno" checked={mesAnoFiltro} onChange={() => setMesAnoFiltro(!mesAnoFiltro)} />
-            </div>
+            {!onlyWeek && (
+              <div className="mt-4 ">
+                <div className="flex flex-col justify-center w-full">
+                  <span className="text-1xl font-semibold mb-2 text-center">Selecione uma data</span>
+                  <input disabled={allPeriodo || onlyWeek} type="date" value={date} onChange={handleDateChange} className="input input-bordered" />
+                </div>
 
-            <div className="flex my-6 gap-2 items-center">
-              <span className="text-md">Trazer todos os períodos</span>
-              <input disabled={onlyWeek} className="checkbox" type="checkbox" name="allPeriodo" checked={allPeriodo} onChange={() => setAllPeriodo(!allPeriodo)} />
-            </div>
+                <div className="flex my-6 gap-2 items-center">
+                  <span className="text-md">Considerar apenas mês e ano</span>
+                  <input disabled={onlyWeek} className="checkbox" type="checkbox" name="mesAno" checked={mesAnoFiltro} onChange={() => setMesAnoFiltro(!mesAnoFiltro)} />
+                </div>
+
+                <div className="flex my-6 gap-2 items-center">
+                  <span className="text-md">Trazer todos os períodos</span>
+                  <input disabled={onlyWeek} className="checkbox" type="checkbox" name="allPeriodo" checked={allPeriodo} onChange={() => setAllPeriodo(!allPeriodo)} />
+                </div>
+              </div>
+            )}
 
             <div className="flex justify-center">
               <button className="btn btn-primary" onClick={handleBuscar}>
