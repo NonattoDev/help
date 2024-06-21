@@ -108,8 +108,6 @@ export default function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
     if (response && response.error) return toast.error(response.error);
     toast.success(response.success);
 
-    console.log(response.data);
-    return;
     setAgendaAulas([...agendaAulas, response.data]);
     setStep(Step.SELECTDATE);
     setModalidade("");
@@ -129,7 +127,7 @@ export default function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
   };
 
   // Verificar quantas aulas o aluno já tem marcadas ESSE mes
-  const qtdAulasMarcadas = aluno.AgendaAulas.filter((agenda) => moment(agenda.data).format("MM-YYYY") === moment(date).format("MM-YYYY")).length;
+  const qtdAulasMarcadas = agendaAulas.filter((agenda) => moment(agenda.data).format("MM-YYYY") === moment(date).format("MM-YYYY")).length;
 
   return (
     <div>
