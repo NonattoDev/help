@@ -2,7 +2,7 @@ import prisma from "../../../../../../prisma/prismaInstance";
 import { Suspense } from "react";
 import AgendaAlunos from "./AgendaAlunos";
 
-export async function getAllAlunos() {
+async function getAllAlunos() {
   const alunosNome = await prisma.aluno.findMany({
     where: {
       ativo: true,
