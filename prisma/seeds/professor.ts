@@ -1,5 +1,4 @@
 import { PrismaClient } from "@prisma/client";
-import moment from "moment";
 
 export async function createProfessor(prisma: PrismaClient) {
   const series = await prisma.series.findMany();
