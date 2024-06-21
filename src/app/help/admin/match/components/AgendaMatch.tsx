@@ -111,6 +111,9 @@ export default function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
     toast.success(response.success);
 
     setStep(Step.SELECTDATE);
+    setModalidade("");
+    setHoraInicio("");
+    setHoraFinal("");
   };
 
   const handleVoltar = () => {
@@ -119,6 +122,7 @@ export default function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
     } else if (step === Step.SELECTMODALIDADE) {
       setStep(Step.SELECTDATE);
     } else if (step === Step.SELECTHORARIODISPONIVEL) {
+      setModalidade("");
       setStep(Step.SELECTMODALIDADE);
     }
   };

@@ -2,7 +2,6 @@
 import { useState } from "react";
 import SelectProfessoresAgenda from "./components/SelectProfessoresAgenda";
 import { AgendaAulas, Professor } from "@prisma/client";
-import moment from "moment";
 import { GetProfessorAgenda } from "./actions/GetProfessorAgenda";
 import { FaSearch } from "react-icons/fa";
 import { toast } from "react-toastify";
@@ -13,17 +12,16 @@ interface SelectProfessoresAgendaProps {
 }
 
 export default function AgendaProfessores({ professores }: SelectProfessoresAgendaProps) {
-  const [professor, setProfessor] = useState("");
-  const [professorAgenda, setProfessorAgenda] = useState<AgendaAulas[] | undefined>();
+  const [professor, setProfessor] = useState<string>("");
+  const [professorAgenda, setProfessorAgenda] = useState<AgendaAulas[]>([]);
   const [date, setDate] = useState<string>("");
-  const [showDate, setShowDate] = useState(false);
-  const [allPeriodo, setAllPeriodo] = useState(false);
-  const [mesAnoFiltro, setMesAnoFiltro] = useState(false);
-  const [onlyWeek, setOnlyWeek] = useState(true);
+  const [showDate, setShowDate] = useState<boolean>(false);
+  const [allPeriodo, setAllPeriodo] = useState<boolean>(false);
+  const [mesAnoFiltro, setMesAnoFiltro] = useState<boolean>(false);
+  const [onlyWeek, setOnlyWeek] = useState<boolean>(true);
 
   const HandleSelectChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
     setProfessor(event.target.value);
-
     setShowDate(true);
   };
 
@@ -42,7 +40,6 @@ export default function AgendaProfessores({ professores }: SelectProfessoresAgen
       setMesAnoFiltro(false);
     }
 
-    // Buscar a agenda do professor
     const agendasProfessor = await GetProfessorAgenda(professor, allPeriodo, mesAnoFiltro, onlyWeek, date);
 
     if (!agendasProfessor) {
@@ -52,9 +49,7 @@ export default function AgendaProfessores({ professores }: SelectProfessoresAgen
 
     if (agendasProfessor.error) {
       toast.error(agendasProfessor.error);
-    }
-
-    if (agendasProfessor.success) {
+    } else {
       setProfessorAgenda(agendasProfessor.data as unknown as AgendaAulas[]);
     }
   };
@@ -109,7 +104,7 @@ export default function AgendaProfessores({ professores }: SelectProfessoresAgen
         )}
       </div>
 
-      {(professorAgenda?.length as any) > 0 && (
+      {professorAgenda && professorAgenda.length > 0 && (
         <div className="card card-bordered shadow-md p-6">
           <div className="text-center font-bold text-3xl mb-4">Agenda</div>
           <AgendaCard AgendaAulas={professorAgenda as any[]} calledBy="AgendaProfessores" />

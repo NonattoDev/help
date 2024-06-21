@@ -24,7 +24,7 @@ CREATE TABLE "AgendaAulas" (
     "id" TEXT NOT NULL,
     "alunoId" TEXT NOT NULL,
     "professorId" TEXT NOT NULL,
-    "data" TEXT NOT NULL,
+    "data" TIMESTAMP(3) NOT NULL,
     "horaInicio" TEXT NOT NULL,
     "horaFinal" TEXT NOT NULL,
     "local" TEXT NOT NULL,

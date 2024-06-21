@@ -42,7 +42,7 @@ export default function AgendaAlunos({ alunos }: SelectAlunosAgendaProps) {
     }
 
     // Buscar a agenda do aluno
-    const agendasAluno = await GetAlunosAgenda(aluno, allPeriodo, mesAnoFiltro, onlyWeek, date);
+    const agendasAluno = await GetAlunosAgenda(aluno, mesAnoFiltro, onlyWeek, date);
 
     if (!agendasAluno) {
       toast.error("Erro interno de servidor");

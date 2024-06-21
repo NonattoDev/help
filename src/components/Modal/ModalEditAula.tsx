@@ -17,7 +17,7 @@ export default function ModalEditAula({ agendaAula, onClose, handleUpdatedAula }
   const handleDataChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAula({
       ...aula!,
-      data: event.target.value,
+      data: moment(event.target.value).toDate(),
     });
   };
 
@@ -81,7 +81,7 @@ export default function ModalEditAula({ agendaAula, onClose, handleUpdatedAula }
                 <span className="text-1xl font-bold">Data</span>
               </label>
               <div>
-                <input type="date" name="data" className="input input-bordered input-sm" value={aula.data} onChange={handleDataChange} />
+                <input type="date" name="data" className="input input-bordered input-sm" value={moment(aula.data).format("YYYY-MM-DD")} onChange={handleDataChange} />
               </div>
             </div>
 

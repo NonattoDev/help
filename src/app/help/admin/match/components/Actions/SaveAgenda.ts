@@ -1,13 +1,14 @@
 "use server";
 import { AgendaAulas } from "@prisma/client";
 import prisma from "../../../../../../../prisma/prismaInstance";
+import moment from "moment";
 
 export const saveAgenda = async (agenda: AgendaAulas) => {
   try {
     // Verifica se já existe uma agenda para o professor e aluno com essa data e no intervalo entre horaInicio e horaFinal
     const agendaExistsForProfessorAndAluno = await prisma.agendaAulas.findFirst({
       where: {
-        data: agenda.data,
+        data: moment(agenda.data).toDate(),
         professorId: agenda.professorId,
         alunoId: agenda.alunoId,
         OR: [
@@ -32,7 +33,7 @@ export const saveAgenda = async (agenda: AgendaAulas) => {
     // Verifica se já existe uma agenda para o aluno com essa data e no intervalo entre horaInicio e horaFinal
     const agendaExistsForAluno = await prisma.agendaAulas.findFirst({
       where: {
-        data: agenda.data,
+        data: moment(agenda.data).toDate(),
         alunoId: agenda.alunoId,
         OR: [
           {
@@ -54,7 +55,10 @@ export const saveAgenda = async (agenda: AgendaAulas) => {
     }
 
     const insertAgenda = await prisma.agendaAulas.create({
-      data: agenda,
+      data: {
+        ...agenda,
+        data: moment(agenda.data).toDate(),
+      },
       include: {
         aluno: {
           select: {

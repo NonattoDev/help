@@ -11,115 +11,67 @@ export const GetProfessorAgenda = async (professorId: string, allPeriodo: boolea
       const startDate = moment().startOf("week").toDate();
       const endDate = moment().endOf("week").toDate();
 
-      if (professorId === "all") {
-        agendas = await prisma.agendaAulas.findMany({
-          where: {
-            createdAt: {
-              gte: startDate,
-              lte: endDate,
+      agendas = await prisma.agendaAulas.findMany({
+        where: {
+          professorId: professorId !== "all" ? professorId : undefined,
+          data: {
+            gte: startDate,
+            lte: endDate,
+          },
+        },
+        include: {
+          professor: {
+            select: {
+              nome: true,
+              endereco: true,
             },
           },
-          include: {
-            professor: {
-              select: {
-                nome: true,
-                endereco: true,
-              },
-            },
-            aluno: {
-              select: {
-                nome: true,
-                endereco: true,
-              },
+          aluno: {
+            select: {
+              nome: true,
+              endereco: true,
             },
           },
-        });
+        },
+        orderBy: {
+          data: "asc", // Ordenar por data em ordem ascendente
+        },
+      });
 
-        return {
-          success: true,
-          data: agendas,
-        };
-      } else {
-        agendas = await prisma.agendaAulas.findMany({
-          where: {
-            professorId: professorId,
-            createdAt: {
-              gte: startDate,
-              lte: endDate,
-            },
-          },
-          include: {
-            professor: {
-              select: {
-                nome: true,
-                endereco: true,
-              },
-            },
-            aluno: {
-              select: {
-                nome: true,
-                endereco: true,
-              },
-            },
-          },
-        });
-
-        return {
-          success: true,
-          data: agendas,
-        };
-      }
+      return {
+        success: true,
+        data: agendas,
+      };
     }
 
     if (allPeriodo) {
-      if (professorId === "all") {
-        agendas = await prisma.agendaAulas.findMany({
-          include: {
-            professor: {
-              select: {
-                nome: true,
-                endereco: true,
-              },
-            },
-            aluno: {
-              select: {
-                nome: true,
-                endereco: true,
-              },
+      agendas = await prisma.agendaAulas.findMany({
+        where: {
+          professorId: professorId !== "all" ? professorId : undefined,
+        },
+        include: {
+          professor: {
+            select: {
+              nome: true,
+              endereco: true,
             },
           },
-        });
+          aluno: {
+            select: {
+              nome: true,
+              endereco: true,
+            },
+          },
+        },
+        orderBy: {
+          data: "asc", // Ordenar por data em ordem ascendente
+        },
+      });
 
-        return {
-          success: true,
-          data: agendas,
-        };
-      } else {
-        agendas = await prisma.agendaAulas.findMany({
-          where: {
-            professorId: professorId,
-          },
-          include: {
-            professor: {
-              select: {
-                nome: true,
-                endereco: true,
-              },
-            },
-            aluno: {
-              select: {
-                nome: true,
-                endereco: true,
-              },
-            },
-          },
-        });
-
-        return {
-          success: true,
-          data: agendas,
-        };
-      }
+      return {
+        success: true,
+        data: agendas,
+      };
     }
 
     if (date) {
@@ -131,67 +83,38 @@ export const GetProfessorAgenda = async (professorId: string, allPeriodo: boolea
         .endOf(mesAnoFiltro ? "month" : "day")
         .toDate();
 
-      if (professorId === "all") {
-        agendas = await prisma.agendaAulas.findMany({
-          where: {
-            createdAt: {
-              gte: startDate,
-              lte: endDate,
+      agendas = await prisma.agendaAulas.findMany({
+        where: {
+          professorId: professorId !== "all" ? professorId : undefined,
+          data: {
+            gte: startDate,
+            lte: endDate,
+          },
+        },
+        include: {
+          professor: {
+            select: {
+              nome: true,
+              endereco: true,
             },
           },
-          include: {
-            professor: {
-              select: {
-                nome: true,
-                endereco: true,
-              },
-            },
-            aluno: {
-              select: {
-                nome: true,
-                endereco: true,
-              },
+          aluno: {
+            select: {
+              nome: true,
+              endereco: true,
             },
           },
-        });
+        },
+        orderBy: {
+          data: "asc", // Ordenar por data em ordem ascendente
+        },
+      });
 
-        return {
-          success: true,
-          data: agendas,
-        };
-      } else {
-        agendas = await prisma.agendaAulas.findMany({
-          where: {
-            professorId: professorId,
-            createdAt: {
-              gte: startDate,
-              lte: endDate,
-            },
-          },
-          include: {
-            professor: {
-              select: {
-                nome: true,
-                endereco: true,
-              },
-            },
-            aluno: {
-              select: {
-                nome: true,
-                endereco: true,
-              },
-            },
-          },
-        });
-
-        return {
-          success: true,
-          data: agendas,
-        };
-      }
+      return {
+        success: true,
+        data: agendas,
+      };
     }
-
-    console.log(agendas);
 
     return {
       error: "Nenhuma agenda encontrada para os critérios fornecidos",

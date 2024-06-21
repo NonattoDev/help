@@ -1,8 +1,58 @@
 "use server";
 import { AgendaAulas } from "@prisma/client";
 import prisma from "../../../../../../../prisma/prismaInstance";
+import moment from "moment";
 
 export const updateAula = async (agenda: AgendaAulas) => {
+  // Obter a aula original do banco de dados
+  const originalAula = await prisma.agendaAulas.findUnique({
+    where: { id: agenda.id },
+  });
+
+  if (!originalAula) {
+    return {
+      error: "Aula não encontrada",
+    };
+  }
+
+  const originalData = moment(originalAula.data);
+  const newData = moment(agenda.data);
+
+  // Se a data original e a nova data estiverem no mesmo mês, não verifique o limite de aulas
+  if (!originalData.isSame(newData, "month")) {
+    // Obter o início e o fim do mês da nova data da aula
+    const startOfMonth = newData.startOf("month").toDate();
+    const endOfMonth = newData.endOf("month").toDate();
+
+    // Verificar quantas aulas o aluno já tem no mês da nova data da aula
+    const qtdAulasMes = await prisma.agendaAulas.count({
+      where: {
+        alunoId: agenda.alunoId,
+        data: {
+          gte: startOfMonth,
+          lte: endOfMonth,
+        },
+      },
+    });
+
+    // Verificar o percentual de aulas do aluno
+    const pctAulasAluno = await prisma.aluno.findFirst({
+      where: {
+        id: agenda.alunoId,
+      },
+      select: {
+        financeiro: true,
+      },
+    });
+
+    // Verificar se o aluno atingiu o limite de aulas no mês
+    if (pctAulasAluno && (pctAulasAluno.financeiro as any).qtd_aulas <= qtdAulasMes) {
+      return {
+        error: "O aluno já atingiu o limite de aulas no mês",
+      };
+    }
+  }
+
   try {
     // Verifica se já existe uma agenda para o professor e aluno com essa data e no intervalo entre horaInicio e horaFinal, ignorando a própria aula
     const agendaExistsForProfessorAndAluno = await prisma.agendaAulas.findFirst({
@@ -71,7 +121,7 @@ export const updateAula = async (agenda: AgendaAulas) => {
         finalizada: agenda.finalizada,
         cancelada: agenda.cancelada,
         createdAt: agenda.createdAt,
-        updatedAt: new Date(), // Atualiza o campo updatedAt para o momento atual
+        updatedAt: new Date(),
       },
       include: {
         aluno: {

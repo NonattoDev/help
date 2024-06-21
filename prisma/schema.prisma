@@ -28,7 +28,7 @@ model AgendaAulas {
   aluno       Aluno      @relation(fields: [alunoId], references: [id])
   professorId String
   professor   Professor  @relation(fields: [professorId], references: [id])
-  data        String
+  data        DateTime
   horaInicio  String
   horaFinal     String
   local       String
