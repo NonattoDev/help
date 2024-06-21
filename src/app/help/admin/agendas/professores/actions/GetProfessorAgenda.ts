@@ -19,6 +19,20 @@ export const GetProfessorAgenda = async (professorId: string, allPeriodo: boolea
               lte: endDate,
             },
           },
+          include: {
+            professor: {
+              select: {
+                nome: true,
+                endereco: true,
+              },
+            },
+            aluno: {
+              select: {
+                nome: true,
+                endereco: true,
+              },
+            },
+          },
         });
       } else {
         agendas = await prisma.agendaAulas.findMany({
@@ -27,6 +41,20 @@ export const GetProfessorAgenda = async (professorId: string, allPeriodo: boolea
             createdAt: {
               gte: startDate,
               lte: endDate,
+            },
+          },
+          include: {
+            professor: {
+              select: {
+                nome: true,
+                endereco: true,
+              },
+            },
+            aluno: {
+              select: {
+                nome: true,
+                endereco: true,
+              },
             },
           },
         });
@@ -40,6 +68,20 @@ export const GetProfessorAgenda = async (professorId: string, allPeriodo: boolea
         agendas = await prisma.agendaAulas.findMany({
           where: {
             professorId: professorId,
+          },
+          include: {
+            professor: {
+              select: {
+                nome: true,
+                endereco: true,
+              },
+            },
+            aluno: {
+              select: {
+                nome: true,
+                endereco: true,
+              },
+            },
           },
         });
       }
@@ -61,6 +103,20 @@ export const GetProfessorAgenda = async (professorId: string, allPeriodo: boolea
                 lte: endDate,
               },
             },
+            include: {
+              professor: {
+                select: {
+                  nome: true,
+                  endereco: true,
+                },
+              },
+              aluno: {
+                select: {
+                  nome: true,
+                  endereco: true,
+                },
+              },
+            },
           });
         } else {
           agendas = await prisma.agendaAulas.findMany({
@@ -69,6 +125,20 @@ export const GetProfessorAgenda = async (professorId: string, allPeriodo: boolea
               createdAt: {
                 gte: startDate,
                 lte: endDate,
+              },
+            },
+            include: {
+              professor: {
+                select: {
+                  nome: true,
+                  endereco: true,
+                },
+              },
+              aluno: {
+                select: {
+                  nome: true,
+                  endereco: true,
+                },
               },
             },
           });

@@ -30,15 +30,6 @@ interface Disponibilidade {
   noite: boolean;
 }
 
-interface ProfessorDisponibilidade {
-  segunda: Disponibilidade;
-  terca: Disponibilidade;
-  quarta: Disponibilidade;
-  quinta: Disponibilidade;
-  sexta: Disponibilidade;
-  sabado: Disponibilidade;
-}
-
 export default function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
   const [step, setStep] = useState<Step>(Step.SELECTDATE);
   const [date, setDate] = useState<string>("");
