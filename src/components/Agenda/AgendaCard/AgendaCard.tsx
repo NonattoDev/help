@@ -8,6 +8,7 @@ import { CancelAula } from "../../../app/help/admin/match/components/Actions/Can
 import { useState } from "react";
 import { FaCheckCircle, FaPencilAlt, FaRoute } from "react-icons/fa";
 import Modal from "../../Modal/ModalEditAula";
+import { FinalizarAula } from "@/app/help/admin/match/components/Actions/FinalizarAula";
 
 interface AgendaProps {
   AgendaAulas: AgendaAulas[] | undefined;
@@ -56,6 +57,23 @@ export default function AgendaCard({ AgendaAulas }: AgendaProps) {
     setAgendaAulas([...agendaAulas!]);
   };
 
+  const handleFinalizarAula = async (aulaId: string) => {
+    const finalizarAula = await FinalizarAula(aulaId);
+
+    if (!finalizarAula) return toast.error("Erro ao finalizar a aula");
+
+    if (finalizarAula.success) {
+      toast.success(finalizarAula.success);
+    }
+
+    const findIndex = agendaAulas?.findIndex((agenda) => agenda.id === aulaId);
+
+    if (findIndex !== undefined) {
+      agendaAulas![findIndex].finalizada = true;
+      setAgendaAulas([...agendaAulas!]);
+    }
+  };
+
   return (
     <>
       <div className="grid grid-cols-5 gap-4">
@@ -86,7 +104,18 @@ export default function AgendaCard({ AgendaAulas }: AgendaProps) {
                 )}
               </div>
               <div>
-                {agenda.cancelada ? <div className="stat-desc text-error text-center mt-5">Aula cancelada</div> : <div className="stat-desc text-success text-center mt-5">Aula confirmada</div>}
+                {agenda.cancelada ? (
+                  <div className="stat-desc text-error text-center mt-5">Aula cancelada</div>
+                ) : (
+                  <div className="flex flex-col gap-2">
+                    {!agenda.finalizada && <div className="stat-desc text-success text-center mt-5">Aula confirmada</div>}
+                    {aulaDateTime.isBefore(moment()) && !agenda.finalizada && (
+                      <button className="btn btn-success text-white" onClick={() => handleFinalizarAula(agenda.id)}>
+                        Marcar como finalizada
+                      </button>
+                    )}
+                  </div>
+                )}
                 {agenda.finalizada && <div className="stat-desc text-success text-center my-2">Aula concluída</div>}
               </div>
               {aulaDateTime.isAfter(moment()) && !agenda.cancelada && (

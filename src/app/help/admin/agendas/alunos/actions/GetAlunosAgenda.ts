@@ -3,7 +3,7 @@ import { AgendaAulas } from "@prisma/client";
 import prisma from "../../../../../../../prisma/prismaInstance";
 import moment from "moment";
 
-export const GetProfessorAgenda = async (professorId: string, allPeriodo: boolean, mesAnoFiltro: boolean, onlyWeek: boolean, date?: string) => {
+export const GetAlunosAgenda = async (alunoId: string, allPeriodo: boolean, mesAnoFiltro: boolean, onlyWeek: boolean, date?: string) => {
   let agendas: AgendaAulas[] = [];
 
   try {
@@ -11,7 +11,7 @@ export const GetProfessorAgenda = async (professorId: string, allPeriodo: boolea
       const startDate = moment().startOf("week").toDate();
       const endDate = moment().endOf("week").toDate();
 
-      if (professorId === "all") {
+      if (alunoId === "all") {
         agendas = await prisma.agendaAulas.findMany({
           where: {
             createdAt: {
@@ -42,7 +42,7 @@ export const GetProfessorAgenda = async (professorId: string, allPeriodo: boolea
       } else {
         agendas = await prisma.agendaAulas.findMany({
           where: {
-            professorId: professorId,
+            alunoId: alunoId,
             createdAt: {
               gte: startDate,
               lte: endDate,
@@ -72,7 +72,7 @@ export const GetProfessorAgenda = async (professorId: string, allPeriodo: boolea
     }
 
     if (allPeriodo) {
-      if (professorId === "all") {
+      if (alunoId === "all") {
         agendas = await prisma.agendaAulas.findMany({
           include: {
             professor: {
@@ -97,7 +97,7 @@ export const GetProfessorAgenda = async (professorId: string, allPeriodo: boolea
       } else {
         agendas = await prisma.agendaAulas.findMany({
           where: {
-            professorId: professorId,
+            alunoId: alunoId,
           },
           include: {
             professor: {
@@ -131,7 +131,7 @@ export const GetProfessorAgenda = async (professorId: string, allPeriodo: boolea
         .endOf(mesAnoFiltro ? "month" : "day")
         .toDate();
 
-      if (professorId === "all") {
+      if (alunoId === "all") {
         agendas = await prisma.agendaAulas.findMany({
           where: {
             createdAt: {
@@ -162,7 +162,7 @@ export const GetProfessorAgenda = async (professorId: string, allPeriodo: boolea
       } else {
         agendas = await prisma.agendaAulas.findMany({
           where: {
-            professorId: professorId,
+            alunoId: alunoId,
             createdAt: {
               gte: startDate,
               lte: endDate,

@@ -18,8 +18,10 @@ export async function getAllProfessores() {
 export default async function ProfessoresAgendas() {
   const professores = await getAllProfessores();
 
+  const fallBackLoading = <div className="flex flex-col justify-center items-center skeleton w-full h-32"></div>;
+
   return (
-    <Suspense fallback={<>Loading...</>}>
+    <Suspense fallback={fallBackLoading}>
       <AgendaProfessores professores={professores} />
     </Suspense>
   );

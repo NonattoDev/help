@@ -1,7 +1,28 @@
-export default async function AlunosAgendas() {
+import prisma from "../../../../../../prisma/prismaInstance";
+import { Suspense } from "react";
+import AgendaAlunos from "./AgendaAlunos";
+
+export async function getAllAlunos() {
+  const alunosNome = await prisma.aluno.findMany({
+    where: {
+      ativo: true,
+    },
+  });
+
+  if (!alunosNome) {
+    return [];
+  }
+
+  return alunosNome;
+}
+export default async function AlunosAgenda() {
+  const alunos = await getAllAlunos();
+
+  const fallBackLoading = <div className="flex flex-col justify-center items-center skeleton w-full h-32"></div>;
+
   return (
-    <div>
-      <h1>Aqui conterá todas as agendas dos alunos </h1>
-    </div>
+    <Suspense fallback={fallBackLoading}>
+      <AgendaAlunos alunos={alunos} />
+    </Suspense>
   );
 }

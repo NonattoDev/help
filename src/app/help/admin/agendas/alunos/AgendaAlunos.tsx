@@ -1,20 +1,20 @@
 "use client";
 import { useState } from "react";
-import SelectProfessoresAgenda from "./components/SelectProfessoresAgenda";
-import { AgendaAulas, Professor } from "@prisma/client";
-import moment from "moment";
-import { GetProfessorAgenda } from "./actions/GetProfessorAgenda";
+import SelectAlunosAgenda from "./components/SelectAlunosAgenda";
+import { AgendaAulas, Aluno } from "@prisma/client";
 import { FaSearch } from "react-icons/fa";
 import { toast } from "react-toastify";
 import AgendaCard from "@/components/Agenda/AgendaCard/AgendaCard";
+import { GetAlunosAgenda } from "./actions/GetAlunosAgenda";
+import { only } from "node:test";
 
-interface SelectProfessoresAgendaProps {
-  professores: Professor[];
+interface SelectAlunosAgendaProps {
+  alunos: Aluno[];
 }
 
-export default function AgendaProfessores({ professores }: SelectProfessoresAgendaProps) {
-  const [professor, setProfessor] = useState("");
-  const [professorAgenda, setProfessorAgenda] = useState<AgendaAulas[] | undefined>();
+export default function AgendaAlunos({ alunos }: SelectAlunosAgendaProps) {
+  const [aluno, setAluno] = useState("");
+  const [alunoAgenda, setAlunoAgenda] = useState<AgendaAulas[] | undefined>();
   const [date, setDate] = useState<string>("");
   const [showDate, setShowDate] = useState(false);
   const [allPeriodo, setAllPeriodo] = useState(false);
@@ -22,7 +22,7 @@ export default function AgendaProfessores({ professores }: SelectProfessoresAgen
   const [onlyWeek, setOnlyWeek] = useState(false);
 
   const HandleSelectChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setProfessor(event.target.value);
+    setAluno(event.target.value);
 
     setShowDate(true);
   };
@@ -42,20 +42,20 @@ export default function AgendaProfessores({ professores }: SelectProfessoresAgen
       setMesAnoFiltro(false);
     }
 
-    // Buscar a agenda do professor
-    const agendasProfessor = await GetProfessorAgenda(professor, allPeriodo, mesAnoFiltro, onlyWeek, date);
+    // Buscar a agenda do aluno
+    const agendasAluno = await GetAlunosAgenda(aluno, allPeriodo, mesAnoFiltro, onlyWeek, date);
 
-    if (!agendasProfessor) {
+    if (!agendasAluno) {
       toast.error("Erro interno de servidor");
       return;
     }
 
-    if (agendasProfessor.error) {
-      toast.error(agendasProfessor.error);
+    if (agendasAluno.error) {
+      toast.error(agendasAluno.error);
     }
 
-    if (agendasProfessor.success) {
-      setProfessorAgenda(agendasProfessor.data as unknown as AgendaAulas[]);
+    if (agendasAluno.success) {
+      setAlunoAgenda(agendasAluno.data as unknown as AgendaAulas[]);
     }
   };
 
@@ -63,7 +63,7 @@ export default function AgendaProfessores({ professores }: SelectProfessoresAgen
     <>
       <div className="flex flex-col justify-center items-center">
         <h1 className="text-2xl font-semibold mb-6">Agenda dos professores</h1>
-        <SelectProfessoresAgenda professores={professores} HandleSelectChange={HandleSelectChange} />
+        <SelectAlunosAgenda alunos={alunos} HandleSelectChange={HandleSelectChange} />
         {showDate && (
           <div className="my-5">
             <div className="flex flex-col">
@@ -105,10 +105,10 @@ export default function AgendaProfessores({ professores }: SelectProfessoresAgen
         )}
       </div>
 
-      {(professorAgenda?.length as any) > 0 && (
+      {(alunoAgenda?.length as any) > 0 && (
         <div className="card card-bordered shadow-md p-6">
           <div className="text-center font-bold text-3xl">Agenda</div>
-          <AgendaCard AgendaAulas={professorAgenda as any[]} />
+          <AgendaCard AgendaAulas={alunoAgenda as any[]} />
         </div>
       )}
     </>

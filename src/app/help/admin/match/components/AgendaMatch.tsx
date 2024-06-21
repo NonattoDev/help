@@ -24,12 +24,6 @@ enum Step {
   SELECTHORARIODISPONIVEL,
 }
 
-interface Disponibilidade {
-  manha: boolean;
-  tarde: boolean;
-  noite: boolean;
-}
-
 export default function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
   const [step, setStep] = useState<Step>(Step.SELECTDATE);
   const [date, setDate] = useState<string>("");

@@ -3,6 +3,10 @@
     {
       "path": "/api/aniversariantes",
       "schedule": "0 0 * * *"
+    },
+    {
+      "path": "/api/aniversariantes",
+      "schedule": "0 0 * * 5"
     }
   ]
 }
