@@ -12,6 +12,7 @@ import { FinalizarAula } from "@/app/help/admin/match/components/Actions/Finaliz
 
 interface AgendaProps {
   AgendaAulas: AgendaAulas[] | undefined;
+  calledBy: "AgendaAlunos" | "AgendaProfessores" | "AgendaMatch" | "AlunoPage" | "ProfessorPage" | "ResponsavelPage";
 }
 
 interface AgendaAulas extends PrismaAgendaAulas {
@@ -19,7 +20,7 @@ interface AgendaAulas extends PrismaAgendaAulas {
   professor: Professor;
 }
 
-export default function AgendaCard({ AgendaAulas }: AgendaProps) {
+export default function AgendaCard({ AgendaAulas, calledBy }: AgendaProps) {
   const [agendaAulas, setAgendaAulas] = useState<AgendaAulas[] | undefined>(AgendaAulas);
   const [selectedAula, setSelectedAula] = useState<AgendaAulas | null>(null);
 
@@ -93,6 +94,8 @@ export default function AgendaCard({ AgendaAulas }: AgendaProps) {
               </div>
               <div className="my-2">
                 <div className="status-info">Aluno: {agenda.aluno.nome}</div>
+                {calledBy === "AgendaAlunos" && <div className="status-info">Professor: {`${agenda.professor.nome.split(" ")[0]} ${agenda.professor.nome.split(" ").slice(-1)[0]}`}</div>}
+
                 <div className="status-info">Modalidade: {agenda.modalidade === "ONLINE" ? "Online" : "Presencial"}</div>
                 {agenda.modalidade === "PRESENCIAL" && (
                   <div className="flex justify-between align-middle justify-items-center">

@@ -111,8 +111,8 @@ export default function AgendaProfessores({ professores }: SelectProfessoresAgen
 
       {(professorAgenda?.length as any) > 0 && (
         <div className="card card-bordered shadow-md p-6">
-          <div className="text-center font-bold text-3xl">Agenda</div>
-          <AgendaCard AgendaAulas={professorAgenda as any[]} />
+          <div className="text-center font-bold text-3xl mb-4">Agenda</div>
+          <AgendaCard AgendaAulas={professorAgenda as any[]} calledBy="AgendaProfessores" />
         </div>
       )}
     </>

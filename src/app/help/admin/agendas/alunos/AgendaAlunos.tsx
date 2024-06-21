@@ -6,7 +6,6 @@ import { FaSearch } from "react-icons/fa";
 import { toast } from "react-toastify";
 import AgendaCard from "@/components/Agenda/AgendaCard/AgendaCard";
 import { GetAlunosAgenda } from "./actions/GetAlunosAgenda";
-import { only } from "node:test";
 
 interface SelectAlunosAgendaProps {
   alunos: Aluno[];
@@ -111,8 +110,8 @@ export default function AgendaAlunos({ alunos }: SelectAlunosAgendaProps) {
 
       {(alunoAgenda?.length as any) > 0 && (
         <div className="card card-bordered shadow-md p-6">
-          <div className="text-center font-bold text-3xl">Agenda</div>
-          <AgendaCard AgendaAulas={alunoAgenda as any[]} />
+          <div className="text-center font-bold text-3xl mb-4">Agenda</div>
+          <AgendaCard AgendaAulas={alunoAgenda as any[]} calledBy="AgendaAlunos" />
         </div>
       )}
     </>

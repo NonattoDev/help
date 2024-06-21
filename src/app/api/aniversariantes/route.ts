@@ -112,8 +112,4 @@ export async function GET() {
     });
   }
   return NextResponse.json({ message: "Aniversariantes encontrados" });
-  // instalar a dependencia do Nodemailer
-  // Configurar o nodemailer para enviar os e-mails
-  // Enviar os e-mails para os aniversariantes
-  // Não enviar o final, ir me avisando a cada passo.
 }

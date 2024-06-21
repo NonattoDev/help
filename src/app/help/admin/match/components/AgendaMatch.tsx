@@ -212,7 +212,7 @@ export default function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
           {(agendaAulas?.length as any) > 0 && (
             <>
               <div className="text-center font-bold text-1xl">Agenda do professor {professor.nome}</div>
-              <AgendaCard AgendaAulas={agendaAulas} />
+              <AgendaCard AgendaAulas={agendaAulas} calledBy="AgendaMatch" />
             </>
           )}
         </div>
