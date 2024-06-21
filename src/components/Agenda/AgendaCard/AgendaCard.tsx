@@ -58,6 +58,8 @@ export default function AgendaCard({ AgendaAulas, calledBy }: AgendaProps) {
   const handleFinalizarAula = async (aulaId: string) => {
     const finalizarAula = await FinalizarAula(aulaId);
 
+    return;
+
     if (!finalizarAula) return toast.error("Erro ao finalizar a aula");
 
     if (finalizarAula.success) {
