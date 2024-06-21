@@ -31,11 +31,10 @@ export default interface Aluno {
   financeiro: {
     qtd_aulas: number;
     valor: number;
-    dta_vencimento: string;
+    dia_vencimento: string;
   };
   AgendaAulas?: any;
   createdAt?: Date;
   updatedAt?: Date;
   responsavel?: Responsavel;
-  dadosFinanceiro?: any;
 }

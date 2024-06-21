@@ -258,12 +258,12 @@ const DadosPessoaisForm: React.FC<Props> = ({
               <span className="label-text">Selecione uma data de vencimento</span>
             </label>
             <ReactInputMask
-              mask="99/99"
+              mask="99"
               maskPlaceholder={null}
               alwaysShowMask={false}
               type="text"
-              name="financeiro.dta_vencimento"
-              value={alunoData.financeiro.dta_vencimento}
+              name="financeiro.dia_vencimento"
+              value={alunoData.financeiro.dia_vencimento}
               onChange={handleChange}
               className="input input-bordered w-fit"
               required

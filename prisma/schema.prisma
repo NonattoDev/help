@@ -8,18 +8,18 @@ datasource db {
 }
 
 model Usuarios {
-  id          String   @id @default(cuid())
-  nome        String
-  email       String   @unique
+  id              String   @id @default(cuid())
+  nome            String
+  email           String   @unique
   data_nascimento DateTime
-  cpf         String   @unique
-  cargo       String
-  telefone    String
-  password    String
-  accessLevel String   @default("administrativo")
-  ativo       Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  cpf             String   @unique
+  cargo           String
+  telefone        String
+  password        String
+  accessLevel     String   @default("administrativo")
+  ativo           Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }
 
 model AgendaAulas {
@@ -30,9 +30,10 @@ model AgendaAulas {
   professor   Professor  @relation(fields: [professorId], references: [id])
   data        DateTime
   horaInicio  String
-  horaFinal     String
+  horaFinal   String
   local       String
   duracao     Float
+  valor_aula  Float
   modalidade  Modalidade
   finalizada  Boolean    @default(false)
   cancelada   Boolean    @default(false)
@@ -45,6 +46,14 @@ model AgendaAulas {
 enum Modalidade {
   PRESENCIAL
   ONLINE
+}
+
+model Valores {
+  id         String   @id @default(cuid())
+  nome String
+  valor  Float
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
 model Responsavel {
@@ -62,63 +71,76 @@ model Responsavel {
 }
 
 model Aluno {
-  id              String        @id @default(cuid())
+  id              String            @id @default(cuid())
   nome            String
-  email           String        @unique
+  email           String            @unique
   escola          String
   ano_escolar     String
   data_nascimento DateTime
   telefone        String
   endereco        Json
   ficha           String
-  modalidade      Json          @default("{\"presencial\": true, \"online\": true}")
+  modalidade      Json              @default("{\"presencial\": true, \"online\": true}")
   password        String
   responsavelId   String
-  responsavel     Responsavel   @relation(fields: [responsavelId], references: [id])
+  responsavel     Responsavel       @relation(fields: [responsavelId], references: [id])
   financeiro      Json
   dificuldades    String[]
-  accessLevel     String        @default("aluno")
-  ativo           Boolean       @default(true)
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
-  dadosFinanceiro Financeiro[]
+  accessLevel     String            @default("aluno")
+  ativo           Boolean           @default(true)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  dadosFinanceiro FinanceiroAluno[]
   AgendaAulas     AgendaAulas[]
 }
 
-model Financeiro {
-  id                   String   @id @default(cuid())
-  alunoId              String
-  aluno                Aluno    @relation(fields: [alunoId], references: [id])
-  qtd_aulas_compradas  Int
-  qtd_aulas_executadas Int
-  valor                Float
-  status               String   @default("pendente")
-  conferidoConta       Boolean  @default(false)
-  dataPagamento        DateTime @default(now())
-  createdAt            DateTime @default(now())
-  updatedAt            DateTime @updatedAt
+model FinanceiroAluno {
+  id             String   @id @default(cuid())
+  alunoId        String
+  aluno          Aluno    @relation(fields: [alunoId], references: [id])
+  valor          Float
+  status         String   @default("pendente")
+  conferidoConta Boolean  @default(false)
+  dataPagamento  DateTime @default(now())
+  referenciaMes  String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model FinanceiroProfessor {
+  id               String    @id @default(cuid())
+  professorId      String
+  professor        Professor @relation(fields: [professorId], references: [id])
+  valor            Float
+  status_aula      String
+  referenciaSemana String
+  dataPagamento    DateTime
+  status           String    @default("pendente")
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
 }
 
 model Professor {
-  id                 String        @id @default(cuid())
+  id                 String                @id @default(cuid())
   nome               String
-  email              String        @unique
+  email              String                @unique
   data_nascimento    DateTime
-  cpf                String        @unique
+  cpf                String                @unique
   telefone           String
   endereco           Json
   areaFormacao       Json[]
   turmas_habilitadas String[]
   img_url            String?
-  ativo              Boolean       @default(true)
-  disponibilidade    Json          @default("{\"segunda\": {\"manha\": false, \"tarde\": true, \"noite\": false}, \"terca\": {\"manha\": false, \"tarde\": true, \"noite\": false}, \"quarta\": {\"manha\": false, \"tarde\": true, \"noite\": false}, \"quinta\": {\"manha\": false, \"tarde\": true, \"noite\": false}, \"sexta\": {\"manha\": false, \"tarde\": true, \"noite\": false}, \"sabado\": {\"manha\": true, \"tarde\": false, \"noite\": false}}")
+  ativo              Boolean               @default(true)
+  disponibilidade    Json                  @default("{\"segunda\": {\"manha\": false, \"tarde\": true, \"noite\": false}, \"terca\": {\"manha\": false, \"tarde\": true, \"noite\": false}, \"quarta\": {\"manha\": false, \"tarde\": true, \"noite\": false}, \"quinta\": {\"manha\": false, \"tarde\": true, \"noite\": false}, \"sexta\": {\"manha\": false, \"tarde\": true, \"noite\": false}, \"sabado\": {\"manha\": true, \"tarde\": false, \"noite\": false}}")
   ficha              Json[]
-  accessLevel        String        @default("professor")
-  modalidade         Json          @default("{\"presencial\": true, \"online\": false}")
+  accessLevel        String                @default("professor")
+  modalidade         Json                  @default("{\"presencial\": true, \"online\": false}")
   password           String
   materias           String[]
-  createdAt          DateTime      @default(now())
-  updatedAt          DateTime      @updatedAt
+  createdAt          DateTime              @default(now())
+  updatedAt          DateTime              @updatedAt
+  dadosFinanceiro    FinanceiroProfessor[]
   AgendaAulas        AgendaAulas[]
 }
 

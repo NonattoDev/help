@@ -4,6 +4,7 @@ import { createUsuarios } from "./usuarios";
 import { createProfessor } from "./professor";
 import { createSeries } from "./series";
 import prisma from "../prismaInstance";
+import { createValores } from "./valores";
 
 async function main() {
   await createSeries(prisma);
@@ -11,6 +12,7 @@ async function main() {
   await createAlunos(prisma);
   await createUsuarios(prisma);
   await createProfessor(prisma);
+  await createValores(prisma);
 }
 
 main()

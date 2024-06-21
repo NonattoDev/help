@@ -54,10 +54,17 @@ export const saveAgenda = async (agenda: AgendaAulas) => {
       };
     }
 
+    const valor = await prisma.valores.findFirst({
+      where: {
+        nome: "AULA PRESENCIAL",
+      },
+    });
+
     const insertAgenda = await prisma.agendaAulas.create({
       data: {
         ...agenda,
         data: moment(agenda.data).toDate(),
+        valor_aula: valor ? valor.valor : 0.0,
       },
       include: {
         aluno: {
@@ -75,7 +82,7 @@ export const saveAgenda = async (agenda: AgendaAulas) => {
       },
     });
 
-    console.log(insertAgenda);
+    console.log("Agenda salva com sucesso:", insertAgenda);
 
     return {
       success: "Agenda salva com sucesso",

@@ -105,11 +105,12 @@ export default function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
 
     const response = await saveAgenda(AgendaAula as any);
 
-    setAgendaAulas([...agendaAulas, response.data]);
-
     if (response && response.error) return toast.error(response.error);
     toast.success(response.success);
 
+    console.log(response.data);
+    return;
+    setAgendaAulas([...agendaAulas, response.data]);
     setStep(Step.SELECTDATE);
     setModalidade("");
     setHoraInicio("");

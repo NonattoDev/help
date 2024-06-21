@@ -1906,7 +1906,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: "400",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -1937,7 +1937,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: "890",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -1968,7 +1968,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: "400",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -1999,7 +1999,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: "440",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -2030,7 +2030,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: 0,
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -2061,7 +2061,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: "400",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -2092,7 +2092,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 12,
         valor: 0,
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -2123,7 +2123,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 4,
         valor: 0,
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -2154,7 +2154,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: 0,
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -2185,7 +2185,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: 0,
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -2216,7 +2216,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 12,
         valor: "580",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -2247,7 +2247,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: "440",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -2278,7 +2278,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: "260",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -2309,7 +2309,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 12,
         valor: "580",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -2340,7 +2340,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 16,
         valor: "680",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -2371,7 +2371,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 4,
         valor: "260",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -2402,7 +2402,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 2,
         valor: "120",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -2433,7 +2433,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 6,
         valor: "380",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -2464,7 +2464,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: "350",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -2495,7 +2495,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: "440",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -2526,7 +2526,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: "440",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -2557,7 +2557,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: "530",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -2588,7 +2588,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: "440",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -2619,7 +2619,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 12,
         valor: "580",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -2650,7 +2650,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 16,
         valor: "720",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -2681,7 +2681,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: "360",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -2712,7 +2712,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 12,
         valor: "400",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -2743,7 +2743,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 12,
         valor: "580",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -2774,7 +2774,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 35,
         valor: "1470",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -2805,7 +2805,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 16,
         valor: "720",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -2836,7 +2836,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 12,
         valor: "580",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -2867,7 +2867,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 16,
         valor: "720",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -2898,7 +2898,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 12,
         valor: "670",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -2929,7 +2929,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: "440",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -2960,7 +2960,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: "360",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -2991,7 +2991,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 12,
         valor: "580",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -3022,7 +3022,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 12,
         valor: "",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -3053,7 +3053,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 16,
         valor: "720",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -3084,7 +3084,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: "440",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -3115,7 +3115,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 12,
         valor: "580",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -3146,7 +3146,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: "",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -3177,7 +3177,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 20,
         valor: "",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -3208,7 +3208,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 20,
         valor: "",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -3239,7 +3239,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 12,
         valor: "720",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -3270,7 +3270,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: "360",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -3301,7 +3301,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 16,
         valor: "680",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -3332,7 +3332,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 4,
         valor: "260",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -3363,7 +3363,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: "360",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -3394,7 +3394,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 12,
         valor: "580",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -3425,7 +3425,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: "360",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -3456,7 +3456,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 12,
         valor: "580",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -3487,7 +3487,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 12,
         valor: "550",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -3518,7 +3518,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 12,
         valor: "450",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -3549,7 +3549,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 12,
         valor: "630",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -3580,7 +3580,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 20,
         valor: "1490",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -3611,7 +3611,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: "730",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -3642,7 +3642,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: "440",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -3673,7 +3673,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 12,
         valor: "550",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -3704,7 +3704,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 20,
         valor: "1490",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -3735,7 +3735,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 12,
         valor: "260",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -3766,7 +3766,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 4,
         valor: "260",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -3797,7 +3797,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 16,
         valor: "910",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -3828,7 +3828,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 12,
         valor: "900",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -3859,7 +3859,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: "420",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -3890,7 +3890,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: "440",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -3921,7 +3921,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 12,
         valor: "580",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -3952,7 +3952,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 12,
         valor: "550",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -3983,7 +3983,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 12,
         valor: "680",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -4014,7 +4014,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 12,
         valor: "580",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -4045,7 +4045,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 12,
         valor: "580",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -4076,7 +4076,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 12,
         valor: "580",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -4107,7 +4107,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 16,
         valor: "690",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -4138,7 +4138,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: "480",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -4169,7 +4169,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 20,
         valor: "880",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -4200,7 +4200,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 16,
         valor: "720",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -4231,7 +4231,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 16,
         valor: "720",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -4262,7 +4262,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 4,
         valor: "260",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -4293,7 +4293,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 4,
         valor: "260",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -4324,7 +4324,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: "360",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -4355,7 +4355,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 12,
         valor: "540",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -4386,7 +4386,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 12,
         valor: "450",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -4417,7 +4417,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 4,
         valor: "260",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -4448,7 +4448,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 12,
         valor: "500",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -4479,7 +4479,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: "120",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -4510,7 +4510,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: "400 ",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -4541,7 +4541,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: "120",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -4572,7 +4572,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 4,
         valor: "",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -4603,7 +4603,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 12,
         valor: "530",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -4634,7 +4634,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: "750",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -4665,7 +4665,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 12,
         valor: "500",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -4696,7 +4696,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: "440",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -4727,7 +4727,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 3,
         valor: "440",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -4758,7 +4758,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 3,
         valor: "280",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -4789,7 +4789,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: "440",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -4820,7 +4820,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: "375",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -4851,7 +4851,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: "440",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -4882,7 +4882,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 12,
         valor: "580",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -4913,7 +4913,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 12,
         valor: "500",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -4944,7 +4944,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: "600",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -4975,7 +4975,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: "",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -5006,7 +5006,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 16,
         valor: "680",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -5037,7 +5037,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: "300",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -5068,7 +5068,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: "440",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -5099,7 +5099,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 20,
         valor: "800",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -5130,7 +5130,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 20,
         valor: "880",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -5161,7 +5161,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 4,
         valor: "300",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -5192,7 +5192,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: "370",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -5223,7 +5223,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 12,
         valor: "270",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -5254,7 +5254,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 12,
         valor: "860",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -5285,7 +5285,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: "360",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -5316,7 +5316,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: "440",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -5347,7 +5347,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 20,
         valor: "880",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -5378,7 +5378,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: "120",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -5409,7 +5409,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 4,
         valor: "260",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -5440,7 +5440,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 12,
         valor: "890",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -5471,7 +5471,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 12,
         valor: "580",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
     {
@@ -5502,7 +5502,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 12,
         valor: "500",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05",
       },
     },
   ];

@@ -87,7 +87,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: "890",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05/24",
       },
     },
     {
@@ -118,7 +118,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: "400",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05/24",
       },
       dificuldades: ["Matemática", "Espanhol", "Biologia", "Geografia"],
     },
@@ -150,7 +150,7 @@ export async function createAlunos(prisma: PrismaClient) {
       financeiro: {
         qtd_aulas: 8,
         valor: "400",
-        dta_vencimento: "05/24",
+        dia_vencimento: "05/24",
       },
     },
   ];

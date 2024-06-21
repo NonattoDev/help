@@ -29,6 +29,7 @@ CREATE TABLE "AgendaAulas" (
     "horaFinal" TEXT NOT NULL,
     "local" TEXT NOT NULL,
     "duracao" DOUBLE PRECISION NOT NULL,
+    "valor_aula" DOUBLE PRECISION NOT NULL,
     "modalidade" "Modalidade" NOT NULL,
     "finalizada" BOOLEAN NOT NULL DEFAULT false,
     "cancelada" BOOLEAN NOT NULL DEFAULT false,
@@ -36,6 +37,17 @@ CREATE TABLE "AgendaAulas" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "AgendaAulas_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Valores" (
+    "id" TEXT NOT NULL,
+    "nome" TEXT NOT NULL,
+    "valor" DOUBLE PRECISION NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Valores_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -79,19 +91,33 @@ CREATE TABLE "Aluno" (
 );
 
 -- CreateTable
-CREATE TABLE "Financeiro" (
+CREATE TABLE "FinanceiroAluno" (
     "id" TEXT NOT NULL,
     "alunoId" TEXT NOT NULL,
-    "qtd_aulas_compradas" INTEGER NOT NULL,
-    "qtd_aulas_executadas" INTEGER NOT NULL,
     "valor" DOUBLE PRECISION NOT NULL,
     "status" TEXT NOT NULL DEFAULT 'pendente',
     "conferidoConta" BOOLEAN NOT NULL DEFAULT false,
     "dataPagamento" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "referenciaMes" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "Financeiro_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "FinanceiroAluno_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "FinanceiroProfessor" (
+    "id" TEXT NOT NULL,
+    "professorId" TEXT NOT NULL,
+    "valor" DOUBLE PRECISION NOT NULL,
+    "status_aula" TEXT NOT NULL,
+    "referenciaSemana" TEXT NOT NULL,
+    "dataPagamento" TIMESTAMP(3) NOT NULL,
+    "status" TEXT NOT NULL DEFAULT 'pendente',
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "FinanceiroProfessor_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -173,4 +199,7 @@ ALTER TABLE "AgendaAulas" ADD CONSTRAINT "AgendaAulas_professorId_fkey" FOREIGN 
 ALTER TABLE "Aluno" ADD CONSTRAINT "Aluno_responsavelId_fkey" FOREIGN KEY ("responsavelId") REFERENCES "Responsavel"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Financeiro" ADD CONSTRAINT "Financeiro_alunoId_fkey" FOREIGN KEY ("alunoId") REFERENCES "Aluno"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "FinanceiroAluno" ADD CONSTRAINT "FinanceiroAluno_alunoId_fkey" FOREIGN KEY ("alunoId") REFERENCES "Aluno"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "FinanceiroProfessor" ADD CONSTRAINT "FinanceiroProfessor_professorId_fkey" FOREIGN KEY ("professorId") REFERENCES "Professor"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

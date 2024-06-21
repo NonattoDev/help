@@ -26,7 +26,7 @@ const createEmptyAluno = (): Aluno => ({
   financeiro: {
     qtd_aulas: 0,
     valor: 0,
-    dta_vencimento: "",
+    dia_vencimento: "",
   },
   password: "",
   AgendaAulas: {},
