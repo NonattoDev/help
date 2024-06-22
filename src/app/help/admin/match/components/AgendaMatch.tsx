@@ -127,7 +127,7 @@ export default function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
   };
 
   // Verificar quantas aulas o aluno já tem marcadas ESSE mes
-  const qtdAulasMarcadas = agendaAulas.filter((agenda) => moment(agenda.data).format("MM-YYYY") === moment(date).format("MM-YYYY")).length;
+  const qtdAulasMarcadas = agendaAulas.filter((agenda) => moment(agenda.data).format("MM-YYYY") === moment(date).format("MM-YYYY") && agenda.cancelada === false).length;
 
   return (
     <div>

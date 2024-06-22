@@ -62,8 +62,30 @@ export const CancelAula = async (id: string) => {
         valor_transporte: valorTransporte ? valorTransporte.valor : 0.0,
         status_aula: "CANCELADA",
         referenciaSemana: "0",
-        dataPagamento: new Date(),
-        status: "PAGO",
+        dataPagamento: moment()
+          .day(moment().day() > 5 ? 12 : 5)
+          .toDate(),
+        status: "PAGAMENTO PENDENTE",
+      },
+    });
+  } else {
+    const valor = await prisma.valores.findFirst({
+      where: {
+        nome: agendaCancelada.modalidade === "PRESENCIAL" ? "AULA CANCELADA PRESENCIAL" : "AULA CANCELADA ONLINE",
+      },
+    });
+    financeiroCancelada = await prisma.financeiroProfessor.create({
+      data: {
+        professorId: agendaCancelada.professorId,
+        aulaId: agendaCancelada.id,
+        valor: 0.0,
+        valor_transporte: 0.0,
+        status_aula: "CANCELADA",
+        referenciaSemana: "0",
+        dataPagamento: moment()
+          .day(moment().day() > 5 ? 12 : 5)
+          .toDate(),
+        status: "PAGAMENTO PENDENTE",
       },
     });
   }
