@@ -1,48 +1,18 @@
-import prisma from "@/utils/prismaInstance";
+"use client";
 import moment from "moment";
+import useSWR from "swr";
+import { fetchDadosFinancas } from "./actions/GetFinancas";
 
-const getDadosFinancas = async () => {
-  const startOfWeek = moment().startOf("week").toDate(); // Domingo desta semana
-  const endOfWeek = moment().endOf("week").toDate(); // Sábado desta semana
-
-  // Verifica no banco de agendamentos de aulas no momento que entrar na página, as aulas que já aconteceram e não foram pagas
-  const aulasRealizadas = await prisma.agendaAulas.findMany({
-    where: {
-      finalizada: true,
-    },
+export default function FinanceiroPage() {
+  const { data, error } = useSWR("dadosFinancas", fetchDadosFinancas, {
+    refreshInterval: 5000, // Atualiza a cada 1 segundo
   });
 
-  const aulasCanceladasComValor = await prisma.agendaAulas.findMany({
-    where: {
-      cancelada: true,
-      valor_aula: {
-        not: 0,
-      },
-    },
-  });
+  if (!data) return <div>Carregando...</div>;
+  if (error) return <div>Erro ao carregar os dados.</div>;
 
-  const totalAulasRealizadas = await prisma.agendaAulas.findMany({
-    where: {
-      data: {
-        gte: startOfWeek,
-        lte: endOfWeek,
-      },
-    },
-    include: {
-      aluno: true,
-      professor: true,
-    },
-  });
+  const { aulasRealizadas, aulasCanceladasComValor, totalAulasRealizadas } = data.data;
 
-  return {
-    aulasRealizadas,
-    aulasCanceladasComValor,
-    totalAulasRealizadas,
-  };
-};
-
-export default async function FinanceiroPage() {
-  const { aulasRealizadas, aulasCanceladasComValor, totalAulasRealizadas } = await getDadosFinancas();
   return (
     <div>
       <h1>Financeiro works!!</h1>
@@ -65,7 +35,6 @@ export default async function FinanceiroPage() {
               <th>Cancelada</th>
             </tr>
           </thead>
-
           <tbody>
             {totalAulasRealizadas.map((aula) => (
               <tr key={aula.id}>
