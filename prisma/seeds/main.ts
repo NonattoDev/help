@@ -1,10 +1,10 @@
+import prisma from "../../src/utils/prismaInstance";
 import { createMaterias } from "./materias";
 import { createAlunos } from "./alunos";
 import { createUsuarios } from "./usuarios";
 import { createProfessor } from "./professor";
 import { createSeries } from "./series";
 import { createValores } from "./valores";
-import prisma from "@/utils/prismaInstance";
 
 async function main() {
   await createSeries(prisma);
