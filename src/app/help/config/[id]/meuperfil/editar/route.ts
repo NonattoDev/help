@@ -1,5 +1,5 @@
 import bcrypt from "bcryptjs";
-import prisma from "../../../../../../../prisma/prismaInstance";
+import prisma from "@/utils/prismaInstance";
 import moment from "moment";
 import parseCurrency from "@/utils/FormatCurrency";
 

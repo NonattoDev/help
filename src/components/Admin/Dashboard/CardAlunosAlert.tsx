@@ -1,5 +1,4 @@
 import moment from "moment";
-import prisma from "../../../../prisma/prismaInstance";
 
 export async function getDados(data: any) {
   const alunos = await prisma.aluno.findMany({

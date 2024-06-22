@@ -1,8 +1,8 @@
 // app/api/cron/route.ts
 import { NextResponse } from "next/server";
-import prisma from "../../../../prisma/prismaInstance";
 import moment from "moment";
 import { transporter } from "@/utils/Nodemailer";
+import prisma from "@/utils/prismaInstance";
 
 // Esse cron rodará todos os dias as 00:00
 export async function GET() {

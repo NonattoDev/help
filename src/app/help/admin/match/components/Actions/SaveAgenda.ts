@@ -1,6 +1,6 @@
 "use server";
 import { AgendaAulas } from "@prisma/client";
-import prisma from "../../../../../../../prisma/prismaInstance";
+import prisma from "@/utils/prismaInstance";
 import moment from "moment";
 
 export const saveAgenda = async (agenda: AgendaAulas) => {

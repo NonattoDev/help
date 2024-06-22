@@ -1,7 +1,7 @@
 // app/api/admin/financeiro.ts
 import { NextResponse } from "next/server";
-import prisma from "../../../../../prisma/prismaInstance";
 import moment from "moment";
+import prisma from "@/utils/prismaInstance";
 
 // Esta rota será acessada toda sexta-feira
 export async function GET() {

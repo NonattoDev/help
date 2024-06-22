@@ -1,6 +1,6 @@
-import prisma from "../../../../../../prisma/prismaInstance";
 import { Suspense } from "react";
 import AgendaAlunos from "./AgendaAlunos";
+import prisma from "@/utils/prismaInstance";
 
 async function getAllAlunos() {
   const alunosNome = await prisma.aluno.findMany({

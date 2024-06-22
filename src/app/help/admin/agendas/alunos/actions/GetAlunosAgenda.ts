@@ -1,6 +1,6 @@
 "use server";
+import prisma from "@/utils/prismaInstance";
 import { AgendaAulas } from "@prisma/client";
-import prisma from "../../../../../../../prisma/prismaInstance";
 import moment from "moment";
 
 export const GetAlunosAgenda = async (alunoId: string, mesAnoFiltro: boolean, onlyWeek: boolean, date?: string) => {

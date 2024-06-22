@@ -5,7 +5,7 @@ import EditProfessor from "../../../../../components/EditForms/EditProfessor/Edi
 import EditAluno from "../../../../../components/EditForms/EditAluno/EditAluno";
 import EditResponsavel from "../../../../../components/EditForms/EditResponsavel/EditResponsavel";
 import EditAdmin from "../../../../../components/EditForms/EditAdmin/EditAdmin";
-import prisma from "../../../../../../prisma/prismaInstance";
+import prisma from "@/utils/prismaInstance";
 
 async function getUserData(id: string) {
   const session = await getServerSession(authOptions);

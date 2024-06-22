@@ -1,6 +1,6 @@
 "use server";
 import { Professor } from "@/interfaces/professor.interface";
-import prisma from "../../../../../../../prisma/prismaInstance";
+import prisma from "@/utils/prismaInstance";
 import { Client } from "@googlemaps/google-maps-services-js";
 import Aluno from "@/interfaces/aluno.interface";
 

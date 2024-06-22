@@ -1,4 +1,4 @@
-import prisma from "../../../../../../../prisma/prismaInstance";
+import prisma from "@/utils/prismaInstance";
 import CreateProfessor from "./CreateProfessor";
 
 async function getDados() {

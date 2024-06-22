@@ -3,8 +3,8 @@ import { createAlunos } from "./alunos";
 import { createUsuarios } from "./usuarios";
 import { createProfessor } from "./professor";
 import { createSeries } from "./series";
-import prisma from "../prismaInstance";
 import { createValores } from "./valores";
+import prisma from "@/utils/prismaInstance";
 
 async function main() {
   await createSeries(prisma);

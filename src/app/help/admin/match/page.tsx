@@ -1,4 +1,4 @@
-import prisma from "../../../../../prisma/prismaInstance";
+import prisma from "@/utils/prismaInstance";
 import MatchApp from "./components/MatchApp";
 
 const getMatchDados = async () => {

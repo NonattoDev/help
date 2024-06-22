@@ -1,12 +1,10 @@
 import { authOptions } from "@/app/lib/auth";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
-import prisma from "../../../../../prisma/prismaInstance";
 
 export const metadata: Metadata = {
   title: "Help - Cliente",
 };
-
 
 async function getData() {
   const session = await getServerSession(authOptions);

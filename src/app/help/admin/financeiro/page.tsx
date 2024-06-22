@@ -1,5 +1,5 @@
+import prisma from "@/utils/prismaInstance";
 import moment from "moment";
-import prisma from "../../../../../prisma/prismaInstance";
 
 const getDadosFinancas = async () => {
   const startOfWeek = moment().startOf("week").toDate(); // Domingo desta semana

@@ -1,8 +1,8 @@
-import prisma from "../../../../../../../../prisma/prismaInstance";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/lib/auth";
 import EditAluno from "@/components/EditForms/EditAluno/EditAluno";
+import prisma from "@/utils/prismaInstance";
 
 async function getDados(id: string) {
   let session = await getServerSession(authOptions);

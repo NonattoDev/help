@@ -1,7 +1,7 @@
 "use server";
 
+import prisma from "@/utils/prismaInstance";
 import moment from "moment";
-import prisma from "../../../../../../../prisma/prismaInstance";
 
 export const CancelAula = async (id: string) => {
   const agendaCancelada = await prisma.agendaAulas.update({

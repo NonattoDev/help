@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
-import prisma from "../../../../../../../prisma/prismaInstance";
+import {  NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import moment from "moment";
+import prisma from "@/utils/prismaInstance";
 
 export async function POST(request: Request, params: any) {
   let { formData: userData, typeEdit, alunoData, responsavelData } = await request.json();
