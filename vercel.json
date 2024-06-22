@@ -5,7 +5,7 @@
       "schedule": "0 0 * * *"
     },
     {
-      "path": "/api/aniversariantes",
+      "path": "/api/admin/financeiro/pagamentos/professores",
       "schedule": "0 0 * * 5"
     }
   ]
