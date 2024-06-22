@@ -1,3 +1,4 @@
+import prisma from "@/utils/prismaInstance";
 import moment from "moment";
 
 export async function getDados(data: any) {
