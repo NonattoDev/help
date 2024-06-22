@@ -1,4 +1,5 @@
 import { authOptions } from "@/app/lib/auth";
+import prisma from "@/utils/prismaInstance";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
 
