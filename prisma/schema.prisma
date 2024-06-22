@@ -39,6 +39,7 @@ model AgendaAulas {
   cancelada   Boolean    @default(false)
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
+  FinanceiroProfessor FinanceiroProfessor[]
 
   @@unique([professorId, data, horaInicio, horaFinal])
 }
@@ -111,7 +112,10 @@ model FinanceiroProfessor {
   id               String    @id @default(cuid())
   professorId      String
   professor        Professor @relation(fields: [professorId], references: [id])
+  aulaId           String 
+  aula              AgendaAulas  @relation(fields: [aulaId], references: [id])
   valor            Float
+  valor_transporte Float
   status_aula      String
   referenciaSemana String
   dataPagamento    DateTime

@@ -31,6 +31,8 @@ export default function AgendaCard({ AgendaAulas, calledBy }: AgendaProps) {
   const handleCancelAula = async (aulaId: string) => {
     const aulaCancelada = await CancelAula(aulaId);
 
+    return;
+
     if (!aulaCancelada) return toast.error("Erro ao cancelar a aula");
 
     setAgendaAulas((prev) => prev?.map((agenda) => (agenda.id === aulaId ? { ...agenda, cancelada: true } : agenda)));
@@ -57,8 +59,6 @@ export default function AgendaCard({ AgendaAulas, calledBy }: AgendaProps) {
 
   const handleFinalizarAula = async (aulaId: string) => {
     const finalizarAula = await FinalizarAula(aulaId);
-
-    return;
 
     if (!finalizarAula) return toast.error("Erro ao finalizar a aula");
 

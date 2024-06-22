@@ -109,7 +109,9 @@ CREATE TABLE "FinanceiroAluno" (
 CREATE TABLE "FinanceiroProfessor" (
     "id" TEXT NOT NULL,
     "professorId" TEXT NOT NULL,
+    "aulaId" TEXT NOT NULL,
     "valor" DOUBLE PRECISION NOT NULL,
+    "valor_transporte" DOUBLE PRECISION NOT NULL,
     "status_aula" TEXT NOT NULL,
     "referenciaSemana" TEXT NOT NULL,
     "dataPagamento" TIMESTAMP(3) NOT NULL,
@@ -203,3 +205,6 @@ ALTER TABLE "FinanceiroAluno" ADD CONSTRAINT "FinanceiroAluno_alunoId_fkey" FORE
 
 -- AddForeignKey
 ALTER TABLE "FinanceiroProfessor" ADD CONSTRAINT "FinanceiroProfessor_professorId_fkey" FOREIGN KEY ("professorId") REFERENCES "Professor"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "FinanceiroProfessor" ADD CONSTRAINT "FinanceiroProfessor_aulaId_fkey" FOREIGN KEY ("aulaId") REFERENCES "AgendaAulas"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -25,10 +25,18 @@ export const FinalizarAula = async (aulaId: string) => {
     },
   });
 
+  const valorTransporte = await prisma.valores.findFirst({
+    where: {
+      nome: "TRANSPORTE PÚBLICO",
+    },
+  });
+
   const insertFinanceiro = await prisma.financeiroProfessor.create({
     data: {
       professorId: finalizarAula.professorId,
+      aulaId: finalizarAula.id,
       valor: valor ? valor.valor : 0.0,
+      valor_transporte: finalizarAula.modalidade === "PRESENCIAL" ? (valorTransporte ? valorTransporte.valor : 0.0) : 0.0,
       status_aula: "FINALIZADA",
       referenciaSemana: moment(finalizarAula.data).week().toString(),
       dataPagamento: moment()
