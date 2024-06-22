@@ -5,7 +5,7 @@ import { fetchDadosFinancas } from "./actions/GetFinancas";
 
 export default function FinanceiroPage() {
   const { data, error } = useSWR("dadosFinancas", fetchDadosFinancas, {
-    refreshInterval: 5000, // Atualiza a cada 1 segundo
+    refreshInterval: 5000,
   });
 
   if (!data) return <div>Carregando...</div>;
