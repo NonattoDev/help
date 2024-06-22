@@ -68,7 +68,7 @@ export default async function FinanceiroPage() {
 
           <tbody>
             {totalAulasRealizadas.map((aula) => (
-              <tr>
+              <tr key={aula.id}>
                 <td>{aula.id}</td>
                 <td>{aula.aluno.nome}</td>
                 <td>{aula.professor.nome}</td>
