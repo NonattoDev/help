@@ -2,8 +2,8 @@ import useSWR from "swr";
 import { fetchDadosFinancas } from "../actions/GetFinancas";
 import moment from "moment";
 
-export default function Status() {
-  const { data, error } = useSWR("dadosFinancas", fetchDadosFinancas, {
+export default function Status({ professorId }: { professorId: string | null }) {
+  const { data, error } = useSWR(professorId ? ["dadosFinancas", professorId] : "dadosFinancas", () => fetchDadosFinancas(professorId), {
     refreshInterval: 5000,
   });
 

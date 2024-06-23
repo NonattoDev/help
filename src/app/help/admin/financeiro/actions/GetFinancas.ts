@@ -4,13 +4,16 @@ import prisma from "@/utils/prismaInstance";
 import moment from "moment";
 
 // Função de busca de dados
-export const fetchDadosFinancas = async (professorId?: string) => {
+export const fetchDadosFinancas = async (professorId?: string | null) => {
+  console.log(`FetchDadosFinancas foi chamado e ${professorId ? `professorId é ${professorId}` : "professorId é nulo"}`);
   const startOfWeek = moment().startOf("week").toDate();
   const endOfWeek = moment().endOf("week").toDate();
-  console.log(startOfWeek, endOfWeek);
+
+  // Ajuste as consultas com base na presença do professorId
+  const whereClause = professorId ? { finalizada: true, professorId } : { finalizada: true };
 
   const aulasRealizadas = await prisma.agendaAulas.findMany({
-    where: { finalizada: true },
+    where: whereClause,
     include: {
       FinanceiroProfessor: true,
     },
@@ -20,6 +23,7 @@ export const fetchDadosFinancas = async (professorId?: string) => {
     where: {
       cancelada: true,
       data: { gte: startOfWeek, lte: endOfWeek },
+      ...(professorId && { professorId }),
     },
     include: {
       FinanceiroProfessor: true,
@@ -31,6 +35,7 @@ export const fetchDadosFinancas = async (professorId?: string) => {
   const totalAulasRealizadas = await prisma.agendaAulas.findMany({
     where: {
       data: { gte: startOfWeek, lte: endOfWeek },
+      ...(professorId && { professorId }),
     },
     include: { aluno: true, professor: true, FinanceiroProfessor: true },
   });
