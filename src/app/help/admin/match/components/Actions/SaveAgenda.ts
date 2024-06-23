@@ -54,17 +54,26 @@ export const saveAgenda = async (agenda: AgendaAulas) => {
       };
     }
 
-    const valor = await prisma.valores.findFirst({
+    const valores = await prisma.valores.findMany({
       where: {
-        nome: "AULA PRESENCIAL",
+        OR: [{ nome: "AULA PRESENCIAL" }, { nome: "AULA ONLINE" }],
       },
     });
+
+    const aulaPresencial = valores.find((valor) => valor.nome === "AULA PRESENCIAL");
+    const aulaOnline = valores.find((valor) => valor.nome === "AULA ONLINE");
+
+    if (!aulaPresencial || !aulaOnline) {
+      return {
+        error: "Valores de aula não encontrados",
+      };
+    }
 
     const insertAgenda = await prisma.agendaAulas.create({
       data: {
         ...agenda,
         data: moment(agenda.data).toDate(),
-        valor_aula: valor ? valor.valor : 0.0,
+        valor_aula: agenda.modalidade === "PRESENCIAL" ? aulaPresencial.valor : aulaOnline.valor,
       },
       include: {
         aluno: {
