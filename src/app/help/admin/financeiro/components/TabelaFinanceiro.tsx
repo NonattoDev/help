@@ -30,6 +30,7 @@ export default function TabelaFinanceiro({ professorId }: { professorId: string 
             <th className="px-4 py-2">Duração</th>
             <th className="px-4 py-2">Valor da Aula</th>
             <th className="px-4 py-2">Modalidade</th>
+            <th className="px-4 py-2">Matéria</th>
             <th className="px-4 py-2">Finalizada</th>
             <th className="px-4 py-2">Cancelada</th>
           </tr>
@@ -45,6 +46,7 @@ export default function TabelaFinanceiro({ professorId }: { professorId: string 
               <td className="px-4 py-2">{aula.duracao}</td>
               <td className="px-4 py-2">{aula.valor_aula.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</td>
               <td className="px-4 py-2">{aula.modalidade}</td>
+              <td className="px-4 py-2">{aula.materia}</td>
               <td className="px-4 py-2">{aula.finalizada ? "Sim" : "Não"}</td>
               <td className="px-4 py-2">{aula.cancelada ? "Sim" : "Não"}</td>
             </tr>

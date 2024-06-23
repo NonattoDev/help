@@ -1,6 +1,6 @@
 "use client";
 
-import { Aluno } from "@prisma/client";
+import { Aluno, Materias } from "@prisma/client";
 import { ProfessoresMatch } from "./Actions/GetProfessores";
 import { useState } from "react";
 import { toast } from "react-toastify";
@@ -15,19 +15,22 @@ moment.locale("pt-br");
 
 interface AgendaMatchProps {
   professor: ProfessoresMatch;
+  materias: Materias[];
   aluno: Aluno & { AgendaAulas: any[]; financeiro: { qtd_aulas: number } };
 }
 
 enum Step {
   SELECTDATE,
   SELECTMODALIDADE,
+  SELECTMATERIA,
   SELECTHORARIODISPONIVEL,
 }
 
-export default function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
+export default function AgendaMatch({ professor, aluno, materias }: AgendaMatchProps) {
   const [step, setStep] = useState<Step>(Step.SELECTDATE);
   const [date, setDate] = useState<string>("");
   const [modalidade, setModalidade] = useState<string>("");
+  const [materia, setMateria] = useState<string>("");
 
   const [horaInicio, setHoraInicio] = useState<string>("");
   const [horaFinal, setHoraFinal] = useState<string>("");
@@ -50,6 +53,11 @@ export default function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
 
   const handleModalidadeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setModalidade(e.target.value);
+    setStep(Step.SELECTMATERIA);
+  };
+
+  const handleMateriaChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    setMateria(e.target.value);
     setStep(Step.SELECTHORARIODISPONIVEL);
   };
 
@@ -94,6 +102,7 @@ export default function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
       data: moment(date).format("YYYY-MM-DD"),
       horaInicio,
       horaFinal,
+      materia,
       modalidade: modalidade.toUpperCase(),
       duracao,
       local: "",
@@ -120,6 +129,8 @@ export default function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
       window.location.reload();
     } else if (step === Step.SELECTMODALIDADE) {
       setStep(Step.SELECTDATE);
+    } else if (step === Step.SELECTMATERIA) {
+      setStep(Step.SELECTMODALIDADE);
     } else if (step === Step.SELECTHORARIODISPONIVEL) {
       setModalidade("");
       setStep(Step.SELECTMODALIDADE);
@@ -172,6 +183,21 @@ export default function AgendaMatch({ professor, aluno }: AgendaMatchProps) {
               Presencial
             </label>
           </div>
+        </div>
+      )}
+      {step === Step.SELECTMATERIA && (
+        <div className="flex flex-col justify-center align-middle items-center">
+          <h2 className="text-center font-bold text-1xl mb-4">Que materia será lecionada ?</h2>
+          <select className="select input-bordered w-2/12" name="materiaSelect" id="materiaSelect" onChange={handleMateriaChange} value={""}>
+            <option disabled value="">
+              Selecione
+            </option>
+            {materias.map((materia) => (
+              <option key={materia.id} value={materia.materia}>
+                {materia.materia}
+              </option>
+            ))}
+          </select>
         </div>
       )}
       {step === Step.SELECTHORARIODISPONIVEL && (

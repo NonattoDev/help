@@ -1,5 +1,6 @@
+import { GetMaterias } from "@/app/help/admin/match/components/Actions/GetMaterias";
 import { updateAula } from "@/app/help/admin/match/components/Actions/updateAula";
-import { AgendaAulas } from "@prisma/client";
+import { AgendaAulas, Materias } from "@prisma/client";
 import moment from "moment";
 import { useState } from "react";
 import ReactInputMask from "react-input-mask";
@@ -13,6 +14,7 @@ interface ModalProps {
 
 export default function ModalEditAula({ agendaAula, onClose, handleUpdatedAula }: ModalProps) {
   const [aula, setAula] = useState<AgendaAulas | null>(agendaAula);
+  const [materias, setMaterias] = useState<Materias[]>([]);
 
   const handleDataChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAula({
@@ -25,6 +27,13 @@ export default function ModalEditAula({ agendaAula, onClose, handleUpdatedAula }
     setAula({
       ...aula!,
       modalidade: event.target.value as "ONLINE" | "PRESENCIAL",
+    });
+  };
+
+  const handleMateriaChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setAula({
+      ...aula!,
+      materia: event.target.value,
     });
   };
 
@@ -64,6 +73,14 @@ export default function ModalEditAula({ agendaAula, onClose, handleUpdatedAula }
     onClose();
   };
 
+  const handleFetchMaterias = async (event: React.MouseEvent<HTMLSelectElement>) => {
+    const materias = await GetMaterias();
+
+    if (!materias) return toast.error("Erro ao buscar matérias");
+
+    setMaterias(materias as Materias[]);
+  };
+
   if (!aula) return null;
 
   const horaInicio = moment(aula.horaInicio, "HH:mm");
@@ -97,6 +114,28 @@ export default function ModalEditAula({ agendaAula, onClose, handleUpdatedAula }
                   Presencial
                 </label>
               </div>
+            </div>
+            <div className="my-5">
+              <div className="text-1xl font-bold text-center mb-2">Qual matéria será lecionada ?</div>
+              <select
+                className="select input-bordered"
+                name="materiaSelect"
+                id="materiaSelect"
+                value={aula.materia}
+                onClick={materias.length === 0 ? handleFetchMaterias : undefined}
+                onChange={handleMateriaChange}
+              >
+                {aula && aula.materia && (
+                  <option value={aula.materia} disabled>
+                    {aula.materia}
+                  </option>
+                )}
+                {materias.map((materia) => (
+                  <option key={materia.id} value={materia.materia}>
+                    {materia.materia}
+                  </option>
+                ))}
+              </select>
             </div>
             <div className="text-1xl font-bold text-center mt-4">Digite um horário</div>
             <div className="formControl">

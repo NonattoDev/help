@@ -30,6 +30,7 @@ CREATE TABLE "AgendaAulas" (
     "local" TEXT NOT NULL,
     "duracao" DOUBLE PRECISION NOT NULL,
     "valor_aula" DOUBLE PRECISION NOT NULL,
+    "materia" TEXT NOT NULL,
     "modalidade" "Modalidade" NOT NULL,
     "finalizada" BOOLEAN NOT NULL DEFAULT false,
     "cancelada" BOOLEAN NOT NULL DEFAULT false,

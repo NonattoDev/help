@@ -5,13 +5,14 @@
 // Já estar próximo da região do aluno
 
 "use client";
-import { Aluno } from "@prisma/client";
+import { Aluno, Materias } from "@prisma/client";
 import SelectAluno from "./SelectAluno";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import ShowProfessores from "./ShowProfessores";
 import { ProfessoresMatch, getProfessores } from "./Actions/GetProfessores";
 import AgendaMatch from "./AgendaMatch";
+import { GetMaterias } from "./Actions/GetMaterias";
 
 interface MatchAppProps {
   alunos: Aluno[];
@@ -28,6 +29,7 @@ export default function MatchApp({ alunos }: MatchAppProps) {
   const [professores, setProfessores] = useState<ProfessoresMatch[]>();
   const [alunoSelected, setAlunoSelected] = useState<Aluno>();
   const [professorSelected, setProfessorSelected] = useState<ProfessoresMatch>();
+  const [materias, setMaterias] = useState<any[]>();
 
   async function handleSelectAluno(e: React.ChangeEvent<HTMLSelectElement>) {
     const { name, value } = e.target;
@@ -52,9 +54,13 @@ export default function MatchApp({ alunos }: MatchAppProps) {
     setPage(Page.SHOWPROFESSORES);
   }
 
-  const selectProfessor = (professor: ProfessoresMatch) => {
+  const selectProfessor = async (professor: ProfessoresMatch) => {
     // Define o professor selecionado
     setProfessorSelected(professor);
+    // Busca todas as materias
+    const materias = await GetMaterias();
+
+    setMaterias(materias);
     setPage(Page.AGENDAMATCH);
   };
 
@@ -62,7 +68,7 @@ export default function MatchApp({ alunos }: MatchAppProps) {
     <div>
       {page === Page.SELECTALUNO && <SelectAluno alunos={alunos} handleSelectAluno={handleSelectAluno} alunoSelected={alunoSelected as Aluno | undefined} />}
       {page === Page.SHOWPROFESSORES && <ShowProfessores aluno={alunoSelected as Aluno} professores={professores!} selectProfessor={selectProfessor} />}
-      {page === Page.AGENDAMATCH && <AgendaMatch professor={professorSelected!} aluno={alunoSelected! as any} />}
+      {page === Page.AGENDAMATCH && <AgendaMatch professor={professorSelected!} aluno={alunoSelected! as any} materias={materias as Materias[]} />}
     </div>
   );
 }

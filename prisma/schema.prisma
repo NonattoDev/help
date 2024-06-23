@@ -23,22 +23,23 @@ model Usuarios {
 }
 
 model AgendaAulas {
-  id          String     @id @default(cuid())
-  alunoId     String
-  aluno       Aluno      @relation(fields: [alunoId], references: [id])
-  professorId String
-  professor   Professor  @relation(fields: [professorId], references: [id])
-  data        DateTime
-  horaInicio  String
-  horaFinal   String
-  local       String
-  duracao     Float
-  valor_aula  Float
-  modalidade  Modalidade
-  finalizada  Boolean    @default(false)
-  cancelada   Boolean    @default(false)
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  id                  String                @id @default(cuid())
+  alunoId             String
+  aluno               Aluno                 @relation(fields: [alunoId], references: [id])
+  professorId         String
+  professor           Professor             @relation(fields: [professorId], references: [id])
+  data                DateTime
+  horaInicio          String
+  horaFinal           String
+  local               String
+  duracao             Float
+  valor_aula          Float
+  materia             String
+  modalidade          Modalidade
+  finalizada          Boolean               @default(false)
+  cancelada           Boolean               @default(false)
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
   FinanceiroProfessor FinanceiroProfessor[]
 
   @@unique([professorId, data, horaInicio, horaFinal])
@@ -50,11 +51,11 @@ enum Modalidade {
 }
 
 model Valores {
-  id         String   @id @default(cuid())
-  nome String
-  valor  Float
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id        String   @id @default(cuid())
+  nome      String
+  valor     Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Responsavel {
@@ -109,19 +110,19 @@ model FinanceiroAluno {
 }
 
 model FinanceiroProfessor {
-  id               String    @id @default(cuid())
+  id               String      @id @default(cuid())
   professorId      String
-  professor        Professor @relation(fields: [professorId], references: [id])
-  aulaId           String 
-  aula              AgendaAulas  @relation(fields: [aulaId], references: [id])
+  professor        Professor   @relation(fields: [professorId], references: [id])
+  aulaId           String
+  aula             AgendaAulas @relation(fields: [aulaId], references: [id])
   valor            Float
   valor_transporte Float
   status_aula      String
   referenciaSemana String
   dataPagamento    DateTime
-  status           String    @default("pendente")
-  createdAt        DateTime  @default(now())
-  updatedAt        DateTime  @updatedAt
+  status           String      @default("pendente")
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
 }
 
 model Professor {

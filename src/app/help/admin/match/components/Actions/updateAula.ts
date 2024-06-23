@@ -4,6 +4,7 @@ import prisma from "@/utils/prismaInstance";
 import moment from "moment";
 
 export const updateAula = async (agenda: AgendaAulas) => {
+  console.log("Atualizando aula:", agenda);
   // Obter a aula original do banco de dados
   const originalAula = await prisma.agendaAulas.findUnique({
     where: { id: agenda.id },
@@ -118,6 +119,7 @@ export const updateAula = async (agenda: AgendaAulas) => {
         local: agenda.local,
         duracao: agenda.duracao,
         modalidade: agenda.modalidade,
+        materia: agenda.materia,
         finalizada: agenda.finalizada,
         cancelada: agenda.cancelada,
         createdAt: agenda.createdAt,
