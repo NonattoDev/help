@@ -46,6 +46,8 @@ export const FinalizarAula = async (aulaId: string) => {
     },
   });
 
+  await prisma.$disconnect();
+
   return {
     success: `A aula do aluno ${finalizarAula.aluno.nome} com o professor ${finalizarAula.professor.nome} foi finalizada com sucesso!`,
     data: finalizarAula,

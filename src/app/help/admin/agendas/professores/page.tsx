@@ -13,6 +13,7 @@ async function getAllProfessores() {
     return [];
   }
 
+  await prisma.$disconnect();
   return professoresNome;
 }
 export default async function ProfessoresAgendas() {

@@ -50,7 +50,7 @@ async function getUserData(id: string) {
       break;
   }
 
-  prisma.$disconnect();
+  await prisma.$disconnect();
 
   if (!userData) {
     redirect("/");

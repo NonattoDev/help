@@ -12,6 +12,7 @@ const getMatchDados = async () => {
     },
   });
 
+  await prisma.$disconnect();
   return { alunos };
 };
 

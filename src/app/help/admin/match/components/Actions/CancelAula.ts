@@ -91,6 +91,6 @@ export const CancelAula = async (id: string) => {
   }
 
   console.log(agendaCancelada, financeiroCancelada);
-
+  await prisma.$disconnect();
   return agendaCancelada;
 };

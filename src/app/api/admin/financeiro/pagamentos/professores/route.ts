@@ -24,6 +24,7 @@ export async function GET() {
     });
 
     console.log("Aulas da semana:", agendaAulas);
+    await prisma.$disconnect();
 
     // Para cada aula que o professor tiver que for confirmada ele vai adicionar o valor da aula na tabela financeiro
 

@@ -68,6 +68,7 @@ export const GetProfessorAgenda = async (professorId: string, allPeriodo: boolea
         },
       });
 
+      await prisma.$disconnect();
       return {
         success: true,
         data: agendas,

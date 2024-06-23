@@ -68,6 +68,7 @@ const calcularDistancia = async (enderecoAluno: string, enderecoProfessor: strin
       timeout: 1000,
     });
 
+    await prisma.$disconnect();
     const distanciaEmMetros = response.data.rows[0].elements[0].distance.value;
     return parseFloat((distanciaEmMetros / 1000).toFixed(1));
   } catch (error) {

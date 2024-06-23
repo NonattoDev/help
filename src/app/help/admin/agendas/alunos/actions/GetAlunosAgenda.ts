@@ -56,6 +56,7 @@ export const GetAlunosAgenda = async (alunoId: string, mesAnoFiltro: boolean, on
     });
 
     if (agendas.length > 0) {
+      await prisma.$disconnect();
       return {
         success: true,
         data: agendas,

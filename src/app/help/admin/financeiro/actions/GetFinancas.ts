@@ -4,9 +4,10 @@ import prisma from "@/utils/prismaInstance";
 import moment from "moment";
 
 // Função de busca de dados
-export const fetchDadosFinancas = async () => {
+export const fetchDadosFinancas = async (professorId?: string) => {
   const startOfWeek = moment().startOf("week").toDate();
   const endOfWeek = moment().endOf("week").toDate();
+  console.log(startOfWeek, endOfWeek);
 
   const aulasRealizadas = await prisma.agendaAulas.findMany({
     where: { finalizada: true },
@@ -37,6 +38,8 @@ export const fetchDadosFinancas = async () => {
   let valorTransporteAtual = await prisma.valores.findFirst({
     where: { nome: "TRANSPORTE PÚBLICO" },
   });
+
+  await prisma.$disconnect();
 
   return {
     success: true,

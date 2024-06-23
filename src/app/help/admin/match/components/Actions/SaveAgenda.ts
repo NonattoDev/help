@@ -92,7 +92,7 @@ export const saveAgenda = async (agenda: AgendaAulas) => {
     });
 
     console.log("Agenda salva com sucesso:", insertAgenda);
-
+    await prisma.$disconnect();
     return {
       success: "Agenda salva com sucesso",
       data: insertAgenda,

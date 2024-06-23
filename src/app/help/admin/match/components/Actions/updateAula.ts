@@ -138,7 +138,7 @@ export const updateAula = async (agenda: AgendaAulas) => {
         },
       },
     });
-
+    await prisma.$disconnect();
     return {
       success: "Aula atualizada com sucesso",
       data: updatedAgenda,

@@ -13,6 +13,8 @@ async function getAllAlunos() {
     return [];
   }
 
+  await prisma.$disconnect();
+
   return alunosNome;
 }
 export default async function AlunosAgenda() {

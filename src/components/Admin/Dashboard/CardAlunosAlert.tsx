@@ -8,6 +8,7 @@ export async function getDados(data: any) {
     },
   });
 
+  await prisma.$disconnect();
   return alunos.length;
 }
 
