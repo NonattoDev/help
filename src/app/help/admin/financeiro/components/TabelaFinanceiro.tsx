@@ -1,6 +1,11 @@
 import moment from "moment";
 import { fetchDadosFinancas } from "../actions/GetFinancas";
 import useSWR from "swr";
+import excelSVG from "./svg/excel.svg";
+import pdfSVG from "./svg/pdf.svg";
+import Image from "next/image";
+import { exportPDF } from "./exportFunctions/exportPdf";
+import { exportExcel } from "./exportFunctions/exportExcel";
 
 export default function TabelaFinanceiro({ professorId }: { professorId: string | null }) {
   const { data, error } = useSWR(professorId ? ["dadosFinancas", professorId] : "dadosFinancas", () => fetchDadosFinancas(professorId), {
@@ -19,6 +24,14 @@ export default function TabelaFinanceiro({ professorId }: { professorId: string 
 
   return (
     <div className="overflow-x-auto my-8">
+      <div id="exportCsv" className="flex gap-1 my-2">
+        <button className="btn" onClick={() => exportPDF(totalAulasRealizadas)}>
+          <Image src={pdfSVG} alt="pdfIcon" width={28} height={28} />
+        </button>
+        <button className="btn" onClick={() => exportExcel(totalAulasRealizadas)}>
+          <Image src={excelSVG} alt="excelIcon" width={28} height={28} />
+        </button>
+      </div>
       <table className="table w-full">
         <thead className="bg-gray-100">
           <tr>
