@@ -5,8 +5,6 @@ import prisma from "@/utils/prismaInstance";
 import moment from "moment";
 
 export const SendRecoveryEmail = async (email: string) => {
-  console.log(email);
-
   let userExists =
     (await prisma.usuarios.findFirst({
       where: { email },

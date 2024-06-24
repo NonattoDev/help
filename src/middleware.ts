@@ -5,12 +5,19 @@ import { getToken } from "next-auth/jwt";
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
+  const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+
+  // Redirecionar para a rota / se o token estiver presente e o usuário tentar acessar a rota /help/forgot-password
+  if (pathname.includes("/help/forgot-password") && token) {
+    const url = new URL(req.url);
+    url.pathname = "/";
+    return NextResponse.redirect(url.toString());
+  }
 
   // Ignorar a verificação de token para a rota /help/forgot-password
-  if (pathname.startsWith("/help/forgot-password")) {
+  if (pathname.includes("/help/forgot-password")) {
     return NextResponse.next();
   }
-  const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
 
   if (!token) {
     const url = new URL(req.url);

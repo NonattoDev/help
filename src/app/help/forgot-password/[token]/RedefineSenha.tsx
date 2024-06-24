@@ -4,6 +4,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { ChangePasswordForgot } from "./ChangePasswordForgot";
 import verifyPassword from "@/utils/VerifyPassword";
+import { redirect } from "next/navigation";
 
 export default function RedefineSenha({ email }: { email: string }) {
   const [password, setPassword] = useState("");
@@ -17,7 +18,7 @@ export default function RedefineSenha({ email }: { email: string }) {
     if (!password || !confirmPassword) {
       errorCount++;
       toast.error("Preencha todos os campos");
-      return
+      return;
     }
 
     if (password !== confirmPassword) {
@@ -32,7 +33,8 @@ export default function RedefineSenha({ email }: { email: string }) {
     const trocaSenha = await ChangePasswordForgot(email, password);
 
     if (trocaSenha.success) {
-      return toast.success(trocaSenha.message);
+      toast.success(trocaSenha.message);
+      redirect("/");
     } else {
       return toast.error(trocaSenha.message);
     }
