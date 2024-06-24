@@ -10,6 +10,7 @@ import { Professor } from "@prisma/client";
 import { Suspense } from "react";
 import AgendaDropdown from "../Agenda/Agenda";
 import FinanceiroButton from "../Buttons/FinanceiroButton";
+import { AdministrativoButton } from "../Administrativo/Administrativo";
 
 function LoadingFallback() {
   return <div className="p-4 skeleton"></div>;
@@ -70,6 +71,7 @@ const Header = async () => {
         )}
         {(session?.user.accessLevel === "administrador" || session?.user.accessLevel === "administrativo") && <AgendaDropdown />}
         {(session?.user.accessLevel === "administrador" || session?.user.accessLevel === "administrativo") && <FinanceiroButton />}
+        {(session?.user.accessLevel === "administrador" || session?.user.accessLevel === "administrativo") && <AdministrativoButton />}
       </div>
 
       {/* Fim Header */}

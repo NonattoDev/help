@@ -37,6 +37,7 @@ export default function AgendaMatch({ professor, aluno, materias }: AgendaMatchP
 
   // Agenda aulas do professor
   const [agendaAulas, setAgendaAulas] = useState<any[]>(professor?.AgendaAulas as any[]);
+  const [agendaAulasAluno, setAgendaAulasAluno] = useState<any[]>(aluno?.AgendaAulas as any[]);
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let errorCount = 0;
@@ -118,6 +119,7 @@ export default function AgendaMatch({ professor, aluno, materias }: AgendaMatchP
     toast.success(response.success);
 
     setAgendaAulas([...agendaAulas, response.data]);
+    setAgendaAulasAluno([...agendaAulasAluno, response.data]);
     setStep(Step.SELECTDATE);
     setModalidade("");
     setHoraInicio("");
@@ -138,7 +140,7 @@ export default function AgendaMatch({ professor, aluno, materias }: AgendaMatchP
   };
 
   // Verificar quantas aulas o aluno já tem marcadas ESSE mes
-  const qtdAulasMarcadas = agendaAulas.filter((agenda) => moment(agenda.data).format("MM-YYYY") === moment(date).format("MM-YYYY") && agenda.cancelada === false).length;
+  const qtdAulasMarcadas = agendaAulasAluno.filter((agenda) => moment(agenda.data).format("MM-YYYY") === moment(date).format("MM-YYYY") && agenda.cancelada === false).length;
 
   return (
     <div>

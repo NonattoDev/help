@@ -11,11 +11,13 @@ export const saveAgenda = async (agenda: AgendaAulas) => {
         data: moment(agenda.data).toDate(),
         professorId: agenda.professorId,
         alunoId: agenda.alunoId,
-        OR: [
+        AND: [
           {
             horaInicio: {
               lte: agenda.horaFinal,
             },
+          },
+          {
             horaFinal: {
               gte: agenda.horaInicio,
             },
@@ -35,11 +37,13 @@ export const saveAgenda = async (agenda: AgendaAulas) => {
       where: {
         data: moment(agenda.data).toDate(),
         alunoId: agenda.alunoId,
-        OR: [
+        AND: [
           {
             horaInicio: {
               lte: agenda.horaFinal,
             },
+          },
+          {
             horaFinal: {
               gte: agenda.horaInicio,
             },
@@ -51,6 +55,32 @@ export const saveAgenda = async (agenda: AgendaAulas) => {
     if (agendaExistsForAluno) {
       return {
         error: "O aluno já tem uma aula agendada nesse horário com outro professor",
+      };
+    }
+
+    // Verifica se já existe uma agenda para o professor com essa data e no intervalo entre horaInicio e horaFinal
+    const agendaExistsForProfessor = await prisma.agendaAulas.findFirst({
+      where: {
+        data: moment(agenda.data).toDate(),
+        professorId: agenda.professorId,
+        AND: [
+          {
+            horaInicio: {
+              lte: agenda.horaFinal,
+            },
+          },
+          {
+            horaFinal: {
+              gte: agenda.horaInicio,
+            },
+          },
+        ],
+      },
+    });
+
+    if (agendaExistsForProfessor) {
+      return {
+        error: "O professor já tem uma aula agendada nesse horário",
       };
     }
 

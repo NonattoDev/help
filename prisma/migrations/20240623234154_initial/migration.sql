@@ -20,6 +20,20 @@ CREATE TABLE "Usuarios" (
 );
 
 -- CreateTable
+CREATE TABLE "MateriaisRequisitados" (
+    "id" TEXT NOT NULL,
+    "alunoId" TEXT NOT NULL,
+    "professorId" TEXT NOT NULL,
+    "material" TEXT NOT NULL,
+    "status" TEXT NOT NULL DEFAULT 'pendente',
+    "concluidoPor" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "MateriaisRequisitados_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "AgendaAulas" (
     "id" TEXT NOT NULL,
     "alunoId" TEXT NOT NULL,
@@ -191,6 +205,12 @@ CREATE UNIQUE INDEX "Professor_email_key" ON "Professor"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Professor_cpf_key" ON "Professor"("cpf");
+
+-- AddForeignKey
+ALTER TABLE "MateriaisRequisitados" ADD CONSTRAINT "MateriaisRequisitados_alunoId_fkey" FOREIGN KEY ("alunoId") REFERENCES "Aluno"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "MateriaisRequisitados" ADD CONSTRAINT "MateriaisRequisitados_professorId_fkey" FOREIGN KEY ("professorId") REFERENCES "Professor"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "AgendaAulas" ADD CONSTRAINT "AgendaAulas_alunoId_fkey" FOREIGN KEY ("alunoId") REFERENCES "Aluno"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
