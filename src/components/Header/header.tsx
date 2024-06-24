@@ -11,6 +11,7 @@ import { Suspense } from "react";
 import AgendaDropdown from "../Agenda/Agenda";
 import FinanceiroButton from "../Buttons/FinanceiroButton";
 import { AdministrativoButton } from "../Administrativo/Administrativo";
+import ConfigButton from "../Buttons/ConfigButton";
 
 function LoadingFallback() {
   return <div className="p-4 skeleton"></div>;
@@ -47,15 +48,7 @@ const Header = async () => {
   }
 
   return (
-    <div
-      className="navbar bg-base-100 shadow-md"
-      style={{
-        width: "97%",
-        margin: "10px auto",
-        display: "flex",
-        justifyContent: "space-between",
-      }}
-    >
+    <div className="flex justify-between navbar bg-base-100 shadow-md my-4 mx-auto w-[97%]">
       {/* Inicio Header */}
       <div className="w-1/4 justify-start">
         <LogoButton userName={session?.user.nome} />
@@ -75,12 +68,8 @@ const Header = async () => {
       </div>
 
       {/* Fim Header */}
-      <div
-        className="w-1/4 flex justify-end"
-        style={{
-          gap: "10px",
-        }}
-      >
+      <div className="w-1/4 flex justify-end gap-1">
+        {(session?.user.accessLevel === "administrador" || session?.user.accessLevel === "administrativo") && <ConfigButton />}
         <MyProfileButton id={session?.user?.id} />
         <LogoutButton />
       </div>
