@@ -121,6 +121,19 @@ CREATE TABLE "FinanceiroAluno" (
 );
 
 -- CreateTable
+CREATE TABLE "TokenRecuperacao" (
+    "id" TEXT NOT NULL,
+    "token" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "utilizado" BOOLEAN NOT NULL DEFAULT false,
+    "validoAte" TIMESTAMP(3) NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "TokenRecuperacao_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "FinanceiroProfessor" (
     "id" TEXT NOT NULL,
     "professorId" TEXT NOT NULL,
@@ -199,6 +212,9 @@ CREATE UNIQUE INDEX "Responsavel_cpf_key" ON "Responsavel"("cpf");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Aluno_email_key" ON "Aluno"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "TokenRecuperacao_token_key" ON "TokenRecuperacao"("token");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Professor_email_key" ON "Professor"("email");

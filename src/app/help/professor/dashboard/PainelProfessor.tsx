@@ -4,7 +4,7 @@ import AgendaCard from "@/components/Agenda/AgendaCard/AgendaCard";
 import { AgendaAulas } from "@prisma/client";
 import moment from "moment";
 import { useState } from "react";
-import { GetAgendas } from "../../../server/actions/GetAgendas";
+import { GetAgendas } from "../../../../server/actions/GetAgendas";
 import { toast } from "react-toastify";
 
 export default function PainelProfessor({ AgendaProfessor }: { AgendaProfessor: any[] }) {

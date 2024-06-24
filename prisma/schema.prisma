@@ -123,6 +123,16 @@ model FinanceiroAluno {
   updatedAt      DateTime @updatedAt
 }
 
+model TokenRecuperacao {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  email     String
+  utilizado Boolean  @default(false)
+  validoAte DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model FinanceiroProfessor {
   id               String      @id @default(cuid())
   professorId      String

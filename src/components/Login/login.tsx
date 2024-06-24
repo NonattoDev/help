@@ -10,12 +10,14 @@ import help from "/public/help.svg";
 import { useRouter } from "next/navigation";
 import LoadingButton from "../Buttons/LoadingButton";
 import Modal from "./ForgotModal"; // Importe o componente Modal
+import { SendRecoveryEmail } from "@/server/actions/SendRecoveryEmail";
 
 export default function LoginComponent() {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const [showModal, setShowModal] = React.useState(false);
+  const [emailRecuperacao, setEmailRecuperacao] = React.useState("");
   const router = useRouter();
 
   const submit = async (e: React.FormEvent) => {
@@ -66,6 +68,20 @@ export default function LoginComponent() {
 
   const closeModal = () => {
     setShowModal(false);
+  };
+
+  const handleSendCode = async () => {
+    const sendEmail = await SendRecoveryEmail(emailRecuperacao);
+
+    if (sendEmail.success) {
+      setEmailRecuperacao("");
+      toast.success(sendEmail.message);
+    } else {
+      toast.error(sendEmail.message);
+      return;
+    }
+    // E depois fechar o modal
+    closeModal();
   };
 
   return (
@@ -124,9 +140,16 @@ export default function LoginComponent() {
         </div>
       </div>
       <Modal show={showModal} onClose={closeModal}>
-        <h2 className="text-lg font-bold">Esqueci minha senha</h2>
-        <p className="py-4">Insira seu email para redefinir sua senha.</p>
-        <input type="email" name="emailRecuperacao" id="emailRecuperacao" className="input input-bordered" />
+        <div className="flex flex-col items-center">
+          <h2 className="text-lg font-bold">Esqueci minha senha</h2>
+          <p className="py-4">Insira seu email para redefinir sua senha.</p>
+
+          <input type="email" name="emailRecuperacao" id="emailRecuperacao" className="input input-bordered" value={emailRecuperacao} onChange={(e) => setEmailRecuperacao(e.target.value)} />
+
+          <button className="btn my-2" onClick={handleSendCode}>
+            Enviar email de recuperação
+          </button>
+        </div>
       </Modal>
     </div>
   );
