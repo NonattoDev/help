@@ -9,21 +9,21 @@ import { toast } from "react-toastify";
 import help from "/public/help.svg";
 import { useRouter } from "next/navigation";
 import LoadingButton from "../Buttons/LoadingButton";
-import Link from "next/link";
+import Modal from "./ForgotModal"; // Importe o componente Modal
 
 export default function LoginComponent() {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [loading, setLoading] = React.useState(false);
+  const [showModal, setShowModal] = React.useState(false);
   const router = useRouter();
 
   const submit = async (e: React.FormEvent) => {
     setLoading(true);
     e.preventDefault();
-    if (email.includes("@") == false) return toast.error("Email inválido");
+    if (!email.includes("@")) return toast.error("Email inválido");
     if (email === "" || password === "") return toast.info("Preencha todos os campos");
 
-    // Usa o NextAuth para fazer login
     try {
       const response = await signIn("credentials", {
         email,
@@ -58,8 +58,14 @@ export default function LoginComponent() {
       setLoading(false);
       console.error(error);
     }
+  };
 
-    return;
+  const handleForgotPassword = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
   };
 
   return (
@@ -71,7 +77,7 @@ export default function LoginComponent() {
           </div>
           <div className="bg-white p-8 rounded-lg shadow-lg">
             <h2 className="text-2xl font-bold mb-4 text-center">Help</h2>
-            <form onSubmit={(e) => submit(e)}>
+            <form onSubmit={submit}>
               <div className="mb-4">
                 <label htmlFor="email" className="block text-gray-700 font-bold mb-2">
                   Email
@@ -85,7 +91,6 @@ export default function LoginComponent() {
                 <label htmlFor="password" className="block text-gray-700 font-bold mb-2">
                   Senha
                 </label>
-
                 <div className="flex items-center border border-gray-300 rounded focus-within:border-blue-500">
                   <MdPassword className="ml-3 text-gray-500" />
                   <input
@@ -108,9 +113,9 @@ export default function LoginComponent() {
                       <BiSearch className="mr-1 text-white" />
                       Login
                     </button>
-                    <Link className="text-center" href={"/redefinir-senha"}>
+                    <button type="button" className="btn text-center mt-4" onClick={handleForgotPassword}>
                       Esqueci minha senha
-                    </Link>
+                    </button>
                   </div>
                 )}
               </div>
@@ -118,6 +123,11 @@ export default function LoginComponent() {
           </div>
         </div>
       </div>
+      <Modal show={showModal} onClose={closeModal}>
+        <h2 className="text-lg font-bold">Esqueci minha senha</h2>
+        <p className="py-4">Insira seu email para redefinir sua senha.</p>
+        <input type="email" name="emailRecuperacao" id="emailRecuperacao" className="input input-bordered" />
+      </Modal>
     </div>
   );
 }
