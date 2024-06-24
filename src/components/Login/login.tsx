@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import help from "/public/help.svg";
 import { useRouter } from "next/navigation";
 import LoadingButton from "../Buttons/LoadingButton";
+import Link from "next/link";
 
 export default function LoginComponent() {
   const [email, setEmail] = React.useState("");
@@ -102,10 +103,15 @@ export default function LoginComponent() {
                 {loading ? (
                   <LoadingButton />
                 ) : (
-                  <button type="submit" className={`flex items-center px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition duration-500 ${loading ? "skeleton" : ""}`}>
-                    <BiSearch className="mr-1 text-white" />
-                    Login
-                  </button>
+                  <div className="flex flex-col items-center">
+                    <button type="submit" className={`flex items-center px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition duration-500 ${loading ? "skeleton" : ""}`}>
+                      <BiSearch className="mr-1 text-white" />
+                      Login
+                    </button>
+                    <Link className="text-center" href={"/redefinir-senha"}>
+                      Esqueci minha senha
+                    </Link>
+                  </div>
                 )}
               </div>
             </form>

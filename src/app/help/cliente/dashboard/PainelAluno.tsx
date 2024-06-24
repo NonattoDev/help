@@ -7,8 +7,8 @@ import { useState } from "react";
 import { GetAgendas } from "../../../server/actions/GetAgendas";
 import { toast } from "react-toastify";
 
-export default function PainelProfessor({ AgendaProfessor }: { AgendaProfessor: any[] }) {
-  const [agendaAulas, setAgendaAulas] = useState<AgendaAulas[] | undefined>(AgendaProfessor);
+export default function PainelAluno({ AgendaAluno }: { AgendaAluno: any[] }) {
+  const [agendaAulas, setAgendaAulas] = useState<AgendaAulas[] | undefined>(AgendaAluno);
   const [date, setDate] = useState(moment().format("YYYY-MM-DD"));
 
   const handleDateChange = async (e: any) => {
@@ -30,8 +30,8 @@ export default function PainelProfessor({ AgendaProfessor }: { AgendaProfessor: 
         <span className="label-text">Filtro por data</span>
         <input type="date" name="date" className="input input-bordered w-1/12 input-sm" value={date} onChange={handleDateChange} />
       </div>
-      {agendaAulas && agendaAulas.length > 0 && <AgendaCard AgendaAulas={agendaAulas as any[]} calledBy="ProfessorPage" />}
-      {agendaAulas && agendaAulas.length <= 0 && <AgendaCard AgendaAulas={AgendaProfessor as any[]} calledBy="ProfessorPage" />}
+      {agendaAulas && agendaAulas.length > 0 && <AgendaCard AgendaAulas={agendaAulas as any[]} calledBy="AlunoPage" />}
+      {agendaAulas && agendaAulas.length <= 0 && <AgendaCard AgendaAulas={AgendaAluno as any[]} calledBy="AlunoPage" />}
     </div>
   );
 }

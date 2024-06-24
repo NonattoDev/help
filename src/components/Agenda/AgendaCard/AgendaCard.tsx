@@ -110,7 +110,7 @@ export default function AgendaCard({ AgendaAulas, calledBy }: AgendaProps) {
                     <div className="flex flex-col gap-2">
                       {!agenda.finalizada && <div className="stat-desc text-success text-center mt-5">Aula confirmada</div>}
                       {aulaDateTime.isBefore(moment()) && !agenda.finalizada && (
-                        <button className="btn btn-success text-white" onClick={() => handleFinalizarAula(agenda.id)}>
+                        <button disabled={calledBy !== "AgendaMatch"} className="btn btn-success text-white" onClick={() => handleFinalizarAula(agenda.id)}>
                           Marcar como finalizada
                         </button>
                       )}
@@ -119,12 +119,16 @@ export default function AgendaCard({ AgendaAulas, calledBy }: AgendaProps) {
                   {agenda.finalizada && <div className="stat-desc text-success text-center my-2">Aula concluída</div>}
                 </div>
                 {aulaDateTime.isAfter(moment()) && !agenda.cancelada && (
-                  <button className={`btn btn-error ${agenda.cancelada ? "cursor-not-allowed" : "cursor-pointer"}`} onClick={() => handleCancelAula(agenda.id)} disabled={agenda.cancelada}>
+                  <button
+                    className={`btn btn-error ${agenda.cancelada ? "cursor-not-allowed" : "cursor-pointer"}`}
+                    onClick={() => handleCancelAula(agenda.id)}
+                    disabled={agenda.cancelada || calledBy !== "AgendaMatch"}
+                  >
                     <MdCancel />
                   </button>
                 )}
                 {agenda.finalizada && (
-                  <button className="btn btn-success">
+                  <button className="btn btn-success" disabled={calledBy !== "AgendaMatch"}>
                     <FaCheckCircle color="white" />
                   </button>
                 )}
