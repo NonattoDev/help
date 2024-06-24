@@ -49,6 +49,8 @@ export const ChangePasswordForgot = async (email: string, password: string) => {
         utilizado: true,
       },
     });
+
+    await prisma.$disconnect();
   } catch (error) {
     console.log(error);
   }

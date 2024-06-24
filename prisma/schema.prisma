@@ -28,6 +28,7 @@ model MateriaisRequisitados {
   aluno        Aluno     @relation(fields: [alunoId], references: [id])
   professorId  String
   professor    Professor @relation(fields: [professorId], references: [id])
+  titulo       String
   material     String
   status       String    @default("pendente")
   concluidoPor String?

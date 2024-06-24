@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import help from "/public/help.svg";
 import { useRouter } from "next/navigation";
 import LoadingButton from "../Buttons/LoadingButton";
-import Modal from "./ForgotModal"; // Importe o componente Modal
+import Modal from "../Modal/Modal";
 import { SendRecoveryEmail } from "@/server/actions/SendRecoveryEmail";
 
 export default function LoginComponent() {
