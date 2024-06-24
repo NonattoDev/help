@@ -4,6 +4,10 @@ import { AgendaAulas } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import PainelProfessor from "./PainelProfessor";
 
+export const metadata = {
+  title: "Help - Professor",
+};
+
 const getDados = async () => {
   const session = await getServerSession(authOptions);
 
