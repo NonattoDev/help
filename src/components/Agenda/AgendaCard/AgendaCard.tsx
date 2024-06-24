@@ -89,9 +89,11 @@ export default function AgendaCard({ AgendaAulas, calledBy }: AgendaProps) {
                 <div className="text-info text-end">
                   {agenda.horaInicio} - {agenda.horaFinal}
                 </div>
-                <div className="my-2">
+                <div className="flex flex-col my-4 gap-1">
                   <div className="status-info">Aluno: {agenda.aluno.nome}</div>
-                  {calledBy === "AgendaAlunos" && <div className="status-info">Professor: {`${agenda.professor.nome.split(" ")[0]} ${agenda.professor.nome.split(" ").slice(-1)[0]}`}</div>}
+                  {calledBy === "AgendaAlunos" ||
+                    calledBy === "ResponsavelPage" ||
+                    (calledBy === "AlunoPage" && <div className="status-info">Professor: {`${agenda.professor.nome.split(" ")[0]} ${agenda.professor.nome.split(" ").slice(-1)[0]}`}</div>)}
 
                   <div className="status-info">Modalidade: {agenda.modalidade === "ONLINE" ? "Online" : "Presencial"}</div>
                   {agenda.modalidade === "PRESENCIAL" && (
