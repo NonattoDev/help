@@ -123,15 +123,29 @@ CREATE TABLE "Aluno" (
 CREATE TABLE "FinanceiroAluno" (
     "id" TEXT NOT NULL,
     "alunoId" TEXT NOT NULL,
+    "qtdAulas" INTEGER NOT NULL,
     "valor" DOUBLE PRECISION NOT NULL,
-    "status" TEXT NOT NULL DEFAULT 'pendente',
-    "conferidoConta" BOOLEAN NOT NULL DEFAULT false,
-    "dataPagamento" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "referenciaMes" TEXT NOT NULL,
+    "diaVencimento" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "FinanceiroAluno_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "PagamentosAluno" (
+    "id" TEXT NOT NULL,
+    "alunoId" TEXT NOT NULL,
+    "codigoIdentificador" TEXT NOT NULL,
+    "identificacao" TEXT NOT NULL,
+    "valor" DOUBLE PRECISION NOT NULL,
+    "mesReferencia" TEXT NOT NULL,
+    "formaPagamento" TEXT NOT NULL,
+    "dataPagamento" TIMESTAMP(3) NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "PagamentosAluno_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -231,6 +245,9 @@ CREATE UNIQUE INDEX "Responsavel_cpf_key" ON "Responsavel"("cpf");
 CREATE UNIQUE INDEX "Aluno_email_key" ON "Aluno"("email");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "FinanceiroAluno_alunoId_key" ON "FinanceiroAluno"("alunoId");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "TokenRecuperacao_token_key" ON "TokenRecuperacao"("token");
 
 -- CreateIndex
@@ -259,6 +276,9 @@ ALTER TABLE "Aluno" ADD CONSTRAINT "Aluno_responsavelId_fkey" FOREIGN KEY ("resp
 
 -- AddForeignKey
 ALTER TABLE "FinanceiroAluno" ADD CONSTRAINT "FinanceiroAluno_alunoId_fkey" FOREIGN KEY ("alunoId") REFERENCES "Aluno"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "PagamentosAluno" ADD CONSTRAINT "PagamentosAluno_alunoId_fkey" FOREIGN KEY ("alunoId") REFERENCES "Aluno"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "FinanceiroProfessor" ADD CONSTRAINT "FinanceiroProfessor_professorId_fkey" FOREIGN KEY ("professorId") REFERENCES "Professor"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

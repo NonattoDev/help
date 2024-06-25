@@ -155,13 +155,25 @@ export async function createAlunos(prisma: PrismaClient) {
     },
   ];
 
-  // Crie alunos
-  const alunos = await prisma.aluno.createMany({
-    data: alunosData,
-    skipDuplicates: true,
-  });
+  for (const aluno of alunosData) {
+    // Crie alunos
+    const alunoCriado = await prisma.aluno.create({
+      data: aluno,
+    });
+
+    // Cria informacao financeiro
+
+    await prisma.financeiroAluno.create({
+      data: {
+        diaVencimento: "05",
+        qtdAulas: Number(aluno.financeiro.qtd_aulas),
+        valor: parseFloat(aluno.financeiro.valor),
+        alunoId: alunoCriado.id,
+      },
+    });
+  }
 
   await prisma.$disconnect();
 
-  console.log("Alunos Criados: " + alunos);
+  console.log("Alunos Criados com suas informacoes financeiras");
 }

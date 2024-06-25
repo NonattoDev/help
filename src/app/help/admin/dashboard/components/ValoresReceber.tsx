@@ -14,7 +14,7 @@ export default function ValoresReceber() {
     <div className="stats shadow text-primary-content bg-slate-300">
       <div className="stat">
         <div className="stat-figure text-primary">
-          <FaMoneyBillTrendUp fontSize={25} />
+          <FaMoneyBillTrendUp fontSize={25} color="#00A96E" />
         </div>
         <div className="stat-title text-zinc-900">A receber</div>
         <div className="stat-value text-success">

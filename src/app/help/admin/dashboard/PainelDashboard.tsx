@@ -16,7 +16,7 @@ export default function PainelDashboard() {
         <label className="label-text">Filtrar por data</label>
         <input type="date" className="input input-bordered" value={date} onChange={(e) => setDate(e.target.value)} />
       </div>
-      <div className="flex gap-2">
+      <div className="flex gap-2 justify-center">
         <CardAlunosAlert date={date} />
         <AlunosEntrantesSemanal />
         <AlunosSemProfessor />

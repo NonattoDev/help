@@ -24,16 +24,15 @@ model Usuarios {
 }
 
 model UsuariosFinanceiro {
-  id            String   @id @default(cuid())
-  usuarioId     String   @unique
-  usuario       Usuarios  @relation(fields: [usuarioId], references: [id])
-  valor         Float
-  status        String    @default("pendente")
+  id           String   @id @default(cuid())
+  usuarioId    String   @unique
+  usuario      Usuarios @relation(fields: [usuarioId], references: [id])
+  valor        Float
+  status       String   @default("pendente")
   diaPagamento String
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
-
 
 model MateriaisRequisitados {
   id           String    @id @default(cuid())
@@ -119,22 +118,35 @@ model Aluno {
   ativo                 Boolean                 @default(true)
   createdAt             DateTime                @default(now())
   updatedAt             DateTime                @updatedAt
-  dadosFinanceiro       FinanceiroAluno[]
+  dadosFinanceiro       FinanceiroAluno?
   AgendaAulas           AgendaAulas[]
   MateriaisRequisitados MateriaisRequisitados[]
+  PagamentosAluno       PagamentosAluno[]
 }
 
 model FinanceiroAluno {
-  id             String   @id @default(cuid())
-  alunoId        String
-  aluno          Aluno    @relation(fields: [alunoId], references: [id])
-  valor          Float
-  status         String   @default("pendente")
-  conferidoConta Boolean  @default(false)
-  dataPagamento  DateTime @default(now())
-  referenciaMes  String
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  id            String   @id @default(cuid())
+  alunoId       String  @unique
+  aluno         Aluno    @relation(fields: [alunoId], references: [id])
+  qtdAulas      Int
+  valor         Float
+  diaVencimento String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model PagamentosAluno {
+  id                  String   @id @default(cuid())
+  alunoId             String
+  aluno               Aluno    @relation(fields: [alunoId], references: [id])
+  codigoIdentificador String
+  identificacao       String
+  valor               Float
+  mesReferencia       String
+  formaPagamento      String
+  dataPagamento       DateTime
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
 }
 
 model TokenRecuperacao {
