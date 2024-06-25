@@ -19,6 +19,7 @@ interface Props {
   setConfirmPassword: any;
   showConfirmPassword: any;
   confirmPassword: any;
+  handleToggleChange: any;
 }
 
 const DadosPessoaisForm: React.FC<Props> = ({
@@ -29,6 +30,7 @@ const DadosPessoaisForm: React.FC<Props> = ({
   handleChange,
   handleCheckboxChange,
   handleMateriasChange,
+  handleToggleChange,
   handleFetchCep,
   handleCurrencyChange,
   setConfirmPassword,
@@ -37,7 +39,17 @@ const DadosPessoaisForm: React.FC<Props> = ({
 }) => {
   return (
     <form>
-      <h2 className="text-md text-center font-bold mt-5 mb-5">Dados Pessoais</h2>
+      <div>
+        <div className="w-24 mr-5">
+          {accessLevel?.startsWith("admin") && (
+            <label className="cursor-pointer label gap-2">
+              <input type="checkbox" name="ativo" checked={alunoData.ativo} onChange={handleToggleChange} className="toggle toggle-info" />
+              <span className="label-text">{alunoData.ativo ? "Ativo" : "Desativado"}</span>
+            </label>
+          )}
+        </div>
+        <h2 className="text-md text-center font-bold mt-5 mb-5">Dados Pessoais</h2>
+      </div>
       <div className="grid grid-cols-4 gap-4">
         <div className="form-control">
           <label className="label">

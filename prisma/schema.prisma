@@ -36,6 +36,8 @@ model MateriaisRequisitados {
   updatedAt    DateTime  @updatedAt
 }
 
+
+
 model AgendaAulas {
   id                  String                @id @default(cuid())
   alunoId             String

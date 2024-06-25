@@ -234,6 +234,15 @@ export default function EditAluno({ aluno, series, materias, accessLevel }: Prop
     }
   };
 
+  const handleToggleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    alert(`O aluno foi ${e.target.checked ? "ativado" : "desativado"}`);
+
+    setAlunoData((prev) => ({
+      ...prev,
+      ativo: e.target.checked,
+    }));
+  };
+
   return (
     <div>
       <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
@@ -245,6 +254,7 @@ export default function EditAluno({ aluno, series, materias, accessLevel }: Prop
           accessLevel={accessLevel!}
           handleChange={handleChange}
           handleCheckboxChange={handleCheckboxChange}
+          handleToggleChange={handleToggleChange}
           handleMateriasChange={handleMateriasChange}
           handleFetchCep={handleFetchCep}
           handleCurrencyChange={handleCurrencyChange}

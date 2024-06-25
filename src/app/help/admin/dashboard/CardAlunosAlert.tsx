@@ -1,19 +1,19 @@
-import prisma from "@/utils/prismaInstance";
-import moment from "moment";
+"use client";
 
-export async function getDados(data: any) {
-  const alunos = await prisma.aluno.findMany({
-    where: {
-      ativo: true,
-    },
-  });
+import useSWR from "swr";
+import { GetAlunosAtivos } from "./actions/GetAlunosAtivos";
+import { toast } from "react-toastify";
 
-  await prisma.$disconnect();
-  return alunos.length;
-}
+export default function CardAlunosAlert({ date }: { date: string }) {
+  const { data, error, isLoading } = useSWR(["GetAlunosAtivos", date], () => GetAlunosAtivos(date));
 
-export default async function CardAlunosAlert() {
-  const alunosAtivos = getDados(moment().startOf("day").toDate());
+  if (error) return <div>Erro ao carregar os dados</div>;
+  if (isLoading) return <div className="skeleton w-full h-96"></div>;
+
+  if (data && data.success === false) {
+    toast.error(data.message);
+    return;
+  }
 
   return (
     <div className="stats shadow text-primary-content bg-slate-300">
@@ -29,8 +29,8 @@ export default async function CardAlunosAlert() {
           </svg>
         </div>
         <div className="stat-title text-zinc-900">Total de alunos ativos</div>
-        <div className="stat-value text-primary">{alunosAtivos}</div>
-        <div className="stat-desc text-zinc-900">21% more than last month</div>
+        <div className="stat-value text-primary">{data?.data}</div>
+        <div className="stat-desc text-zinc-900">{data?.comparativoMeses} more than last month</div>
       </div>
     </div>
   );
