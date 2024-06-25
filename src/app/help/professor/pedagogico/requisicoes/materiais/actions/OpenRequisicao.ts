@@ -17,6 +17,7 @@ export const OpenRequisicao = async (requisicao: { alunoId: string; requisicaoMa
       material: requisicao?.requisicaoMaterial,
     },
   });
+  await prisma.$disconnect();
 
   if (!openRequisicao) return { success: false, data: null, message: "Erro ao abrir requisição." };
 

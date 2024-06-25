@@ -24,6 +24,7 @@ CREATE TABLE "MateriaisRequisitados" (
     "id" TEXT NOT NULL,
     "alunoId" TEXT NOT NULL,
     "professorId" TEXT NOT NULL,
+    "titulo" TEXT NOT NULL,
     "material" TEXT NOT NULL,
     "status" TEXT NOT NULL DEFAULT 'pendente',
     "concluidoPor" TEXT,
