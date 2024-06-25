@@ -1,7 +1,8 @@
-import {  NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import moment from "moment";
 import prisma from "@/utils/prismaInstance";
+import { connect } from "http2";
 
 export async function POST(request: Request, params: any) {
   let { formData: userData, typeEdit, alunoData, responsavelData } = await request.json();
@@ -17,6 +18,7 @@ export async function POST(request: Request, params: any) {
     alunoData.email = alunoData.email.toLowerCase();
     alunoData.telefone = alunoData.telefone.replace(/\D/g, "");
     alunoData.password = bcrypt.hashSync(alunoData.password, 10);
+    alunoData.financeiro.valor = (parseFloat(alunoData.financeiro.valor.replace(/\D/g, "")) / 100).toString();
     responsavelData.email = responsavelData.email.toLowerCase();
     responsavelData.telefone = responsavelData.telefone.replace(/\D/g, "");
     responsavelData.cpf = responsavelData.cpf.replace(/\D/g, "");
@@ -62,10 +64,17 @@ export async function POST(request: Request, params: any) {
         data: responsavelData,
       });
 
-      alunoData.responsavelId = responsavel.id;
-
       await prisma.aluno.create({
-        data: { ...alunoData, data_nascimento: moment(alunoData.data_nascimento).toDate() },
+        data: {
+          ...alunoData,
+          data_nascimento: moment(alunoData.data_nascimento).toDate(),
+
+          responsavel: {
+            connect: {
+              id: responsavel.id,
+            },
+          },
+        },
       });
     }
 

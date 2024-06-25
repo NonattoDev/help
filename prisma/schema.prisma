@@ -8,19 +8,32 @@ datasource db {
 }
 
 model Usuarios {
-  id              String   @id @default(cuid())
+  id              String              @id @default(cuid())
   nome            String
-  email           String   @unique
+  email           String              @unique
   data_nascimento DateTime
-  cpf             String   @unique
+  cpf             String              @unique
   cargo           String
   telefone        String
   password        String
-  accessLevel     String   @default("administrativo")
-  ativo           Boolean  @default(true)
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  accessLevel     String              @default("administrativo")
+  ativo           Boolean             @default(true)
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+  financeiro      UsuariosFinanceiro?
 }
+
+model UsuariosFinanceiro {
+  id            String   @id @default(cuid())
+  usuarioId     String   @unique
+  usuario       Usuarios  @relation(fields: [usuarioId], references: [id])
+  valor         Float
+  status        String    @default("pendente")
+  diaPagamento String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
 
 model MateriaisRequisitados {
   id           String    @id @default(cuid())
@@ -35,8 +48,6 @@ model MateriaisRequisitados {
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
 }
-
-
 
 model AgendaAulas {
   id                  String                @id @default(cuid())

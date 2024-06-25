@@ -2,12 +2,19 @@
 import prisma from "@/utils/prismaInstance";
 import moment from "moment";
 
-export async function GetAlunosAtivos(data: string) {
+export async function GetAlunosIngressantesSemanal() {
   try {
+    // Determina o início e o fim da semana (domingo anterior e domingo seguinte)
+    const startOfWeek = moment().startOf("week");
+    const endOfWeek = moment().endOf("week").add(1, "day");
+
     const alunos = await prisma.aluno.findMany({
       where: {
         ativo: true,
-        ...(data && { createdAt: moment(data).toDate() }),
+        createdAt: {
+          gte: startOfWeek.toDate(),
+          lt: endOfWeek.toDate(),
+        },
       },
     });
 

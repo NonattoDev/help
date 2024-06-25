@@ -1,19 +1,13 @@
 "use client";
-
 import useSWR from "swr";
-import { GetAlunosAtivos } from "./actions/GetAlunosAtivos";
-import { toast } from "react-toastify";
+import { GetAlunosIngressantesSemanal } from "../actions/GetAlunosIngressantesSemanal";
+import SkeletonStatLoading from "./SkeletonStatLoading";
 
-export default function CardAlunosAlert({ date }: { date: string }) {
-  const { data, error, isLoading } = useSWR(["GetAlunosAtivos", date], () => GetAlunosAtivos(date));
+export default function AlunosEntrantesSemanal() {
+  const { data, isLoading, error } = useSWR("GetAlunosIngressantesSemanal", GetAlunosIngressantesSemanal);
 
   if (error) return <div>Erro ao carregar os dados</div>;
-  if (isLoading) return <div className="skeleton w-full h-96"></div>;
-
-  if (data && data.success === false) {
-    toast.error(data.message);
-    return;
-  }
+  if (isLoading) return <SkeletonStatLoading />;
 
   return (
     <div className="stats shadow text-primary-content bg-slate-300">
@@ -28,9 +22,8 @@ export default function CardAlunosAlert({ date }: { date: string }) {
             ></path>
           </svg>
         </div>
-        <div className="stat-title text-zinc-900">Total de alunos ativos</div>
+        <div className="stat-title text-zinc-900">Alunos novos na semana</div>
         <div className="stat-value text-primary">{data?.data}</div>
-        <div className="stat-desc text-zinc-900">{data?.comparativoMeses} more than last month</div>
       </div>
     </div>
   );

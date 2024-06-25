@@ -13,6 +13,7 @@ import FinanceiroButton from "../Buttons/FinanceiroButton";
 import { AdministrativoButton } from "../Administrativo/Administrativo";
 import ConfigButton from "../Buttons/ConfigButton";
 import MateriaisButton from "../Buttons/Professor/MateriaisButtons";
+import HomeButton from "../Buttons/HomeButton";
 
 function LoadingFallback() {
   return <div className="p-4 skeleton"></div>;
@@ -56,7 +57,8 @@ const Header = async () => {
       </div>
 
       {/* Meio do Header*/}
-      <div className="w-1/4 justify-center">
+      <div className="w-1/4 justify-center gap-2">
+        <HomeButton />
         {(session?.user.accessLevel === "administrador" || session?.user.accessLevel === "administrativo") && <MatchButton />}
         {(session?.user.accessLevel === "administrador" || session?.user.accessLevel === "administrativo") && (
           <Suspense fallback={<LoadingFallback />}>
