@@ -14,7 +14,6 @@ export default function FinanceiroPage() {
 
   const HandleSelectChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
     setProfessorId(event.target.value);
-    toast.success("Professor selecionado com sucesso" + event.target.value);
   };
 
   return (

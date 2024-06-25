@@ -6,7 +6,7 @@ import PainelAluno from "./PainelAluno";
 import PainelResponsavel from "./PainelResponsavel";
 
 export const metadata: Metadata = {
-  title: "Help - Cliente",
+  title: "Help - Dashboard",
 };
 
 async function getData() {

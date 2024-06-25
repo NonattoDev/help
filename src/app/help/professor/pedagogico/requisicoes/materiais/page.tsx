@@ -30,11 +30,9 @@ export default async function Materiais() {
   const { MateriaisRequisitados } = await getRequisicoesMateriais();
   return (
     <div>
-      <h1 className="text-center text-2xl font-bold">Requisições de Materiais</h1>
-      {/* Aqui havéra um client component que o professor poderá solicitar materiais para o pedagógico. */}
+      <h1 className="text-1xl font-semibold text-center">Requisições de Materiais não atendidas</h1>
       <AbrirRequisicao />
-      {/* Mostrar em cards os materiais que professor já solicitou e o status de cada um, podendo também cancelar a solicitação. */}
-      <RequisicoesProfessor  MateriaisRequisitados={MateriaisRequisitados}/>
+      <RequisicoesProfessor MateriaisRequisitados={MateriaisRequisitados} />
     </div>
   );
 }

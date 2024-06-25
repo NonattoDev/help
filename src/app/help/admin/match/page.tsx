@@ -1,6 +1,10 @@
 import prisma from "@/utils/prismaInstance";
 import MatchApp from "./components/MatchApp";
 
+export const metadata = {
+  title: "Help - Match",
+};
+
 const getMatchDados = async () => {
   const alunos = await prisma.aluno.findMany({
     where: {

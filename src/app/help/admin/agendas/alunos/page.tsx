@@ -2,6 +2,10 @@ import { Suspense } from "react";
 import AgendaAlunos from "./AgendaAlunos";
 import prisma from "@/utils/prismaInstance";
 
+export const metadata = {
+  title: "Help - Agenda Alunos",
+};
+
 async function getAllAlunos() {
   const alunosNome = await prisma.aluno.findMany({
     where: {

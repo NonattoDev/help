@@ -74,7 +74,7 @@ export default function AbrirRequisicao() {
 
   return (
     <div>
-      <button className="btn" onClick={handleShowModal}>
+      <button className="btn my-2" onClick={handleShowModal}>
         Abrir Requisição
       </button>
 

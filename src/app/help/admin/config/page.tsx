@@ -1,6 +1,10 @@
 import prisma from "@/utils/prismaInstance";
 import EditValores from "./EditValores";
 
+export const metadata = {
+  title: "Help - Configurações do sistema",
+};
+
 const getDados = async () => {
   const valores = await prisma.valores.findMany();
 
@@ -14,7 +18,6 @@ export default async function Config() {
 
   return (
     <div>
-      <h1>Configurações de valores do sistema</h1>
       <EditValores valores={valores} />
     </div>
   );

@@ -30,7 +30,7 @@ export default function EditValores({ valores }: { valores: Valores[] }) {
 
   return (
     <div className="relative p-4">
-      <h2 className="text-2xl font-bold mb-4">Valores</h2>
+      <h2 className="text-1xl font-bold mb-4 text-center">Configurações de valores do sistema</h2>
       <div className="overflow-x-auto shadow-md">
         <table className="table w-full">
           <thead>
