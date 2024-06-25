@@ -5,12 +5,14 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { GetAlunos } from "./actions/GetAlunos";
 import { Aluno } from "@prisma/client";
+import { OpenRequisicao } from "./actions/OpenRequisicao";
 
 export default function AbrirRequisicao() {
   const [showModal, setShowModal] = useState(false);
   const [alunos, setAlunos] = useState([] as Aluno[]);
   const [alunoSelected, setAlunoSelected] = useState("");
   const [requisicaoMaterial, setRequisicaoMaterial] = useState("");
+  const [tituloRequisicao, setTituloRequisicao] = useState("");
 
   const handleShowModal = async () => {
     // Server Action que busca os alunos para o select
@@ -29,12 +31,41 @@ export default function AbrirRequisicao() {
     setAlunoSelected(e.target.value);
   };
 
-  const handleAbrirRequisicao = () => {
+  const handleAbrirRequisicao = async () => {
     if (!alunoSelected) {
       toast.error("Selecione um aluno.");
       return;
     }
-    toast.success(`Requisição aberta para o aluno ${alunoSelected}.`);
+
+    if (!tituloRequisicao) {
+      toast.error("Informe o título da requisição.");
+      return;
+    }
+
+    if (!requisicaoMaterial) {
+      toast.error("Informe o material da requisição.");
+      return;
+    }
+
+    const requisicaoCompleta = {
+      alunoId: alunoSelected,
+      requisicaoMaterial,
+      tituloRequisicao,
+    };
+
+    const openRequisicao = await OpenRequisicao(requisicaoCompleta);
+
+    if (!openRequisicao.success) {
+      toast.error(openRequisicao.message);
+
+      return;
+    }
+
+    // Zera os States
+    setAlunoSelected("");
+    setRequisicaoMaterial("");
+    setTituloRequisicao("");
+    toast.success(openRequisicao.message);
   };
 
   const handleChangeRequisicao = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -54,7 +85,7 @@ export default function AbrirRequisicao() {
           <label htmlFor="" className="label-text">
             Selecione o aluno
           </label>
-          <select className="input input-bordered text-center my-2" value={alunoSelected} onChange={handleSelectAluno}>
+          <select className="select select-primary w-full max-w-xs" value={alunoSelected} onChange={handleSelectAluno}>
             <option value="" disabled>
               Selecione o aluno
             </option>
@@ -65,7 +96,9 @@ export default function AbrirRequisicao() {
             ))}
           </select>
 
-          <textarea className="textarea textarea-accent textarea-lg w-full " placeholder="Bio" value={requisicaoMaterial} onChange={handleChangeRequisicao}></textarea>
+          <label className="label-text text-center mt-4">Do que precisa ?</label>
+          <input type="text" className="input input-bordered input-sm mb-2 text-center" value={tituloRequisicao} onChange={(e) => setTituloRequisicao(e.target.value)} />
+          <textarea className="textarea textarea-accent textarea-lg w-full text-sm " placeholder="Bio" value={requisicaoMaterial} onChange={handleChangeRequisicao}></textarea>
 
           <button className="btn my-2" onClick={handleAbrirRequisicao}>
             Fazer pedido de material

@@ -8,6 +8,8 @@ export const GetProfessores = async () => {
     },
   });
 
+  await prisma.$disconnect();
+
   return {
     success: true,
     data: professores,

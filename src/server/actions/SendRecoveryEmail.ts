@@ -62,6 +62,8 @@ export const SendRecoveryEmail = async (email: string) => {
     `,
   });
 
+  await prisma.$disconnect();
+
   return {
     success: true,
     message: "Email enviado com sucesso",

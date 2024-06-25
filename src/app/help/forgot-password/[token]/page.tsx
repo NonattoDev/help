@@ -17,6 +17,8 @@ const verifyToken = async (token: string) => {
     },
   });
 
+  await prisma.$disconnect();
+
   return tokenIsValid ? tokenIsValid : false;
 };
 
