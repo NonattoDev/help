@@ -23,7 +23,8 @@ export async function GetAlunosSemProfessor() {
 
     return {
       success: true,
-      data: alunos.length,
+      quantidadeAlunos: alunos.length,
+      listaAlunos: alunos,
     };
   } catch (error: any) {
     return {

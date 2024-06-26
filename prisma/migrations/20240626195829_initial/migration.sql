@@ -39,6 +39,7 @@ CREATE TABLE "MateriaisRequisitados" (
     "professorId" TEXT NOT NULL,
     "titulo" TEXT NOT NULL,
     "material" TEXT NOT NULL,
+    "prazo" TIMESTAMP(3) NOT NULL,
     "status" TEXT NOT NULL DEFAULT 'pendente',
     "concluidoPor" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,

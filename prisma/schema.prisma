@@ -42,6 +42,7 @@ model MateriaisRequisitados {
   professor    Professor @relation(fields: [professorId], references: [id])
   titulo       String
   material     String
+  prazo        DateTime
   status       String    @default("pendente")
   concluidoPor String?
   createdAt    DateTime  @default(now())

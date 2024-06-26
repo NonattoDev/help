@@ -4,6 +4,7 @@ import { getSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { ConcluiRequisicao } from "./actions/ConcluiRequisicao";
+import moment from "moment";
 
 export default function CardRequisicoes({ material }: { material: MateriaisRequisitados }) {
   const [materialData, setMaterialData] = useState<MateriaisRequisitados>(material);
@@ -35,6 +36,7 @@ export default function CardRequisicoes({ material }: { material: MateriaisRequi
   return (
     <div className="card bg-primary text-secondary-content w-96">
       <div className="card-body">
+        <span className="badge bard-primary justify-end">{moment(materialData.prazo).format("DD/MM/YYYY")}</span>
         <h2 className="card-title">{materialData.titulo}</h2>
         <p>{materialData.material}</p>
         <div className="card-actions justify-end">

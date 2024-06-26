@@ -20,7 +20,8 @@ export async function GetAlunosIngressantesSemanal() {
 
     return {
       success: true,
-      data: alunos.length,
+      qtdAlunosNovos: alunos.length,
+      alunosNovos: alunos
     };
   } catch (error: any) {
     return {

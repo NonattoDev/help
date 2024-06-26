@@ -6,12 +6,14 @@ import { toast } from "react-toastify";
 import { GetAlunos } from "./actions/GetAlunos";
 import { Aluno } from "@prisma/client";
 import { OpenRequisicao } from "./actions/OpenRequisicao";
+import moment from "moment";
 
 export default function AbrirRequisicao() {
   const [showModal, setShowModal] = useState(false);
   const [alunos, setAlunos] = useState([] as Aluno[]);
   const [alunoSelected, setAlunoSelected] = useState("");
   const [requisicaoMaterial, setRequisicaoMaterial] = useState("");
+  const [prazo, setPrazo] = useState(moment().add(2, "days").format("YYYY-MM-DD"));
   const [tituloRequisicao, setTituloRequisicao] = useState("");
 
   const handleShowModal = async () => {
@@ -47,10 +49,27 @@ export default function AbrirRequisicao() {
       return;
     }
 
+    if (!prazo) {
+      toast.error("Informe o prazo da requisição.");
+      return;
+    }
+
+    if (moment(prazo).isBefore(moment().add(2, "days"))) {
+      toast.error("O prazo deve ser maior que 2 dias.");
+      return;
+    }
+
+    // Não pode ser menor que a data atual
+    if (moment(prazo).isBefore(moment())) {
+      toast.error("O prazo deve ser maior que a data atual.");
+      return;
+    }
+
     const requisicaoCompleta = {
       alunoId: alunoSelected,
       requisicaoMaterial,
       tituloRequisicao,
+      prazo: moment(prazo).toDate(),
     };
 
     const openRequisicao = await OpenRequisicao(requisicaoCompleta);
@@ -62,7 +81,9 @@ export default function AbrirRequisicao() {
     }
 
     // Zera os States
+
     setAlunoSelected("");
+    setPrazo(moment().add(2, "days").format("YYYY-MM-DD"));
     setRequisicaoMaterial("");
     setTituloRequisicao("");
     toast.success(openRequisicao.message);
@@ -82,10 +103,8 @@ export default function AbrirRequisicao() {
         <div className="flex flex-col items-center">
           <h2 className="text-md font-semibold mb-4">Abrir uma Requisição</h2>
 
-          <label htmlFor="" className="label-text">
-            Selecione o aluno
-          </label>
-          <select className="select select-primary w-full max-w-xs" value={alunoSelected} onChange={handleSelectAluno}>
+          <label className="label-text">Selecione o aluno</label>
+          <select className="select select-sm select-primary w-full max-w-xs text-center" value={alunoSelected} onChange={handleSelectAluno}>
             <option value="" disabled>
               Selecione o aluno
             </option>
@@ -96,8 +115,10 @@ export default function AbrirRequisicao() {
             ))}
           </select>
 
-          <label className="label-text text-center mt-4">Do que precisa ?</label>
+          <label className="label-text text-center mt-2">Do que precisa ?</label>
           <input type="text" className="input input-bordered input-sm mb-2 text-center" value={tituloRequisicao} onChange={(e) => setTituloRequisicao(e.target.value)} />
+          <label className="label-text text-center mt-2">Para quando precisa ?</label>
+          <input className="mb-4 input input-bordered texte-center input-sm" type="date" name="prazo" value={prazo} onChange={(e) => setPrazo(e.target.value)} />
           <textarea className="textarea textarea-accent textarea-lg w-full text-sm " placeholder="Bio" value={requisicaoMaterial} onChange={handleChangeRequisicao}></textarea>
 
           <button className="btn my-2" onClick={handleAbrirRequisicao}>
