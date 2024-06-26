@@ -1,7 +1,7 @@
 "use server";
 import prisma from "@/utils/prismaInstance";
 
-export const GetValoresReceber = async () => {
+export const GetLucroTotal = async () => {
   try {
     const alunosAtivos = await prisma.aluno.findMany({
       where: {
@@ -20,14 +20,29 @@ export const GetValoresReceber = async () => {
       return acc;
     }, 0);
 
+    const aPagarFuncionarios = await prisma.usuarios.findMany({
+      include: {
+        financeiro: true,
+      },
+    });
+
+    const aPagar = aPagarFuncionarios.reduce((acc, curr) => {
+      if (curr.financeiro) {
+        return acc + curr.financeiro.valor;
+      }
+      return acc;
+    }, 0);
+
+    const LucroTotal = aReceber - aPagar;
+
     return {
       success: true,
-      data: aReceber,
+      LucroTotal,
     };
   } catch (error: any) {
     return {
       success: false,
-      data: 0,
+      LucroTotal: 0,
       error: error.message,
     };
   } finally {
