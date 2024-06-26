@@ -29,12 +29,12 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
           [enderecoKey]: value,
         },
       }));
-    } else if (name.startsWith("financeiro.")) {
+    } else if (name.startsWith("dadosFinanceiro.")) {
       const financeiroKey = name.split(".")[1];
       setAlunoData((prev) => ({
         ...prev,
-        financeiro: {
-          ...prev.financeiro,
+        dadosFinanceiro: {
+          ...prev.dadosFinanceiro,
           [financeiroKey]: value,
         },
       }));
@@ -84,7 +84,7 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
     if (value === "") {
       setAlunoData((prev) => ({
         ...prev,
-        financeiro: { ...prev.financeiro, valor: 0 },
+        dadosFinanceiro: { ...prev.dadosFinanceiro, valor: 0 },
       }));
       return;
     }
@@ -92,8 +92,8 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
 
     setAlunoData((prev) => ({
       ...prev,
-      financeiro: {
-        ...prev.financeiro,
+      dadosFinanceiro: {
+        ...prev.dadosFinanceiro,
         [name.split(".")[1]]: formattedValue,
       },
     }));
@@ -134,9 +134,9 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
     // Remover a formatação do valor ao enviar para o backend
     const cleanedAlunoData = {
       ...alunoData,
-      financeiro: {
-        ...alunoData.financeiro,
-        valor: alunoData.financeiro.valor,
+      dadosFinanceiro: {
+        ...alunoData.dadosFinanceiro,
+        valor: alunoData.dadosFinanceiro.valor,
       },
     };
 
@@ -401,8 +401,8 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
                 </label>
                 <input
                   type="number"
-                  name="financeiro.qtd_aulas"
-                  value={alunoData?.financeiro?.qtd_aulas}
+                  name="dadosFinanceiro.qtdAulas"
+                  value={alunoData?.dadosFinanceiro?.qtdAulas}
                   onChange={handleChange}
                   className="input input-bordered w-fit"
                   required
@@ -413,7 +413,7 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
                 <label className="label">
                   <span className="label-text">Valor</span>
                 </label>
-                <input type="text" name="financeiro.valor" value={alunoData.financeiro.valor} onChange={handleCurrencyChange} className="input input-bordered w-fit" required />
+                <input type="text" name="dadosFinanceiro.valor" value={alunoData.dadosFinanceiro.valor} onChange={handleCurrencyChange} className="input input-bordered w-fit" required />
               </div>
               <div className="form-control">
                 <label className="label">
@@ -424,8 +424,8 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
                   maskPlaceholder={null}
                   alwaysShowMask={false}
                   type="text"
-                  name="financeiro.dia_vencimento"
-                  value={alunoData.financeiro.dia_vencimento}
+                  name="dadosFinanceiro.diaVencimento"
+                  value={alunoData.dadosFinanceiro.diaVencimento}
                   onChange={handleChange}
                   className="input input-bordered w-fit"
                   required

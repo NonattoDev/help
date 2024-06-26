@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import prisma from "@/utils/prismaInstance";
 import moment from "moment";
 import parseCurrency from "@/utils/FormatCurrency";
+import { Aluno, Professor } from "@prisma/client";
 
 export async function PUT(request: Request, params: any) {
   const { formData: userData, senhaAntiga, typeEdit, responsavelData } = await request.json();
@@ -23,9 +24,6 @@ export async function PUT(request: Request, params: any) {
     let updateResponsavel;
 
     if (typeEdit === "aluno") {
-      if (userData.financeiro && typeof userData.financeiro.valor === "string") {
-        userData.financeiro.valor = parseCurrency(userData.financeiro.valor);
-      }
       updatedUser = await prisma.aluno.update({
         where: { id: userID },
         data: {
@@ -35,7 +33,6 @@ export async function PUT(request: Request, params: any) {
           ano_escolar: userData.ano_escolar,
           telefone: userData.telefone,
           endereco: userData.endereco,
-          financeiro: userData.financeiro,
           ficha: userData.ficha,
           password: userData.password,
           modalidade: userData.modalidade,
@@ -44,11 +41,23 @@ export async function PUT(request: Request, params: any) {
         },
       });
 
+      // Atualizar dados financeiros
+
+      await prisma.financeiroAluno.update({
+        where: { id: userData.dadosFinanceiro.id },
+        data: {
+          valor: parseFloat(String(userData.dadosFinanceiro.valor).replace(/[^\d]/g, "")) / 100,
+          qtdAulas: userData.dadosFinanceiro.qtdAulas,
+          diaVencimento: userData.dadosFinanceiro.diaVencimento,
+        },
+      });
+
       await prisma.responsavel.update({
         where: { id: responsavelData.id },
         data: responsavelData,
       });
     } else if (typeEdit === "professor") {
+      userData as Professor;
       updatedUser = await prisma.professor.update({
         where: { id: userID },
         data: {

@@ -1,5 +1,6 @@
 import Aluno from "@/interfaces/aluno.interface";
 import { Responsavel } from "./CreateEmptyResponsavel";
+import { FinanceiroAluno } from "@prisma/client";
 
 const createEmptyAluno = (): Aluno => ({
   nome: "",
@@ -23,15 +24,21 @@ const createEmptyAluno = (): Aluno => ({
     online: false,
     presencial: false,
   },
-  financeiro: {
-    qtd_aulas: 0,
-    valor: 0,
-    dia_vencimento: "",
-  },
   password: "",
-  AgendaAulas: {},
+  AgendaAulas: [],
   dificuldades: [],
   responsavel: {} as Responsavel,
+  responsavelId: "",
+  accessLevel: "",
+  ativo: true,
+  createdAt: new Date(),
+  dadosFinanceiro: {
+    valor: 0,
+    diaVencimento: "05",
+    qtdAulas: 0,
+  } as FinanceiroAluno,
+  id: "",
+  updatedAt: new Date(),
 });
 
 export default createEmptyAluno;

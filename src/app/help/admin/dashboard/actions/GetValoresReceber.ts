@@ -14,12 +14,14 @@ export const GetValoresReceber = async () => {
       where: {
         ativo: true,
       },
+      include: {
+        dadosFinanceiro: true,
+      },
     });
 
     const aReceber = alunosAtivos.reduce((acc, curr) => {
-      if (curr.financeiro) {
-        const financeiro: Financeiro = curr.financeiro as unknown as Financeiro;
-        const valorNumerico = parseFloat(financeiro.valor);
+      if (curr.dadosFinanceiro) {
+        const valorNumerico = curr.dadosFinanceiro.valor;
         return acc + valorNumerico;
       }
       return acc;

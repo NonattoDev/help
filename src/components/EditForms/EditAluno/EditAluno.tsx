@@ -6,7 +6,6 @@ import { Series } from "@prisma/client";
 import { Materia } from "@/interfaces/professor.interface";
 import { validateCPF } from "@/utils/validateCpf";
 import validaResponsavel from "@/utils/ValidaResponsavel";
-import moment from "moment";
 import Aluno from "@/interfaces/aluno.interface";
 import Responsavel from "@/interfaces/responsavel.interface";
 import { redirect } from "next/navigation";
@@ -22,19 +21,14 @@ interface Props {
   accessLevel?: string;
 }
 
-const formatDate = (date: Date | string) => {
-  return moment(date).format("YYYY-MM-DD");
-};
-
 export default function EditAluno({ aluno, series, materias, accessLevel }: Props) {
   if (!aluno.responsavel) {
     redirect("/");
   }
 
-  const [alunoData, setAlunoData] = useState({
-    ...aluno,
-    data_nascimento: aluno.data_nascimento ? formatDate(aluno.data_nascimento) : "",
-  });
+  const [alunoData, setAlunoData] = useState(aluno);
+
+  const [financeiroData, setFinanceiroData] = useState(aluno.dadosFinanceiro);
 
   // Logica de confirmacao de senha do aluno
   const [confirmPassword, setConfirmPassword] = useState<string>("");
@@ -58,12 +52,12 @@ export default function EditAluno({ aluno, series, materias, accessLevel }: Prop
           [enderecoKey]: value,
         },
       }));
-    } else if (name.startsWith("financeiro.")) {
+    } else if (name.startsWith("dadosFinanceiro.")) {
       const financeiroKey = name.split(".")[1];
       setAlunoData((prev) => ({
         ...prev,
-        financeiro: {
-          ...prev.financeiro,
+        dadosFinanceiro: {
+          ...prev.dadosFinanceiro,
           [financeiroKey]: value,
         },
       }));
@@ -156,12 +150,12 @@ export default function EditAluno({ aluno, series, materias, accessLevel }: Prop
   const handleCurrencyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     const unformattedValue = value.replace(/[^\d]/g, "");
-    if (value === "") return setAlunoData((prev) => ({ ...prev, financeiro: { ...prev.financeiro, valor: 0 } }));
+    if (value === "") return setAlunoData((prev) => ({ ...prev, dadosFinanceiro: { ...prev.dadosFinanceiro, valor: 0 } }));
     const formattedValue = formatCurrency(unformattedValue);
     setAlunoData((prev) => ({
       ...prev,
-      financeiro: {
-        ...prev.financeiro,
+      dadosFinanceiro: {
+        ...prev.dadosFinanceiro,
         [name.split(".")[1]]: formattedValue,
       },
     }));
@@ -211,9 +205,9 @@ export default function EditAluno({ aluno, series, materias, accessLevel }: Prop
 
     const cleanedAlunoData = {
       ...alunoData,
-      financeiro: {
-        ...alunoData.financeiro,
-        valor: alunoData.financeiro.valor,
+      dadosFinanceiro: {
+        ...alunoData.dadosFinanceiro,
+        valor: alunoData.dadosFinanceiro.valor,
       },
     };
 

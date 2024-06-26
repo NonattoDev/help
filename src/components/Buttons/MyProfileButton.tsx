@@ -4,7 +4,7 @@ import { BiUserCircle } from "react-icons/bi";
 export default async function MyProfileButton({ id }: { id: string }) {
   return (
     <Link className="btn" href={`/help/config/${id}/meuperfil`}>
-      <BiUserCircle />
+      <BiUserCircle fontSize={18}/>
     </Link>
   );
 }

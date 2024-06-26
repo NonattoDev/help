@@ -112,7 +112,6 @@ model Aluno {
   password              String
   responsavelId         String
   responsavel           Responsavel             @relation(fields: [responsavelId], references: [id])
-  financeiro            Json
   dificuldades          String[]
   accessLevel           String                  @default("aluno")
   ativo                 Boolean                 @default(true)

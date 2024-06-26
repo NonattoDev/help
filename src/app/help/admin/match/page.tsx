@@ -13,6 +13,7 @@ const getMatchDados = async () => {
     include: {
       responsavel: true,
       AgendaAulas: true,
+      dadosFinanceiro: true,
     },
   });
 

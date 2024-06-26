@@ -42,12 +42,18 @@ export const updateAula = async (agenda: AgendaAulas) => {
         id: agenda.alunoId,
       },
       select: {
-        financeiro: true,
+        dadosFinanceiro: true,
       },
     });
 
+    if (!pctAulasAluno) {
+      return {
+        error: "Aluno não encontrado",
+      };
+    }
+
     // Verificar se o aluno atingiu o limite de aulas no mês
-    if (pctAulasAluno && (pctAulasAluno.financeiro as any).qtd_aulas <= qtdAulasMes) {
+    if (pctAulasAluno && pctAulasAluno.dadosFinanceiro && pctAulasAluno.dadosFinanceiro.qtdAulas <= qtdAulasMes) {
       return {
         error: "O aluno já atingiu o limite de aulas no mês",
       };

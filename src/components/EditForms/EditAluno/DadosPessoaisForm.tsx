@@ -5,9 +5,10 @@ import { Series } from "@prisma/client";
 import ReactInputMask from "react-input-mask";
 import { Materia } from "@/interfaces/professor.interface";
 import moment from "moment";
+import Aluno from "@/interfaces/aluno.interface";
 
 interface Props {
-  alunoData: any;
+  alunoData: Aluno;
   series: Series[];
   materias: Materia[];
   accessLevel: string;
@@ -239,8 +240,8 @@ const DadosPessoaisForm: React.FC<Props> = ({
             </label>
             <input
               type="number"
-              name="financeiro.qtd_aulas"
-              value={alunoData?.financeiro?.qtd_aulas}
+              name="dadosFinanceiro.qtdAulas"
+              value={alunoData?.dadosFinanceiro?.qtdAulas}
               onChange={handleChange}
               className="input input-bordered w-fit"
               required
@@ -254,8 +255,8 @@ const DadosPessoaisForm: React.FC<Props> = ({
             </label>
             <input
               type="text"
-              name="financeiro.valor"
-              value={alunoData.financeiro.valor.toLocaleString("pt-br", {
+              name="dadosFinanceiro.valor"
+              value={alunoData.dadosFinanceiro.valor.toLocaleString("pt-br", {
                 style: "currency",
                 currency: "BRL",
               })}
@@ -274,8 +275,8 @@ const DadosPessoaisForm: React.FC<Props> = ({
               maskPlaceholder={null}
               alwaysShowMask={false}
               type="text"
-              name="financeiro.dia_vencimento"
-              value={alunoData.financeiro.dia_vencimento}
+              name="dadosFinanceiro.diaVencimento"
+              value={alunoData.dadosFinanceiro?.diaVencimento}
               onChange={handleChange}
               className="input input-bordered w-fit"
               required

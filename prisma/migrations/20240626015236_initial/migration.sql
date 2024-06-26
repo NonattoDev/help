@@ -109,7 +109,6 @@ CREATE TABLE "Aluno" (
     "modalidade" JSONB NOT NULL DEFAULT '{"presencial": true, "online": true}',
     "password" TEXT NOT NULL,
     "responsavelId" TEXT NOT NULL,
-    "financeiro" JSONB NOT NULL,
     "dificuldades" TEXT[],
     "accessLevel" TEXT NOT NULL DEFAULT 'aluno',
     "ativo" BOOLEAN NOT NULL DEFAULT true,

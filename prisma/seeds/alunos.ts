@@ -85,9 +85,9 @@ export async function createAlunos(prisma: PrismaClient) {
       responsavelId: responsavelMap["aniel2@gmail.com"],
       ativo: true,
       financeiro: {
-        qtd_aulas: 8,
-        valor: "890",
-        dia_vencimento: "05/24",
+        qtdAulas: 8,
+        valor: 890,
+        diaVencimento: "05",
       },
     },
     {
@@ -116,9 +116,9 @@ export async function createAlunos(prisma: PrismaClient) {
       responsavelId: responsavelMap["aniel2@gmail.com"],
       ativo: true,
       financeiro: {
-        qtd_aulas: 8,
-        valor: "400",
-        dia_vencimento: "05/24",
+        qtdAulas: 8,
+        valor: 400,
+        diaVencimento: "05",
       },
       dificuldades: ["Matemática", "Espanhol", "Biologia", "Geografia"],
     },
@@ -148,17 +148,18 @@ export async function createAlunos(prisma: PrismaClient) {
       responsavelId: responsavelMap["pspibio@gmail.com"],
       ativo: true,
       financeiro: {
-        qtd_aulas: 8,
-        valor: "400",
-        dia_vencimento: "05/24",
+        qtdAulas: 8,
+        valor: 400,
+        diaVencimento: "05",
       },
     },
   ];
 
   for (const aluno of alunosData) {
+    let { financeiro, ...alunoDataWithoutFin } = aluno;
     // Crie alunos
     const alunoCriado = await prisma.aluno.create({
-      data: aluno,
+      data: alunoDataWithoutFin,
     });
 
     // Cria informacao financeiro
@@ -166,8 +167,8 @@ export async function createAlunos(prisma: PrismaClient) {
     await prisma.financeiroAluno.create({
       data: {
         diaVencimento: "05",
-        qtdAulas: Number(aluno.financeiro.qtd_aulas),
-        valor: parseFloat(aluno.financeiro.valor),
+        qtdAulas: aluno.financeiro.qtdAulas,
+        valor: aluno.financeiro.valor,
         alunoId: alunoCriado.id,
       },
     });

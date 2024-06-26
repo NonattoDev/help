@@ -1,6 +1,6 @@
 "use client";
 
-import { Aluno, Materias } from "@prisma/client";
+import { Aluno, FinanceiroAluno, Materias } from "@prisma/client";
 import { ProfessoresMatch } from "./Actions/GetProfessores";
 import { useState } from "react";
 import { toast } from "react-toastify";
@@ -16,7 +16,7 @@ moment.locale("pt-br");
 interface AgendaMatchProps {
   professor: ProfessoresMatch;
   materias: Materias[];
-  aluno: Aluno & { AgendaAulas: any[]; financeiro: { qtd_aulas: number } };
+  aluno: Aluno & { AgendaAulas: any[]; dadosFinanceiro: FinanceiroAluno };
 }
 
 enum Step {
@@ -151,7 +151,7 @@ export default function AgendaMatch({ professor, aluno, materias }: AgendaMatchP
         <div className="flex flex-col justify-center gap-6">
           {date && (
             <label className="text-1xl font-bold text-end">
-              {aluno.nome} tem {aluno.financeiro?.qtd_aulas - qtdAulasMarcadas} aulas restantes para o mês de {moment(date).format("MMMM")}
+              {aluno.nome} tem {aluno.dadosFinanceiro?.qtdAulas- qtdAulasMarcadas} aulas restantes para o mês de {moment(date).format("MMMM")}
             </label>
           )}
           <label className="text-1xl font-bold text-center">Selecione uma data</label>
@@ -163,7 +163,7 @@ export default function AgendaMatch({ professor, aluno, materias }: AgendaMatchP
               className="btn btn-primary"
               onClick={() => {
                 if (!date) return toast.error("Selecione uma data");
-                if (qtdAulasMarcadas >= aluno.financeiro.qtd_aulas) return toast.error("Aluno já atingiu o limite de aulas para o mês");
+                if (qtdAulasMarcadas >= aluno.dadosFinanceiro.qtdAulas) return toast.error("Aluno já atingiu o limite de aulas para o mês");
                 setStep(Step.SELECTMODALIDADE);
               }}
             >

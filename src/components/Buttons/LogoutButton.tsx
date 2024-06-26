@@ -11,7 +11,7 @@ export function LogoutButton() {
   };
   return (
     <button onClick={handleSignOut} className="btn">
-      <BiLogOutCircle />
+      <BiLogOutCircle fontSize={18} />
     </button>
   );
 }

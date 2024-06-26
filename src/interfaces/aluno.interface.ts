@@ -1,12 +1,14 @@
+import { AgendaAulas, FinanceiroAluno } from "@prisma/client";
 import Responsavel from "./responsavel.interface";
+import { Aluno as AlunoPrisma } from "@prisma/client";
 
-export default interface Aluno {
-  id?: string;
+export default interface Aluno extends AlunoPrisma {
+  id: string;
   nome: string;
   email: string;
   escola: string;
   ano_escolar: string;
-  data_nascimento: Date | string;
+  data_nascimento: Date;
   telefone: string;
   endereco: {
     cep: string;
@@ -24,17 +26,13 @@ export default interface Aluno {
     presencial: boolean;
   };
   password: string;
-  responsavelId?: string;
+  responsavelId: string;
   dificuldades: string[];
-  accessLevel?: string;
-  ativo?: boolean;
-  financeiro: {
-    qtd_aulas: number;
-    valor: number;
-    dia_vencimento: string;
-  };
-  AgendaAulas?: any;
-  createdAt?: Date;
-  updatedAt?: Date;
-  responsavel?: Responsavel;
+  accessLevel: string;
+  ativo: boolean;
+  AgendaAulas: AgendaAulas[];
+  createdAt: Date;
+  updatedAt: Date;
+  responsavel: Responsavel;
+  dadosFinanceiro: FinanceiroAluno;
 }

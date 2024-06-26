@@ -5,7 +5,7 @@ export default function HomeButton() {
   return (
     <button className="btn btn-circle bg-cyan-400">
       <Link href="/">
-        <FaHouseChimney color="white" />
+        <FaHouseChimney fontSize={18} color="white" />
       </Link>
     </button>
   );

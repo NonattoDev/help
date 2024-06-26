@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import moment from "moment";
 import prisma from "@/utils/prismaInstance";
-import { connect } from "http2";
 
 export async function POST(request: Request, params: any) {
   let { formData: userData, typeEdit, alunoData, responsavelData } = await request.json();
@@ -18,7 +17,6 @@ export async function POST(request: Request, params: any) {
     alunoData.email = alunoData.email.toLowerCase();
     alunoData.telefone = alunoData.telefone.replace(/\D/g, "");
     alunoData.password = bcrypt.hashSync(alunoData.password, 10);
-    alunoData.financeiro.valor = (parseFloat(alunoData.financeiro.valor.replace(/\D/g, "")) / 100).toString();
     responsavelData.email = responsavelData.email.toLowerCase();
     responsavelData.telefone = responsavelData.telefone.replace(/\D/g, "");
     responsavelData.cpf = responsavelData.cpf.replace(/\D/g, "");
@@ -64,14 +62,32 @@ export async function POST(request: Request, params: any) {
         data: responsavelData,
       });
 
+      // Remove financeiro do objeto aluno
+      const { dadosFinanceiro, ...aluno } = alunoData;
+
       await prisma.aluno.create({
         data: {
-          ...alunoData,
+          nome: aluno.nome,
+          email: aluno.email,
+          escola: aluno.escola,
+          ano_escolar: aluno.ano_escolar,
+          telefone: aluno.telefone,
+          endereco: aluno.endereco,
+          ficha: aluno.ficha,
+          modalidade: aluno.modalidade,
+          password: aluno.password,
+          dificuldades: aluno.dificuldades,
           data_nascimento: moment(alunoData.data_nascimento).toDate(),
-
           responsavel: {
             connect: {
               id: responsavel.id,
+            },
+          },
+          dadosFinanceiro: {
+            create: {
+              qtdAulas: Number(dadosFinanceiro.qtdAulas),
+              valor: parseFloat(String(dadosFinanceiro.valor).replace(/[^\d]/g, "")) / 100,
+              diaVencimento: dadosFinanceiro.diaVencimento,
             },
           },
         },
