@@ -21,7 +21,7 @@ export const ConcluiRequisicao = async (id: string) => {
       },
       data: {
         status: "concluido",
-        concluidoPor: session.user.name,
+        concluidoPor: session.user.nome,
       },
     });
 
