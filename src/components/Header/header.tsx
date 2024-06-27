@@ -9,11 +9,11 @@ import prisma from "@/utils/prismaInstance";
 import { Professor } from "@prisma/client";
 import { Suspense } from "react";
 import AgendaDropdown from "../Agenda/Agenda";
-import FinanceiroButton from "../Buttons/FinanceiroButton";
 import { AdministrativoButton } from "../Administrativo/Administrativo";
 import ConfigButton from "../Buttons/ConfigButton";
 import MateriaisButton from "../Buttons/Professor/MateriaisButtons";
 import HomeButton from "../Buttons/HomeButton";
+import FinanceiroDropdown from "../Financeiro/Financeiro";
 
 function LoadingFallback() {
   return <div className="p-4 skeleton"></div>;
@@ -31,15 +31,18 @@ const getData = async () => {
     disponibilidade: professor.disponibilidade as Professor["disponibilidade"],
   }));
 
+  const colaboradores = await prisma.usuarios.findMany();
+
   await prisma.$disconnect();
 
-  return { alunos, professores };
+  return { alunos, professores, colaboradores };
 };
 
 const Header = async () => {
   const session = await getServerSession(authOptions);
   let professores: any;
   let alunos: any;
+  let colaboradores: any;
 
   if (!session) return null;
 
@@ -47,6 +50,7 @@ const Header = async () => {
     const data = await getData();
     professores = data.professores;
     alunos = data.alunos;
+    colaboradores = data.colaboradores;
   }
 
   return (
@@ -61,12 +65,10 @@ const Header = async () => {
         <HomeButton />
         {(session?.user.accessLevel === "administrador" || session?.user.accessLevel === "administrativo") && <MatchButton />}
         {(session?.user.accessLevel === "administrador" || session?.user.accessLevel === "administrativo") && (
-          <Suspense fallback={<LoadingFallback />}>
-            <ManutencaoButton professores={professores} alunos={alunos} />
-          </Suspense>
+          <ManutencaoButton professores={professores} alunos={alunos} colaboradores={colaboradores} />
         )}
         {(session?.user.accessLevel === "administrador" || session?.user.accessLevel === "administrativo") && <AgendaDropdown />}
-        {(session?.user.accessLevel === "administrador" || session?.user.accessLevel === "administrativo") && <FinanceiroButton />}
+        {(session?.user.accessLevel === "administrador" || session?.user.accessLevel === "administrativo") && <FinanceiroDropdown />}
         {(session?.user.accessLevel === "administrador" || session?.user.accessLevel === "administrativo") && <AdministrativoButton />}
         {session?.user.accessLevel === "professor" && <MateriaisButton />}
       </div>
