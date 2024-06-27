@@ -110,11 +110,11 @@ CREATE TABLE "Aluno" (
     "modalidade" JSONB NOT NULL DEFAULT '{"presencial": true, "online": true}',
     "password" TEXT NOT NULL,
     "responsavelId" TEXT NOT NULL,
-    "diaInicio" TIMESTAMP(3) NOT NULL,
+    "dataInicioAulas" TIMESTAMP(3),
     "dificuldades" TEXT[],
     "accessLevel" TEXT NOT NULL DEFAULT 'aluno',
     "ativo" BOOLEAN NOT NULL DEFAULT true,
-    "contrato" TEXT NOT NULL,
+    "contrato" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -199,7 +199,7 @@ CREATE TABLE "Professor" (
     "modalidade" JSONB NOT NULL DEFAULT '{"presencial": true, "online": false}',
     "password" TEXT NOT NULL,
     "materias" TEXT[],
-    "contrato" TEXT NOT NULL,
+    "contrato" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
