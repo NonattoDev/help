@@ -112,10 +112,12 @@ model Aluno {
   modalidade            Json                    @default("{\"presencial\": true, \"online\": true}")
   password              String
   responsavelId         String
+  dataInicioAulas       DateTime?
   responsavel           Responsavel             @relation(fields: [responsavelId], references: [id])
   dificuldades          String[]
   accessLevel           String                  @default("aluno")
   ativo                 Boolean                 @default(true)
+  contrato              String?
   createdAt             DateTime                @default(now())
   updatedAt             DateTime                @updatedAt
   dadosFinanceiro       FinanceiroAluno?
@@ -126,7 +128,7 @@ model Aluno {
 
 model FinanceiroAluno {
   id            String   @id @default(cuid())
-  alunoId       String  @unique
+  alunoId       String   @unique
   aluno         Aluno    @relation(fields: [alunoId], references: [id])
   qtdAulas      Int
   valor         Float
@@ -193,6 +195,7 @@ model Professor {
   modalidade            Json                    @default("{\"presencial\": true, \"online\": false}")
   password              String
   materias              String[]
+  contrato              String?
   createdAt             DateTime                @default(now())
   updatedAt             DateTime                @updatedAt
   dadosFinanceiro       FinanceiroProfessor[]
