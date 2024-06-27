@@ -11,6 +11,7 @@ import { Series } from "@/interfaces/series.interface";
 import Pica from "pica";
 import verifyPassword from "@/utils/VerifyPassword";
 import moment from "moment";
+import Link from "next/link";
 
 interface EditProfessorProps {
   professor: Professor;
@@ -232,11 +233,13 @@ export default function EditProfessor({ professor, materias, accessLevel, series
       <form onSubmit={submitEdit}>
         <div>
           <div id="profilePic" className="flex justify-between items-center">
-            <div className="avatar ml-5 flex">
-              <div className="w-24 rounded-full flex cursor-pointer" onClick={() => document.getElementById("fileInput")?.click()}>
-                <img src={selectedImage} alt="Profile" />
+            <div className="flex items-end">
+              <div className="avatar ml-5 flex">
+                <div className="w-24 rounded-full flex cursor-pointer" onClick={() => document.getElementById("fileInput")?.click()}>
+                  <img src={selectedImage} alt="Profile" />
+                </div>
+                <input type="file" id="fileInput" style={{ display: "none" }} onChange={handleFileChange} accept=".png, .jpg, .jpeg" />
               </div>
-              <input type="file" id="fileInput" style={{ display: "none" }} onChange={handleFileChange} accept=".png, .jpg, .jpeg" />
             </div>
             <h2 className="text-md text-center font-bold mb-5 align-middle">Dados Pessoais</h2>
             <div className="w-24 mr-5">

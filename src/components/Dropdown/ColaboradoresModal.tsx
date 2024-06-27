@@ -76,7 +76,7 @@ export default function ColaboradoresModalButton({ colaboradores }: AlunoModalBu
         <button className="absolute top-5 right-2 text-gray-500 hover:text-gray-700" onClick={closeModal}>
           ✖
         </button>
-        <h2 className="font-bold text-2xl mb-8 text-center">Lista de Alunos</h2>
+        <h2 className="font-bold text-2xl mb-8 text-center">Lista de colaboradores</h2>
         <label className="input input-bordered flex items-center gap-2">
           <BiSearch className="w-4 h-4 opacity-70" />
           <input type="search" className="grow text-center" placeholder="Pesquisar por Colaborador" onChange={(e) => handleSearch(e.target.value)} />
@@ -85,8 +85,8 @@ export default function ColaboradoresModalButton({ colaboradores }: AlunoModalBu
           {loading ? (
             <LoadingButton />
           ) : (
-            <Link onClick={closeModal} href={"/help/admin/factory/create/aluno"} className="btn btn-primary">
-              <CgUserAdd /> Adicionar Aluno
+            <Link onClick={closeModal} href={"/help/admin/factory/create/colaborador"} className="btn btn-primary">
+              <CgUserAdd /> Adicionar colaborador
             </Link>
           )}
         </div>

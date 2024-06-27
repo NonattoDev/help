@@ -39,7 +39,6 @@ const createEmptyAluno = (): Aluno => ({
   } as FinanceiroAluno,
   id: "",
   updatedAt: new Date(),
-  contrato: "",
   dataInicioAulas: new Date(),
 });
 

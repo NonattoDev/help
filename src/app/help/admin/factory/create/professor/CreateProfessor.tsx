@@ -212,11 +212,13 @@ export default function CreateProfessor({ materias, series }: CreateProfessorPro
     <div>
       <form onSubmit={submitCreate}>
         <div id="profilePic" className="flex justify-between items-center">
-          <div className="avatar ml-5 flex">
-            <div className="w-24 rounded-full flex cursor-pointer" onClick={() => document.getElementById("fileInput")?.click()}>
-              <img src={formData.img_url || "https://i0.wp.com/sbcf.fr/wp-content/uploads/2018/03/sbcf-default-avatar.png?ssl=1"} alt="Profile" />
+          <div className="flex items-end">
+            <div className="avatar ml-5 flex">
+              <div className="w-24 rounded-full flex cursor-pointer" onClick={() => document.getElementById("fileInput")?.click()}>
+                <img src={formData.img_url || "https://i0.wp.com/sbcf.fr/wp-content/uploads/2018/03/sbcf-default-avatar.png?ssl=1"} alt="Profile" />
+              </div>
+              <input type="file" id="fileInput" style={{ display: "none" }} onChange={handleFileChange} accept="image/png, image/jpeg" />
             </div>
-            <input type="file" id="fileInput" style={{ display: "none" }} onChange={handleFileChange} accept="image/png, image/jpeg" />
           </div>
           <h2 className="text-md text-center font-bold mb-5 align-middle">Dados Pessoais</h2>
           <div className="w-24 mr-5"></div>
