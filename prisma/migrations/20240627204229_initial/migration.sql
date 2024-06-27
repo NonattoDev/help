@@ -114,11 +114,28 @@ CREATE TABLE "Aluno" (
     "dificuldades" TEXT[],
     "accessLevel" TEXT NOT NULL DEFAULT 'aluno',
     "ativo" BOOLEAN NOT NULL DEFAULT true,
-    "contrato" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Aluno_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Feedbacks" (
+    "id" TEXT NOT NULL,
+    "alunoId" TEXT NOT NULL,
+    "professorId" TEXT NOT NULL,
+    "autonomia" TEXT NOT NULL,
+    "concentracao" TEXT NOT NULL,
+    "interpretacao" TEXT NOT NULL,
+    "desenvolvimento" TEXT NOT NULL,
+    "comentarios" TEXT NOT NULL,
+    "materiaisSugeridos" TEXT NOT NULL,
+    "proximosPassos" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Feedbacks_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -199,7 +216,6 @@ CREATE TABLE "Professor" (
     "modalidade" JSONB NOT NULL DEFAULT '{"presencial": true, "online": false}',
     "password" TEXT NOT NULL,
     "materias" TEXT[],
-    "contrato" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -276,6 +292,12 @@ ALTER TABLE "AgendaAulas" ADD CONSTRAINT "AgendaAulas_professorId_fkey" FOREIGN 
 
 -- AddForeignKey
 ALTER TABLE "Aluno" ADD CONSTRAINT "Aluno_responsavelId_fkey" FOREIGN KEY ("responsavelId") REFERENCES "Responsavel"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Feedbacks" ADD CONSTRAINT "Feedbacks_alunoId_fkey" FOREIGN KEY ("alunoId") REFERENCES "Aluno"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Feedbacks" ADD CONSTRAINT "Feedbacks_professorId_fkey" FOREIGN KEY ("professorId") REFERENCES "Professor"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "FinanceiroAluno" ADD CONSTRAINT "FinanceiroAluno_alunoId_fkey" FOREIGN KEY ("alunoId") REFERENCES "Aluno"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

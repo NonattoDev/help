@@ -7,13 +7,13 @@ import { authOptions } from "@/app/lib/auth";
 import MyProfileButton from "@/components/Buttons/MyProfileButton";
 import prisma from "@/utils/prismaInstance";
 import { Professor } from "@prisma/client";
-import { Suspense } from "react";
 import AgendaDropdown from "../Agenda/Agenda";
 import { AdministrativoButton } from "../Administrativo/Administrativo";
 import ConfigButton from "../Buttons/ConfigButton";
 import MateriaisButton from "../Buttons/Professor/MateriaisButtons";
 import HomeButton from "../Buttons/HomeButton";
 import FinanceiroDropdown from "../Financeiro/Financeiro";
+import FeedbackButton from "../Buttons/Professor/FeedbackButton";
 
 function LoadingFallback() {
   return <div className="p-4 skeleton"></div>;
@@ -70,7 +70,9 @@ const Header = async () => {
         {(session?.user.accessLevel === "administrador" || session?.user.accessLevel === "administrativo") && <AgendaDropdown />}
         {(session?.user.accessLevel === "administrador" || session?.user.accessLevel === "administrativo") && <FinanceiroDropdown />}
         {(session?.user.accessLevel === "administrador" || session?.user.accessLevel === "administrativo") && <AdministrativoButton />}
+        {/* // Professor */}
         {session?.user.accessLevel === "professor" && <MateriaisButton />}
+        {session?.user.accessLevel === "professor" && <FeedbackButton />}
       </div>
 
       {/* Fim Header */}

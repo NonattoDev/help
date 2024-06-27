@@ -123,6 +123,24 @@ model Aluno {
   AgendaAulas           AgendaAulas[]
   MateriaisRequisitados MateriaisRequisitados[]
   PagamentosAluno       PagamentosAluno[]
+  Feedbacks             Feedbacks[]
+}
+
+model Feedbacks {
+  id                 String    @id @default(cuid())
+  alunoId            String
+  aluno              Aluno     @relation(fields: [alunoId], references: [id])
+  professorId        String
+  professor          Professor @relation(fields: [professorId], references: [id])
+  autonomia          String // Grau de autonomia nos estudos (1 a 5)
+  concentracao       String // Grau de concentração na aula (1 a 5)
+  interpretacao      String // Habilidade de interpretar e responder o enunciado
+  desenvolvimento    String // Detalhes sobre o desenvolvimento do aluno
+  comentarios        String // Comentários sobre pontos fortes e a serem melhorados
+  materiaisSugeridos String // Materiais sugeridos para facilitar a aprendizagem
+  proximosPassos     String // Pontos a serem ajustados e trabalhados nas próximas aulas
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
 }
 
 model FinanceiroAluno {
@@ -199,6 +217,7 @@ model Professor {
   dadosFinanceiro       FinanceiroProfessor[]
   AgendaAulas           AgendaAulas[]
   MateriaisRequisitados MateriaisRequisitados[]
+  Feedbacks             Feedbacks[]
 }
 
 model Materias {
