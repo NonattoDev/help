@@ -20,7 +20,7 @@ CREATE TABLE "Usuarios" (
 );
 
 -- CreateTable
-CREATE TABLE "UsuariosFinanceiro" (
+CREATE TABLE "FinanceiroUsuarios" (
     "id" TEXT NOT NULL,
     "usuarioId" TEXT NOT NULL,
     "valor" DOUBLE PRECISION NOT NULL,
@@ -29,7 +29,23 @@ CREATE TABLE "UsuariosFinanceiro" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "UsuariosFinanceiro_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "FinanceiroUsuarios_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "NiveisAcesso" (
+    "id" TEXT NOT NULL,
+    "accessLevel" TEXT NOT NULL,
+
+    CONSTRAINT "NiveisAcesso_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Cargos" (
+    "id" SERIAL NOT NULL,
+    "cargo" TEXT NOT NULL,
+
+    CONSTRAINT "Cargos_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -292,7 +308,7 @@ CREATE UNIQUE INDEX "Professor_email_key" ON "Professor"("email");
 CREATE UNIQUE INDEX "Professor_cpf_key" ON "Professor"("cpf");
 
 -- AddForeignKey
-ALTER TABLE "UsuariosFinanceiro" ADD CONSTRAINT "UsuariosFinanceiro_usuarioId_fkey" FOREIGN KEY ("usuarioId") REFERENCES "Usuarios"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "FinanceiroUsuarios" ADD CONSTRAINT "FinanceiroUsuarios_usuarioId_fkey" FOREIGN KEY ("usuarioId") REFERENCES "Usuarios"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "FinanceiroAluno" ADD CONSTRAINT "FinanceiroAluno_alunoId_fkey" FOREIGN KEY ("alunoId") REFERENCES "Aluno"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

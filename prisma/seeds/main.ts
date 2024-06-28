@@ -5,8 +5,12 @@ import { createUsuarios } from "./usuarios";
 import { createProfessor } from "./professor";
 import { createSeries } from "./series";
 import { createValores } from "./valores";
+import { createCargos } from "./cargos";
+import { createNiveisAcesso } from "./accessLevel";
 
 async function main() {
+  await createCargos(prisma);
+  await createNiveisAcesso(prisma);
   await createSeries(prisma);
   await createMaterias(prisma);
   await createAlunos(prisma);

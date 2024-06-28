@@ -8,24 +8,25 @@ datasource db {
 }
 
 model Usuarios {
-  id              String              @id @default(cuid())
+  id              String               @id @default(cuid())
   nome            String
-  email           String              @unique
+  email           String               @unique
   data_nascimento DateTime
-  cpf             String              @unique
+  cpf             String               @unique
   cargo           String
   telefone        String
   password        String
-  accessLevel     String              @default("administrativo")
-  ativo           Boolean             @default(true)
-  createdAt       DateTime            @default(now())
-  updatedAt       DateTime            @updatedAt
-  financeiro      UsuariosFinanceiro[]
+  accessLevel     String               @default("administrativo")
+  ativo           Boolean              @default(true)
+  createdAt       DateTime             @default(now())
+  updatedAt       DateTime             @updatedAt
+  financeiro      FinanceiroUsuarios[]
 }
 
-model UsuariosFinanceiro {
+
+model FinanceiroUsuarios {
   id           String   @id @default(cuid())
-  usuarioId    String   
+  usuarioId    String
   usuario      Usuarios @relation(fields: [usuarioId], references: [id])
   valor        Float
   status       String   @default("pendente")
@@ -34,6 +35,16 @@ model UsuariosFinanceiro {
   updatedAt    DateTime @updatedAt
 }
 
+
+model NiveisAcesso {
+  id        String   @id @default(cuid())
+  accessLevel     String
+}
+
+model Cargos {
+  id    Int    @id @default(autoincrement())
+  cargo String
+}
 
 // Alunos 
 model FinanceiroAluno {
@@ -74,7 +85,6 @@ model Aluno {
   Feedbacks             Feedbacks[]
   ControleAlunos        ControleAlunos[]
 }
-
 
 //! -------------------------------------------
 
@@ -143,8 +153,6 @@ model Responsavel {
   updatedAt   DateTime @updatedAt
 }
 
-
-
 model ControleAlunos {
   id            String   @id @default(cuid())
   alunoId       String
@@ -160,7 +168,7 @@ model ControleProfessores {
   professor     Professor @relation(fields: [professorId], references: [id])
   desativadoPor String
   desativadoEm  DateTime
-  createdAt DateTime @default(now())
+  createdAt     DateTime  @default(now())
 }
 
 model Feedbacks {

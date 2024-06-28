@@ -1,16 +1,16 @@
 "use server";
 import prisma from "@/utils/prismaInstance";
-import { Usuarios, UsuariosFinanceiro } from "@prisma/client";
+import { Usuarios, FinanceiroUsuarios } from "@prisma/client";
 import { hashSync } from "bcryptjs";
 import moment from "moment";
 
-export const UpdateColaborador = async (formData: Usuarios & { financeiro: UsuariosFinanceiro }, senhaAtual: string) => {
+export const UpdateColaborador = async (formData: Usuarios & { financeiro: FinanceiroUsuarios }, senhaAtual: string) => {
   if (formData.password !== senhaAtual) {
     formData.password = hashSync(formData.password, 12);
   }
 
   try {
-    const currentFinanceiro = await prisma.usuariosFinanceiro.findFirst({
+    const currentFinanceiro = await prisma.FinanceiroUsuarios.findFirst({
       where: { usuarioId: formData.id },
       orderBy: { createdAt: "desc" },
     });
@@ -19,13 +19,13 @@ export const UpdateColaborador = async (formData: Usuarios & { financeiro: Usuar
     const proximoMes = moment().add(1, "month").startOf("month").toDate();
 
     if (currentFinanceiro && (currentFinanceiro.valor !== novoValor || currentFinanceiro.diaPagamento !== formData.financeiro.diaPagamento)) {
-      const proximoFinanceiro = await prisma.usuariosFinanceiro.findFirst({
+      const proximoFinanceiro = await prisma.FinanceiroUsuarios.findFirst({
         where: { usuarioId: formData.id, createdAt: proximoMes },
       });
 
       if (proximoFinanceiro) {
         // Atualizar o registro financeiro do próximo mês
-        await prisma.usuariosFinanceiro.update({
+        await prisma.FinanceiroUsuarios.update({
           where: { id: proximoFinanceiro.id },
           data: {
             valor: novoValor,
@@ -34,7 +34,7 @@ export const UpdateColaborador = async (formData: Usuarios & { financeiro: Usuar
         });
       } else {
         // Adicionar um novo registro financeiro com início no próximo mês
-        await prisma.usuariosFinanceiro.create({
+        await prisma.FinanceiroUsuarios.create({
           data: {
             usuarioId: formData.id,
             valor: novoValor,

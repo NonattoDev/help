@@ -4,14 +4,14 @@ import LoadingButton from "@/components/Buttons/LoadingButton";
 import { UpdateColaborador } from "@/server/actions/UpdateColaborador";
 import verifyPassword from "@/utils/VerifyPassword";
 import { validateCPF } from "@/utils/validateCpf";
-import { Usuarios, UsuariosFinanceiro } from "@prisma/client";
+import { Usuarios, FinanceiroUsuarios } from "@prisma/client";
 import moment from "moment";
 import { useState } from "react";
 import ReactInputMask from "react-input-mask";
 import { toast } from "react-toastify";
 
 interface EditColaboradorProps {
-  colaborador: Usuarios & { financeiro: UsuariosFinanceiro };
+  colaborador: Usuarios & { financeiro: FinanceiroUsuarios };
   accessLevel: string;
 }
 
@@ -29,7 +29,6 @@ const formatCurrency = (value: string | number): string => {
 const getNumericValue = (formattedValue: string): number => {
   return parseFloat(formattedValue.replace(/[^\d]/g, "")) / 100;
 };
-
 
 export default function EditColaborador({ colaborador, accessLevel }: EditColaboradorProps) {
   const [formData, setFormData] = useState({
@@ -49,7 +48,7 @@ export default function EditColaborador({ colaborador, accessLevel }: EditColabo
     const { name, value } = e.target;
 
     if (name.startsWith("financeiro")) {
-      const financeiroKey = name.split(".")[1] as keyof UsuariosFinanceiro;
+      const financeiroKey = name.split(".")[1] as keyof FinanceiroUsuarios;
       setFormData({
         ...formData,
         financeiro: {
