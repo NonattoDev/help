@@ -11,7 +11,6 @@ import { Series } from "@/interfaces/series.interface";
 import Pica from "pica";
 import verifyPassword from "@/utils/VerifyPassword";
 import moment from "moment";
-import Link from "next/link";
 
 interface EditProfessorProps {
   professor: Professor;
@@ -214,7 +213,7 @@ export default function EditProfessor({ professor, materias, accessLevel, series
     }
 
     try {
-      const response = await axios.put(`/help/config/${formData.id}/meuperfil/editar`, { formData, senhaAntiga: professor.password, typeEdit: "professor" });
+      const response = await axios.put(`/help/config/${formData.id}/meuperfil/editar`, { formData, senhaAntiga: professor.password, typeEdit: "professor", accessLevel });
 
       if (response.status === 200) {
         toast.success("Dados atualizados com sucesso");

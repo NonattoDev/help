@@ -217,6 +217,7 @@ export default function EditAluno({ aluno, series, materias, accessLevel }: Prop
         responsavelData,
         senhaAntiga: alunoData.password,
         typeEdit: "aluno",
+        accessLevel,
       });
       toast.success("Salvo com sucesso");
     } catch (error: any) {
@@ -229,8 +230,6 @@ export default function EditAluno({ aluno, series, materias, accessLevel }: Prop
   };
 
   const handleToggleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    alert(`O aluno foi ${e.target.checked ? "ativado" : "desativado"}`);
-
     setAlunoData((prev) => ({
       ...prev,
       ativo: e.target.checked,

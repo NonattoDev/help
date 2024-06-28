@@ -1,20 +1,28 @@
 import bcrypt from "bcryptjs";
 import prisma from "@/utils/prismaInstance";
 import moment from "moment";
-import parseCurrency from "@/utils/FormatCurrency";
-import { Aluno, Professor } from "@prisma/client";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/lib/auth";
 
 export async function PUT(request: Request, params: any) {
-  const { formData: userData, senhaAntiga, typeEdit, responsavelData } = await request.json();
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    return new Response(JSON.stringify({ error: "Usuário não autenticado" }), { status: 401 });
+  }
+
+  const { formData: userData, senhaAntiga, typeEdit, responsavelData, accessLevel } = await request.json();
   const userID = params.params.id;
 
+  // Verifica e criptografa a senha, se necessário
   if (senhaAntiga !== userData.password) {
     userData.password = await bcrypt.hash(userData.password, 10);
   }
 
+  // Normaliza email e telefone
   userData.email = userData.email.toLowerCase();
   userData.telefone = userData.telefone.replace(/\D/g, "");
 
+  // Normaliza CPF se o tipo não for "aluno"
   if (typeEdit !== "aluno") {
     userData.cpf = userData.cpf.replace(/\D/g, "");
   }
@@ -23,10 +31,23 @@ export async function PUT(request: Request, params: any) {
     let updatedUser;
     let updateResponsavel;
 
+    // Atualização do tipo "aluno"
     if (typeEdit === "aluno") {
+      const controleAluno = await prisma.aluno.findFirst({ where: { id: userID } });
+
+      if (controleAluno && controleAluno.ativo !== userData.ativo && !userData.ativo && (accessLevel === "administrador" || accessLevel === "administrativo")) {
+        await prisma.controleAlunos.create({
+          data: {
+            alunoId: controleAluno.id,
+            desativadoEm: moment().toDate(),
+            desativadoPor: session.user.nome,
+          },
+        });
+      }
       updatedUser = await prisma.aluno.update({
         where: { id: userID },
         data: {
+          ativo: userData.ativo,
           nome: userData.nome,
           escola: userData.escola,
           email: userData.email,
@@ -41,8 +62,7 @@ export async function PUT(request: Request, params: any) {
         },
       });
 
-      // Atualizar dados financeiros
-
+      // Atualizar dados financeiros do aluno
       await prisma.financeiroAluno.update({
         where: { id: userData.dadosFinanceiro.id },
         data: {
@@ -52,12 +72,25 @@ export async function PUT(request: Request, params: any) {
         },
       });
 
+      // Atualizar dados do responsável
       await prisma.responsavel.update({
         where: { id: responsavelData.id },
         data: responsavelData,
       });
-    } else if (typeEdit === "professor") {
-      userData as Professor;
+    }
+    // Atualização do tipo "professor"
+    else if (typeEdit === "professor") {
+      const controleProfessor = await prisma.professor.findFirst({ where: { id: userID } });
+
+      if (controleProfessor && controleProfessor.ativo !== userData.ativo && !userData.ativo && (accessLevel === "administrador" || accessLevel === "administrativo")) {
+        await prisma.controleProfessores.create({
+          data: {
+            professorId: controleProfessor.id,
+            desativadoEm: moment().toDate(),
+            desativadoPor: session.user.nome,
+          },
+        });
+      }
       updatedUser = await prisma.professor.update({
         where: { id: userID },
         data: {
@@ -76,7 +109,9 @@ export async function PUT(request: Request, params: any) {
           img_url: userData.img_url,
         },
       });
-    } else if (typeEdit === "responsavel") {
+    }
+    // Atualização do tipo "responsavel"
+    else if (typeEdit === "responsavel") {
       updatedUser = await prisma.responsavel.update({
         where: { id: userID },
         data: {
@@ -86,7 +121,9 @@ export async function PUT(request: Request, params: any) {
           endereco: userData.endereco,
         },
       });
-    } else if (typeEdit === "admin") {
+    }
+    // Atualização do tipo "admin"
+    else if (typeEdit === "admin") {
       updatedUser = await prisma.usuarios.update({
         where: { id: userID },
         data: {
@@ -99,6 +136,7 @@ export async function PUT(request: Request, params: any) {
       });
     }
 
+    // Verificação final se o usuário foi atualizado
     if (!updatedUser && !updateResponsavel) {
       return new Response(JSON.stringify({ error: "Usuário não encontrado" }), { status: 404 });
     }

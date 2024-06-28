@@ -121,6 +121,28 @@ CREATE TABLE "Aluno" (
 );
 
 -- CreateTable
+CREATE TABLE "ControleAlunos" (
+    "id" TEXT NOT NULL,
+    "alunoId" TEXT NOT NULL,
+    "desativadoPor" TEXT NOT NULL,
+    "desativadoEm" TIMESTAMP(3) NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "ControleAlunos_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "ControleProfessores" (
+    "id" TEXT NOT NULL,
+    "professorId" TEXT NOT NULL,
+    "desativadoPor" TEXT NOT NULL,
+    "desativadoEm" TIMESTAMP(3) NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "ControleProfessores_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "Feedbacks" (
     "id" TEXT NOT NULL,
     "alunoId" TEXT NOT NULL,
@@ -292,6 +314,12 @@ ALTER TABLE "AgendaAulas" ADD CONSTRAINT "AgendaAulas_professorId_fkey" FOREIGN 
 
 -- AddForeignKey
 ALTER TABLE "Aluno" ADD CONSTRAINT "Aluno_responsavelId_fkey" FOREIGN KEY ("responsavelId") REFERENCES "Responsavel"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "ControleAlunos" ADD CONSTRAINT "ControleAlunos_alunoId_fkey" FOREIGN KEY ("alunoId") REFERENCES "Aluno"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "ControleProfessores" ADD CONSTRAINT "ControleProfessores_professorId_fkey" FOREIGN KEY ("professorId") REFERENCES "Professor"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Feedbacks" ADD CONSTRAINT "Feedbacks_alunoId_fkey" FOREIGN KEY ("alunoId") REFERENCES "Aluno"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

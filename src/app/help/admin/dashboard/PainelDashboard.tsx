@@ -10,6 +10,8 @@ import ValoresReceber from "./components/ValoresReceber";
 import LucroTotal from "./components/LucroTotal";
 import VendasDaSemana from "./components/VendasDaSemana";
 import TicketMedio from "./components/TicketMedio";
+import ProfessoresDesativadosMensal from "./components/ProfessoresDesativadosMensal";
+import AlunosDesativadosMensal from "./components/AlunosDesativadosMensal";
 
 export default function PainelDashboard() {
   const [date, setDate] = useState(moment().format("YYYY-MM-DD"));
@@ -28,6 +30,8 @@ export default function PainelDashboard() {
         <LucroTotal />
         <VendasDaSemana />
         <TicketMedio />
+        <ProfessoresDesativadosMensal />
+        <AlunosDesativadosMensal />
       </div>
     </div>
   );

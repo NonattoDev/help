@@ -12,7 +12,7 @@ export async function createUsuarios(prisma: PrismaClient) {
       cpf: "00000000000",
       accessLevel: "administrador",
       financeiro: {
-        valor: 5000.0,
+        valor: 470,
         diaPagamento: "05",
       },
     },
@@ -26,7 +26,7 @@ export async function createUsuarios(prisma: PrismaClient) {
       cpf: "08362023503",
       accessLevel: "administrador",
       financeiro: {
-        valor: 3000.0,
+        valor: 340,
         diaPagamento: "05",
       },
     },

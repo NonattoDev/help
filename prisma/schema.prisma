@@ -124,6 +124,25 @@ model Aluno {
   MateriaisRequisitados MateriaisRequisitados[]
   PagamentosAluno       PagamentosAluno[]
   Feedbacks             Feedbacks[]
+  ControleAlunos        ControleAlunos[]
+}
+
+model ControleAlunos {
+  id            String   @id @default(cuid())
+  alunoId       String
+  aluno         Aluno    @relation(fields: [alunoId], references: [id])
+  desativadoPor String
+  desativadoEm  DateTime
+  createdAt     DateTime @default(now())
+}
+
+model ControleProfessores {
+  id            String    @id @default(cuid())
+  professorId   String
+  professor     Professor @relation(fields: [professorId], references: [id])
+  desativadoPor String
+  desativadoEm  DateTime
+  createdAt DateTime @default(now())
 }
 
 model Feedbacks {
@@ -218,6 +237,7 @@ model Professor {
   AgendaAulas           AgendaAulas[]
   MateriaisRequisitados MateriaisRequisitados[]
   Feedbacks             Feedbacks[]
+  ControleProfessores   ControleProfessores[]
 }
 
 model Materias {
