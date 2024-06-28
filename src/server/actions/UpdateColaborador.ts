@@ -10,7 +10,7 @@ export const UpdateColaborador = async (formData: Usuarios & { financeiro: Finan
   }
 
   try {
-    const currentFinanceiro = await prisma.FinanceiroUsuarios.findFirst({
+    const currentFinanceiro = await prisma.financeiroUsuarios.findFirst({
       where: { usuarioId: formData.id },
       orderBy: { createdAt: "desc" },
     });
@@ -19,13 +19,13 @@ export const UpdateColaborador = async (formData: Usuarios & { financeiro: Finan
     const proximoMes = moment().add(1, "month").startOf("month").toDate();
 
     if (currentFinanceiro && (currentFinanceiro.valor !== novoValor || currentFinanceiro.diaPagamento !== formData.financeiro.diaPagamento)) {
-      const proximoFinanceiro = await prisma.FinanceiroUsuarios.findFirst({
+      const proximoFinanceiro = await prisma.financeiroUsuarios.findFirst({
         where: { usuarioId: formData.id, createdAt: proximoMes },
       });
 
       if (proximoFinanceiro) {
         // Atualizar o registro financeiro do próximo mês
-        await prisma.FinanceiroUsuarios.update({
+        await prisma.financeiroUsuarios.update({
           where: { id: proximoFinanceiro.id },
           data: {
             valor: novoValor,
@@ -34,7 +34,7 @@ export const UpdateColaborador = async (formData: Usuarios & { financeiro: Finan
         });
       } else {
         // Adicionar um novo registro financeiro com início no próximo mês
-        await prisma.FinanceiroUsuarios.create({
+        await prisma.financeiroUsuarios.create({
           data: {
             usuarioId: formData.id,
             valor: novoValor,

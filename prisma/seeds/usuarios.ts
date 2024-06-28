@@ -41,7 +41,7 @@ export async function createUsuarios(prisma: PrismaClient) {
     });
 
     // Cria a informação financeira associada
-    await prisma.FinanceiroUsuarios.create({
+    await prisma.financeiroUsuarios.create({
       data: {
         usuarioId: createdUser.id,
         valor: financeiro.valor,
