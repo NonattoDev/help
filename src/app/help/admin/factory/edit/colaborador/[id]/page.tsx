@@ -1,48 +1,94 @@
-import { redirect } from "next/navigation";
-import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/lib/auth";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 import prisma from "@/utils/prismaInstance";
-import EditColaborador from "@/components/EditForms/EditColaborador/EditColaborador";
-import { Usuarios, UsuariosFinanceiro } from "@prisma/client";
+import EditProfessor from "@/components/EditForms/EditProfessor/EditProfessor";
+import EditAluno from "@/components/EditForms/EditAluno/EditAluno";
+import EditResponsavel from "@/components/EditForms/EditResponsavel/EditResponsavel";
+import EditAdmin from "@/components/EditForms/EditAdmin/EditAdmin";
 
-async function getDados(id: string) {
-  let session = await getServerSession(authOptions);
+async function getUserData(id: string) {
+  const session = await getServerSession(authOptions);
 
-  if (!session) {
-    redirect("/");
-  }
+  let userData: any;
+  let materias: any;
+  let series: any;
 
-  const colaborador = await prisma.usuarios.findUnique({
-    where: {
-      id: id,
-    },
-    include: {
-      financeiro: {
-        orderBy: {
-          createdAt: "desc",
+  switch (session?.user?.accessLevel) {
+    case "administrador":
+    case "administrativo":
+      userData = await prisma.usuarios.findUnique({
+        where: { id: id },
+        include: {
+          financeiro: {
+            orderBy: {
+              createdAt: "desc",
+            },
+            take: 1,
+          },
         },
-        take: 1,
-      },
-    },
-  });
+      });
+      if (userData?.financeiro) {
+        userData.financeiro = userData.financeiro[0];
+      }
+      break;
+    case "aluno":
+      userData = await prisma.aluno.findUnique({
+        where: { id: id },
+        include: {
+          responsavel: true,
+          dadosFinanceiro: {
+            orderBy: {
+              createdAt: "desc",
+            },
+            take: 1,
+          },
+        },
+      });
+      if (userData?.dadosFinanceiro) {
+        userData.dadosFinanceiro = userData.dadosFinanceiro[0];
+      }
+      materias = await prisma.materias.findMany();
+      series = await prisma.series.findMany();
+      break;
+    case "responsavel":
+      userData = await prisma.responsavel.findUnique({
+        where: { id: id },
+        include: {
+          alunos: true,
+        },
+      });
+      break;
+    case "professor":
+      userData = await prisma.professor.findUnique({
+        where: { id: id },
+      });
+      materias = await prisma.materias.findMany();
+      series = await prisma.series.findMany();
+      break;
+    default:
+      break;
+  }
 
   await prisma.$disconnect();
 
-  if (colaborador) {
-    // Garantir que estamos retornando apenas o objeto financeiro mais recente
-    const colaboradorComFinanceiro = {
-      ...colaborador,
-      financeiro: colaborador.financeiro[0], // Pega o primeiro (e único) elemento do array
-    };
-
-    return { colaborador: colaboradorComFinanceiro, session };
+  if (!userData) {
+    redirect("/");
   }
 
-  redirect("/");
+  return { userData, materias, series };
 }
 
-export default async function adminEditProfessor({ params }: { params: { id: string } }) {
-  const { colaborador, session } = await getDados(params.id);
+export default async function configMeuperfilPage({ params }: { params: { id: string } }) {
+  const { userData, materias, series } = await getUserData(params.id);
 
-  return <EditColaborador colaborador={colaborador as Usuarios & { financeiro: UsuariosFinanceiro }} accessLevel={session?.user.accessLevel} />;
+  return (
+    <div>
+      <p className="text-xl text-center mb-2">Olá, {userData.nome}! Esta é a página do seu perfil.</p>
+      {userData.accessLevel === "professor" && <EditProfessor professor={userData} materias={materias} series={series} />}
+      {userData.accessLevel === "aluno" && <EditAluno aluno={userData} series={series} materias={materias} />}
+      {userData.accessLevel === "responsavel" && <EditResponsavel responsavel={userData} />}
+      {(userData.accessLevel === "administrador" || userData.accessLevel === "administrativo") && <EditAdmin userData={userData} />}
+    </div>
+  );
 }

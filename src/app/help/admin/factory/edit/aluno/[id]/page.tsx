@@ -3,7 +3,6 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/lib/auth";
 import EditAluno from "@/components/EditForms/EditAluno/EditAluno";
 import prisma from "@/utils/prismaInstance";
-import Aluno from "@/interfaces/aluno.interface";
 
 async function getDados(id: string) {
   let session = await getServerSession(authOptions);
