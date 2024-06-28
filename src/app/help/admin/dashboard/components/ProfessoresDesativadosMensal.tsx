@@ -4,8 +4,8 @@ import SkeletonStatLoading from "./SkeletonStatLoading";
 import { TbZoomMoney } from "react-icons/tb";
 import { GetProfessoresDesativadosMensal } from "../actions/GetProfessoresDesativadosMensal";
 
-export default function ProfessoresDesativadosMensal() {
-  const { data, isLoading, error } = useSWR("GetProfessoresDesativadosMensal", GetProfessoresDesativadosMensal);
+export default function ProfessoresDesativadosMensal({ date }: { date: string }) {
+  const { data, isLoading, error } = useSWR(["GetProfessoresDesativadosMensal", date], () => GetProfessoresDesativadosMensal(date));
 
   if (error) return <div>Erro ao carregar os dados</div>;
   if (isLoading) return <SkeletonStatLoading />;

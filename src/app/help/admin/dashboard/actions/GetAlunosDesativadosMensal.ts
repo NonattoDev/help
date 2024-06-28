@@ -2,9 +2,11 @@
 import prisma from "@/utils/prismaInstance";
 import moment from "moment";
 
-export const GetAlunosDesativadosMensal = async () => {
-  const startOfMonth = moment().startOf("month").toDate();
-  const endOfMonth = moment().endOf("month").toDate();
+export const GetAlunosDesativadosMensal = async (date?: string) => {
+  const targetDate = date ? moment(date) : moment();
+  const startOfMonth = targetDate.startOf("month").toDate();
+  const endOfMonth = targetDate.endOf("month").toDate();
+
   try {
     const alunosDesativadosMes = await prisma.controleAlunos.findMany({
       where: {

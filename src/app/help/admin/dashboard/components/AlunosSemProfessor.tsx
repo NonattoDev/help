@@ -4,10 +4,9 @@ import { GetAlunosSemProfessor } from "../actions/GetAlunosSemProfessor";
 import SkeletonStatLoading from "./SkeletonStatLoading";
 import Modal from "@/components/Modal/Modal";
 import { useState } from "react";
-import { table } from "console";
 
-export default function AlunosSemProfessor() {
-  const { data, isLoading, error } = useSWR("GetAlunosSemProfessor", GetAlunosSemProfessor);
+export default function AlunosSemProfessor({ date }: { date?: string }) {
+  const { data, isLoading, error } = useSWR(["GetAlunosSemProfessor", date], () => GetAlunosSemProfessor(date));
   const [showModal, setShowModal] = useState(false);
 
   if (error) return <div>Erro ao carregar os dados</div>;

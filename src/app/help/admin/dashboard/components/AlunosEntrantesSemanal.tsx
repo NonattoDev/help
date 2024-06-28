@@ -5,8 +5,8 @@ import SkeletonStatLoading from "./SkeletonStatLoading";
 import Modal from "@/components/Modal/Modal";
 import { useState } from "react";
 
-export default function AlunosEntrantesSemanal() {
-  const { data, isLoading, error } = useSWR("GetAlunosIngressantesSemanal", GetAlunosIngressantesSemanal);
+export default function AlunosEntrantesSemanal({ date }: { date?: string }) {
+  const { data, isLoading, error } = useSWR(["GetAlunosIngressantesSemanal", date], () => GetAlunosIngressantesSemanal(date));
   const [showModal, setShowModal] = useState(false);
 
   if (error) return <div>Erro ao carregar os dados</div>;

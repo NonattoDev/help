@@ -4,8 +4,8 @@ import SkeletonStatLoading from "./SkeletonStatLoading";
 import { GetValoresReceber } from "../actions/GetValoresReceber";
 import { FaMoneyBillTrendUp } from "react-icons/fa6";
 
-export default function ValoresReceber() {
-  const { data, isLoading, error } = useSWR("GetValoresReceber", GetValoresReceber);
+export default function ValoresReceber({ date }: { date?: string }) {
+  const { data, isLoading, error } = useSWR(["GetValoresReceber",date] , () => GetValoresReceber(date));
 
   if (error) return <div>Erro ao carregar os dados</div>;
   if (isLoading) return <SkeletonStatLoading />;

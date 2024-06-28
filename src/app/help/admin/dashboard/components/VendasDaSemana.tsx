@@ -4,8 +4,8 @@ import SkeletonStatLoading from "./SkeletonStatLoading";
 import { GetVendasDaSemana } from "../actions/GetVendasDaSemana";
 import { TbZoomMoney } from "react-icons/tb";
 
-export default function VendasDaSemana() {
-  const { data, isLoading, error } = useSWR("GetVendasDaSemana", GetVendasDaSemana);
+export default function VendasDaSemana({ date }: { date?: string }) {
+  const { data, isLoading, error } = useSWR(["GetVendasDaSemana", date], () => GetVendasDaSemana(date));
 
   if (error) return <div>Erro ao carregar os dados</div>;
   if (isLoading) return <SkeletonStatLoading />;

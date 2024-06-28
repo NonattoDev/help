@@ -33,6 +33,43 @@ CREATE TABLE "UsuariosFinanceiro" (
 );
 
 -- CreateTable
+CREATE TABLE "FinanceiroAluno" (
+    "id" TEXT NOT NULL,
+    "alunoId" TEXT NOT NULL,
+    "qtdAulas" INTEGER NOT NULL,
+    "valor" DOUBLE PRECISION NOT NULL,
+    "diaVencimento" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "FinanceiroAluno_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Aluno" (
+    "id" TEXT NOT NULL,
+    "nome" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "escola" TEXT NOT NULL,
+    "ano_escolar" TEXT NOT NULL,
+    "data_nascimento" TIMESTAMP(3) NOT NULL,
+    "telefone" TEXT NOT NULL,
+    "endereco" JSONB NOT NULL,
+    "ficha" TEXT NOT NULL,
+    "modalidade" JSONB NOT NULL DEFAULT '{"presencial": true, "online": true}',
+    "password" TEXT NOT NULL,
+    "responsavelId" TEXT NOT NULL,
+    "dataInicioAulas" TIMESTAMP(3),
+    "dificuldades" TEXT[],
+    "accessLevel" TEXT NOT NULL DEFAULT 'aluno',
+    "ativo" BOOLEAN NOT NULL DEFAULT true,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Aluno_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "MateriaisRequisitados" (
     "id" TEXT NOT NULL,
     "alunoId" TEXT NOT NULL,
@@ -97,30 +134,6 @@ CREATE TABLE "Responsavel" (
 );
 
 -- CreateTable
-CREATE TABLE "Aluno" (
-    "id" TEXT NOT NULL,
-    "nome" TEXT NOT NULL,
-    "email" TEXT NOT NULL,
-    "escola" TEXT NOT NULL,
-    "ano_escolar" TEXT NOT NULL,
-    "data_nascimento" TIMESTAMP(3) NOT NULL,
-    "telefone" TEXT NOT NULL,
-    "endereco" JSONB NOT NULL,
-    "ficha" TEXT NOT NULL,
-    "modalidade" JSONB NOT NULL DEFAULT '{"presencial": true, "online": true}',
-    "password" TEXT NOT NULL,
-    "responsavelId" TEXT NOT NULL,
-    "dataInicioAulas" TIMESTAMP(3),
-    "dificuldades" TEXT[],
-    "accessLevel" TEXT NOT NULL DEFAULT 'aluno',
-    "ativo" BOOLEAN NOT NULL DEFAULT true,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-
-    CONSTRAINT "Aluno_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
 CREATE TABLE "ControleAlunos" (
     "id" TEXT NOT NULL,
     "alunoId" TEXT NOT NULL,
@@ -158,19 +171,6 @@ CREATE TABLE "Feedbacks" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Feedbacks_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "FinanceiroAluno" (
-    "id" TEXT NOT NULL,
-    "alunoId" TEXT NOT NULL,
-    "qtdAulas" INTEGER NOT NULL,
-    "valor" DOUBLE PRECISION NOT NULL,
-    "diaVencimento" TEXT NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-
-    CONSTRAINT "FinanceiroAluno_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -271,7 +271,7 @@ CREATE UNIQUE INDEX "Usuarios_email_key" ON "Usuarios"("email");
 CREATE UNIQUE INDEX "Usuarios_cpf_key" ON "Usuarios"("cpf");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "UsuariosFinanceiro_usuarioId_key" ON "UsuariosFinanceiro"("usuarioId");
+CREATE UNIQUE INDEX "Aluno_email_key" ON "Aluno"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "AgendaAulas_professorId_data_horaInicio_horaFinal_key" ON "AgendaAulas"("professorId", "data", "horaInicio", "horaFinal");
@@ -281,12 +281,6 @@ CREATE UNIQUE INDEX "Responsavel_email_key" ON "Responsavel"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Responsavel_cpf_key" ON "Responsavel"("cpf");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Aluno_email_key" ON "Aluno"("email");
-
--- CreateIndex
-CREATE UNIQUE INDEX "FinanceiroAluno_alunoId_key" ON "FinanceiroAluno"("alunoId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "TokenRecuperacao_token_key" ON "TokenRecuperacao"("token");
@@ -301,6 +295,12 @@ CREATE UNIQUE INDEX "Professor_cpf_key" ON "Professor"("cpf");
 ALTER TABLE "UsuariosFinanceiro" ADD CONSTRAINT "UsuariosFinanceiro_usuarioId_fkey" FOREIGN KEY ("usuarioId") REFERENCES "Usuarios"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "FinanceiroAluno" ADD CONSTRAINT "FinanceiroAluno_alunoId_fkey" FOREIGN KEY ("alunoId") REFERENCES "Aluno"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Aluno" ADD CONSTRAINT "Aluno_responsavelId_fkey" FOREIGN KEY ("responsavelId") REFERENCES "Responsavel"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "MateriaisRequisitados" ADD CONSTRAINT "MateriaisRequisitados_alunoId_fkey" FOREIGN KEY ("alunoId") REFERENCES "Aluno"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -313,9 +313,6 @@ ALTER TABLE "AgendaAulas" ADD CONSTRAINT "AgendaAulas_alunoId_fkey" FOREIGN KEY 
 ALTER TABLE "AgendaAulas" ADD CONSTRAINT "AgendaAulas_professorId_fkey" FOREIGN KEY ("professorId") REFERENCES "Professor"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Aluno" ADD CONSTRAINT "Aluno_responsavelId_fkey" FOREIGN KEY ("responsavelId") REFERENCES "Responsavel"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE "ControleAlunos" ADD CONSTRAINT "ControleAlunos_alunoId_fkey" FOREIGN KEY ("alunoId") REFERENCES "Aluno"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -326,9 +323,6 @@ ALTER TABLE "Feedbacks" ADD CONSTRAINT "Feedbacks_alunoId_fkey" FOREIGN KEY ("al
 
 -- AddForeignKey
 ALTER TABLE "Feedbacks" ADD CONSTRAINT "Feedbacks_professorId_fkey" FOREIGN KEY ("professorId") REFERENCES "Professor"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "FinanceiroAluno" ADD CONSTRAINT "FinanceiroAluno_alunoId_fkey" FOREIGN KEY ("alunoId") REFERENCES "Aluno"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "PagamentosAluno" ADD CONSTRAINT "PagamentosAluno_alunoId_fkey" FOREIGN KEY ("alunoId") REFERENCES "Aluno"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

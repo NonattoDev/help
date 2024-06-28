@@ -4,8 +4,8 @@ import SkeletonStatLoading from "./SkeletonStatLoading";
 import { GetFinanceiroFuncionarios } from "../actions/GetFinanceiroFuncionarios";
 import { FaBalanceScaleLeft } from "react-icons/fa";
 
-export default function FinanceiroFuncionarios() {
-  const { data, isLoading, error } = useSWR("GetFinanceiroFuncionarios", GetFinanceiroFuncionarios);
+export default function FinanceiroFuncionarios({ date }: { date: string }) {
+  const { data, isLoading, error } = useSWR(["GetFinanceiroFuncionarios", date], () => GetFinanceiroFuncionarios(date));
 
   if (error) return <div>Erro ao carregar os dados</div>;
   if (isLoading) return <SkeletonStatLoading />;

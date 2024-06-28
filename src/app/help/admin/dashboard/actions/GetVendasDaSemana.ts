@@ -2,26 +2,36 @@
 import prisma from "@/utils/prismaInstance";
 import moment from "moment";
 
-export const GetVendasDaSemana = async () => {
-  const startOfWeek = moment().startOf("week").format("YYYY-MM-DD");
-  const endOfWeek = moment().endOf("week").format("YYYY-MM-DD");
-  
+export const GetVendasDaSemana = async (date?: string) => {
+  const targetDate = date ? moment(date) : moment();
+  const startOfWeek = targetDate.startOf("week").toDate();
+  const endOfWeek = targetDate.endOf("week").add(1, "day").toDate();
+
   try {
     const VendasDaSemana = await prisma.aluno.findMany({
       where: {
         createdAt: {
-          gte: moment(startOfWeek).toDate(),
-          lte: moment(endOfWeek).toDate(),
+          gte: startOfWeek,
+          lt: endOfWeek,
         },
         ativo: true,
       },
       include: {
-        dadosFinanceiro: true,
+        dadosFinanceiro: {
+          orderBy: {
+            createdAt: "desc",
+          },
+        },
       },
     });
 
     const ValorTotalDasVendas = VendasDaSemana.reduce((acc, aluno) => {
-      return acc + (aluno.dadosFinanceiro?.valor || 0);
+      // Encontrar o último registro financeiro antes do fim da semana
+      const financeiroDaSemana = aluno.dadosFinanceiro.find((financeiro) => new Date(financeiro.createdAt) <= endOfWeek);
+      if (financeiroDaSemana) {
+        return acc + financeiroDaSemana.valor;
+      }
+      return acc;
     }, 0);
 
     return {
@@ -34,6 +44,7 @@ export const GetVendasDaSemana = async () => {
       success: false,
       VendasDaSemana: [],
       ValorTotalDasVendas: 0,
+      error: error.message,
     };
   } finally {
     await prisma.$disconnect();

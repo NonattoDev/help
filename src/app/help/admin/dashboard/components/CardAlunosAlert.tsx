@@ -5,7 +5,7 @@ import { GetAlunosAtivos } from "../actions/GetAlunosAtivos";
 import { toast } from "react-toastify";
 import SkeletonStatLoading from "./SkeletonStatLoading";
 
-export default function CardAlunosAlert({ date }: { date: string }) {
+export default function CardAlunosAlert({ date }: { date?: string }) {
   const { data, error, isLoading } = useSWR(["GetAlunosAtivos", date], () => GetAlunosAtivos(date));
 
   if (error) return <div>Erro ao carregar os dados</div>;

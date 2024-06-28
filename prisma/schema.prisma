@@ -20,12 +20,12 @@ model Usuarios {
   ativo           Boolean             @default(true)
   createdAt       DateTime            @default(now())
   updatedAt       DateTime            @updatedAt
-  financeiro      UsuariosFinanceiro?
+  financeiro      UsuariosFinanceiro[]
 }
 
 model UsuariosFinanceiro {
   id           String   @id @default(cuid())
-  usuarioId    String   @unique
+  usuarioId    String   
   usuario      Usuarios @relation(fields: [usuarioId], references: [id])
   valor        Float
   status       String   @default("pendente")
@@ -33,6 +33,50 @@ model UsuariosFinanceiro {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }
+
+
+// Alunos 
+model FinanceiroAluno {
+  id            String   @id @default(cuid())
+  alunoId       String
+  aluno         Aluno    @relation(fields: [alunoId], references: [id])
+  qtdAulas      Int
+  valor         Float
+  diaVencimento String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Aluno {
+  id                    String                  @id @default(cuid())
+  nome                  String
+  email                 String                  @unique
+  escola                String
+  ano_escolar           String
+  data_nascimento       DateTime
+  telefone              String
+  endereco              Json
+  ficha                 String
+  modalidade            Json                    @default("{\"presencial\": true, \"online\": true}")
+  password              String
+  responsavelId         String
+  dataInicioAulas       DateTime?
+  responsavel           Responsavel             @relation(fields: [responsavelId], references: [id])
+  dificuldades          String[]
+  accessLevel           String                  @default("aluno")
+  ativo                 Boolean                 @default(true)
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
+  dadosFinanceiro       FinanceiroAluno[]
+  AgendaAulas           AgendaAulas[]
+  MateriaisRequisitados MateriaisRequisitados[]
+  PagamentosAluno       PagamentosAluno[]
+  Feedbacks             Feedbacks[]
+  ControleAlunos        ControleAlunos[]
+}
+
+
+//! -------------------------------------------
 
 model MateriaisRequisitados {
   id           String    @id @default(cuid())
@@ -99,33 +143,7 @@ model Responsavel {
   updatedAt   DateTime @updatedAt
 }
 
-model Aluno {
-  id                    String                  @id @default(cuid())
-  nome                  String
-  email                 String                  @unique
-  escola                String
-  ano_escolar           String
-  data_nascimento       DateTime
-  telefone              String
-  endereco              Json
-  ficha                 String
-  modalidade            Json                    @default("{\"presencial\": true, \"online\": true}")
-  password              String
-  responsavelId         String
-  dataInicioAulas       DateTime?
-  responsavel           Responsavel             @relation(fields: [responsavelId], references: [id])
-  dificuldades          String[]
-  accessLevel           String                  @default("aluno")
-  ativo                 Boolean                 @default(true)
-  createdAt             DateTime                @default(now())
-  updatedAt             DateTime                @updatedAt
-  dadosFinanceiro       FinanceiroAluno?
-  AgendaAulas           AgendaAulas[]
-  MateriaisRequisitados MateriaisRequisitados[]
-  PagamentosAluno       PagamentosAluno[]
-  Feedbacks             Feedbacks[]
-  ControleAlunos        ControleAlunos[]
-}
+
 
 model ControleAlunos {
   id            String   @id @default(cuid())
@@ -160,17 +178,6 @@ model Feedbacks {
   proximosPassos     String // Pontos a serem ajustados e trabalhados nas próximas aulas
   createdAt          DateTime  @default(now())
   updatedAt          DateTime  @updatedAt
-}
-
-model FinanceiroAluno {
-  id            String   @id @default(cuid())
-  alunoId       String   @unique
-  aluno         Aluno    @relation(fields: [alunoId], references: [id])
-  qtdAulas      Int
-  valor         Float
-  diaVencimento String
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
 }
 
 model PagamentosAluno {

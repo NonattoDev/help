@@ -4,8 +4,8 @@ import SkeletonStatLoading from "./SkeletonStatLoading";
 import { GetTicketMedio } from "../actions/GetTicketMedio";
 import { ImTicket } from "react-icons/im";
 
-export default function TicketMedio() {
-  const { data, isLoading, error } = useSWR("GetTicketMedio", GetTicketMedio);
+export default function TicketMedio({ date }: { date: string }) {
+  const { data, isLoading, error } = useSWR(["GetTicketMedio", date], () => GetTicketMedio(date));
 
   if (error) return <div>Erro ao carregar os dados</div>;
   if (isLoading) return <SkeletonStatLoading />;

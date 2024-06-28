@@ -4,8 +4,8 @@ import SkeletonStatLoading from "./SkeletonStatLoading";
 import { GetLucroTotal } from "../actions/GetLucroTotal";
 import { GiReceiveMoney } from "react-icons/gi";
 
-export default function LucroTotal() {
-  const { data, isLoading, error } = useSWR("GetLucroTotal", GetLucroTotal);
+export default function LucroTotal({ date }: { date?: string }) {
+  const { data, isLoading, error } = useSWR(["GetLucroTotal", date], () => GetLucroTotal(date));
 
   if (error) return <div>Erro ao carregar os dados</div>;
   if (isLoading) return <SkeletonStatLoading />;

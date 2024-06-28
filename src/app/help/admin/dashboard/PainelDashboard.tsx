@@ -14,7 +14,8 @@ import ProfessoresDesativadosMensal from "./components/ProfessoresDesativadosMen
 import AlunosDesativadosMensal from "./components/AlunosDesativadosMensal";
 
 export default function PainelDashboard() {
-  const [date, setDate] = useState(moment().format("YYYY-MM-DD"));
+  const [date, setDate] = useState<string>(moment().format("YYYY-MM-DD"));
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col my-2 items-center gap-2">
@@ -23,15 +24,15 @@ export default function PainelDashboard() {
       </div>
       <div className="flex flex-wrap gap-2 justify-center">
         <CardAlunosAlert date={date} />
-        <AlunosEntrantesSemanal />
-        <AlunosSemProfessor />
-        <FinanceiroFuncionarios />
-        <ValoresReceber />
-        <LucroTotal />
-        <VendasDaSemana />
-        <TicketMedio />
-        <ProfessoresDesativadosMensal />
-        <AlunosDesativadosMensal />
+        <AlunosEntrantesSemanal date={date} />
+        <AlunosSemProfessor date={date} />
+        <FinanceiroFuncionarios date={date} />
+        <ValoresReceber date={date} />
+        <LucroTotal date={date} />
+        <VendasDaSemana date={date} />
+        <TicketMedio date={date} />
+        <ProfessoresDesativadosMensal date={date} />
+        <AlunosDesativadosMensal date={date} />
       </div>
     </div>
   );

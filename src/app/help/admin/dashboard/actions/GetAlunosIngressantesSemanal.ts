@@ -2,26 +2,50 @@
 import prisma from "@/utils/prismaInstance";
 import moment from "moment";
 
-export async function GetAlunosIngressantesSemanal() {
+export async function GetAlunosIngressantesSemanal(date?: string) {
   try {
-    // Determina o início e o fim da semana (domingo anterior e domingo seguinte)
-    const startOfWeek = moment().startOf("week");
-    const endOfWeek = moment().endOf("week").add(1, "day");
+    const targetDate = date ? moment(date) : moment();
 
-    const alunos = await prisma.aluno.findMany({
+    // Se uma data for fornecida, retorna dados do mês da data
+    if (date) {
+      const startDate = targetDate.startOf("month").toDate();
+      const endDate = targetDate.endOf("month").toDate();
+
+      const alunosDoMes = await prisma.aluno.findMany({
+        where: {
+          ativo: true,
+          createdAt: {
+            gte: startDate,
+            lt: endDate,
+          },
+        },
+      });
+
+      return {
+        success: true,
+        qtdAlunosNovos: alunosDoMes.length,
+        alunosNovos: alunosDoMes,
+      };
+    }
+
+    // Se nenhuma data for fornecida, retorna dados da semana atual
+    const startOfWeek = moment().startOf("week").toDate();
+    const endOfWeek = moment().endOf("week").add(1, "day").toDate();
+
+    const alunosDaSemana = await prisma.aluno.findMany({
       where: {
         ativo: true,
         createdAt: {
-          gte: startOfWeek.toDate(),
-          lt: endOfWeek.toDate(),
+          gte: startOfWeek,
+          lt: endOfWeek,
         },
       },
     });
 
     return {
       success: true,
-      qtdAlunosNovos: alunos.length,
-      alunosNovos: alunos
+      qtdAlunosNovos: alunosDaSemana.length,
+      alunosNovos: alunosDaSemana,
     };
   } catch (error: any) {
     return {
