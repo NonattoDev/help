@@ -33,6 +33,7 @@ export const generatePDF = (feedback: Feedbacks & { aluno: Aluno; professor: Pro
     body: [
       ["Autonomia", feedback.autonomia],
       ["Concentração", feedback.concentracao],
+      ["Engajamento", feedback.engajamentoAulas],
       ["Interpretação", feedback.interpretacao],
     ],
     theme: "grid",

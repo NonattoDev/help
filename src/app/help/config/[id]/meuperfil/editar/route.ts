@@ -164,6 +164,42 @@ export async function PUT(request: Request, params: any) {
           data_nascimento: moment(userData.data_nascimento).toDate(),
         },
       });
+
+      // Se os dados financeiros mudarem, isso significa que precisar adicionar um novo registro na tabela financeiroUsuarios
+      const currentFinanceiro = await prisma.financeiroUsuarios.findFirst({
+        where: { usuarioId: userID },
+        orderBy: { createdAt: "desc" },
+      });
+
+      const novoValor = parseFloat(String(userData.financeiro.valor).replace(/[^\d]/g, "")) / 100;
+      const proximoMes = moment().add(1, "month").startOf("month").toDate();
+
+      if (currentFinanceiro && (currentFinanceiro.valor !== novoValor || currentFinanceiro.diaPagamento !== userData.financeiro.diaPagamento)) {
+        const proximoFinanceiro = await prisma.financeiroUsuarios.findFirst({
+          where: { usuarioId: userID, createdAt: proximoMes },
+        });
+
+        if (proximoFinanceiro) {
+          // Atualizar o registro financeiro do próximo mês
+          await prisma.financeiroUsuarios.update({
+            where: { id: proximoFinanceiro.id },
+            data: {
+              valor: novoValor,
+              diaPagamento: userData.financeiro.diaPagamento,
+            },
+          });
+        } else {
+          // Adicionar um novo registro financeiro com início no próximo mês
+          await prisma.financeiroUsuarios.create({
+            data: {
+              usuarioId: userID,
+              valor: novoValor,
+              diaPagamento: userData.financeiro.diaPagamento,
+              createdAt: proximoMes, // Data de início no próximo mês
+            },
+          });
+        }
+      }
     }
 
     // Verificação final se o usuário foi atualizado

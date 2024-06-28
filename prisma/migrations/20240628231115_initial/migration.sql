@@ -178,6 +178,7 @@ CREATE TABLE "Feedbacks" (
     "professorId" TEXT NOT NULL,
     "autonomia" TEXT NOT NULL,
     "concentracao" TEXT NOT NULL,
+    "engajamentoAulas" TEXT NOT NULL,
     "interpretacao" TEXT NOT NULL,
     "desenvolvimento" TEXT NOT NULL,
     "comentarios" TEXT NOT NULL,

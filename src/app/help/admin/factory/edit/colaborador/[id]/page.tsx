@@ -76,19 +76,19 @@ async function getUserData(id: string) {
     redirect("/");
   }
 
-  return { userData, materias, series };
+  return { userData, materias, series, accessLevel: session?.user?.accessLevel };
 }
 
-export default async function configMeuperfilPage({ params }: { params: { id: string } }) {
-  const { userData, materias, series } = await getUserData(params.id);
+export default async function edicaoPerfilLikeAdmin({ params }: { params: { id: string } }) {
+  const { userData, materias, series, accessLevel } = await getUserData(params.id);
 
   return (
     <div>
       <p className="text-xl text-center mb-2">Olá, {userData.nome}! Esta é a página do seu perfil.</p>
-      {userData.accessLevel === "professor" && <EditProfessor professor={userData} materias={materias} series={series} />}
-      {userData.accessLevel === "aluno" && <EditAluno aluno={userData} series={series} materias={materias} />}
+      {userData.accessLevel === "professor" && <EditProfessor professor={userData} materias={materias} series={series} accessLevel={accessLevel} />}
+      {userData.accessLevel === "aluno" && <EditAluno aluno={userData} series={series} materias={materias} accessLevel={accessLevel} />}
       {userData.accessLevel === "responsavel" && <EditResponsavel responsavel={userData} />}
-      {(userData.accessLevel === "administrador" || userData.accessLevel === "administrativo") && <EditAdmin userData={userData} />}
+      {(userData.accessLevel === "administrador" || userData.accessLevel === "administrativo") && <EditAdmin userData={userData} accessLevel={accessLevel} />}
     </div>
   );
 }

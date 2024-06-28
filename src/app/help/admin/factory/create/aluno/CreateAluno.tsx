@@ -205,7 +205,7 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
 
   return (
     <div>
-      <div role="tablist" className="tabs tabs-boxed">
+      <div role="tablist" className="tabs tabs-boxed tabs-sm mb-8">
         <a role="tab" className={`tab ${activeTab === "dadosPessoais" ? "tab-active" : ""}`} onClick={() => setActiveTab("dadosPessoais")}>
           Dados do Aluno
         </a>
@@ -216,29 +216,29 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
 
       {activeTab === "dadosPessoais" && (
         <form onSubmit={handleSubmit}>
-          <h2 className="text-md text-center font-bold mt-5 mb-5">Dados Pessoais</h2>
+          <h2 className="block text-gray-700 text-2xl text-center font-bold my-4">Dados Pessoais</h2>
           <div className="grid grid-cols-4 gap-4">
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Nome</span>
+                <span className="block text-gray-700 text-sm font-bold mb-2">Nome</span>
               </label>
               <input type="text" name="nome" value={alunoData.nome} onChange={handleChange} className="input input-bordered" />
             </div>
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Email</span>
+                <span className="block text-gray-700 text-sm font-bold mb-2">Email</span>
               </label>
               <input type="email" name="email" value={alunoData.email} onChange={handleChange} className="input input-bordered" />
             </div>
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Data de Nascimento</span>
+                <span className="block text-gray-700 text-sm font-bold mb-2">Data de Nascimento</span>
               </label>
               <input type="date" name="data_nascimento" value={moment(alunoData.data_nascimento).format("YYYY-MM-DD")} onChange={handleChange} className="input input-bordered" />
             </div>
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Telefone</span>
+                <span className="block text-gray-700 text-sm font-bold mb-2">Telefone</span>
               </label>
               <ReactInputMask
                 mask="(99) 99999-9999"
@@ -253,30 +253,30 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
             </div>
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Senha</span>
+                <span className="block text-gray-700 text-sm font-bold mb-2">Senha</span>
               </label>
               <input type="password" name="password" value={alunoData.password} onChange={handleChange} className="input input-bordered" />
             </div>
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Confirme a senha</span>
+                <span className="block text-gray-700 text-sm font-bold mb-2">Confirme a senha</span>
               </label>
               <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className="input input-bordered" />
             </div>
           </div>
 
-          <h2 className="text-md text-center font-bold mt-5 mb-5">Dados Escolares</h2>
+          <h2 className="block text-gray-700 text-2xl text-center font-bold my-4">Dados Escolares</h2>
           <div className="grid grid-cols-4 gap-4">
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Escola</span>
+                <span className="block text-gray-700 text-sm font-bold mb-2">Escola</span>
               </label>
               <input type="text" name="escola" value={alunoData.escola} onChange={handleChange} className="input input-bordered" />
             </div>
 
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Ano Escolar</span>
+                <span className="block text-gray-700 text-sm font-bold mb-2">Ano Escolar</span>
               </label>
               <select className="input input-bordered" name="ano_escolar" onChange={handleChange}>
                 {series.map((item) => (
@@ -293,7 +293,7 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
             <div className="grid grid-cols-4 gap-4">
               <div>
                 <label className="label">
-                  <span className="label-text">CEP</span>
+                  <span className="block text-gray-700 text-sm font-bold mb-2">CEP</span>
                 </label>
                 <ReactInputMask
                   mask={"99999999"}
@@ -310,52 +310,70 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
 
               <div>
                 <label className="label">
-                  <span className="label-text">Rua</span>
+                  <span className="block text-gray-700 text-sm font-bold mb-2">Rua</span>
                 </label>
                 <input type="text" name="endereco.rua" value={alunoData.endereco.rua} onChange={handleChange} className="input input-bordered w-full" />
               </div>
 
               <div>
                 <label className="label">
-                  <span className="label-text">Número</span>
+                  <span className="block text-gray-700 text-sm font-bold mb-2">Número</span>
                 </label>
                 <input type="text" name="endereco.numero" value={alunoData.endereco.numero} onChange={handleChange} className="input input-bordered w-full" />
               </div>
 
               <div>
                 <label className="label">
-                  <span className="label-text">Complemento</span>
+                  <span className="block text-gray-700 text-sm font-bold mb-2">Complemento</span>
                 </label>
                 <input type="text" name="endereco.complemento" value={alunoData.endereco.complemento} onChange={handleChange} className="input input-bordered w-full" />
               </div>
 
               <div>
                 <label className="label">
-                  <span className="label-text">Bairro</span>
+                  <span className="block text-gray-700 text-sm font-bold mb-2">Bairro</span>
                 </label>
                 <input type="text" name="endereco.bairro" value={alunoData.endereco.bairro} onChange={handleChange} className="input input-bordered w-full" />
               </div>
 
               <div>
                 <label className="label">
-                  <span className="label-text">Cidade</span>
+                  <span className="block text-gray-700 text-sm font-bold mb-2">Cidade</span>
                 </label>
                 <input type="text" name="endereco.cidade" value={alunoData.endereco.cidade} onChange={handleChange} className="input input-bordered w-full" />
               </div>
 
               <div>
                 <label className="label">
-                  <span className="label-text">Estado</span>
+                  <span className="block text-gray-700 text-sm font-bold mb-2">Estado</span>
                 </label>
                 <input type="text" name="endereco.estado" value={alunoData.endereco.estado} onChange={handleChange} className="input input-bordered w-full" />
               </div>
 
               <div>
                 <label className="label">
-                  <span className="label-text">Referência</span>
+                  <span className="block text-gray-700 text-sm font-bold mb-2">Referência</span>
                 </label>
                 <input type="text" name="endereco.referencia" value={alunoData.endereco.referencia} onChange={handleChange} className="input input-bordered w-full" />
               </div>
+            </div>
+          </div>
+
+          <div className="form-control mt-8">
+            <h2 className="text-md text-center font-bold mb-5">Informações Iniciais</h2>
+            <div className="flex flex-col justify-center items-center">
+              <label className="label">
+                <span className="block text-gray-700 text-sm font-bold mb-2">Selecione uma data para inicio das aulas desse aluno</span>
+              </label>
+              <input
+                type="date"
+                name="dataInicioAulas"
+                value={moment(alunoData.dataInicioAulas).format("YYYY-MM-DD")}
+                onChange={(e) => {
+                  setAlunoData((prev) => ({ ...prev, dataInicioAulas: moment(e.target.value).toDate() }));
+                }}
+                className="input input-bordered w-fit input-md"
+              />
             </div>
           </div>
 
@@ -395,7 +413,7 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
             <div className="grid grid-cols-4 gap-4">
               <div className="form-control ">
                 <label className="label">
-                  <span className="label-text">Quantidade de aulas mensais</span>
+                  <span className="block text-gray-700 text-sm font-bold mb-2">Quantidade de aulas mensais</span>
                 </label>
                 <input
                   type="number"
@@ -408,13 +426,13 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
               </div>
               <div className="form-control ">
                 <label className="label">
-                  <span className="label-text">Valor</span>
+                  <span className="block text-gray-700 text-sm font-bold mb-2">Valor</span>
                 </label>
                 <input type="text" name="dadosFinanceiro.valor" value={alunoData.dadosFinanceiro.valor} onChange={handleCurrencyChange} className="input input-bordered w-fit" />
               </div>
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">Selecione uma data de vencimento</span>
+                  <span className="block text-gray-700 text-sm font-bold mb-2">Selecione uma data de vencimento</span>
                 </label>
                 <ReactInputMask
                   mask="99"
@@ -440,23 +458,23 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
 
       {activeTab === "dadosResponsaveis" && (
         <div>
-          <h2 className="text-md text-center font-bold mt-5 mb-5">Dados Responsáveis</h2>
+          <h2 className="block text-gray-700 text-2xl text-center font-bold my-4">Dados Responsáveis</h2>
           <div className="grid grid-cols-4 gap-4">
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Nome</span>
+                <span className="block text-gray-700 text-sm font-bold mb-2">Nome</span>
               </label>
               <input type="text" name="nome" value={responsavelData?.nome} onChange={handleResponsavelChange} className="input input-bordered" />
             </div>
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Email</span>
+                <span className="block text-gray-700 text-sm font-bold mb-2">Email</span>
               </label>
               <input type="email" name="email" value={responsavelData?.email} onChange={handleResponsavelChange} className="input input-bordered" />
             </div>
             <div className="form-control">
               <label className="label">
-                <span className="label-text">CPF</span>
+                <span className="block text-gray-700 text-sm font-bold mb-2">CPF</span>
               </label>
               <ReactInputMask
                 mask={"999.999.999-99"}
@@ -471,7 +489,7 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
             </div>
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Telefone</span>
+                <span className="block text-gray-700 text-sm font-bold mb-2">Telefone</span>
               </label>
               <ReactInputMask
                 mask="(99) 99999-9999"
@@ -486,7 +504,7 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
             </div>
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Senha</span>
+                <span className="block text-gray-700 text-sm font-bold mb-2">Senha</span>
               </label>
               <input type="password" name="password" value={responsavelData?.password} onChange={handleResponsavelChange} className="input input-bordered" />
             </div>
@@ -496,7 +514,7 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
             <div className="grid grid-cols-4 gap-4">
               <div>
                 <label className="label">
-                  <span className="label-text">CEP</span>
+                  <span className="block text-gray-700 text-sm font-bold mb-2">CEP</span>
                 </label>
                 <ReactInputMask
                   mask={"99999999"}
@@ -513,49 +531,49 @@ export default function CreateAluno({ series, materias }: { series: Series[]; ma
 
               <div>
                 <label className="label">
-                  <span className="label-text">Rua</span>
+                  <span className="block text-gray-700 text-sm font-bold mb-2">Rua</span>
                 </label>
                 <input type="text" name="endereco.rua" value={responsavelData?.endereco.rua} onChange={handleResponsavelChange} className="input input-bordered w-full" />
               </div>
 
               <div>
                 <label className="label">
-                  <span className="label-text">Número</span>
+                  <span className="block text-gray-700 text-sm font-bold mb-2">Número</span>
                 </label>
                 <input type="text" name="endereco.numero" value={responsavelData?.endereco.numero} onChange={handleResponsavelChange} className="input input-bordered w-full" />
               </div>
 
               <div>
                 <label className="label">
-                  <span className="label-text">Complemento</span>
+                  <span className="block text-gray-700 text-sm font-bold mb-2">Complemento</span>
                 </label>
                 <input type="text" name="endereco.complemento" value={responsavelData?.endereco.complemento} onChange={handleResponsavelChange} className="input input-bordered w-full" />
               </div>
 
               <div>
                 <label className="label">
-                  <span className="label-text">Bairro</span>
+                  <span className="block text-gray-700 text-sm font-bold mb-2">Bairro</span>
                 </label>
                 <input type="text" name="endereco.bairro" value={responsavelData?.endereco.bairro} onChange={handleResponsavelChange} className="input input-bordered w-full" />
               </div>
 
               <div>
                 <label className="label">
-                  <span className="label-text">Cidade</span>
+                  <span className="block text-gray-700 text-sm font-bold mb-2">Cidade</span>
                 </label>
                 <input type="text" name="endereco.cidade" value={responsavelData?.endereco.cidade} onChange={handleResponsavelChange} className="input input-bordered w-full" />
               </div>
 
               <div>
                 <label className="label">
-                  <span className="label-text">Estado</span>
+                  <span className="block text-gray-700 text-sm font-bold mb-2">Estado</span>
                 </label>
                 <input type="text" name="endereco.estado" value={responsavelData?.endereco.estado} onChange={handleResponsavelChange} className="input input-bordered w-full" />
               </div>
 
               <div>
                 <label className="label">
-                  <span className="label-text">Referência</span>
+                  <span className="block text-gray-700 text-sm font-bold mb-2">Referência</span>
                 </label>
                 <input type="text" name="endereco.referencia" value={responsavelData?.endereco.referencia} onChange={handleResponsavelChange} className="input input-bordered w-full" />
               </div>

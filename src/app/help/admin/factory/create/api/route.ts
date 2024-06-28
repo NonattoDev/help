@@ -78,11 +78,12 @@ export async function POST(request: Request, params: any) {
           password: aluno.password,
           dificuldades: aluno.dificuldades,
           data_nascimento: moment(alunoData.data_nascimento).toDate(),
+          dataInicioAulas: moment(alunoData.dataInicioAulas).toDate(),
           responsavel: {
             connect: {
               id: responsavel.id,
             },
-          },
+          }, 
           dadosFinanceiro: {
             create: {
               qtdAulas: Number(dadosFinanceiro.qtdAulas),

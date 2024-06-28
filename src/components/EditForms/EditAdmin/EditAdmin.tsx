@@ -2,14 +2,15 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 import React from "react";
-import { Administrador } from "@/interfaces/admin.interface";
 import ReactInputMask from "react-input-mask";
 import { validateCPF } from "@/utils/validateCpf";
 import verifyPassword from "@/utils/VerifyPassword";
 import moment from "moment";
+import { FinanceiroUsuarios, Usuarios } from "@prisma/client";
 
-export default function EditAdmin({ userData }: { userData: Administrador }) {
-  const [formData, setFormData] = React.useState<Administrador>(userData);
+export default function EditAdmin({ userData, accessLevel }: { userData: Usuarios & { financeiro: FinanceiroUsuarios }; accessLevel?: string | undefined }) {
+  const [formData, setFormData] = React.useState<Usuarios>(userData);
+  const [financeiro, setFinanceiro] = React.useState<FinanceiroUsuarios>(userData.financeiro);
 
   // Logica de confirmacao de senha
   const [confirmPassword, setConfirmPassword] = React.useState<string>("");
@@ -25,6 +26,14 @@ export default function EditAdmin({ userData }: { userData: Administrador }) {
     if (name === "password" && formData.password !== userData.password) {
       setShowConfirmPassword(true);
     }
+  };
+
+  const handleFinanceiroChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFinanceiro((prev) => ({
+      ...prev,
+      [name]: name === "valor" ? parseFloat(value) : value,
+    }));
   };
 
   const submitEdit = async (e: React.FormEvent) => {
@@ -43,7 +52,10 @@ export default function EditAdmin({ userData }: { userData: Administrador }) {
     if (errorCount > 0) return;
     try {
       const response = await axios.put(`/help/config/${formData.id}/meuperfil/editar`, {
-        formData,
+        formData: {
+          ...formData,
+          financeiro,
+        },
         senhaAntiga: userData.password,
         typeEdit: "admin",
       });
@@ -60,7 +72,7 @@ export default function EditAdmin({ userData }: { userData: Administrador }) {
   return (
     <div>
       <form onSubmit={submitEdit}>
-        <h2 className="text-md text-center font-bold mb-5 mt-4">Dados do Administrador</h2>
+        <h2 className="block text-gray-700 text-2xl text-center font-bold my-4">Dados do Colaborador</h2>
         <div className="grid grid-cols-4 gap-4">
           <div className="form-control">
             <label className="label">
@@ -134,9 +146,26 @@ export default function EditAdmin({ userData }: { userData: Administrador }) {
           )}
         </div>
 
-        <button type="submit" className="btn btn-primary mt-5 w-full">
-          Salvar
-        </button>
+        <h2 className="block text-gray-700 text-2xl text-center font-bold my-4">Dados Financeiros</h2>
+        <div className="grid grid-cols-4 gap-4">
+          <div>
+            <label className="block text-gray-700 text-sm font-bold mb-2">Remuneração</label>
+            <input disabled={!accessLevel?.startsWith("admin")} type="text" name="valor" className="input input-md input-bordered w-full" value={financeiro.valor} onChange={handleFinanceiroChange} />
+          </div>
+          <div>
+            <label className="block text-gray-700 text-sm font-bold mb-2">Dia de pagamento</label>
+            <input
+              disabled={!accessLevel?.startsWith("admin")}
+              type="text"
+              name="diaPagamento"
+              className="input input-md input-bordered w-full"
+              value={financeiro.diaPagamento}
+              onChange={handleFinanceiroChange}
+            />
+          </div>
+        </div>
+
+        <button className="btn btn-primary mt-5 w-full">Salvar</button>
       </form>
     </div>
   );

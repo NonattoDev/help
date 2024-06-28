@@ -17,6 +17,7 @@ export default function FeedbackButton() {
     professorId: "",
     autonomia: "3",
     concentracao: "3",
+    engajamentoAulas: "3",
     interpretacao: "",
     desenvolvimento: "",
     comentarios: "",
@@ -41,6 +42,7 @@ export default function FeedbackButton() {
       professorId: "",
       autonomia: "3",
       concentracao: "3",
+      engajamentoAulas: "3",
       interpretacao: "Regular",
       desenvolvimento: "",
       comentarios: "",
@@ -106,6 +108,7 @@ export default function FeedbackButton() {
         professorId: "",
         autonomia: "3",
         concentracao: "3",
+        engajamentoAulas: "3",
         interpretacao: "Regular",
         desenvolvimento: "",
         comentarios: "",
@@ -239,6 +242,26 @@ export default function FeedbackButton() {
                   </label>
                   <label>
                     <input type="radio" name="concentracao" value="5" checked={feedbackData.concentracao === "5"} onChange={handleRadioChange} /> Muita concentração
+                  </label>
+                </div>
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2"> Como foi o engajamento nas aula ? </label>
+                <div className="flex justify-between">
+                  <label>
+                    <input type="radio" name="engajamentoAulas" value="1" checked={feedbackData.engajamentoAulas === "1"} onChange={handleRadioChange} required /> Pouca concentração
+                  </label>
+                  <label>
+                    <input type="radio" name="engajamentoAulas" value="2" checked={feedbackData.engajamentoAulas === "2"} onChange={handleRadioChange} /> 2
+                  </label>
+                  <label>
+                    <input type="radio" name="engajamentoAulas" value="3" checked={feedbackData.engajamentoAulas === "3"} onChange={handleRadioChange} /> 3
+                  </label>
+                  <label>
+                    <input type="radio" name="engajamentoAulas" value="4" checked={feedbackData.engajamentoAulas === "4"} onChange={handleRadioChange} /> 4
+                  </label>
+                  <label>
+                    <input type="radio" name="engajamentoAulas" value="5" checked={feedbackData.engajamentoAulas === "5"} onChange={handleRadioChange} /> Muita concentração
                   </label>
                 </div>
               </div>

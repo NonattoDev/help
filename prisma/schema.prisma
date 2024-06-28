@@ -179,6 +179,7 @@ model Feedbacks {
   professor          Professor @relation(fields: [professorId], references: [id])
   autonomia          String // Grau de autonomia nos estudos (1 a 5)
   concentracao       String // Grau de concentração na aula (1 a 5)
+  engajamentoAulas   String // Grau de engajamento nas aulas (1 a 5)
   interpretacao      String // Habilidade de interpretar e responder o enunciado
   desenvolvimento    String // Detalhes sobre o desenvolvimento do aluno
   comentarios        String // Comentários sobre pontos fortes e a serem melhorados

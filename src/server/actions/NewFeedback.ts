@@ -21,6 +21,7 @@ export const NewFeedback = async (feedBack: Feedbacks) => {
         autonomia: feedBack.autonomia,
         comentarios: feedBack.comentarios,
         concentracao: feedBack.concentracao,
+        engajamentoAulas: feedBack.engajamentoAulas,
         desenvolvimento: feedBack.desenvolvimento,
         interpretacao: feedBack.interpretacao,
         materiaisSugeridos: feedBack.materiaisSugeridos,

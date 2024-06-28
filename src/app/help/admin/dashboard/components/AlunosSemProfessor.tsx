@@ -4,6 +4,7 @@ import { GetAlunosSemProfessor } from "../actions/GetAlunosSemProfessor";
 import SkeletonStatLoading from "./SkeletonStatLoading";
 import Modal from "@/components/Modal/Modal";
 import { useState } from "react";
+import moment from "moment";
 
 export default function AlunosSemProfessor({ date }: { date?: string }) {
   const { data, isLoading, error } = useSWR(["GetAlunosSemProfessor", date], () => GetAlunosSemProfessor(date));
@@ -37,7 +38,7 @@ export default function AlunosSemProfessor({ date }: { date?: string }) {
             <tr>
               <th>Nome</th>
               <th>Telefone</th>
-              <th>Email</th>
+              <th>Data de Inicio</th>
             </tr>
           </thead>
           {
@@ -47,7 +48,7 @@ export default function AlunosSemProfessor({ date }: { date?: string }) {
                   <tr key={aluno.id}>
                     <td>{aluno.nome}</td>
                     <td>{aluno.telefone}</td>
-                    <td>{aluno.email}</td>
+                    <td>{moment(aluno.dataInicioAulas).format("DD/MM/YYYY")}</td>
                   </tr>
                 ))}
             </tbody>

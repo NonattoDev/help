@@ -11,13 +11,31 @@ export async function GetAlunosSemProfessor(date?: string) {
     const alunos = await prisma.aluno.findMany({
       where: {
         ativo: true,
-        AgendaAulas: {
-          none: {}, // Verifica se o aluno não possui nenhuma aula marcada
-        },
-        createdAt: {
-          gte: startOfWeek,
-          lt: endOfWeek,
-        },
+        AND: [
+          {
+            OR: [
+              {
+                AgendaAulas: {
+                  none: {}, // Verifica se o aluno não possui nenhuma aula marcada
+                },
+              },
+              {
+                AgendaAulas: {
+                  every: {
+                    cancelada: true, // Verifica se todas as aulas foram canceladas
+                    finalizada: false, // Verifica se nenhuma aula foi finalizada
+                  },
+                },
+              },
+            ],
+          },
+          {
+            createdAt: {
+              gte: startOfWeek,
+              lt: endOfWeek,
+            },
+          },
+        ],
       },
     });
 

@@ -38,6 +38,23 @@ export async function createAlunos(prisma: PrismaClient) {
       },
       password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
     },
+    {
+      nome: "Lorena Fabiana Alana Rezende",
+      email: "lorena-rezende88@cassianoricardo.com.br",
+      cpf: "10854372059",
+      telefone: "91985288330",
+      endereco: {
+        rua: "Travessa We-29",
+        numero: "330",
+        bairro: "Cidade Nova",
+        cidade: "Ananindeua",
+        estado: "PA",
+        cep: "67133088",
+        complemento: "teste",
+        referencia: "teste",
+      },
+      password: "$2a$12$8mEzsG7hKhYKuNgs0RW4fOK6AQREgPRkCEJtQmD5t.8nLGfPF6k0S",
+    },
   ];
 
   // Crie responsáveis
@@ -59,6 +76,38 @@ export async function createAlunos(prisma: PrismaClient) {
 
   // Dados dos alunos
   const alunosData = [
+    {
+      id: "clxza5wad0003rg6it5aj39wk",
+      nome: "Carolina Alessandra Kamilly Jesus",
+      email: "carolina.alessandra.jesus@sadefem.com.br",
+      escola: "Marista",
+      ano_escolar: "7 ano",
+      data_nascimento: "1948-03-20T06:00:00.000Z",
+      telefone: "85998203043",
+      endereco: {
+        cep: "60421104",
+        rua: "Rua Edite Braga",
+        bairro: "Itaoca",
+        cidade: "Fortaleza",
+        estado: "CE",
+        numero: "657",
+        referencia: "teste",
+        complemento: "teste",
+      },
+      ficha: "Aluno é deficiente",
+      modalidade: { online: true, presencial: false },
+      password: "$2a$10$G1RKW4M8Xo4MQQUNkcBE2O/HBsVoEIukdSIrRAyVO6OspHO./Hz06",
+      financeiro: {
+        diaVencimento: "05",
+        qtdAulas: 4,
+        valor: 670,
+      },
+      dataInicioAulas: "2024-07-02T06:00:00.000Z",
+      dificuldades: ["Geografia", "Matemática", "Português", "História"],
+      accessLevel: "aluno",
+      responsavelId: responsavelMap["lorena-rezende88@cassianoricardo.com.br"],
+      ativo: true,
+    },
     {
       nome: "Adenilson Augusto Leal Neto",
       email: "adenilsonteste@gmail.com",
