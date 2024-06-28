@@ -1,7 +1,7 @@
 import FeedbackCard from "@/components/CardFeedback/Feedback";
 import prisma from "@/utils/prismaInstance";
 
-export const getFeedbacks = async () => {
+const getFeedbacks = async () => {
   const feedbacks = await prisma.feedbacks.findMany({
     include: {
       aluno: true,
