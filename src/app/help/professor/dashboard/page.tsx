@@ -3,6 +3,7 @@ import prisma from "@/utils/prismaInstance";
 import { AgendaAulas } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import PainelProfessor from "./PainelProfessor";
+import { redirect } from "next/navigation";
 
 export const metadata = {
   title: "Help - Professor",
@@ -27,15 +28,15 @@ const getDados = async () => {
 
   await prisma.$disconnect();
 
-  return { AgendaProfessor };
+  return { AgendaProfessor, idProfessor: session?.user?.id };
 };
 export default async function professorDashboard() {
-  const { AgendaProfessor } = await getDados();
+  const { AgendaProfessor, idProfessor } = await getDados();
 
   return (
     <div>
-      <h1 className="text-center font-semibold text-2xl">Dashboard do professor</h1>
-      <PainelProfessor AgendaProfessor={AgendaProfessor} />
+      <h1 className="text-center font-semibold text-2xl my-4">Dashboard do professor</h1>
+      <PainelProfessor AgendaProfessor={AgendaProfessor} professorId={idProfessor!} />
     </div>
   );
 }

@@ -6,8 +6,9 @@ import moment from "moment";
 import { useState } from "react";
 import { GetAgendas } from "../../../../server/actions/GetAgendas";
 import { toast } from "react-toastify";
+import Status from "../../admin/financeiro/components/Status";
 
-export default function PainelProfessor({ AgendaProfessor }: { AgendaProfessor: any[] }) {
+export default function PainelProfessor({ AgendaProfessor, professorId }: { AgendaProfessor: any[]; professorId: string | null }) {
   const [agendaAulas, setAgendaAulas] = useState<AgendaAulas[] | undefined>(AgendaProfessor);
   const [date, setDate] = useState(moment().format("YYYY-MM-DD"));
 
@@ -26,6 +27,7 @@ export default function PainelProfessor({ AgendaProfessor }: { AgendaProfessor: 
   };
   return (
     <div className="flex flex-col gap-2">
+      <Status professorId={professorId} />
       <div className="flex flex-col gap-2 items-center my-4">
         <span className="label-text">Filtro por data</span>
         <input type="date" name="date" className="input input-bordered w-1/12 input-sm" value={date} onChange={handleDateChange} />

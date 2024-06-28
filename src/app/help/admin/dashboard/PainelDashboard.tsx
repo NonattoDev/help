@@ -8,6 +8,8 @@ import AlunosSemProfessor from "./components/AlunosSemProfessor";
 import FinanceiroFuncionarios from "./components/FinanceiroFuncionarios";
 import ValoresReceber from "./components/ValoresReceber";
 import LucroTotal from "./components/LucroTotal";
+import VendasDaSemana from "./components/VendasDaSemana";
+import TicketMedio from "./components/TicketMedio";
 
 export default function PainelDashboard() {
   const [date, setDate] = useState(moment().format("YYYY-MM-DD"));
@@ -17,15 +19,15 @@ export default function PainelDashboard() {
         <label className="label-text">Filtrar por data</label>
         <input type="date" className="input input-bordered" value={date} onChange={(e) => setDate(e.target.value)} />
       </div>
-      <div className="flex gap-2 justify-center">
+      <div className="flex flex-wrap gap-2 justify-center">
         <CardAlunosAlert date={date} />
         <AlunosEntrantesSemanal />
         <AlunosSemProfessor />
         <FinanceiroFuncionarios />
         <ValoresReceber />
-      </div>
-      <div className="flex gap-2 justify-center">
         <LucroTotal />
+        <VendasDaSemana />
+        <TicketMedio />
       </div>
     </div>
   );

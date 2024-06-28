@@ -5,7 +5,6 @@ import Status from "./components/Status";
 import TabelaFinanceiro from "./components/TabelaFinanceiro";
 import { useState } from "react";
 import SelectProfessores from "./components/SelectProfessores";
-import { toast } from "react-toastify";
 
 moment.locale("pt-br");
 
