@@ -28,6 +28,9 @@ async function getUserData(id: string) {
           },
         },
       });
+      if (userData?.financeiro) {
+        userData.financeiro = userData.financeiro[0];
+      }
       break;
     case "aluno":
       userData = await prisma.aluno.findUnique({
