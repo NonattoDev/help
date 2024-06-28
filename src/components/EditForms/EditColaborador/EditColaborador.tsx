@@ -15,8 +15,30 @@ interface EditColaboradorProps {
   accessLevel: string;
 }
 
+const formatCurrency = (value: string | number): string => {
+  if (typeof value === "number") {
+    value = value.toString();
+  }
+  const numberValue = parseFloat(value.replace(/[^\d]/g, "")) / 100;
+  return numberValue.toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  });
+};
+
+const getNumericValue = (formattedValue: string): number => {
+  return parseFloat(formattedValue.replace(/[^\d]/g, "")) / 100;
+};
+
+
 export default function EditColaborador({ colaborador, accessLevel }: EditColaboradorProps) {
-  const [formData, setFormData] = useState(colaborador);
+  const [formData, setFormData] = useState({
+    ...colaborador,
+    financeiro: {
+      ...colaborador.financeiro,
+      valor: formatCurrency(colaborador.financeiro.valor),
+    },
+  });
   const [loading, setLoading] = useState(false);
 
   // Logica de confirmacao de senha
@@ -48,6 +70,18 @@ export default function EditColaborador({ colaborador, accessLevel }: EditColabo
     const { name, value } = e.target;
     setFormData({ ...formData, data_nascimento: moment(value).toDate() });
   };
+
+  const handleFinanceiroChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setFormData({
+      ...formData,
+      financeiro: {
+        ...formData.financeiro,
+        valor: formatCurrency(value),
+      },
+    });
+  };
+
   const submitEdit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -71,7 +105,16 @@ export default function EditColaborador({ colaborador, accessLevel }: EditColabo
 
     try {
       // Server Action: UpdateColaborador
-      const updateColaborador = await UpdateColaborador(formData, colaborador.password);
+      const updateColaborador = await UpdateColaborador(
+        {
+          ...formData,
+          financeiro: {
+            ...formData.financeiro,
+            valor: getNumericValue(formData.financeiro.valor),
+          },
+        },
+        colaborador.password
+      );
 
       if (updateColaborador.success) {
         toast.success(updateColaborador.message);
@@ -178,7 +221,7 @@ export default function EditColaborador({ colaborador, accessLevel }: EditColabo
             <label className="label">
               <span className="label-text">Remuneração</span>
             </label>
-            <input type="text" name="financeiro.valor" value={formData.financeiro.valor} onChange={handleChange} className="input input-bordered" required />
+            <input type="text" name="financeiro.valor" value={formData.financeiro.valor} onChange={handleFinanceiroChange} className="input input-bordered" required />
           </div>
           <div className="form-control">
             <label className="label">

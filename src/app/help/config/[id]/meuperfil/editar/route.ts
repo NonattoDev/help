@@ -29,7 +29,6 @@ export async function PUT(request: Request, params: any) {
 
   try {
     let updatedUser;
-    let updateResponsavel;
 
     // Atualização do tipo "aluno"
     if (typeEdit === "aluno") {
@@ -62,15 +61,46 @@ export async function PUT(request: Request, params: any) {
         },
       });
 
-      // Atualizar dados financeiros do aluno
-      await prisma.financeiroAluno.update({
-        where: { id: userData.dadosFinanceiro.id },
-        data: {
-          valor: parseFloat(String(userData.dadosFinanceiro.valor).replace(/[^\d]/g, "")) / 100,
-          qtdAulas: userData.dadosFinanceiro.qtdAulas,
-          diaVencimento: userData.dadosFinanceiro.diaVencimento,
-        },
+      // Se os dados financeiros mudarem, isso significa que precisar adicionar um novo registro na tabela financeiroAluno
+      const currentFinanceiro = await prisma.financeiroAluno.findFirst({
+        where: { alunoId: userID },
+        orderBy: { createdAt: "desc" },
       });
+
+      const novoValor = parseFloat(String(userData.dadosFinanceiro.valor).replace(/[^\d]/g, "")) / 100;
+      const proximoMes = moment().add(1, "month").startOf("month").toDate();
+
+      if (
+        currentFinanceiro &&
+        (currentFinanceiro.valor !== novoValor || currentFinanceiro.qtdAulas !== userData.dadosFinanceiro.qtdAulas || currentFinanceiro.diaVencimento !== userData.dadosFinanceiro.diaVencimento)
+      ) {
+        const proximoFinanceiro = await prisma.financeiroAluno.findFirst({
+          where: { alunoId: userID, createdAt: proximoMes },
+        });
+
+        if (proximoFinanceiro) {
+          // Atualizar o registro financeiro do próximo mês
+          await prisma.financeiroAluno.update({
+            where: { id: proximoFinanceiro.id },
+            data: {
+              valor: novoValor,
+              qtdAulas: userData.dadosFinanceiro.qtdAulas,
+              diaVencimento: userData.dadosFinanceiro.diaVencimento,
+            },
+          });
+        } else {
+          // Adicionar um novo registro financeiro com início no próximo mês
+          await prisma.financeiroAluno.create({
+            data: {
+              alunoId: userID,
+              valor: novoValor,
+              qtdAulas: userData.dadosFinanceiro.qtdAulas,
+              diaVencimento: userData.dadosFinanceiro.diaVencimento,
+              createdAt: proximoMes, // Data de início no próximo mês
+            },
+          });
+        }
+      }
 
       // Atualizar dados do responsável
       await prisma.responsavel.update({
@@ -137,7 +167,7 @@ export async function PUT(request: Request, params: any) {
     }
 
     // Verificação final se o usuário foi atualizado
-    if (!updatedUser && !updateResponsavel) {
+    if (!updatedUser) {
       return new Response(JSON.stringify({ error: "Usuário não encontrado" }), { status: 404 });
     }
 

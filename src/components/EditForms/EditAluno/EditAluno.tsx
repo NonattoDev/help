@@ -28,8 +28,6 @@ export default function EditAluno({ aluno, series, materias, accessLevel }: Prop
 
   const [alunoData, setAlunoData] = useState(aluno);
 
-  const [financeiroData, setFinanceiroData] = useState(aluno.dadosFinanceiro);
-
   // Logica de confirmacao de senha do aluno
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);

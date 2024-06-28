@@ -2,24 +2,64 @@
 import prisma from "@/utils/prismaInstance";
 import { Usuarios, UsuariosFinanceiro } from "@prisma/client";
 import { hashSync } from "bcryptjs";
+import moment from "moment";
 
 export const UpdateColaborador = async (formData: Usuarios & { financeiro: UsuariosFinanceiro }, senhaAtual: string) => {
   if (formData.password !== senhaAtual) {
     formData.password = hashSync(formData.password, 12);
   }
+
   try {
+    const currentFinanceiro = await prisma.usuariosFinanceiro.findFirst({
+      where: { usuarioId: formData.id },
+      orderBy: { createdAt: "desc" },
+    });
+
+    const novoValor = parseFloat(formData.financeiro.valor.toString());
+    const proximoMes = moment().add(1, "month").startOf("month").toDate();
+
+    if (currentFinanceiro && (currentFinanceiro.valor !== novoValor || currentFinanceiro.diaPagamento !== formData.financeiro.diaPagamento)) {
+      const proximoFinanceiro = await prisma.usuariosFinanceiro.findFirst({
+        where: { usuarioId: formData.id, createdAt: proximoMes },
+      });
+
+      if (proximoFinanceiro) {
+        // Atualizar o registro financeiro do próximo mês
+        await prisma.usuariosFinanceiro.update({
+          where: { id: proximoFinanceiro.id },
+          data: {
+            valor: novoValor,
+            diaPagamento: formData.financeiro.diaPagamento,
+          },
+        });
+      } else {
+        // Adicionar um novo registro financeiro com início no próximo mês
+        await prisma.usuariosFinanceiro.create({
+          data: {
+            usuarioId: formData.id,
+            valor: novoValor,
+            diaPagamento: formData.financeiro.diaPagamento,
+            status: "pendente",
+            createdAt: proximoMes, // Data de início no próximo mês
+          },
+        });
+      }
+    }
+
     const updatedColaborador = await prisma.usuarios.update({
       where: {
         id: formData.id,
       },
       data: {
-        ...formData,
-        financeiro: {
-          update: {
-            valor: parseFloat(formData.financeiro.valor.toString()),
-            diaPagamento: formData.financeiro.diaPagamento,
-          },
-        },
+        nome: formData.nome,
+        email: formData.email,
+        cpf: formData.cpf,
+        cargo: formData.cargo,
+        telefone: formData.telefone,
+        password: formData.password,
+        accessLevel: formData.accessLevel,
+        ativo: formData.ativo,
+        data_nascimento: moment(formData.data_nascimento).toDate(),
       },
     });
 

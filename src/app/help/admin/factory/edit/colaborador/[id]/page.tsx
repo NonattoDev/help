@@ -17,14 +17,25 @@ async function getDados(id: string) {
       id: id,
     },
     include: {
-      financeiro: true,
+      financeiro: {
+        orderBy: {
+          createdAt: "desc",
+        },
+        take: 1,
+      },
     },
   });
 
   await prisma.$disconnect();
 
   if (colaborador) {
-    return { colaborador, session };
+    // Garantir que estamos retornando apenas o objeto financeiro mais recente
+    const colaboradorComFinanceiro = {
+      ...colaborador,
+      financeiro: colaborador.financeiro[0], // Pega o primeiro (e único) elemento do array
+    };
+
+    return { colaborador: colaboradorComFinanceiro, session };
   }
 
   redirect("/");

@@ -88,6 +88,7 @@ export async function POST(request: Request, params: any) {
               qtdAulas: Number(dadosFinanceiro.qtdAulas),
               valor: parseFloat(String(dadosFinanceiro.valor).replace(/[^\d]/g, "")) / 100,
               diaVencimento: dadosFinanceiro.diaVencimento,
+              createdAt: new Date(),
             },
           },
         },
