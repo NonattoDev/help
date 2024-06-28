@@ -1,8 +1,8 @@
 import moment from "moment";
 import { fetchDadosFinancas } from "../actions/GetFinancas";
 import useSWR from "swr";
-import excelSVG from "./svg/excel.svg";
-import pdfSVG from "./svg/pdf.svg";
+import excelSVG from "@/assets/excel.svg";
+import pdfSVG from "@/assets/pdf.svg";
 import Image from "next/image";
 import { exportPDF } from "./exportFunctions/exportPdf";
 import { exportExcel } from "./exportFunctions/exportExcel";

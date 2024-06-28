@@ -23,6 +23,9 @@ export function AdministrativoButton() {
           <li>
             <Link href="/help/admin/gestao/cadastro/metas">Metas</Link>
           </li>
+          <li>
+            <Link href="/help/admin/pedagogico/feedbacks">Feedbacks</Link>
+          </li>
         </ul>
       </div>
     </Suspense>

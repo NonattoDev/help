@@ -2,8 +2,10 @@
 
 import Modal from "@/components/Modal/Modal";
 import { GetStudentsWithOldFeedbacks } from "@/server/actions/GetStudentsWithOldFeedbacks";
+import { NewFeedback } from "@/server/actions/NewFeedback";
 import { Aluno, Feedbacks } from "@prisma/client";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 export default function FeedbackButton() {
   const [showModal, setShowModal] = useState(false);
@@ -32,14 +34,14 @@ export default function FeedbackButton() {
 
   const handleCloseModal = () => {
     setShowModal(false);
-    setSelectedStudent({} as Aluno);
+    setSelectedStudent(undefined);
     setFeedbackData({
       id: "",
       alunoId: "",
       professorId: "",
       autonomia: "3",
       concentracao: "3",
-      interpretacao: "",
+      interpretacao: "Regular",
       desenvolvimento: "",
       comentarios: "",
       materiaisSugeridos: "",
@@ -59,8 +61,64 @@ export default function FeedbackButton() {
     setFeedbackData((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const handleSubmit = () => {
-    console.log(feedbackData);
+  const handleSubmit = async () => {
+    let countError = 0;
+
+    if (!feedbackData.alunoId) {
+      toast.error("Selecione um aluno");
+      countError++;
+    }
+
+    if (!feedbackData.interpretacao) {
+      toast.error("Selecione uma opção para a habilidade de interpretar e responder o que está sendo pedido no enunciado");
+      countError++;
+    }
+
+    if (!feedbackData.desenvolvimento) {
+      toast.error("Descreva as percepções sobre o desenvolvimento do aluno durante o período de aula");
+      countError++;
+    }
+
+    if (!feedbackData.comentarios) {
+      toast.error("Faça um breve comentário sobre o(a) aluno(a), citando pontos fortes e pontos a serem melhorados");
+      countError++;
+    }
+
+    if (!feedbackData.materiaisSugeridos) {
+      toast.error("Quais materiais você sugere que sejam utilizados para facilitar a interação e aprendizagem nas aulas?");
+      countError++;
+    }
+
+    if (!feedbackData.proximosPassos) {
+      toast.error("Quais os pontos necessários a serem ajustados e trabalhados nas próximas aulas? Descreva-os com detalhes");
+      countError++;
+    }
+
+    if (countError > 0) return;
+
+    const newFeedback = await NewFeedback(feedbackData);
+
+    if (newFeedback?.success) {
+      toast.success(newFeedback.message);
+      setFeedbackData({
+        id: "",
+        alunoId: "",
+        professorId: "",
+        autonomia: "3",
+        concentracao: "3",
+        interpretacao: "Regular",
+        desenvolvimento: "",
+        comentarios: "",
+        materiaisSugeridos: "",
+        proximosPassos: "",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+      setShowModal(false);
+      return;
+    } else {
+      toast.error(newFeedback.message);
+    }
   };
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -79,7 +137,7 @@ export default function FeedbackButton() {
       </button>
       <Modal onClose={handleCloseModal} show={showModal}>
         <h1 className="text-center font-semibold my-2">Modal de feedback</h1>
-        <div className="flex flex-col items-center max-h-[80vh] overflow-y-auto">
+        <div className="flex flex-col items-center">
           <select name="students" className="select select-bordered select-primary w-[60%] text-center" value={selectedStudent?.id} onChange={handleSelectChange}>
             {students.length > 0 ? (
               <>

@@ -58,7 +58,7 @@ export const SendRecoveryEmail = async (email: string) => {
     html: `
       <h1>Recuperação de senha</h1>
       <p>Olá, ${userExists.nome}, você solicitou a recuperação de senha. Seu link de recuperação é:</p>
-      <a href='${process.env.NEXTAUTH_URL}help/forgot-password/${tokenCreated.token}'>Clique aqui para recuperar sua senha</a>
+      <a href='${process.env.NEXTAUTH_URL}/help/forgot-password/${tokenCreated.token}'>Clique aqui para recuperar sua senha</a>
     `,
   });
 

@@ -7,7 +7,12 @@ import { getServerSession } from "next-auth";
 
 export const NewFeedback = async (feedBack: Feedbacks) => {
   const session = await getServerSession(authOptions);
-  if (!session) return null;
+  if (!session) {
+    return {
+      success: false,
+      message: "Usuário não autenticado",
+    };
+  }
   try {
     const feedback = await prisma.feedbacks.create({
       data: {
@@ -26,7 +31,7 @@ export const NewFeedback = async (feedBack: Feedbacks) => {
     return {
       success: true,
       message: "Feedback criado com sucesso",
-      feedback
+      feedback,
     };
   } catch (error) {
     return {
