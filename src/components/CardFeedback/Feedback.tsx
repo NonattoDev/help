@@ -3,7 +3,6 @@
 import { Aluno, Feedbacks, Professor } from "@prisma/client";
 import Modal from "../Modal/Modal";
 import { useState } from "react";
-import jsPDF from "jspdf";
 import Image from "next/image";
 import pdfSVG from "@/assets/pdf.svg";
 import { generatePDF } from "./GeneratePDF";
