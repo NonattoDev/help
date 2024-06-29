@@ -36,4 +36,5 @@ export const metadata: Metadata = {
       name: "Lara",
     },
   ],
+  
 };
