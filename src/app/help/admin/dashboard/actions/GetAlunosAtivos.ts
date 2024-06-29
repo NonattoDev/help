@@ -8,7 +8,10 @@ export async function GetAlunosAtivos(date?: string) {
     const startDate = targetDate.startOf("month").toDate();
     const endDate = targetDate.endOf("month").toDate();
 
-    const alunos = await prisma.aluno.findMany({
+    const prevMonthStartDate = targetDate.clone().subtract(1, "month").startOf("month").toDate();
+    const prevMonthEndDate = targetDate.clone().subtract(1, "month").endOf("month").toDate();
+
+    const alunosCurrentMonth = await prisma.aluno.findMany({
       where: {
         ativo: true,
         createdAt: {
@@ -18,10 +21,33 @@ export async function GetAlunosAtivos(date?: string) {
       },
     });
 
+    const alunosPrevMonth = await prisma.aluno.findMany({
+      where: {
+        ativo: true,
+        createdAt: {
+          gte: prevMonthStartDate,
+          lt: prevMonthEndDate,
+        },
+      },
+    });
+
+    const currentMonthCount = alunosCurrentMonth.length;
+    const prevMonthCount = alunosPrevMonth.length;
+
+    let porcentagemAmaisqueMesAnterior;
+    if (prevMonthCount === 0) {
+      porcentagemAmaisqueMesAnterior = currentMonthCount > 0 ? 100 : 0;
+    } else {
+      porcentagemAmaisqueMesAnterior = ((currentMonthCount - prevMonthCount) / prevMonthCount) * 100;
+    }
+
+  
+
     return {
       success: true,
-      data: alunos.length,
-      alunos,
+      data: currentMonthCount,
+      alunos: alunosCurrentMonth,
+      porcentagemAmaisqueMesAnterior,
     };
   } catch (error: any) {
     return {

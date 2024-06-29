@@ -29,6 +29,9 @@ export default function AlunosSemProfessor({ date }: { date?: string }) {
           </div>
           <div className="stat-title text-zinc-900">Alunos sem professor semanal</div>
           <div className="stat-value text-primary">{data?.quantidadeAlunos}</div>
+
+          <div className="stat-desc text-black">{data?.semAgendas} ainda não tem agenda de aulas</div>
+          <div className="stat-desc text-error">{data?.aulasCanceladas} tiveram aulas canceladas</div>
         </div>
       </div>
       <Modal onClose={() => setShowModal(false)} show={showModal}>

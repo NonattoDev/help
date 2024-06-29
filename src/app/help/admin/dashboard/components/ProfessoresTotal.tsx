@@ -11,7 +11,7 @@ export default function ProfessoresTotal({ date }: { date: string }) {
   if (isLoading) return <SkeletonStatLoading />;
 
   return (
-    <div className="stats shadow text-primary-content bg-slate-300 p-4 ">
+    <div className="stats shadow text-primary-content bg-slate-300 ">
       <div className="stat flex flex-col items-center">
         <div className="stat-figure text-primary mb-2">
           <GiTeacher fontSize={30} color="#00A96E" />

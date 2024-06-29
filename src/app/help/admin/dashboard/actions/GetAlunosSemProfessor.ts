@@ -37,12 +37,23 @@ export async function GetAlunosSemProfessor(date?: string) {
           },
         ],
       },
+      include: {
+        AgendaAulas: true,
+      },
     });
+
+    const aulasCanceladas = alunos.reduce((count, aluno) => {
+      return count + aluno.AgendaAulas.filter((aula) => aula.cancelada).length;
+    }, 0);
+
+    const semAgendas = alunos.filter((aluno) => aluno.AgendaAulas.length === 0).length;
 
     return {
       success: true,
       quantidadeAlunos: alunos.length,
       listaAlunos: alunos,
+      aulasCanceladas,
+      semAgendas,
     };
   } catch (error: any) {
     return {
