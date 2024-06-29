@@ -28,6 +28,8 @@ export const metadata: Metadata = {
     "ensino médio",
     "aulas de matemática",
     "aulas de português",
+    "helpreforcoescolar",
+    "HELP! | Reforço escolar",
   ],
   authors: [
     {
