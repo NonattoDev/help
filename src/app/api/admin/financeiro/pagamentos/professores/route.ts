@@ -6,15 +6,19 @@ import prisma from "@/utils/prismaInstance";
 // Esta rota será acessada toda sexta-feira
 export async function GET() {
   try {
-    return NextResponse.json({ message: "Rota de transações financeiras." });
     // Ao entrar na sexta feira ele vai buscar na agendaAulas todas as aulas que foram feitas naquela semana
+    const startOfWeek = moment().day(6).startOf("day"); // Sábado
+    const endOfWeek = moment()
+      .day(5 + 7)
+      .endOf("day");
+
     const agendaAulas = await prisma.agendaAulas.findMany({
       where: {
         cancelada: false,
         finalizada: true,
         createdAt: {
-          gte: moment().startOf("week").toDate(),
-          lte: moment().endOf("week").toDate(),
+          gte: startOfWeek.toDate(),
+          lte: endOfWeek.toDate(),
         },
       },
       include: {
@@ -26,7 +30,7 @@ export async function GET() {
     console.log("Aulas da semana:", agendaAulas);
     await prisma.$disconnect();
 
-    // Para cada aula que o professor tiver que for confirmada ele vai adicionar o valor da aula na tabela financeiro
+    // Para cada aula que o professor tiver que for confirmada ele vai adicionar o valor da aula na tabela PagamentosProfessor
 
     // const transacoes = await prisma.financeiro.createMany();
 
