@@ -135,7 +135,7 @@ export default function CreateColaborador() {
             name="accessLevel"
             value={colaborador.accessLevel}
             onChange={handleSelectAccessLevel}
-            onClick={getSelects}
+            onFocus={getSelects}
           >
             <option value="" disabled>
               Selecione uma opção
@@ -149,7 +149,7 @@ export default function CreateColaborador() {
         </div>
         <div>
           <label className="block text-gray-700 text-sm font-bold mb-2">Cargo</label>
-          <select name="cargo" className={`select select-md select-bordered w-full ${selectLoading ? "skeleton" : ""}`} value={colaborador.cargo} onChange={handleSelectCargo} onClick={getSelects}>
+          <select name="cargo" className={`select select-md select-bordered w-full ${selectLoading ? "skeleton" : ""}`} value={colaborador.cargo} onChange={handleSelectCargo} onFocus={getSelects}>
             <option value="" disabled>
               Selecione uma opção
             </option>

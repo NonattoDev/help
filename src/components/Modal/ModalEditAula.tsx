@@ -73,7 +73,7 @@ export default function ModalEditAula({ agendaAula, onClose, handleUpdatedAula }
     onClose();
   };
 
-  const handleFetchMaterias = async (event: React.MouseEvent<HTMLSelectElement>) => {
+  const handleFetchMaterias = async () => {
     const materias = await GetMaterias();
 
     if (!materias) return toast.error("Erro ao buscar matérias");
@@ -122,7 +122,7 @@ export default function ModalEditAula({ agendaAula, onClose, handleUpdatedAula }
                 name="materiaSelect"
                 id="materiaSelect"
                 value={aula.materia}
-                onClick={materias.length === 0 ? handleFetchMaterias : undefined}
+                onFocus={materias.length === 0 ? handleFetchMaterias : undefined}
                 onChange={handleMateriaChange}
               >
                 {aula && aula.materia && (

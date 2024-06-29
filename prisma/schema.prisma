@@ -21,8 +21,8 @@ model Usuarios {
   createdAt       DateTime             @default(now())
   updatedAt       DateTime             @updatedAt
   financeiro      FinanceiroUsuarios[]
+  PagamentosAluno PagamentosAluno[]
 }
-
 
 model FinanceiroUsuarios {
   id           String   @id @default(cuid())
@@ -35,10 +35,9 @@ model FinanceiroUsuarios {
   updatedAt    DateTime @updatedAt
 }
 
-
 model NiveisAcesso {
-  id        String   @id @default(cuid())
-  accessLevel     String
+  id          String @id @default(cuid())
+  accessLevel String
 }
 
 model Cargos {
@@ -193,13 +192,15 @@ model PagamentosAluno {
   id                  String   @id @default(cuid())
   alunoId             String
   aluno               Aluno    @relation(fields: [alunoId], references: [id])
+  lancadoPor          String
+  funcionario         Usuarios @relation(fields: [lancadoPor], references: [id])
   codigoIdentificador String
-  identificacao       String
+  observacao          String?
   valor               Float
   mesReferencia       String
+  anoReferencia       String
   formaPagamento      String
   dataPagamento       DateTime
-  lancadoPor          String
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
 }

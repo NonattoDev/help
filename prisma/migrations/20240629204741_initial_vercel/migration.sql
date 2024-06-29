@@ -194,13 +194,14 @@ CREATE TABLE "Feedbacks" (
 CREATE TABLE "PagamentosAluno" (
     "id" TEXT NOT NULL,
     "alunoId" TEXT NOT NULL,
+    "lancadoPor" TEXT NOT NULL,
     "codigoIdentificador" TEXT NOT NULL,
-    "identificacao" TEXT NOT NULL,
+    "observacao" TEXT,
     "valor" DOUBLE PRECISION NOT NULL,
     "mesReferencia" TEXT NOT NULL,
+    "anoReferencia" TEXT NOT NULL,
     "formaPagamento" TEXT NOT NULL,
     "dataPagamento" TIMESTAMP(3) NOT NULL,
-    "lancadoPor" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -344,6 +345,9 @@ ALTER TABLE "Feedbacks" ADD CONSTRAINT "Feedbacks_professorId_fkey" FOREIGN KEY 
 
 -- AddForeignKey
 ALTER TABLE "PagamentosAluno" ADD CONSTRAINT "PagamentosAluno_alunoId_fkey" FOREIGN KEY ("alunoId") REFERENCES "Aluno"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "PagamentosAluno" ADD CONSTRAINT "PagamentosAluno_lancadoPor_fkey" FOREIGN KEY ("lancadoPor") REFERENCES "Usuarios"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "FinanceiroProfessor" ADD CONSTRAINT "FinanceiroProfessor_professorId_fkey" FOREIGN KEY ("professorId") REFERENCES "Professor"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
