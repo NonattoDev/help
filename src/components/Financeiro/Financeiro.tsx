@@ -10,6 +10,9 @@ export default function FinanceiroDropdown() {
         <li>
           <Link href="/help/admin/financeiro">Analítico Professores</Link>
         </li>
+        <li>
+          <Link href="/help/admin/financeiro/lancamentos/pagamentos">Lançar Pagamentos</Link>
+        </li>
       </ul>
     </div>
   );

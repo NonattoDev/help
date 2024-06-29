@@ -200,6 +200,7 @@ CREATE TABLE "PagamentosAluno" (
     "mesReferencia" TEXT NOT NULL,
     "formaPagamento" TEXT NOT NULL,
     "dataPagamento" TIMESTAMP(3) NOT NULL,
+    "lancadoPor" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
