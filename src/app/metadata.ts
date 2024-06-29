@@ -23,6 +23,11 @@ export const metadata: Metadata = {
     "mentoria escolar",
     "professores qualificados",
     "ensino eficiente",
+    "preparação para exames",
+    "ensino fundamental",
+    "ensino médio",
+    "aulas de matemática",
+    "aulas de português",
   ],
   authors: [
     {
