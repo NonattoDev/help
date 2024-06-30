@@ -2,9 +2,26 @@
 
 import prisma from "@/utils/prismaInstance";
 import { Metas } from "@prisma/client";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/lib/auth";
 
 export const CreateMeta = async (meta: Metas, atualizar: boolean) => {
   try {
+    const session = await getServerSession(authOptions);
+    if (!session) {
+      return {
+        success: false,
+        message: "Usuário não autenticado",
+      };
+    }
+
+    if (session?.user.accessLevel !== "administrador") {
+      return {
+        success: false,
+        message: "Usuário não autorizado",
+      };
+    }
+
     const metaExistente = await prisma.metas.findFirst({
       where: {
         mesAno: meta.mesAno,

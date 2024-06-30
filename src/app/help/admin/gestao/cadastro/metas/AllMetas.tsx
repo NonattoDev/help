@@ -12,6 +12,7 @@ export default function AllMetas({ date }: { date: string }) {
   if (error) return <div>Erro ao carregar</div>;
 
   const allMetas: Metas[] | undefined = data?.allMetas;
+  const accessLevel = data?.accessLevel;
 
   return (
     <div className="overflow-x-auto">
@@ -19,7 +20,7 @@ export default function AllMetas({ date }: { date: string }) {
       <table className="table w-full">
         <thead>
           <tr>
-            <th>Faturamento</th>
+            {accessLevel === "administrador" && <th>Faturamento</th>}
             <th>Vendas</th>
             <th>Alunos Ativos</th>
             <th>Mês/Ano</th>
@@ -28,7 +29,14 @@ export default function AllMetas({ date }: { date: string }) {
         <tbody>
           {allMetas?.map((meta) => (
             <tr key={meta.id}>
-              <td>{meta.faturamento}</td>
+              {accessLevel === "administrador" && (
+                <td>
+                  {meta.faturamento.toLocaleString("pt-br", {
+                    style: "currency",
+                    currency: "BRL",
+                  })}
+                </td>
+              )}
               <td>{meta.vendas}</td>
               <td>{meta.alunosAtivos}</td>
               <td>{moment(meta.mesAno).format("MM/YYYY")}</td>
