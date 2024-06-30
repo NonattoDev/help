@@ -17,7 +17,7 @@ export default function LancarPagamentos() {
     observacao: "",
     valor: 0,
     mesReferencia: "",
-    anoReferencia: "",
+    anoReferencia: moment().format("YYYY"),
     formaPagamento: "",
     lancadoPor: "",
     dataPagamento: new Date(),
@@ -111,7 +111,7 @@ export default function LancarPagamentos() {
       observacao: "",
       valor: 0,
       mesReferencia: "",
-      anoReferencia: "",
+      anoReferencia: moment().format("YYYY"),
       formaPagamento: "",
       lancadoPor: "",
       dataPagamento: new Date(),
@@ -220,7 +220,7 @@ export default function LancarPagamentos() {
               id="mesReferencia"
               name="mesReferencia"
               type="text"
-              value={moment().format("YYYY")}
+              value={moment(pagamento.anoReferencia).format("YYYY")}
               required
               readOnly
               disabled

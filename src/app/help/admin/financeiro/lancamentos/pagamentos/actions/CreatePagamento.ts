@@ -6,6 +6,7 @@ import { PagamentosAluno } from "@prisma/client";
 import { getServerSession } from "next-auth";
 
 export const CreatePagamento = async (pagamento: PagamentosAluno) => {
+  console.log(pagamento);
   const session = await getServerSession(authOptions);
 
   if (!session) return { success: false, message: "Usuário não autenticado" };

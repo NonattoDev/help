@@ -6,8 +6,11 @@ import moment from "moment";
 // Função de busca de dados
 export const fetchDadosFinancas = async (professorId?: string | null) => {
   console.log(`FetchDadosFinancas foi chamado e ${professorId ? `professorId é ${professorId}` : "professorId é nulo"}`);
-  const startOfWeek = moment().startOf("week").toDate();
-  const endOfWeek = moment().endOf("week").toDate();
+  const startOfWeek = moment().day(6).startOf("day").toDate(); // Sábado
+  const endOfWeek = moment()
+    .day(5 + 7)
+    .endOf("day")
+    .toDate();
 
   // Ajuste as consultas com base na presença do professorId
   const whereClause = professorId ? { finalizada: true, professorId } : { finalizada: true };
