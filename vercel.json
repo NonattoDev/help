@@ -7,6 +7,10 @@
     {
       "path": "/api/admin/financeiro/pagamentos/professores",
       "schedule": "0 0 * * 5"
+    },
+    {
+      "path": "/api/admin/financeiro/alunos/inadimplentes",
+      "schedule": "0 18 * * *"
     }
   ]
 }

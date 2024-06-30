@@ -4,6 +4,8 @@ import moment from "moment";
 import prisma from "@/utils/prismaInstance";
 import "moment/locale/pt-br";
 import { transporter } from "@/utils/Nodemailer";
+import ExcelJS from "exceljs";
+import fs from "fs";
 
 let responsaveisFinanceiros = ["reforcoescolarhelp01@gmail.com", "laraalopes1@hotmail.com", "robsonnonatoiii@gmail.com"];
 
@@ -62,13 +64,41 @@ export async function GET() {
       .map(
         (aluno) => `
       <tr>
-        <td>${aluno.nome}</td>
-        <td>${aluno.dadosFinanceiro[0].diaVencimento}</td>
-        <td>${aluno.dadosFinanceiro[0].valor}</td>
+        <td style="padding: 10px;">${aluno.nome}</td>
+        <td style="padding: 10px;">${aluno.dadosFinanceiro[0].diaVencimento}</td>
+        <td style="padding: 10px;">${aluno.dadosFinanceiro[0].valor.toLocaleString("pt-BR", {
+          style: "currency",
+          currency: "BRL",
+        })}</td>
       </tr>
     `
       )
       .join("");
+
+    // Gerar arquivo Excel
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet("Alunos Inadimplentes");
+
+    worksheet.columns = [
+      { header: "Nome do Aluno", key: "nome", width: 30 },
+      { header: "Dia de Vencimento", key: "diaVencimento", width: 15 },
+      { header: "Valor da Mensalidade", key: "valor", width: 20 },
+    ];
+
+    alunosAtivos.forEach((aluno) => {
+      worksheet.addRow({
+        nome: aluno.nome,
+        diaVencimento: aluno.dadosFinanceiro[0].diaVencimento,
+        valor: aluno.dadosFinanceiro[0].valor.toLocaleString("pt-BR", {
+          style: "currency",
+          currency: "BRL",
+        }),
+      });
+    });
+
+    const buffer = await workbook.xlsx.writeBuffer();
+    const filePath = "/tmp/AlunosInadimplentes.xlsx";
+    fs.writeFileSync(filePath, Buffer.from(buffer));
 
     transporter.sendMail({
       from: process.env.PROVEDOR_EMAIL,
@@ -91,6 +121,12 @@ export async function GET() {
           </table>
         </div>
       `,
+      attachments: [
+        {
+          filename: "AlunosInadimplentes.xlsx",
+          path: filePath,
+        },
+      ],
     });
 
     return NextResponse.json({

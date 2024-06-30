@@ -57,7 +57,7 @@ export async function GET() {
   // Fazer para Alunos
   for (const aluno of alunos) {
     const mailOptions = {
-      from: "devhelpreforcoescolar@gmail.com",
+      from: process.env.PROVEDOR_EMAIL,
       to: aluno.email,
       subject: `Feliz Aniversário ${aluno.nome}`,
       text: `Olá ${aluno.nome}`,
@@ -83,7 +83,7 @@ export async function GET() {
   // Fazer para Professores
   for (const prof of professores) {
     const mailOptions = {
-      from: "devhelpreforcoescolar@gmail.com",
+      from: process.env.PROVEDOR_EMAIL,
       to: prof.email,
       subject: `Feliz Aniversário ${prof.nome}`,
       text: `Olá ${prof.nome}`,
@@ -109,7 +109,7 @@ export async function GET() {
   // Fazer para Usuarios
   for (const user of usuarios) {
     const mailOptions = {
-      from: "devhelpreforcoescolar@gmail.com",
+      from: process.env.PROVEDOR_EMAIL,
       to: user.email,
       subject: `Feliz Aniversário ${user.nome}`,
       text: `Olá ${user.nome}`,
