@@ -1,5 +1,8 @@
 import Link from "next/link";
 import { Suspense } from "react";
+import { VscFeedback } from "react-icons/vsc";
+import { FaRegFolderOpen } from "react-icons/fa";
+import { GoGoal } from "react-icons/go";
 
 function LoadingFallback() {
   return (
@@ -18,13 +21,22 @@ export function AdministrativoButton() {
         </div>
         <ul tabIndex={0} className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
           <li>
-            <Link href="/help/admin/pedagogico/requisicoes/materiais">Materiais</Link>
+            <Link href="/help/admin/pedagogico/requisicoes/materiais">
+              <FaRegFolderOpen />
+              Materiais
+            </Link>
           </li>
           <li>
-            <Link href="/help/admin/gestao/cadastro/metas">Metas</Link>
+            <Link href="/help/admin/gestao/cadastro/metas">
+              <GoGoal />
+              Metas
+            </Link>
           </li>
           <li>
-            <Link href="/help/admin/pedagogico/feedbacks">Feedbacks</Link>
+            <Link href="/help/admin/pedagogico/feedbacks">
+              <VscFeedback />
+              Feedbacks
+            </Link>
           </li>
         </ul>
       </div>

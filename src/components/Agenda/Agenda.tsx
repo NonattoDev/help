@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { GiTeacher } from "react-icons/gi";
+import { PiStudentFill } from "react-icons/pi";
 
 export default function AgendaDropdown() {
   return (
@@ -8,10 +10,15 @@ export default function AgendaDropdown() {
       </div>
       <ul tabIndex={0} className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
         <li>
-          <Link href="/help/admin/agendas/professores">Professores</Link>
+          <Link href="/help/admin/agendas/professores">
+            <GiTeacher /> Professores
+          </Link>
         </li>
         <li>
-          <Link href="/help/admin/agendas/alunos">Alunos</Link>
+          <Link href="/help/admin/agendas/alunos">
+            <PiStudentFill />
+            Alunos
+          </Link>
         </li>
       </ul>
     </div>

@@ -24,7 +24,7 @@ export default function PainelDashboard() {
         <input type="date" className="input input-bordered" value={date} onChange={(e) => setDate(e.target.value)} />
       </div>
       <div className="flex flex-wrap gap-4 justify-center">
-        <div className="shadow-xl p-8 bg-slate-100 rounded-lg">
+        <div className="shadow-xl p-2 py-8 bg-slate-100 rounded-lg">
           <h2 className="block text-gray-700 text-center text-2xl font-bold mb-2">Dados Financeiros</h2>
           <div className="flex gap-2 flex-wrap justify-center">
             <ProfessoresTotal date={date} />
@@ -37,13 +37,15 @@ export default function PainelDashboard() {
           </div>
         </div>
       </div>
-      <div className="shadow-xl p-8 bg-slate-100 rounded-lg">
-        <h2 className="block text-gray-700 text-center text-2xl font-bold mb-2">Valores</h2>
-        <div id="valores" className="flex gap-2 flex-wrap justify-center">
-          <FinanceiroFuncionarios date={date} />
-          <ValoresReceber date={date} />
-          <TicketMedio date={date} />
-          <LucroTotal date={date} />
+      <div className="flex flex-wrap gap-4 justify-center">
+        <div className="shadow-xl p-2 py-8 bg-slate-100 rounded-lg">
+          <h2 className="block text-gray-700 text-center text-2xl font-bold mb-2">Valores</h2>
+          <div id="valores" className="flex gap-2 flex-wrap justify-center">
+            <FinanceiroFuncionarios date={date} />
+            <ValoresReceber date={date} />
+            <TicketMedio date={date} />
+            <LucroTotal date={date} />
+          </div>
         </div>
       </div>
     </div>
