@@ -13,9 +13,22 @@ const getMatchDados = async () => {
     include: {
       responsavel: true,
       AgendaAulas: true,
-      dadosFinanceiro: true,
+      dadosFinanceiro: {
+        orderBy: {
+          createdAt: "desc",
+        },
+        take: 1,
+      },
     },
   });
+
+  if (alunos && alunos.length > 0) {
+    alunos.forEach((aluno) => {
+      if (aluno.dadosFinanceiro && aluno.dadosFinanceiro.length > 0) {
+        aluno.dadosFinanceiro = aluno.dadosFinanceiro[0] as unknown as any;
+      }
+    });
+  }
 
   await prisma.$disconnect();
   return { alunos };

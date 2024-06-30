@@ -151,7 +151,7 @@ export default function AgendaMatch({ professor, aluno, materias }: AgendaMatchP
         <div className="flex flex-col justify-center gap-6">
           {date && (
             <label className="text-1xl font-bold text-end">
-              {aluno.nome} tem {aluno.dadosFinanceiro?.qtdAulas- qtdAulasMarcadas} aulas restantes para o mês de {moment(date).format("MMMM")}
+              {aluno.nome} tem {aluno.dadosFinanceiro?.qtdAulas - qtdAulasMarcadas} aulas restantes para o mês de {moment(date).format("MMMM")}
             </label>
           )}
           <label className="text-1xl font-bold text-center">Selecione uma data</label>
