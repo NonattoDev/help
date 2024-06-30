@@ -283,6 +283,31 @@ CREATE TABLE "Series" (
     CONSTRAINT "Series_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "Metas" (
+    "id" TEXT NOT NULL,
+    "faturamento" DOUBLE PRECISION NOT NULL,
+    "vendas" INTEGER NOT NULL,
+    "alunosAtivos" INTEGER NOT NULL,
+    "mesAno" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Metas_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "CRM" (
+    "id" TEXT NOT NULL,
+    "nomeCliente" TEXT NOT NULL,
+    "emailCliente" TEXT NOT NULL,
+    "telefoneCliente" TEXT NOT NULL,
+    "dataAtendimento" TIMESTAMP(3) NOT NULL,
+    "descricaoAtendimento" TEXT NOT NULL,
+
+    CONSTRAINT "CRM_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "Usuarios_email_key" ON "Usuarios"("email");
 
@@ -309,6 +334,9 @@ CREATE UNIQUE INDEX "Professor_email_key" ON "Professor"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Professor_cpf_key" ON "Professor"("cpf");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Metas_mesAno_key" ON "Metas"("mesAno");
 
 -- AddForeignKey
 ALTER TABLE "FinanceiroUsuarios" ADD CONSTRAINT "FinanceiroUsuarios_usuarioId_fkey" FOREIGN KEY ("usuarioId") REFERENCES "Usuarios"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

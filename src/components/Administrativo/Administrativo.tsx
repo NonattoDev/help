@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import { VscFeedback } from "react-icons/vsc";
 import { FaRegFolderOpen } from "react-icons/fa";
 import { GoGoal } from "react-icons/go";
+import { SiCivicrm } from "react-icons/si";
 
 function LoadingFallback() {
   return (
@@ -30,6 +31,12 @@ export function AdministrativoButton() {
             <Link href="/help/admin/gestao/cadastro/metas">
               <GoGoal />
               Metas
+            </Link>
+          </li>
+          <li>
+            <Link href="/help/admin/gestao/CRM">
+              <SiCivicrm />
+              CRM
             </Link>
           </li>
           <li>

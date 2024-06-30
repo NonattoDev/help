@@ -45,7 +45,7 @@ export default function EditValores({ valores }: { valores: Valores[] }) {
                 <td>{valor.nome}</td>
                 <td>
                   {editMode ? (
-                    <input type="number" value={valor.valor} onChange={(e) => handleValueChange(valor.id, parseFloat(e.target.value))} className="input input-bordered input-sm" />
+                    <input type="number" value={valor.valor} onChange={(e) => handleValueChange(valor.id, parseFloat(e.target.value))} className="input input-bordered input-sm max-w-14" />
                   ) : (
                     valor.valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })
                   )}
