@@ -285,8 +285,19 @@ model Metas {
 model CRM {
   id                   String   @id @default(cuid())
   nomeCliente          String
-  emailCliente         String
   telefoneCliente      String
+  emailCliente         String?
+  atendimentos Atendimentos[]
+}
+
+
+model Atendimentos {
+  id                   String   @id @default(cuid())
+  clienteId            String
+  cliente              CRM      @relation(fields: [clienteId], references: [id])
   dataAtendimento      DateTime
+  tipoAtendimento      String
   descricaoAtendimento String
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
 }

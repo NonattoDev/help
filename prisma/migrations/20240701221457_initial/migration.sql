@@ -300,12 +300,23 @@ CREATE TABLE "Metas" (
 CREATE TABLE "CRM" (
     "id" TEXT NOT NULL,
     "nomeCliente" TEXT NOT NULL,
-    "emailCliente" TEXT NOT NULL,
     "telefoneCliente" TEXT NOT NULL,
-    "dataAtendimento" TIMESTAMP(3) NOT NULL,
-    "descricaoAtendimento" TEXT NOT NULL,
+    "emailCliente" TEXT,
 
     CONSTRAINT "CRM_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Atendimentos" (
+    "id" TEXT NOT NULL,
+    "clienteId" TEXT NOT NULL,
+    "dataAtendimento" TIMESTAMP(3) NOT NULL,
+    "tipoAtendimento" TEXT NOT NULL,
+    "descricaoAtendimento" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Atendimentos_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -382,3 +393,6 @@ ALTER TABLE "FinanceiroProfessor" ADD CONSTRAINT "FinanceiroProfessor_professorI
 
 -- AddForeignKey
 ALTER TABLE "FinanceiroProfessor" ADD CONSTRAINT "FinanceiroProfessor_aulaId_fkey" FOREIGN KEY ("aulaId") REFERENCES "AgendaAulas"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Atendimentos" ADD CONSTRAINT "Atendimentos_clienteId_fkey" FOREIGN KEY ("clienteId") REFERENCES "CRM"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
