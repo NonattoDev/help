@@ -2,11 +2,11 @@
 import prisma from "@/utils/prismaInstance";
 import moment from "moment";
 
-export const GetAllCRM = async (date?: string) => {
+export const GetAllLead = async (date?: string) => {
   try {
-    let allCRM = [];
-    if (date) {
-      allCRM = await prisma.cRM.findMany({
+    let allLeads = [];
+    if (date && moment(date).format("YYYY-MM-DD") !== moment().format("YYYY-MM-DD")) {
+      allLeads = await prisma.lead.findMany({
         where: {
           atendimentos: {
             some: {
@@ -19,32 +19,32 @@ export const GetAllCRM = async (date?: string) => {
         },
       });
     } else {
-      allCRM = await prisma.cRM.findMany({
+      allLeads = await prisma.lead.findMany({
         include: {
           atendimentos: true,
         },
       });
     }
 
-    if (!allCRM || allCRM.length === 0) {
+    if (!allLeads || allLeads.length === 0) {
       return {
         success: false,
-        message: "Nenhum CRM encontrado",
-        allCRM: [],
+        message: "Nenhum lead encontrado",
+        allLeads: [],
       };
     }
 
     return {
       success: true,
-      message: "CRMs encontrados com sucesso",
-      allCRM,
+      message: "Leads encontrados com sucesso",
+      allLeads,
     };
   } catch (error) {
     console.log(error);
     return {
       success: false,
-      message: "Erro ao buscar CRM",
-      allCRM: [],
+      message: "Erro ao buscar Lead",
+      allLeads: [],
     };
   } finally {
     await prisma.$disconnect();

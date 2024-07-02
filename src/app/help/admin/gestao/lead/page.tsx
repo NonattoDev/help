@@ -1,8 +1,8 @@
 "use client";
 import moment from "moment";
-import CRMApp from "./CRM";
 import { useState } from "react";
 import AddCRM from "./AddCRM";
+import LeadApp from "./LeadApp";
 
 export default function CRMPage() {
   const [date, setDate] = useState(moment().format("YYYY-MM-DD"));
@@ -13,7 +13,7 @@ export default function CRMPage() {
         <input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="input input-bordered" />
       </div>
       <AddCRM />
-      <CRMApp date={date} />
+      <LeadApp date={date} />
     </div>
   );
 }

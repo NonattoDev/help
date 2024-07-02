@@ -297,13 +297,13 @@ CREATE TABLE "Metas" (
 );
 
 -- CreateTable
-CREATE TABLE "CRM" (
+CREATE TABLE "Lead" (
     "id" TEXT NOT NULL,
     "nomeCliente" TEXT NOT NULL,
     "telefoneCliente" TEXT NOT NULL,
     "emailCliente" TEXT,
 
-    CONSTRAINT "CRM_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Lead_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -348,6 +348,9 @@ CREATE UNIQUE INDEX "Professor_cpf_key" ON "Professor"("cpf");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Metas_mesAno_key" ON "Metas"("mesAno");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Lead_emailCliente_key" ON "Lead"("emailCliente");
 
 -- AddForeignKey
 ALTER TABLE "FinanceiroUsuarios" ADD CONSTRAINT "FinanceiroUsuarios_usuarioId_fkey" FOREIGN KEY ("usuarioId") REFERENCES "Usuarios"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -395,4 +398,4 @@ ALTER TABLE "FinanceiroProfessor" ADD CONSTRAINT "FinanceiroProfessor_professorI
 ALTER TABLE "FinanceiroProfessor" ADD CONSTRAINT "FinanceiroProfessor_aulaId_fkey" FOREIGN KEY ("aulaId") REFERENCES "AgendaAulas"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Atendimentos" ADD CONSTRAINT "Atendimentos_clienteId_fkey" FOREIGN KEY ("clienteId") REFERENCES "CRM"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Atendimentos" ADD CONSTRAINT "Atendimentos_clienteId_fkey" FOREIGN KEY ("clienteId") REFERENCES "Lead"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

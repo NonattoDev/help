@@ -282,11 +282,11 @@ model Metas {
   updatedAt    DateTime @updatedAt
 }
 
-model CRM {
+model Lead {
   id                   String   @id @default(cuid())
   nomeCliente          String
   telefoneCliente      String
-  emailCliente         String?
+  emailCliente         String?  @unique
   atendimentos Atendimentos[]
 }
 
@@ -294,7 +294,7 @@ model CRM {
 model Atendimentos {
   id                   String   @id @default(cuid())
   clienteId            String
-  cliente              CRM      @relation(fields: [clienteId], references: [id])
+  cliente              Lead      @relation(fields: [clienteId], references: [id])
   dataAtendimento      DateTime
   tipoAtendimento      String
   descricaoAtendimento String

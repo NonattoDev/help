@@ -34,9 +34,9 @@ export function AdministrativoButton() {
             </Link>
           </li>
           <li>
-            <Link href="/help/admin/gestao/CRM">
+            <Link href="/help/admin/gestao/lead">
               <SiCivicrm />
-              CRM
+              Lead
             </Link>
           </li>
           <li>

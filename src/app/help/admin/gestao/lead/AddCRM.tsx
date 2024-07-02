@@ -1,15 +1,17 @@
 "use client";
 
 import Modal from "@/components/Modal/Modal";
-import { Atendimentos, CRM } from "@prisma/client";
+import { Atendimentos, Lead } from "@prisma/client";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { GetAllCRM } from "./actions/GetAllCRM";
+import { GetAllLead } from "./actions/GetAllLead";
+import moment from "moment";
+import { CreateNewLead } from "./actions/CreateNewLead";
 
-export default function FeedbackButton() {
+export default function AddLead() {
   const [showModal, setShowModal] = useState(false);
-  const [CRMClientes, setCRMClientes] = useState<CRM[]>();
-  const [CRMData, setCRMData] = useState<CRM>({
+  const [LeadClientes, setLeadClientes] = useState<Lead[]>();
+  const [leadData, setLeadData] = useState<Lead>({
     id: "",
     nomeCliente: "",
     telefoneCliente: "",
@@ -26,13 +28,13 @@ export default function FeedbackButton() {
   });
 
   const handleOpenModal = async () => {
-    const allCRMS = await GetAllCRM();
-    if (!allCRMS.success) {
-      setCRMClientes([]);
+    const allLeadS = await GetAllLead();
+    if (!allLeadS.success) {
+      setLeadClientes([]);
       setShowModal(true);
       return;
     }
-    setCRMClientes(allCRMS.allCRM);
+    setLeadClientes(allLeadS.allLeads);
     setShowModal(true);
   };
 
@@ -42,15 +44,21 @@ export default function FeedbackButton() {
       id: "",
       clienteId: "",
       descricaoAtendimento: "",
-      dataAtendimento: new Date(),
+      dataAtendimento: moment().toDate(),
       tipoAtendimento: "",
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      createdAt: moment().toDate(),
+      updatedAt: moment().toDate(),
     });
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
+
+    if (name === "nomeCliente" || name === "telefoneCliente" || name === "emailCliente") {
+      setLeadData((prevState) => ({ ...prevState, [name]: value }));
+      return;
+    }
+
     setAtendimentoData((prevState) => ({ ...prevState, [name]: value }));
   };
 
@@ -64,11 +72,24 @@ export default function FeedbackButton() {
 
     if (countError > 0) return;
 
-    console.log(CRMData, atendimentoData);
+    const createLead = await CreateNewLead(leadData, atendimentoData);
+
+    if (createLead && createLead.success) {
+      toast.success(createLead.message);
+      handleCloseModal();
+      return;
+    }
+
+    toast.error(createLead?.message);
+  };
+
+  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setAtendimentoData((prevState) => ({ ...prevState, [name]: moment(value).toDate() }));
   };
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedClient = CRMClientes?.find((crm) => crm.id === e.target.value);
+    const selectedClient = LeadClientes?.find((Lead) => Lead.id === e.target.value);
 
     if (!selectedClient && e.target.value !== "novoCliente") {
       toast.error("Aluno não encontrado");
@@ -76,15 +97,15 @@ export default function FeedbackButton() {
     }
 
     if (e.target.value === "novoCliente") {
-      setCRMData({
-        id: "",
+      setLeadData({
+        id: "novoCliente",
         nomeCliente: "",
         telefoneCliente: "",
         emailCliente: "",
       });
       return;
     }
-    setCRMData({
+    setLeadData({
       id: selectedClient?.id || "",
       nomeCliente: selectedClient?.nomeCliente || "",
       telefoneCliente: selectedClient?.telefoneCliente || "",
@@ -100,24 +121,24 @@ export default function FeedbackButton() {
       <Modal onClose={handleCloseModal} show={showModal}>
         <h1 className="text-center font-semibold my-2">Atendimento executado</h1>
         <div className="flex flex-col items-center">
-          <select name="students" className="select select-bordered select-primary w-[60%] text-center" value={CRMData?.id} onChange={handleSelectChange}>
-            <option value="">Selecione uma opção</option>
-            {CRMClientes && CRMClientes.length > 0 ? (
+          <select name="students" className="select select-bordered select-primary w-[60%] text-center" value={leadData?.id} onChange={handleSelectChange}>
+            <option value="" disabled>
+              Selecione uma opção
+            </option>
+            <option value="novoCliente">Novo Cliente</option>
+            {LeadClientes && LeadClientes.length > 0 && (
               <>
-                <option value="">Selecione um aluno</option>
-                {CRMClientes.map((crm) => (
-                  <option key={crm.id} value={crm.id}>
-                    {crm.nomeCliente}
+                {LeadClientes.map((Lead) => (
+                  <option key={Lead.id} value={Lead.id}>
+                    {Lead.nomeCliente}
                   </option>
                 ))}
               </>
-            ) : (
-              <option value="novoCliente">Novo Cliente</option>
             )}
           </select>
 
           <div id="form">
-            <div id="DadosDoClienteCRM">
+            <div id="DadosDoClienteLead">
               <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="nomeCliente">
                   Nome do Cliente
@@ -127,7 +148,7 @@ export default function FeedbackButton() {
                   id="nomeCliente"
                   name="nomeCliente"
                   type="text"
-                  value={CRMData?.nomeCliente}
+                  value={leadData?.nomeCliente}
                   onChange={handleInputChange}
                   required
                 />
@@ -141,7 +162,7 @@ export default function FeedbackButton() {
                   id="emailCliente"
                   name="emailCliente"
                   type="text"
-                  value={CRMData?.emailCliente || ""}
+                  value={leadData?.emailCliente || ""}
                   onChange={handleInputChange}
                   required
                 />
@@ -155,7 +176,7 @@ export default function FeedbackButton() {
                   id="telefoneCliente"
                   name="telefoneCliente"
                   type="text"
-                  value={CRMData?.telefoneCliente}
+                  value={leadData?.telefoneCliente}
                   onChange={handleInputChange}
                   required
                 />
@@ -180,30 +201,30 @@ export default function FeedbackButton() {
                 </div>
               </div>
               <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="emailCliente">
-                  Email do Cliente
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="descricaoAtendimento">
+                  Como foi o atendimento ?
                 </label>
                 <input
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="emailCliente"
-                  name="emailCliente"
+                  id="descricaoAtendimento"
+                  name="descricaoAtendimento"
                   type="text"
-                  value={CRMData?.emailCliente || ""}
+                  value={atendimentoData?.descricaoAtendimento || ""}
                   onChange={handleInputChange}
                   required
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="telefoneCliente">
-                  Telefone do cliente
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="dataAtendimento">
+                  Data do atendimento
                 </label>
                 <input
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="telefoneCliente"
-                  name="telefoneCliente"
+                  id="dataAtendimento"
+                  name="dataAtendimento"
                   type="text"
-                  value={CRMData?.telefoneCliente}
-                  onChange={handleInputChange}
+                  value={moment(atendimentoData?.dataAtendimento).format("DD/MM/YYYY")}
+                  onChange={handleDateChange}
                   required
                 />
               </div>
